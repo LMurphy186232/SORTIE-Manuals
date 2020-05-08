@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Light Dependent Seed Survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Light Dependent Seed Survival</h1>
+
+<p>
+This behavior assesses seed survival as a function of the Global Light Index (GLI) of the location in which a seed lands.  Light level calculations can take into account the change in light blocking by snags and trees with storm damage, if desired.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Beam Fraction of Global Radiation</td><td> The fraction of total solar radiation that is direct beam radiation (as opposed to diffuse). Expressed as a value between 0 and 1. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>. </td></tr>
+
+<tr><td class="parname">Clear Sky Transmission Coefficient</td><td> Used to determine the amount of solar radiation seen at the plot location. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>. </td></tr>
+
+<tr><td class="parname">First Day of Growing Season for GLI Light Calculations</td><td> The first day of the growing season, as a Julian day (number between 1 and 365). Seeds only get light during the growing season. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">GLI of Optimum Establishment, 0-100</td><td> The GLI value of optimum survival for seeds, as a value between 0 and 100.</td></tr>
+
+<tr><td class="parname">Height in m At Which to Calculate GLI</td><td> The height, in meters, at which to calculate GLI at the center of each grid cell.</td></tr>
+
+<tr><td class="parname">Last Day of Growing Season for GLI Light Calculations</td><td> The last day of the growing season, as a Julian day (number between 1 and 365). Seeds only get light during the growing season. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Light Extinction Coeff of Complete Damage Trees (0-1)</td><td>  The fraction of light transmitted by the crowns of trees with complete <a href="../disturbance_behaviors/storm_damage_killer.html">Storm damage</a>. Not required if storms are not used.  Expressed as a value between 0 and 1.  If storms are used, a value must be supplied for every species. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Light Extinction Coeff of Medium Damage Trees (0-1)</td><td>  The fraction of light transmitted by the crowns of trees with medium <a href="../disturbance_behaviors/storm_damage_killer.html">Storm damage</a>. Not required if storms are not used.  Expressed as a value between 0 and 1.  If storms are used, a value must be supplied for every species. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Light Extinction Coeff of Undamaged Trees (0-1)</td><td>  The fraction of light transmitted by the crowns of regular live trees (and if storms are being used, trees with no <a href="../disturbance_behaviors/storm_damage_killer.html">Storm damage</a>).  Expressed as a value between 0 and 1. A value must be supplied for every species. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Minimum Solar Angle for GLI Calculations, in rad</td><td>  This is the minimum angle at which sunlight is seen, in radians. Below this value the sky is assumed to be dark due to shading neighbors. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td><tr>  
+
+<tr><td class="parname">Number of Altitude Sky Divisions for GLI Light Calculations</td><td>  Number of grid cells into which the sky is divided from horizon to zenith, for the purpose of calculating light direction. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Number of Azimuth Sky Divisions for GLI Light Calculations</td><td> Number of grid cells into which the sky is divided around the horizon, for the purpose of calculating light direction. See more on <a href="../light_behaviors/light_calculations.html">GLI calculations</a>.</td></tr>
+
+<tr><td class="parname">Slope of Dropoff Above the Optimum GLI</td><td> The slope of the line describing the drop off in seedling survival as a function of GLI above the optimum GLI.</td></tr>
+
+<tr><td class="parname">Slope of Dropoff Below Optimum GLI</td><td> The slope of the line describing the dropoff in seedling survival as a function of GLI below the optimum GLI.</td></tr>
+
+<tr><td class="parname">Snag Age Class 1 Light Extinction Coefficient (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is less than or equal to <b>Upper age (yrs) of snag light extinction class 1</b>.  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species. </td></tr>
+
+<tr><td class="parname">Snag Age Class 2 Light Extinction Coefficient (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than <b>Upper age (yrs) of snag light extinction class 1</b>, but is less than or equal to <b>Upper age (yrs) of snag light extinction class 2</b>.  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species. </td></tr>
+
+<tr><td class="parname">Snag Age Class 3 Light Extinction Coefficient (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than <b>Upper age (yrs) of snag light extinction class 2</b>.  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species. </td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Extinction Class 1</td><td>  The upper age limit, in years, defining the first age class of snag light extinction.  Snags with an age less than or equal to this age have a light extinction coefficient matching <b>Snag age class 1 light extinction coefficient</b>.  If your run does not work with snags, you can ignore this. </td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Extinction Class 2</td><td>  The upper age limit, in years, defining the second age class of snag light extinction.  Snags with an age greater than the upper limit for size class 1, but less than or equal to this age, have a light extinction coefficient matching <b>Snag age class 2 light extinction coefficient</b>.  Snags with an age greater than this value are in age class three.  If your run does not work with snags, you can ignore this. </td></tr>
+
+</table>
+ 
+<h3>How it works</h3>
+
+<p>The effects of light levels on seed survival is graphed as:<br>
+</p>
+<center><img src="../data_files/gli_estab_diagram.gif" alt="Light dependent seed survival GLI diagram"></center>
+<p>
+To assess the effects of light level on the number of seeds that survive, this behavior calculates the GLI at the center of each grid cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a> at the height specified in the <b>Height in m At Which to Calculate GLI</b> parameter (value is in meters).  The calculation proceeds exactly as described in the <a href="../light_behaviors/index.html">Light Behaviors</a>.  In order to perform these GLI calculations, this behavior requires its own copy of the key GLI setup parameters.
+</p>
+<p>
+If you wish to use <a href="../disturbance_behaviors/storm_damage_killer.html">storms</a> in your run, this behavior can take into account the fact that storm-damaged trees may have different light extinction coefficients.  These light extinction coefficients are specified in the <b>Light Extinction Coeff of Complete Damage Trees (0-1)</b> and <b>Light Extinction Coeff of Medium Damage Trees (0-1)</b> parameters.
+</p>
+<p>
+Once GLI has been calculated, the proportion of seeds that survive for a given species is calculated as:
+</p>
+<ul>
+<li>If GLI &lt; GLI<sub>opt</sub>, LE = 1 - (S<sub>lo</sub>(GLI<sub>opt</sub> - GLI))</li>
+<li>If GLI = GLI<sub>opt</sub>, LE = 1</li>
+<li>If GLI &gt; GLI<sub>opt</sub>, LE = 1 - (S<sub>hi</sub>(GLI - GLI<sub>opt</sub>))</li>
+</ul>
+<p> 
+where
+</p>
+<ul>
+<li>GLI is the GLI at the center of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid cell at the height in the <b>Height in m At Which to Calculate GLI </b> parameter</li>
+<li>GLI<sub>opt</sub> is the <b>GLI of Optimum Establishment, 0-100</b> parameter</li>
+<li>S<sub>lo</sub> is the <b>Slope of Dropoff Below Optimum GLI</b> parameter</li>
+<li>S<sub>hi</sub> is the <b>Slope of Dropoff Above the Optimum GLI</b> parameter</li>
+</ul> 
+<p>
+Once the proportion of seeds that survive at the given GLI has been calculated, this value is multiplied by the number of seeds to reduce them by the proper amount.  The new reduced number of seeds is put back in the Dispersed Seeds grid.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to seeds of your desired species. Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied.  Storm damage is optional.
+</p>
+</body>
+</html>

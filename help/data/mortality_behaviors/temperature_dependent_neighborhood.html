@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Temperature dependent neighborhood survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Temperature dependent neighborhood survival</h1>
+<p>
+This behavior assesses tree survival as a function of mean annual temperature and neighbor adult basal area.  For efficiency, it calculates survival rates for cells in a grid and assigns trees the survival probability of the grid cell in which they are found.    
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Temp Dependent Neighborhood Surv - A</td><td> A in the survival function.</td></tr>
+
+<tr><td class="parname">Temp Dependent Neighborhood Surv - B</td><td> B in the survival function.</td></tr>
+
+<tr><td class="parname">Temp Dependent Neighborhood Surv - M</td><td> M in the survival function.</td></tr>
+
+<tr><td class="parname">Temp Dependent Neighborhood Surv - N</td><td> N in the survival function.</td></tr>
+
+<tr><td class="parname">Temp Dependent Neighborhood Surv - Neigh Search Radius (m)</td><td> Maximum radius to search for crowding neighbors, in meters.</td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior uses the <a href="../grids/temp_dep_surv_grid.html">Temperature Dependent Neighborhood Survival</a> grid to keep track of survival rates.   The annual probability of survival for a given species and given grid cell is calculated as: 
+</p>
+<center><img src="../data_files/temp_dep_neigh_surv.gif" alt="surv eq exp(-A*BAT^B)*exp(-0.5*(((T-M)/N)^2))"></center>
+<p>where: </p>
+<ul>
+<li><i>Surv</i> is the annual probability of survival </li>
+<li><i>A</i> is the <b>Temp Dependent Neighborhood Surv - A</b> parameter </li>
+<li><i>B</i> is the <b>Temp Dependent Neighborhood Surv - B</b> parameter </li>
+<li><i>M</i> is the <b>Temp Dependent Neighborhood Surv - M</b> parameter </li>
+<li><i>N</i> is the <b>Temp Dependent Neighborhood Surv - N</b> parameter </li>
+<li><i>T</i> is the mean annual temperature in degrees Celsius as entered in the <a href="../plot.html">Plot </a></li>
+<li><i>BAT</i> is the adult total basal area in the neighborhood, in square meters </li>
+</ul>
+<p>
+BAT is the basal area of all adults within the distance from the center of the grid cell set in the <b>Temp Dependent Neighborhood Surv - Neigh Search Radius (m)</b> parameter.  
+</p>
+<p>
+The probability of survival is for a single year.  For multi-year timesteps, the timestep survival probability is the annual probability raised to the power of the number of years per timestep. 
+</p>
+<p>
+Trees receive the survival probability calculated for the grid cell in which they are found.  A random number is used to determine whether a tree lives or dies.    
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.
+</p>
+
+</body>
+</html>

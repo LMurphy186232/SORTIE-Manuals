@@ -1,0 +1,73 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>The SORTIE-ND installation</title>
+</head>
+<body>
+<h1>The SORTIE-ND installation</h1>
+<p>
+It is a big job to get all the different parts of the SORTIE-ND installation to work together as a single software unit.  (There's more on the different components in <a href="third_party_stuff.html">third party stuff</a>.) Here's a list of needed files and libraries:
+</p>
+<ul>
+<li>SORTIE.exe - an executable wrapper.  Goes in the main application directory.</li>
+<li>In the /bin directory:<ul>
+<li>coremodel.exe - the SORTIE core model code.</li>
+<li>gzip.exe - GZIP application.</li>
+<li>libgcc_s_dw2-1.dll - GCC code library.</li>
+<li>libgsl-0.dll - GNU Scientific Library.</li>
+<li>libgslcblas-0.dll - GNU Scientific Library.</li>
+<li>libinterface.dll - the library that controls the C++ interface.</li>
+<li>libstdc++-6.dll - C++ standard library.</li>
+<li>libxerces-c-3-1-2.dll - Xerces XML parsing library.</li>
+<li>mingwm10.dll - MinGW runtime library.</li>
+<li>SORTIE.jar - the SORTIE-ND GUI.</li>
+<li>tar.exe - TAR application.</li></ul></li>
+<li>In the /lib directory:<ul>
+<li>jcommon-1.0.23.jar - JFreeChart library.</li>
+<li>jfreechart-1.0.19.jar - JFreeChart library.</li>
+<li>jh.jar - JavaHelp library.</li>
+<li>sortie_help.jar - the SORTIE-ND help files.</li>
+<li>xercesimpl.jar - Xerces for Java library.</li>
+<li>xml-apis.jar - Xerces for Java library.</li></ul></li>
+</ul>
+
+<h3>Creating SORTIE.jar</h3>
+<p>
+(See the <a href="http://docs.oracle.com/javase/tutorial/">Java Tutorial</a> for more on JAR files.)  The main SORTIE-ND GUI is contained in a JAR file, SORTIE.jar. This JAR can be created in Eclipse with the JAR description file included. It can also be created from the command line by typing something similar to <code>jar -cvmf Manifest.mf SORTIE.jar classes</code>.  The <code>-cvmf</code> tells jar.exe that you want to:
+</p>
+<ul>
+<li><code>c</code> - create a new archive</li>
+<li><code>v</code> - output info to the screen about what jar.exe is doing.</li>
+<li><code>m</code> - Specify your own manifest file</li>
+<li><code>f</code> - Create a ".JAR" file instead of sending the output to your screen (<code>stdout</code>).</li>
+</ul>
+<p>
+<code>Manifest.mf</code> is the manifest file (more on this in a bit), <code>SORTIE.jar</code> is the name of the JAR file to create, and <code>classes</code> is the directory containing the java .class files (which are the compiled .java files).
+</<p>
+The manifest file defines the JAR and tells SORTIE.jar how to find its needed Java libraries.  The file contains a ClassPath header that directs the JVM to look at the jar files as class directories.  Here is the contents of Manifest.mf at the time of this writing:
+</p>
+<p>
+<code>
+Manifest-Version: 1.0
+<br>Main-Class: sortie.parfile.Model
+<br>Class-Path: ../lib/jh.jar ../lib/sortie_help.jar ../lib/jcommon-1.0.23.jar ../lib/jfreechart-1.0.19.jar ../lib/tar.jar ../lib/xercesImpl.jar ../lib/xml-apis.jar
+</code>
+</p>
+<p>
+The latest version is available on the SORTIE-ND downloads page.
+</p>
+<h3>Launching SORTIE.jar</h3>
+<p>
+Once it is launched from its JAR file, the SORTIE-ND GUI in SORTIE.jar needs to know how to find the core model code.  When running the JAR file from the command line, you do this by adjusting the library path when SORTIE-ND is launched.  The command is <code>java -Djava.library.path=../lib -jar sortie.jar</code>, assuming that you are in the main installation directory when this command is typed.  In release, SORTIE.jar is launched by SORTIE.exe.
+</p>
+<h3>Creating SORTIE.exe</h3>
+<p>
+To make things less challenging for everyone, SORTIE.jar is packaged into a native Windows executable wrapper.  This wrapper is created by <a href="http://jsmooth.sourceforge.net/">JSmooth</a>, an open-source tool.  The JSmooth project file is available on the SORTIE-ND downloads page.  It makes sure that the user has an appropriate JVM installed and passes it the needed library paths.  The library paths are the same as in the SORTIE.jar manifest; these are passed as arguments to the Java Virtual Machine at runtime.
+</p>
+<h3>Creating the installer</h3>
+<p>
+The installer is created by <a href="http://www.jrsoftware.org/isdl.php">Inno</a>, an extremely handy piece of open-source software.  The first step in creating the installer is to recreate a SORTIE-ND install by placing all the files in the appropriate directories, as described above.  Then the Inno install script for SORTIE-ND will do the rest.  The latest version of the SORTIE-ND install script is available by request.   
+</p>
+</body>
+</html>

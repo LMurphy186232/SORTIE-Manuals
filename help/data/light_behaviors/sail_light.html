@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Sail light</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Sail light</h1>
+<p>
+For more on what the Sail Light index is and how it is calculated, see <a href="light_calculations.html">here</a>.
+</p>
+
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Sail Light Maximum Shading Neighbor Distance, in meters</td><td> The radius, in meters, from a tree for which neighbors will be searched who can shade that tree.</td></tr>
+
+<tr><td class="parname">Sail Light Minimum Solar Angle, in degrees</td><td> The azimuth angle, in degrees, below which it is assumed trees will see no light. </td></tr>
+
+<tr><td class="parname">Calculated Crown Depth</td><td> When the shape of a tree's shading neighbors is assessed to see how much light each blocks, their crowns can either conform to each neighbor's true crown height or they can be approximated at the full height of the tree.</td></tr>
+
+<tr><td class="parname">Height of Fisheye Photo</td><td> When a fish-eye photo is simulated for a tree, this positions the photo at either the top of the crown or at mid-crown. Seedlings always get fisheye photos at top-of-crown no matter what this value is.</td></tr>
+
+<tr><td class="parname">Beam Fraction of Global Radiation</td><td> The fraction of total solar radiation that is direct beam radiation (as opposed to diffuse). Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Clear Sky Transmission Coefficient</td><td> Used to determine the amount of solar radiation seen at the plot location.</td></tr>
+
+<tr><td class="parname">First Day of Growing Season</td><td> The first day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Last Day of Growing Season</td><td> The last day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Amount Canopy Light Transmission (0-1)</td><td> Fraction of light transmitted through the tree crown for each species. Expressed as a fraction between 0 and 1. A value must be provided for all species, even if they don't all use light.</td></tr>
+
+<tr><td class="parname">Snag Age Class 1 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 1".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 2 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 1", but is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 3 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 1</td><td>  The upper age limit, in years, defining the first age class of snag light transmission.  Snags with an age less than or equal to this age have a light transmission coefficient matching "Snag Age Class 1 Light Transmission Coefficient".  If your run does not work with snags, you can ignore this.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 2</td><td>  The upper age limit, in years, defining the second age class of snag light transmission.  Snags with an age greater than the upper limit for size class 1, but less than or equal to this age, have a light transmission coefficient matching "Snag Age Class 2 Light Transmission Coefficient".  Snags with an age greater than this value are in age class three.  If your run does not work with snags, you can ignore this.</td></tr>
+
+</table>
+<h3>How it works</h3>
+<p>
+This behavior calculates a Sail Light index value for each individual of each tree type to which it is assigned. Sail Light values go from 0 (full sun) to 1 (full shade).
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

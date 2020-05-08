@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Basal area NCI growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Basal area NCI growth</h1>
+<p>
+This behavior uses the effects of neighbor competitiveness to influence growth rates ("NCI" stands for neighborhood competition index).  In this case, the NCI is based on the basal area of neighboring trees.  A tree's maximum potential growth rate is reduced due to competitiveness and several other possible factors.
+</p>
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Maximum Potential Growth, cm/yr</td><td> Maximum potential diameter growth for a tree, in cm/yr.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using NCI growth.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect Slope (C)</td><td>  The slope of the curve for the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect Steepness (D)</td><td>  The steepness of the curve for the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Size Sensitivity to NCI (gamma)</td><td>  The sensitivity of a tree's growth rate to its DBH.  Set this to 0 to remove the DBH term altogether.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Mode, in cm (X0)</td><td> The mode of the size effect curve. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Variance, in cm (Xb)</td><td>  The variance of the size effect curve.</td></tr>
+
+<tr><td class="parname">Basal Area NCI - BA Divisor</td><td> The value by which to divide neighbor basal area.</td></tr>
+
+<tr><td class="parname">Basal Area NCI - Use Only Larger Neighbors</td><td> Whether to use all neighbors larger than the minimum DBH (false) or only neighbors larger than the target tree (true).</td></tr> 
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+For a tree, the amount of growth per year is calculated as:
+</p>
+<center><i>Growth = Max Growth * Size Effect * Crowding Effect</i></center>
+<p>
+Max Growth is the maximum diameter growth the tree can attain, in cm/yr, entered in the <b>NCI Maximum Potential Growth, cm/yr</b> parameter.  <i>Size Effect</i> and  <i>Crowding Effect</i> are factors which act to reduce the maximum growth rate and will vary depending on the conditions a tree is in.  Each of these effects is a value between 0 and 1.
+</p>
+
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/nci_size_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>DBH </i>is of the target tree, in cm</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Size Effect Mode, in cm (X0)</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Size Effect Variance, in cm (Xb)</b></li>
+</ul>
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><i>CE = exp(-C * (DBH <sup>&#947;</sup> * BA<sub>n</sub> / BADiv) <sup>D</sup>)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>NCI Crowding Effect Slope (C)</b> parameter</li>
+<li><i>DBH</i> is of the target tree, in cm</li>
+<li><i>&#947;</i> is the <b>NCI Size Sensitivity to NCI (gamma)</b> parameter for the target tree's species</li>
+<li><i>D</i> is the <b>NCI Crowding Effect Steepness (D)</b> parameter</li>
+<li><i>BA<sub>n</sub></i> is the sum of the basal areas, in square cm, of eligible neighbors</li>
+<li><i>BADiv</i> is the <b>Basal Area NCI - BA Divisor</b> parameter</li>
+</ul>
+
+<p>
+When calculating BA<sub>n</sub>, this behavior uses neighbors of all species out to the distance set in the <b>NCI Max Radius of Crowding Neighbors, in m</b> parameter. The neighbors must have a DBH larger than the values set in the <b>NCI Minimum Neighbor DBH, in cm</b> parameter. If the <b>Basal Area NCI - Use Only Larger Neighbors</b> parameter is set to true, they must also have a DBH larger than the target tree's DBH. Seedlings and snags never contribute to BA<sub>n</sub>.
+</p>
+<p>
+The amount of growth is in cm/year. For multi-year timesteps, the behavior will calculate total growth with a loop. Each loop iteration will increment DBH for one year. For each year, any portion of the growth equation with DBH as a term is recalculated with the previous year's updated DBH value. (NCI values are constant throughout this loop - for neighbors, only the d10 at the start of the timestep is used.)
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species. It cannot be applied to seedlings. You can use either the diam with auto height or diam only version.
+</p>
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI temperature effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI temperature effects</h1>
+<p>
+Temperature effects adjust tree growth based on mean annual temperature.
+</p>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+
+<hr/>
+<h2>Weibull temperature effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname"> Weibull Temperature Effect "A"</td><td>The A parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius. </td></tr>
+
+<tr><td class="parname"> Weibull Temperature Effect "B"</td><td> The B parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius.</td></tr>
+
+<tr><td class="parname"> Weibull Temperature Effect "C"</td><td> The C parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius. </td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Temperature Effect</i> is calculated as:
+</p>
+<center><i>TE = </i><img alt="Weibull climate growth temperature effect equation" src="../data_files/weib_temp.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>A</i> is the <b>Weibull Temperature Effect "A"</b> parameter</li>
+<li><i>B</i> is the <b>Weibull Temperature Effect "B"</b> parameter</li>
+<li><i>C</i> is the <b>Weibull Temperature Effect "C"</b> parameter</li>
+
+<li><i>T</i> is the plot's annual mean temperature, in degrees Celsius, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+
+
+
+
+<hr/>
+<h2>Double logistic temperature effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">Double Logistic Temp Effect "al"</td><td>The a<sub>l</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+
+<tr><td class="parname">Double Logistic Temp Effect "bl"</td><td>The b<sub>l</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+
+<tr><td class="parname">Double Logistic Temp Effect "cl"</td><td>The c<sub>l</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+
+<tr><td class="parname">Double Logistic Temp Effect "ah"</td><td>The a<sub>h</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+
+<tr><td class="parname">Double Logistic Temp Effect "bh"</td><td>The b<sub>h</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+
+<tr><td class="parname">Double Logistic Temp Effect "ch"</td><td>The c<sub>h</sub> parameter for the temperature effect. The effect is based on mean annual temperature in <b>degrees Kelvin</b>. </td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Temperature Effect</i> is calculated as:
+</p>
+<center><i></i><img alt="Double logistic climate growth temperature effect equation" src="../data_files/temp_double_logistic.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>a<sub>l</sub></i> is the <b>Double Logistic Temp Effect "al"</b> parameter</li>
+<li><i>b<sub>l</sub></i> is the <b>Double Logistic Temp Effect "bl"</b> parameter</li>
+<li><i>c<sub>l</sub></i> is the <b>Double Logistic Temp Effect "cl"</b> parameter</li>
+<li><i>a<sub>h</sub></i> is the <b>Double Logistic Temp Effect "ah"</b> parameter</li>
+<li><i>b<sub>h</sub></i> is the <b>Double Logistic Temp Effect "bh"</b> parameter</li>
+<li><i>c<sub>h</sub></i> is the <b>Double Logistic Temp Effect "ch"</b> parameter</li>
+<li><i>T</i> is the plot's annual mean temperature, in <b>degrees Kelvin</b>. This is calculated from the value in degrees C in the <a href="../plot.html">Plot</a></li>
+</ul>
+
+</body>
+</html>

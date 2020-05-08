@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Gap Light behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Gap Light behavior</h1>
+<p>
+This behavior shortcuts the light calculation process by considering GLI to be binary:  either full light (100%) or no light (0%).  This simulates a simplified version of gap light dynamics.
+</p>
+<h3>How it works</h3>
+<p>
+This behavior uses a <a href="../../using/what_is_a_grid.html">grid</a> object called <a href="../grids/gap_light_grid.html">Gap Light</a> to determine the basic position of plot gaps.  If a grid cell contains no adult trees, it is considered a gap.  If there are any adults of any species, then it is non-gap.
+</p>
+<p>
+The trees to which this behavior has been applied get their GLI values based on the gap status of the grid cell in which they are located.  If the gap status is TRUE, then they receive a GLI value of 100%.  If it is FALSE, they receive a value of 0%.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

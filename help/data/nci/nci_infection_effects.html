@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI infection effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI infection effects</h1>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+
+<hr/>
+<h2>Infection effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">Infection Effect "a"</td><td>The "a" parameter for the infection effect.</td></tr>
+
+<tr><td class="parname">Infection Effect "b"</td><td>The "b" parameter for the infection effect.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Infection Effect</i> is calculated as:
+</p>
+<center><i>Infection Effect = a * ln(T) + b</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>a</i> is the <b>Infection Effect "a"</b> parameter</li>
+<li><i>b</i> is the <b>Infection Effect "b"</b> parameter</li>
+<li><i>T</i> is the time infested</li>
+</ul>
+<p>
+Time infested comes from either the <a href="../disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a> or <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> behaviors. Trees to which this behavior is applied must have one of these two behaviors also applied.
+</p>
+<p>
+If a tree is not infested, there is no effect. 
+</p>
+
+<h1>NCI infection effects</h1>
+
+<hr/>
+<h2>Size Dependent Infection effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">Infection Effect "a"</td><td>The "a" parameter for the infection effect.</td></tr>
+
+<tr><td class="parname">Infection Effect "b"</td><td>The "b" parameter for the infection effect.</td></tr>
+
+<tr><td class="parname">Infection Effect "X0"</td><td>The "X0" parameter for the infection effect.</td></tr>
+
+<tr><td class="parname">Infection Effect "Xb"</td><td>The "Xb" parameter for the infection effect.</td></tr>
+
+<tr><td class="parname">Infection Effect "Xp"</td><td>The "Xp" parameter for the infection effect.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Infection Effect</i> is a function of the size of the tree and the time since infested. It is calculated as:
+</p>
+<center><i><img src="../data_files/size_dep_infection_effect.gif"/></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>a</i> is the <b>Infection Effect "a"</b> parameter</li>
+<li><i>b</i> is the <b>Infection Effect "b"</b> parameter</li>
+<li><i>X0</i> is the <b>Infection Effect "X0"</b> parameter</li>
+<li><i>Xb</i> is the <b>Infection Effect "Xb"</b> parameter</li>
+<li><i>Xp</i> is the <b>Infection Effect "Xp"</b> parameter</li>
+<li><i>diam</i> is the diameter of the tree: diam10 if a seedling, DBH for all others</li>
+<li><i>T</i> is the time infested</li>
+</ul>
+<p>
+Time infested comes from either the <a href="../disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a> or <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> behaviors. Trees to which this behavior is applied must have one of these two behaviors also applied.
+</p>
+<p>
+If a tree is not infested, there is no effect. 
+</p>
+</body>
+</html>

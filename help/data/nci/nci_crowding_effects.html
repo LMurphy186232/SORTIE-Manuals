@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI crowding effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI crowding effects</h1>
+<p>
+Most crowding effects must be paired with an <a href="nci_terms.html">NCI term</a>. The NCI term returns one or more values representing different indexes of neighborhood competitiveness. Each crowding effect term can be matched with a variety of different competitiveness indexes and each one below describes how it uses each NCI value it receives.
+</p>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+<hr/>
+<h2>Default crowding effect</h2>
+<p>
+This can be paired with NCI terms returning either one or two values.
+</p>
+<h3>Parameters</h3>
+
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crowding Effect Slope (C)</td><td> The "C" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect Steepness (D)</td><td>  The "D" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Size Sensitivity to NCI (gamma)</td><td>  The "gamma" term in the crowding effect equation.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><img alt="NCI crowding effect equation" src="../data_files/nci_crowding_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>NCI Crowding Effect Slope (C)</b> parameter</li>
+<li><i>NCI1</i> is either the <b>first</b> term returned from a multi-value <a href="nci_terms.html">NCI</a>, or in the case of a single-value NCI term, the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>&#947;</i> is the <b>NCI Size Sensitivity to NCI (gamma)</b> parameter for the target tree's species</li>
+<li><i>D</i> is the <b>NCI Crowding Effect Steepness (D)</b> parameter</li>
+<li><i>NCI2</i> either the <b>second</b> term returned from a multi-value <a href="nci_terms.html">NCI</a> term, or the single value returned from a single-valued NCI</li>
+</ul>
+<p>
+The valid ranges on parameter values will depend on the choice of the <a href="nci_terms.html">NCI</a> term.
+</p>
+
+
+
+
+
+
+<hr/>
+<h2>Crowding effect 2</h2>
+<p>
+This can be paired with NCI terms returning either one or two values.
+</p>
+
+<h3>Parameters</h3>
+
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crowding Effect Slope (C)</td><td> The "C" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect Steepness (D)</td><td>  The "D" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Size Sensitivity to NCI (gamma)</td><td>  The "gamma" term in the crowding effect equation.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><img alt="NCI crowding effect equation" src="../data_files/nci_crowding_2.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>NCI Crowding Effect Slope (C)</b> parameter</li>
+<li><i>NCI1</i> is either the <b>first</b> term returned from a multi-value <a href="nci_terms.html">NCI</a>, or in the case of a single-value NCI term, the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>&#947;</i> is the <b>NCI Size Sensitivity to NCI (gamma)</b> parameter for the target tree's species</li>
+<li><i>D</i> is the <b>NCI Crowding Effect Steepness (D)</b> parameter</li>
+<li><i>NCI2</i> either the <b>second</b> term returned from a multi-value <a href="nci_terms.html">NCI</a> term, or the single value returned from a single-valued NCI</li>
+</ul>
+
+<p>
+The NCI term is a separate term you select. For a list of options click <a href="nci_terms.html">here</a>. The valid ranges on parameter values will depend on the choice of NCI.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<hr/>
+<h2>Crowding no size term</h2>
+<p>
+This can be paired with NCI terms returning either one or two values, but it will only use one of them.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crowding Effect Slope (C)</td><td> The "C" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect Steepness (D)</td><td>  The "D" term in the crowding effect equation.</td></tr>
+</table>
+<h3>How it works</h3>
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><i>CE = exp(-C * NCI <sup>D</sup>)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>NCI Crowding Effect Slope (C)</b> parameter</li>
+<li><i>D</i> is the <b>NCI Crowding Effect Steepness (D)</b> parameter</li>
+<li><i>NCI</i> either the <b>second</b> term returned from a multi-value <a href="nci_terms.html">NCI</a> term, or the single value returned from a single-valued NCI</li>
+</ul>
+<p>
+The NCI term is a separate term you select. For a list of options click <a href="nci_terms.html">here</a>. The valid ranges on parameter values will depend on the choice of NCI.
+</p>
+
+
+
+
+
+<hr/>
+<h2>Temperature dependent crowding</h2>
+<p>
+In this crowding effect term, plot temperature influences the effects of crowding. This can be paired with NCI terms returning either one or two values.
+</p>
+
+<h3>Parameters</h3>
+
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crowding Effect C</td><td> The "C" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect CX0</td><td> The "X<sub>0</sub>" term in the crowding effect CT equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect CXb</td><td> The "X<sub>b</sub>" term in the crowding effect CT equation.</td></tr>
+
+<tr><td class="parname">NCI Crowding Effect D</td><td>  The "D" term in the crowding effect equation.</td></tr>
+
+<tr><td class="parname">NCI gamma</td><td>  The "&#947;" term in the crowding effect equation.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><img alt="NCI crowding effect equation" src="../data_files/nci_crowding_effect_ct.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>NCI1</i> is either the <b>first</b> term returned from a multi-value <a href="nci_terms.html">NCI</a>, or in the case of a single-value NCI term, the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>&#947;</i> is the <b>NCI gamma</b> parameter for the target tree's species</li>
+<li><i>D</i> is the <b>NCI Crowding Effect D</b> parameter</li>
+<li><i>NCI2</i> either the <b>second</b> term returned from a multi-value <a href="nci_terms.html">NCI</a> term, or the single value returned from a single-valued NCI</li>
+</ul>
+<center><img alt="NCI crowding effect equation" src="../data_files/crowding_ct.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>NCI Crowding Effect C</b> parameter</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Crowding Effect CX0</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Crowding Effect CXb</b> parameter</li>
+<li><i>T</i> is the value in the <b>Mean Annual Temperature, degrees C</b> parameter of the <a href="../plot.html">Plot</a>, <b>converted to K</b></li>
+</ul>
+<p>
+The NCI term is a separate term you select. For a list of options click <a href="nci_terms.html">here</a>. The valid ranges on parameter values will depend on the choice of NCI.
+</p>
+
+
+</body>
+</html>

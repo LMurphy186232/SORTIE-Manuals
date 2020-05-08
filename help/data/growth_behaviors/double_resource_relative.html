@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Double resource relative growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Double resource relative growth</h1>
+<p>
+This behavior uses a double Michaelis-Menton function to calculate relative growth based on two resources:  light and a second resource. The identity of the second resource is unimportant and could be anything, from exchangeable calcium levels to soil moisture.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Asymptotic Diameter Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light - function term A below.</td></tr>
+
+<tr><td class="parname">Slope of Growth Response (S)</td><td> Slope of the Michaelis-Menton growth function at zero light - function term S below.</td></tr>
+
+<tr><td class="parname">Double resource - Influence of Resource (C)</td><td> The parameter governing the influence of the second resource on the double-resource Michaelis-Menton equation. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Relative growth is calculated with the equation:<br>
+</p>
+<center><img src="../data_files/double_mm_eq.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Y</i> is the amount of annual relative growth</li>
+<li><i>A</i> is the <b>Asymptotic Diameter Growth (A)</b> parameter</li>
+<li><i>S</i> is the <b>Slope of Growth Response (S)</b> parameter</li>
+<li><i>C</i> is the <b>Double resource - Influence of Resource (C)</b> parameter, in units appropriate to the value of R</li>
+<li><i>R</i> is the amount of the second resource, in units appropriate to the value of C</li>
+<li><i>GLI</i> is the global light index, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+</ul>
+<p>
+Growth is compounded over multiple timesteps with the equation:
+</p>
+<center><i>G = ((Y + 1)<sup>T</sup> - 1) * diam</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>G</i> is the amount of diameter growth for the timestep, in cm</li>
+<li><i>diam</i> is the diameter of the tree in cm (at 10 cm height if seedling or sapling, or DBH if adult)</li>
+<li><i>T</i> is the number of years per timestep</li>
+</ul>
+<p>
+Note that setting the C parameter in the equation above to 0 eliminates the second resource and makes this equivalent to the "Non-limited relative growth" behavior.
+</p>
+<p>
+The amount of the second resource is captured in a grid object called <a href="../grids/resource_grid.html">Resource</a>.  Currently it is up to you to enter a map of the values for this resource grid; for instructions on how to do this, see the <a href="../../windows/grid_setup_window.html">Grid Setup Window</a> topic.  This behavior does not in any way alter the values in this grid.
+</p>
+
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You must also enter a map of second resource values into the <a href="../grids/resource_grid.html">Resource</a> grid. You can use either the diam with auto height or diam only version.
+</p>
+</body>
+</html>

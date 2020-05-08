@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Windstorm</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Windstorm</h1>
+
+<p>
+Windstorm kills trees due to storm events. 
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "storm".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Windstorm - DBH Exponent (b)</td><td>  The "b" value in the equation used to determine the mortality of an individual tree as a result of a storm. </td></tr>
+
+<tr><td class="parname">Windstorm - Minimum DBH for Windstorm Mortality</td><td>  The minimum DBH for trees to be killed in storm events. </td></tr>
+
+<tr><td class="parname">Windstorm - Mortality Intercept (a)</td><td>  The "a" value in the equation used to determine the mortality of an individual tree as a result of a storm. </td></tr>
+
+<tr><td class="parname">Windstorm - Sea Surface Temperature Cyclicity Period (Years)</td><td>  Parameter that controls the cyclicity of storm frequency.  This value cannot be 0. </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 1 Year Return Interval Storm</td><td>  The severity of storms with a 1 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 5 Year Return Interval Storm</td><td>  The severity of storms with a 5 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 10 Year Return Interval Storm</td><td>  The severity of storms with a 10 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 20 Year Return Interval Storm</td><td>  The severity of storms with a 20 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 40 Year Return Interval Storm</td><td>  The severity of storms with a 40 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 80 Year Return Interval Storm</td><td>  The severity of storms with a 80 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 160 Year Return Interval Storm</td><td>  The severity of storms with a 160 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 320 Year Return Interval Storm</td><td>  The severity of storms with a 320 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 640 Year Return Interval Storm</td><td>  The severity of storms with a 640 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 1280 Year Return Interval Storm</td><td>  The severity of storms with a 1280 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Severity for 2560 Year Return Interval Storm</td><td>  The severity of storms with a 2560 year return interval, as a value between 0 (no mortality) and 1 (complete devastation). </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Cyclicity Sine Curve d</td><td>  Parameter that controls the cyclicity of storm frequency.  For no cyclicity, set this value to 0.  This value is part of the sine curve term and controls the sine amplitude. </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Cyclicity Sine Curve f</td><td>  Parameter that controls the cyclicity of storm frequency.  This value is part of the sine curve term and controls the sine frequency. </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Cyclicity Sine Curve g</td><td>  Parameter that controls the cyclicity of storm frequency.  This value is part of the sine curve term and controls where on the sine curve storms start occurring. </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Cyclicity Trend Function Intercept (i)</td><td>  Parameter that controls the trend of cyclicity of storm frequency.  This value is part of the trend term and is the intercept of the function controlling the increase or decrease of overall frequency cycling.  For no cyclicity at all, set this term to 1.  For no trend in cyclicity, set this term to 0. </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Cyclicity Trend Function Slope (m)</td><td>  Parameter that controls the trend of cyclicity of storm frequency.  This value is part of the trend term and is the slope at which frequency cycling increases or decreases.  For no cyclicity, or no trend in cyclicity, set this term to 0. </td></tr>
+
+<tr><td class="parname">Windstorm - Storm Intensity Coefficient (c)</td><td>  The "c" value in the equation used to determine the mortality of an individual tree as a result of a storm. </td></tr>
+
+<tr><td class="parname">Windstorm - Timestep to Start Storms</td><td>  The first timestep that storms are allowed to occur. </td></tr>
+</table>
+
+
+
+<h3>How it works</h3>
+<p>
+Using the parameters, you provide a general "shape" of storm intensity.  SORTIE then decides which storms occur each timestep, and which trees die as a result.
+</p>
+<p>
+This behavior defines 11 storm return intervals: 1, 5, 10, 20, 40, 80, 160, 320, 640, 1280, and 2560 years.  Each has a set annual probability:  for example, an 80-year return interval storm has an annual probability of 1/80, or 0.0125.  For each year of each timestep, for each return interval, SORTIE generates a random number to decide whether a storm of that return interval will occur.  This means that there can be multiple storms in a timestep, or no storms at all.  In a multi-year timestep, a storm of a given return interval can happen more than once.
+</p>
+<p>
+You give each return interval a storm severity value, between 0 and 1.  These are defined in the <b>Windstorm - Severity for X Year Return Interval Storm</b> parameters.  A severity of 0 means no tree mortality; a severity of 1 approaches 100% mortality.
+</p>
+<p>
+The overall frequency of storms can remain constant, or it can change through time.  It has been reported in <a href="../../more_info/further_reading.html">Goldenburg et al 2001</a> that storm activity in the North Atlantic cycles along with sea surface temperature.  This behavior can thus change the storm frequency over time, using either a sinusoidal pattern, a constant linear change, or both together.  In the figure below, curve 1 is a basic sine wave.  Curve 2 has a sinusoidal pattern plus an upwards trend.
+</p>
+<center><img src="../data_files/windstorm_cyclicity.gif" alt="Windstorm cyclicity curves"></center>
+<p>
+The actual probability of an individual storm that takes place in a storm regime with a cyclical frequency is:
+</p>
+<center><i>P'(F<sub>i</sub>) = P(F<sub>i</sub>) * ([d * sin( &#960; * (x-g) / (2f) )] + [mx + i])</i></center><br/>
+<p>
+Note that the new probability is a baseline probability, <i>P(F<sub>i</sub>)</i>, multiplied by a value that adjusts the probability according to where the model is at the given time in the frequency cycle.  The frequency cycle multiplier is itself made up of two terms added together.  The first term is the sine curve cycling, and the second term is the overall trend upwards or downwards.
+</p>
+<p>
+Terms in the equation:
+</p>
+<ul>
+<li><i>P'(F<sub>i</sub>)</i> is this timestep's annual probability of a storm of the ith return interval, adjusted according to the frequency cyclicity</li>
+<li><i>P(F<sub>i</sub>)</i> is the baseline probability of a storm of the ith return interval; that is, the inverse of the values specified in the <b>Windstorm - Severity for X Year Return Interval Storm</b> parameters</li>
+<li><i>x = 4 * t / Sr</i>, where t is the number of years since storms started and Sr is the <b>Windstorm - Sea Surface Temperature Cyclicity Period (Years)</b> parameter</li>
+<li><i>d</i> is the <b>Windstorm - Storm Cyclicity Sine Curve d</b> parameter, which controls the sine curve's amplitude</li>
+<li><i>f</i> is the <b>Windstorm - Storm Cyclicity Sine Curve f</b> parameter, which controls the sine curve's frequency</li>
+<li><i>g</i> is the <b>Windstorm - Storm Cyclicity Sine Curve g</b> parameter, which controls where on the sine curve storms start occurring</li>
+<li><i>m</i> is the <b>Windstorm - Storm Cyclicity Trend Function Slope (m)</b> parameter</li>
+<li><i>i</i> is the <b>Windstorm - Storm Cyclicity Trend Function Intercept (i)</b> parameter</li>
+</ul>
+<p>
+To turn off all cyclicity and use constant storm probabilities, set <b>Windstorm - Storm Cyclicity Sine Curve d</b> to 0, <b>Windstorm - Storm Cyclicity Trend Function Slope (m)</b> to 0, and <b>Windstorm - Storm Cyclicity Trend Function Intercept (i)</b> to 1.  (The other values are unimportant.)  To use only the sine portion with no trend line, set both <b>Windstorm - Storm Cyclicity Trend Function Slope (m)</b> and <b>Windstorm - Storm Cyclicity Trend Function Intercept (i)</b> to 0.  To use only the trend portion, set <b>Windstorm - Storm Cyclicity Sine Curve d</b> to 0.
+</p>
+<p>
+For each storm that occurs, Windstorm decides what trees will die as a result.  A tree's probability of mortality is calculated as follows:
+</p>
+<center><img src="../data_files/windstorm_mort_eq.gif" alt="exp(a + c*s*DBH^b)/(1+exp(a + c*s*DBH^b))"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>p</i> is the tree's probability of mortality</li>
+<li><i>a</i> is the <b>Windstorm - Mortality Intercept (a)</b> parameter</li>
+<li><i>c</i> is the <b>Windstorm - Storm Intensity Coefficient (c)</b> parameter</li>
+<li><i>b</i> is the <b>Windstorm - DBH Exponent (b)</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+<li><i>s</i> is the storm's severity, set in the parameter for its return interval</li>
+</ul>
+<p>
+Below severity 0.1, the model becomes unreliable; so in that case, the severity is treated as a straight probability of mortality for all trees.  For example, if a storm occurs of severity 0.05, all trees have the same 5% chance of dying.  If a storm return interval's severity is set to 0, then that storm never occurs.  
+</p>
+<p>
+It is possible for a storm to occur and kill no trees, especially if it is a very mild storm or the forest has no large trees.  Unlike the other SORTIE storm behaviors, there is no damaged-but-alive state.  After a windstorm a tree is either dead or in perfect health.
+</p>
+<p>
+Storm events happen "independently".  Every time a storm happens, all eligible trees have a separate chance of mortality.  Of course, the storms can never truly be independent.  A storm can only kill the trees that another storm hasn't already killed.
+</p>
+<p>
+Trees killed in a windstorm are treated like trees killed in natural mortality.  They will form snags if the run uses snags, and are available for processes such as substrate.
+</p>
+<p>
+Seedlings and snags are never killed by storms.  For adults and saplings, only those trees to which the Windstorms behavior has been applied will be considered for storm mortality; and of those trees, only those trees with a DBH larger than the value in the <b>Windstorm - Minimum DBH for Windstorm Mortality</b> parameter can be killed.
+</p>
+<p>
+You can delay the introduction of windstorms into the run using the <b>Windstorm - Timestep to Start Storms</b> parameter.  If this value is greater than 0, no storms will occur until that timestep is reached.
+</p>
+<p>
+Information on what storms occurred during a run is saved in the <a href="../grids/windstorm_grid.html">Windstorm Results grid</a>.  This grid lists how many storms occurred each timestep, and the basal area and density killed of each species in that storm. 
+</p>
+<h3>How to apply it</h3>
+<p>
+Add this behavior to your run and apply it to saplings and/or adults of any species.  If you wish to get results on storm events, save the <a href="../grids/windstorm_grid.html">Windstorm Results grid</a> data in a detailed output file.  You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system. 
+</p>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Detailed Output files</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Detailed output files</h1>
+
+<p>
+The model saves its detailed output in a detailed output file.  A simulation's detailed output file is in fact a collection of individual files packaged together.  Within the detailed output package are two types of files: a copy of the parameter file originally used to perform the run, and individual timestep files, which hold the saved data for each timestep. All the files are written in plain text in the XML data format.  
+</p>
+
+<h2>Contents of a detailed output file</h2>
+<p>
+Detailed output timestep files are collections of map files that you set up using the <a href="../windows/output_setup_window.html">Edit->Output setup window</a>.  They are identified by having "_x" added to the filename, where "x" is the timestep number.  The parameter file copy is given the detailed output package's filename.  Each file produced is then compressed using the GZIP program, and all the files for a single run are put into an archive file using the TAR program.  The detailed output output for a single run is one file with a ".gz.tar" extension.
+</p>
+<p>
+For example:  if the parameter file "testpar.xml" was used to run 5 timesteps, with a detailed output file to be saved named "my detailed output", at the end of the run there would be a file named "my detailed output.gz.tar".  This TAR archive would contain the following files:
+</p>
+<ul>
+<li>"my detailed output.gz" - a copy of the "testpar.xml" parameter file
+<li>"my detailed output_0.gz" - the data saved after setup occurred, before the model started running.  These are the initial conditions.
+<li>"my detailed output_1.gz" - the data saved after the first timestep had run
+<li>"my detailed output_2.gz" - the data saved after the second timestep had run
+<li>"my detailed output_3.gz" - the data saved after the third timestep had run
+<li>"my detailed output_4.gz" - the data saved after the fourth timestep had run
+<li>"my detailed output_5.gz" - the data saved after the fifth timestep had run
+</ul>
+<p>
+The ".gz" extension indicates that these files are compressed.  If uncompressed, the ".gz" extension would be replaced with ".xml".
+</p>
+<p>
+Detailed output files are very flexible and can contain any subset of the model's underlying tree and grid data.  You pick each individual piece of data that you wish to save, and the frequency with which you wish to save it.  The data can be saved at any interval from every timestep to only at the first and last timesteps, and each piece of data has its own save frequency.  You can use this to cut down on detailed output file size.  Data you are less interested in can be saved less frequently.
+</p>
+<p>
+You can also save data separately for just a portion of the plot by defining <a href="../using/subplots.html">subplots</a>.
+</p>
+
+<h2>Viewing the data in a detailed output file</h2>
+<p>
+The data visualization capabilities of the model interface allow you to see your data graphically.  If you want the data raw to do your own analysis, you can save the contents of individual maps within the detailed output files as tab-delimited text. The easiest way to write tree data is to use the <a href="../data_visualization/tables.html">Timestep tree writer tool</a> listed in the "Tables" options after a detailed output file has been loaded for data visualization. Grid map data can be written from any grid map display.
+</p>
+
+
+<h2>Detailed output files as input to other runs</h2>
+<p>
+The maps in a detailed output timestep file can be used as initial conditions on a subsequent run, provided that they are compatible with the parameter file being used. See the <a href="../using/output_as_input.html">Using output as input to a new run</a> topic.
+</p>
+
+<h2>Copying and renaming detailed output files</h2>
+<p>
+Because of their structure, detailed output files cannot be renamed like ordinary files. If you change the file name, the file will be broken. Use the <a href="../windows/tools_copy_detailed_output_file_window.html">Copy detailed output file</a> tool in the <a href="../windows/tools_menu.html">Tools menu</a> to safely make a copy of the file with a new name. (You can safely copy and move detailed output files to different file locations as long as the name stays the same.)
+</p>
+</body>
+</html>

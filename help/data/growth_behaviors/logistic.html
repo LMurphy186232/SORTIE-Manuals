@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Logistic growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Logistic growth</h1>
+<p>This behavior does either diameter or height growth as a function of GLI.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Logistic - Asymptotic Diam Growth - Full Light in mm/yr (a)</td><td>  Asymptotic annual growth at full light, in mm/yr, for diameter growth.</td></tr>
+
+<tr><td class="parname">Logistic - Diam Shape Param 1 (b)</td><td>  Shape parameter 1, for diameter growth.</td></tr>
+
+<tr><td class="parname">Logistic - Diam Shape Param 2 (c)</td><td>  Shape parameter 2, for diameter growth.</td></tr>
+
+<tr><td class="parname">Logistic - Asymptotic Height Growth - Full Light in cm/yr (a)</td><td>  Asymptotic annual growth at full light, in cm/yr, for height growth.</td></tr>
+
+<tr><td class="parname">Logistic - Height Shape Param 1 (b)</td><td>Shape parameter 1, for height growth.</td></tr>
+
+<tr><td class="parname">Logistic - Height Shape Param 2 (c)</td><td>Shape parameter 2, for height growth.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The amount of diameter increase is calculated as:
+</p>
+<center><img src="../data_files/logistic_growth.gif"></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> = amount of diameter increase, in mm, or the amount of height increase, in cm</li>
+<li><i>a</i> = <b>Logistic - Asymptotic Diam Growth - Full Light in mm/yr (a)</b> parameter (for diameter growth) or the <b>Logistic - Asymptotic Height Growth - Full Light in cm/yr (a)</b> parameter (for height growth)</li>
+<li><i>b</i> = <b>Logistic - Diam Shape Param 1 (b)</b> parameter (for diameter growth) or the <b>Logistic - Height Shape Param 1 (b)</b> parameter (for height growth)</li>
+<li><i>c</i> = <b>Logistic - Diam Shape Param 2 (c)</b> parameter (for diameter growth) or the <b>Logistic - Height Shape Param 2 (c)</b> parameter (for height growth)</li>
+<li><i>GLI</i> = global light index, as a percentage between 0 and 100, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+<li><i>T</i> = number of years per timestep</li>
+</ul>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied. You can choose either a diam with auto height, diam only, or height only version.
+</p>
+</body>
+</html>

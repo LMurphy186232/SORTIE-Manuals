@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI terms</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI terms</h1>
+
+<p>
+NCI effects calculate various indexes of neighborhood competitiveness that are used in <a href="nci_crowding_effects.html">crowding effects</a>. NCI effects can calculate one or more values that are inserted into the appropriate places in the crowding effect that the NCI term is paired with. Look carefully at the documentation for both NCI and crowding to determine how many values are calculated with NCI and how they are used in crowding.
+</p>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+
+<hr/>
+<h2>Default NCI term</h2>
+<p>
+NCI is a function of neighbor distance and size. The neighbor's species also matters; the effect depends on the relationship between the target species and the neighbor species. Seedlings never compete. You set whether or not snags compete in the <b>Include Snags in NCI Calculations</b> parameter.  
+</p>
+<p>
+This returns one value: the NCI as described below.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda neighbors</td><td> The competitive effect of neighbors of species i on the target tree species, between 0 and 1.</td></tr>
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+  
+<tr><td class="parname">NCI DBH Divisor (q)</td><td> The value by which neighbor DBHs are divided when calculating NCI. This can be used to make units adjustments.</td></tr>
+
+<tr><td class="parname">Include Snags in NCI Calculations</td><td> Whether or not to include snags when finding competitive neighbors for NCI.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+<i>NCI</i> is calculated as:
+</p>
+<center><img src="../data_files/default_nci_term.gif" alt="NCI equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a DBH of <b>NCI Minimum Neighbor DBH, in cm</b>, out to a distance of <b>NCI Maximum Crowding Distance, in meters</b></li>
+<li><i>&#945;</i> is the <b>NCI Alpha</b> parameter for the target tree's species</li>
+<li><i>&#946;</i> is the <b>NCI Beta</b> parameter for the target tree's species</li>
+<li><i>DBH<sub>jk</sub></i> is the DBH of the kth neighbor, in cm</li>
+<li><i>q</i> is the <b>NCI DBH Divisor (q)</b> parameter.  Set this to a value greater than 1 to rescale the competitive effects of neighbors</li> 
+<li><i>&#955;<sub>ik</sub></i> is the <b>Species j NCI Lambda</b> parameter for the target species relative to the kth neighbor's species
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul>
+
+
+
+
+<hr/>
+<h2>NCI with neighbor damage</h2>
+<p>
+This is the default term with the addition of the effects of <a href="../disturbance_behaviors/storm_damage_applier.html">storm damage</a> on neighbors.
+</p>
+<p>
+This returns one value: the NCI as described below.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda neighbors</td><td> The competitive effect of neighbors of species i on the target tree species, between 0 and 1.</td></tr>
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+
+<tr><td class="parname">NCI Neighbor Storm Damage (eta) - Complete (0-1)</td><td>  The fraction to which a neighbor's competitive effect is reduced when the neighbor has sustained complete storm damage.</td></tr>
+
+<tr><td class="parname">NCI Neighbor Storm Damage (eta) - Medium (0-1)</td><td>  The fraction to which a neighbor's competitive effect is reduced when the neighbor has sustained medium storm damage.</td></tr>
+  
+<tr><td class="parname">NCI DBH Divisor (q)</td><td> The value by which neighbor DBHs are divided when calculating NCI. This can be used to make units adjustments.</td></tr>
+
+<tr><td class="parname">Include Snags in NCI Calculations</td><td> Whether or not to include snags when finding competitive neighbors for NCI.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+<i>NCI</i> is calculated as:
+</p>
+<center><img src="../data_files/nci_neighbor_damage.gif" alt="NCI equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a DBH of <b>NCI Minimum Neighbor DBH, in cm</b>, out to a distance of <b>NCI Max Radius of Crowding Neighbors, in m</b></li>
+<li><i>&#951;<sub>k</sub></i> is the storm damage parameter of the kth neighbor, depending on the damage status (optional). If the neighbor is undamaged, the value is 1. If the neighbor has medium damage, the value is the <b>NCI Neighbor Storm Damage (eta) - Medium (0-1)</b> parameter for the target species.  If the neighbor has complete damage, the value is the <b>NCI Neighbor Storm Damage (eta) - Complete (0-1)</b> parameter for the target species.</li>
+<li><i>&#945;</i> is the <b>NCI Alpha</b> parameter for the target tree's species</li>
+<li><i>&#946;</i> is the <b>NCI Beta</b> parameter for the target tree's species</li>
+<li><i>DBH<sub>jk</sub></i> is the DBH of the kth neighbor, in cm</li>
+<li><i>q</i> is the <b>NCI DBH Divisor (q)</b> parameter.  Set this to a value greater than 1 to rescale the competitive effects of neighbors</li> 
+<li><i>&#955;<sub>ik</sub></i> is the <b>Species j NCI Lambda</b> parameter for the target species relative to the kth neighbor's species
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul>
+
+<h3>How to apply it</h3>
+<p>
+For all trees to which this behavior applies, you must also have the <a href="../disturbance_behaviors/storm_damage_applier.html">Storm damage applier</a> behavior applied. 
+</p>
+
+
+
+
+
+
+
+<hr/>
+<h2>Count of larger neighbors</h2>
+<p>
+This value is a count of all larger neighbors with a DBH at least that of the <b>NCI Minimum Neighbor DBH, in cm</b> parameter, out to a maximum distance set in the <b>NCI Maximum Crowding Distance, in meters</b> parameter.  The value is a straight count - it is not scaled or relativized in any way. Seedlings are never counted.    
+</p>
+<p>
+This effect cannot be used if the NCI behavior is applied to seedlings.
+</p>
+<p>
+This returns one value: the neighbor count.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+</table>
+
+
+
+
+
+
+
+
+<hr/>
+<h2>BA of neighbors</h2>
+<p>
+This returns one value: the neighbor basal area.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+
+<tr><td class="parname">NCI BA Divisor</td><td> The value by which to divide neighbor basal area.</td></tr>
+
+<tr><td class="parname">NCI - Use Only Larger Neighbors</td><td> Whether to use all neighbors larger than the minimum DBH (false) or only neighbors larger than the target tree (true).</td></tr>
+</table>
+<h3>How it works</h3>
+<p>
+This value is the sum of basal area for neighbors with a DBH  at least that of the <b>NCI Minimum Neighbor DBH, in cm</b> parameter, out to a maximum distance set in the <b>NCI Maximum Crowding Distance, in meters</b> parameter. If the parameter <b>NCI - Use Only Larger Neighbors</b> is set to true, only those neighbors larger than the target are used. Otherwise, all neighbors above the minimum DBH are used. Seedlings are never counted.
+</p>
+<p>
+Basal area is reported in total cm<sup>2</sup>. It is divided by the value of the parameter <b>NCI BA Divisor</b>, which can be used to adjust units if desired.
+</p>
+<p>
+This effect may be used when NCI is being applied to seedlings, but only if the <b>NCI - Use Only Larger Neighbors</b> parameter is set to false.
+</p>
+
+
+
+<hr/>
+<h2>NCI with seedlings</h2>
+<p>
+This returns one value: the NCI as described below.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda neighbors</td><td> The competitive effect of neighbors of species i on the target tree species, between 0 and 1.</td></tr>
+
+<tr><td class="parname">NCI Maximum Crowding Distance, in meters</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor Diam10, in cm</td><td> The minimum d<sub>10</sub> for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+  
+<tr><td class="parname">NCI Diam10 Divisor (q)</td><td> The value by which neighbor d<sub>10</sub>s are divided when calculating NCI. This can be used to make units adjustments.</td></tr>
+
+<tr><td class="parname">Include Snags in NCI Calculations</td><td> Whether or not to include snags when finding competitive neighbors for NCI.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The NCI value sums up the competitive effect of all neighbors with a d<sub>10</sub> at least that of the <b>NCI Minimum Neighbor Diam10, in cm</b> parameter, out to a maximum distance set in the <b>NCI Maximum Crowding Distance, in meters</b> parameter. The competitiveness of a neighbor increases with the neighbor's size and decreases with distance. The neighbor's species also matters; the effect depends on the relationship between the target species and the neighbor species. 
+</p>
+<p>
+Unlike the default NCI, this competitiveness index uses d<sub>10</sub> instead of DBH; so seedlings can compete. For adults, the d<sub>10</sub> is calculated from DBH using the <a href="../allometry/dbh_diam10.html">DBH - diameter at 10 cm relationship</a>. You set whether or not snags compete in the <b>NCI - Include Snags in NCI Calculations</b> parameter.
+</p>
+<p>
+NCI is calculated as:
+</p>
+<center><img src="../data_files/juvenile_nci_eq.gif"/></center>
+<p>where:</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a d<sub>10</sub> of <b>NCI Minimum Neighbor Diam10, in cm</b>, out to a distance of <b>NCI Maximum Crowding Distance, in meters</b>
+<li><i>&#945;</i> is the <b>NCI Alpha</b> parameter for the target tree's species</li>
+<li><i>&#946;</i> is the <b>NCI Beta</b> parameter for the target tree's species</li>
+<li><i>D10<sub>jk</sub></i> is the d<sub>10</sub> of the kth neighbor, in cm</li>
+<li><i>q</i> is the <b>NCI Diam10 Divisor (q)</b> parameter.  Set this as necessary to rescale the competitive effects of neighbors</li> 
+<li><i>&#955;<sub>ik</sub></i> is the <b>Species j NCI Lambda</b> parameter for the target species relative to the kth neighbor's species
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul>
+
+
+
+<hr/>
+<h2>BA ratio</h2>
+<p>
+This creates two terms: the first is basal area ratio, and the second is total neighbor basal area.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+This creates two terms: total neighbor basal area (in m<sup>2</sup>), and basal area ratio. Neighbors are all adults within a radius of <b>Maximum Adult Crowding Distance, in meters</b>, and all saplings within a radius of <b>Maximum Sapling Crowding Distance, in meters</b>. The basal area ratio is the ratio of mean neighbor basal area to target tree basal area.
+</p>
+
+
+
+<hr/>
+<h2>BA ratio with target default</h2>
+<p>
+This creates two terms: the first is basal area ratio, and the second is total neighbor basal area.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+
+<tr><td class="parname">Default DBH, in cm</td><td>  The value to be used for target DBH.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+This works exactly like the NCI term BA ratio, except the ratio is always mean neighbor basal area to the basal area calculated from the <b>Default DBH, in cm</b>. Use this when using a version of the NCI Quadrat master, when a target diameter would not be available.
+</p>
+
+
+<hr/>
+<h2>NCI + BA ratio</h2>
+<p>
+NCI is a function of neighbor distance and size. The neighbor's species also matters; the effect depends on the relationship between the target species and the neighbor species. Seedlings never compete.  
+</p>
+<p>
+This creates two terms: the first is the basal area ratio, and the second is NCI as described below.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">DBH Adjustment Factor</td><td>  Any corrective or units adjustment factor to be multiplied by neighbor DBH.</td></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda neighbors</td><td> The competitive effect of neighbors of species i on the target tree species, between 0 and 1.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+  
+</table>
+
+<h3>How it works</h3>
+<p>
+<i>NCI</i> is calculated as:
+</p>
+<center><img src="../data_files/nci_dbh_adjust.gif" alt="NCI equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a DBH of <b>NCI Minimum Neighbor DBH, in cm</b>, out to a distance of <b>Maximum Adult Crowding Distance, in meters</b> (for adult neighbors) or <b>Maximum Sapling Crowding Distance, in meters</b> (for sapling neighbors)</li>
+<li><i>&#945;</i> is the <b>NCI Alpha</b> parameter for the target tree's species</li>
+<li><i>&#946;</i> is the <b>NCI Beta</b> parameter for the target tree's species</li>
+<li><i>DBH<sub>jk</sub></i> is the DBH of the kth neighbor, in cm</li>
+<li><i>q</i> is the <b>DBH Adjustment Factor</b> parameter. Use this to correct units or make other adjustments</li> 
+<li><i>&#955;<sub>ik</sub></i> is the <b>Species j NCI Lambda</b> parameter for the target species relative to the kth neighbor's species
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul>
+
+<p>
+This also calculates basal area ratio. Neighbors are all adults within a radius of <b>Maximum Adult Crowding Distance, in meters</b>, and all saplings within a radius of <b>Maximum Sapling Crowding Distance, in meters</b>. The basal area ratio is the ratio of mean neighbor basal area to target tree basal area.
+</p>
+
+
+
+<hr/>
+<h2>NCI + BA ratio with target default DBH</h2>
+<p>
+This creates two terms: the first is the basal area ratio, and the second is NCI.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">DBH Adjustment Factor</td><td>  Any corrective or units adjustment factor to be multiplied by neighbor DBH.</td></tr>
+
+<tr><td class="parname">Default DBH, in cm</td><td>  The value to be used for target DBH.</td></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda neighbors</td><td> The competitive effect of neighbors of species i on the target tree species, between 0 and 1.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+  
+</table>
+
+<h3>How it works</h3>
+<p>
+This works exactly like the NCI term NCI + BA ratio, except the ratio is always mean neighbor basal area to the basal area calculated from the <b>Default DBH, in cm</b>. Use this when using a version of the NCI Quadrat master, when a target diameter would not be available.
+</p>
+
+
+<hr/>
+<h2>NCI with temp dependent lambda + BA ratio</h2>
+<p>
+NCI is a function of neighbor distance, size, and species. The competitive effect of neighbors is a function of plot temperature.
+</p>
+<p>
+This creates two terms: the first is the basal area ratio, and the second is NCI as described below.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">DBH Adjustment Factor</td><td>  Any corrective or units adjustment factor to be multiplied by neighbor DBH.</td></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda X0 neighbors</td><td> X0 in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda Xa neighbors</td><td> Xa in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda Xb neighbors</td><td> Xb in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+<i>NCI</i> is calculated as:
+</p>
+<center><img src="../data_files/nci_dbh_adjust.gif" alt="NCI equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a DBH of <b>NCI Minimum Neighbor DBH, in cm</b>, out to a distance of <b>Maximum Adult Crowding Distance, in meters</b> (for adult neighbors) or <b>Maximum Sapling Crowding Distance, in meters</b> (for sapling neighbors)</li>
+<li><i>&#945;</i> is the <b>NCI Alpha</b> parameter for the target tree's species</li>
+<li><i>&#946;</i> is the <b>NCI Beta</b> parameter for the target tree's species</li>
+<li><i>DBH<sub>jk</sub></i> is the DBH of the kth neighbor, in cm</li>
+<li><i>q</i> is the <b>DBH Adjustment Factor</b> parameter. Use this to correct units or make other adjustments</li> 
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul>
+<p>
+<i>&#955;<sub>ik</sub></i> is the competitive effect of the kth neighbor's species on the target. It is calculated each timestep as a function of plot temperature, as follows:
+</p>
+<center><img src="../data_files/temp_dep_lambda.gif" alt="NCI equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>X<sub>a</sub></i> is the <b>Species i NCI lambda Xa neighbors</b> parameter</li>
+<li><i>X<sub>0</sub></i> is the <b>Species i NCI lambda X0 neighbors</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>Species i NCI lambda Xb neighbors</b> parameter</li>
+<li><i>T</i> is the value in the <b>Mean Annual Temperature, degrees C</b> parameter of the <a href="../plot.html">Plot</a>, <b>converted to K</b></li>
+</ul>
+<p>
+This also calculates basal area ratio. Neighbors are all adults within a radius of <b>Maximum Adult Crowding Distance, in meters</b>, and all saplings within a radius of <b>Maximum Sapling Crowding Distance, in meters</b>. The basal area ratio is the ratio of mean neighbor basal area to target tree basal area.
+</p>
+
+<hr/>
+<h2>NCI with temp dependent lambda + BA ratio, target default DBH</h2>
+<p>
+This creates two terms: the first is the basal area ratio, and the second is NCI.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">DBH Adjustment Factor</td><td>  Any corrective or units adjustment factor to be multiplied by neighbor DBH.</td></tr>
+
+<tr><td class="parname">Default DBH, in cm</td><td>  The value to be used for target DBH.</td></tr>
+
+<tr><td class="parname">Maximum Adult Crowding Distance, in meters</td><td>  The maximum distance to look for crowding adult neighbors.</td></tr>
+
+<tr><td class="parname">Maximum Sapling Crowding Distance, in meters</td><td>  The maximum distance to look for crowding sapling neighbors.</td></tr>
+
+<tr><td class="parname">NCI Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Beta</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Minimum Neighbor DBH, in cm</td><td> The minimum DBH for trees of that species to compete as neighbors.  Used for all species, not just those using this NCI behavior.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda X0 neighbors</td><td> X0 in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda Xa neighbors</td><td> Xa in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+
+<tr><td class="parname">Species i NCI lambda Xb neighbors</td><td> Xb in the function to calculate the competitive effect of neighbors of species i on the target tree species.</td></tr>
+</table>
+<h3>How it works</h3>
+<p>
+This works exactly like the NCI term NCI with temp dependent lambda + BA ratio, except the ratio is always mean neighbor basal area to the basal area calculated from the <b>Default DBH, in cm</b>. Use this when using a version of the NCI Quadrat master, when a target diameter would not be available.
+</p>
+
+</body>
+</html>

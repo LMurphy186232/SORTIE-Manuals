@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Michaelis Menton with photoinhibition - height only</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Michaelis Menton with photoinhibition - height only</h1>
+<p>
+This behavior uses a modified Michaelis-Menton function to do height growth.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Michaelis-Menton with Photoinhibition - Alpha</td><td>  Alpha parameter. </td></tr>
+
+<tr><td class="parname">Michaelis-Menton with Photoinhibition - Beta</td><td>  Beta parameter. Cannot be equal to zero.</td></tr>
+
+<tr><td class="parname">Michaelis-Menton with Photoinhibition - D</td><td>  D parameter. </td></tr>
+
+<tr><td class="parname">Michaelis-Menton with Photoinhibition - Phi</td><td>  Phi parameter. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The amount of height growth is calculated as:
+</p> 
+<center><img src="../data_files/mm_phot_eq.gif" alt="Michaelis Menton with photoinhibition growth equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Y</i> is the amount of height growth for one year, in cm</li>
+<li><i>GLI</i> is the light level</li>
+<li><i>&#945;</i> is the <b>Michaelis-Menton with Photoinhibition - Alpha</b> parameter</li>
+<li><i>&#946;</i> is the <b>Michaelis-Menton with Photoinhibition - Beta</b> parameter</li>
+<li><i>D</i> is the <b>Michaelis-Menton with Photoinhibition - D</b> parameter</li>
+<li><i>&#966;</i> is the <b>Michaelis-Menton with Photoinhibition - Phi</b> parameter</li>
+<li><i>H</i> is the tree's height in cm</li>
+</ul>
+<p>
+If the timestep is more than one year long, growth is recalculated for each year of the timestep, increasing the height each time.
+</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> and a diameter growth behavior applied.</p>
+</body>
+</html>

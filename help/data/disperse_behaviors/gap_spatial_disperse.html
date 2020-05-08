@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Gap spatial disperse</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Gap spatial disperse</h1>
+
+<p>
+Gap spatial disperse takes forest cover into account when determining the number and placement of seeds. The two possible forest covers are gap and closed canopy. A "gap" is defined as a cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid with no more adults than the value of the "Maximum adults allowed
+in gap cell" parameter, above.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Beta for Stumps</td><td> The &#946; value for stumps. Stumps use the same probability distribution function as the live members of their species. Only required if a behavior is being applied to stumps. </td></tr>
+
+<tr><td class="parname">Canopy Function Used</td><td> The probability distribution function to be used to distribute seeds in canopy conditions. For the behaviors Non-gap spatial disperse and Masting spatial disperse, these PDFs are always the ones used. </td></tr>
+
+<tr><td class="parname">Gap Function Used</td><td> The probability distribution function to be used to distribute seeds in gap conditions.</td></tr>
+
+<tr><td class="parname">Lognormal Canopy Annual STR</td><td> The annual STR value (Standardized Total Recruits, or all seeds produced by a 30 cm DBH tree in one year) for the lognormal function under canopy conditions (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Lognormal Canopy Beta</td><td> The &#946; for the lognormal function under canopy conditions (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>0</sub></td><td> The mean of the lognormal function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>b</sub></td><td> The standard deviation of the lognormal function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Lognormal Gap Annual STR</td><td> The annual STR value (Standardized Total Recruits, or all seeds produced by a 30 cm DBH tree in one year) for the lognormal function under gap conditions (see equation below). This is only required if the gap probability distribution function is lognormal.</td></tr>
+
+<tr><td class="parname">Lognormal Gap Beta</td><td> The &#946; for the lognormal function under gap conditions (see equation below). This is only required if the gap probability distribution function is lognormal.</td></tr>
+
+<tr><td class="parname">Lognormal Gap X<sub>0</sub></td><td> The mean of the lognormal function under gap conditions (see equation below). This is only required if the gap probability distribution function is lognormal.</td></tr>
+
+<tr><td class="parname">Lognormal Gap X<sub>b</sub></td><td> The standard deviation of the lognormal function under gap conditions (see equation below). This is only required if the gap probability distribution function is lognormal.</td></tr>
+
+<tr><td class="parname">Maximum Parent Trees Allowed in Gap Cell</td><td> Maximum number of trees above the minimum DBH for reproduction that are allowed in a grid cell for that cell to still have gap status (as opposed to closed canopy).</td></tr>
+
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">STR for Stumps</td><td> The annual STR value (Standardized Total Recruits, or all seeds produced by a 30 cm DBH tree in one year) for stumps. Stumps use the same probability distribution function as the live members of their species. Only required if a behavior is being applied to stumps. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Annual STR</td><td> The annual STR value (Standardized Total Recruits, or all seeds produced by a 30 cm DBH tree in one year) for the Weibull function under canopy conditions (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Beta</td><td> The &#946; for the Weibull function under canopy conditions (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Dispersal</td><td> The dispersal value for the Weibull function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Theta</td><td> The &#952; for the Weibull function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+<tr><td class="parname">Weibull Gap Annual STR</td><td> The annual STR value (Standardized Total Recruits, or all seeds produced by a 30 cm DBH tree in one year) for the Weibull function under gap conditions (see equation below). This is only required if the gap probability distribution function is Weibull.</td></tr>
+
+<tr><td class="parname">Weibull Gap Beta</td><td> The &#946; value for the Weibull function under gap conditions (see equation below). This is only required if the gap probability distribution function is Weibull.</td></tr>
+
+<tr><td class="parname">Weibull Gap Dispersal</td><td> The dispersal value for the Weibull function under gap conditions (see equation below). This is only required if the gap probability distribution function is Weibull.</td></tr>
+
+<tr><td class="parname">Weibull Gap Theta</td><td> The &#952; value for the Weibull function under gap conditions (see equation below). This is only required if the gap probability distribution function is Weibull.</td></tr>
+</table>
+
+
+
+<h3>How it works</h3>
+<p>
+The behavior starts each timestep by updating the forest cover of each cell (gap or canopy). It counts all trees above the minimum DBH for reproduction in each cell and compares that number to the Maximum parent trees allowed in gap cell parameter. The behavior will count trees of all species to determine gap status. However, if it finds a tree of a species that is not one of the ones this behavior is assigned to, it will use the tree's minimum adult DBH parameter instead of the minimum DBH for reproduction.
+</p>
+<p>
+For each tree greater than the reproductive age, the number of seeds produced is calculated as
+</p>
+<center><i>seeds = STR*(DBH/30)<sup>&#946;</sup></i></center>
+<br/>
+using the higher of gap or canopy <i>STR</i> along with its matching
+<i>&#946;</i>. <br/>
+<br/>
+ 
+<p>
+Each seed is given a random azimuth angle. It is then given a random distance that conforms to the probability distribution function of the current forest cover of the parent (see more about spatial disperse behavior seed distribution <a href="spatial_disperse.html">here</a>). Once the seed has an azimuth and a distance, the function determines which grid cell it should drop in.
+</p>
+<p>
+Once the seed has a target grid cell, that cell's cover is checked. Then the seed's survival is evaluated. If the seed is in the cover type with the higher STR, it automatically survives. Otherwise, a random number is compared to the ratio of the lower STR to the higher STR to determine if it survives.
+</p>
+<p>
+If the seed survives, it may need to be repositioned. If both parent and seed are under closed canopy, the seed is dropped where it is. If the parent is in gap and seedling is in canopy, a new distance is calculated as though the parent was also in canopy. The shortest of the two distances is used to determine where the seed lands. If the seed lands in a gap cell, the behavior "walks out" the line of the seed's path from parent to target landing cell, checking each intermediate grid cell's cover along the way. If any of the grid cells in the line are under canopy cover, the seed drops in the first canopy cell it reaches.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to all trees of at least the minimum reproductive age for your chosen species. If the minimum
+reproductive age is less than the <a href="../../using/tree_life_history_stages.html">Minimum adult DBH</a>, be sure to apply this behavior to saplings as well as adults. In the parameters, choose the appropriate probability distribution function for each species for each forest cover type.
+</p>
+<p>
+This behavior can be used to simulate the suckering of stumps. Apply this behavior to tree type <a href="../../using/tree_life_history_stages.html">"stump"</a> of your chosen species. Stumps reproduce like other parent trees, except they always assume they are in a gap. They use the same probability distribution function and parameters as live members of their species, but they get their own &#946; and STR values so that they can produce different numbers of seeds.
+</p>
+
+</body>
+</html>

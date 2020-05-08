@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Relative growth behaviors</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Relative growth behaviors</h1>
+
+<p>Several behaviors apply a relative growth version of the Michaelis-Menton function. 
+</p>
+
+<h3>Parameters for these behaviors</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Adult Constant Area Growth in sq. cm/yr</td><td> The constant amount of basal area by which to increase a tree's basal area. Applies to basal-area-increment-limited behaviors.</td></tr>
+
+<tr><td class="parname">Adult Constant Radial Growth in mm/yr</td><td> The constant value by which to increase a tree's radius at breast height. Applies to radial-increment-limited-growth behaviors.</td></tr>
+
+<tr><td class="parname">Asymptotic Diameter Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light - function term A below; for diameter growth.</td></tr>
+
+<tr><td class="parname">Asymptotic Height Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light - function term A; for height growth.</td></tr>
+
+<tr><td class="parname">Slope of Growth Response (S)</td><td> Slope of the Michaelis-Menton growth function at zero light - function term S below.</td></tr>
+
+<tr><td class="parname">Relative Michaelis-Menton Growth - Diameter Exponent</td><td>  The exponent to be used with diameter when calculating relative growth. </td></tr>
+
+</table>
+
+<p>
+Relative growth is calculated with the equation:<br>
+</p>
+<center><img src="../data_files/relative_mm.gif"></center>
+<br>
+where: 
+<ul>
+<li><i>Y</i> is the amount of annual relative growth</li>
+<li><i>A</i> is the <b>Asymptotic Diameter Growth (A)</b> or <b>Asymptotic Height Growth (A)</b> parameter</li>
+<li><i>S</i> is the <b>Slope of Growth Response (S)</b> or <b>Slope of Height Growth Response (S)</b> parameter</li>
+<li><i>GLI</i> is the global light index, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+</ul>
+<p>
+Diameter growth is compounded over multiple timesteps with the equation:<br>
+</p>
+<center><i>G = ((Y + 1)<sup>T</sup> - 1) * diam <sup>X</sup></i></center>
+where:
+<ul>
+<li><i>G</i> is the amount of diameter growth for the timestep, in cm</li>
+<li><i>diam</i> is the diameter of the tree in cm (at 10 cm height if seedling or sapling, or DBH if adult)</li>
+<li><i>T</i> is the number of years per timestep</li>
+<li><i>X</i> is the <b>Relative Michaelis-Menton Growth - Diameter Exponent</b> parameter</li>
+</ul>
+<p>
+Relative height growth is calculated slightly differently. The details are discussed in the section for the <a href="#rel_height_only">Relative growth - height only</a> behavior below. Relative growth is discussed in <a href="../../more_info/further_reading.html">Pacala et al 1996</a>.
+</p>
+
+
+
+ 
+<a name="rel_rad"><h2>Relative growth limited to radial increment</h2></a>
+<h3>How it works</h3>
+<p>This behavior calculates an amount of diameter growth according to the relative growth equation. Growth is limited to a maximum of the constant radial growth increment for the species of tree to which it is being applied.  The increment is calculated as described in the "Constant radial growth" behavior.   Note that the increment parameter specifies <b>radial</b> growth; the behavior makes all necessary conversions.
+</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied. You can use either the diam with auto height or diam only version.</p>
+
+
+
+<a name="rel_ba"><h2>Relative growth limited to basal area increment</h2></a>
+<h3>How it works</h3>
+<p>This behavior calculates an amount of diameter growth according to the relative growth equation. Growth is limited to a maximum of a constant basal area increment. The amount of diameter increase is calculated by dividing the annual basal area increment of the tree's species by the diameter of the tree.  The increment is calculated as described in the "Constant basal area growth" behavior. </p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied. You can use either the diam with auto height or diam only version.</p>
+
+
+
+
+
+
+<a name="rel_unlim"><h2>Non-limited relative growth</h2></a>
+<h3>How it works</h3>
+<p>
+The amount of increase returned by the relative growth equation is applied to the tree.
+</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.</p>
+
+
+<a name="rel_height_only"><h2>Relative growth - height only</h2></a>
+<p>
+This behavior uses the Michaelis-Menton function to do height growth.
+</p> 
+<h3>How it works</h3>
+<p>
+After the Michaelis-Menton function is used to calculate <i>Y</i> as described in the section above, the amount of height growth is calculated as:
+</p> 
+<center><i>G = Y * Height <sup>X</sup></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>G</i> is the amount of height growth for one year, in cm</li>
+<li><i>Height</i> is the height of the tree in cm</li>
+<li><i>X</i> is the <b>Relative Michaelis-Menton Growth - Height Exponent</b> parameter</li>
+</ul>
+<p>
+If the timestep is more than one year long, growth is recalculated for each year of the timestep, increasing the height each time.
+</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> and a diameter growth behavior applied.</p>
+</body>
+</html>

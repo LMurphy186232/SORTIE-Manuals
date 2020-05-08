@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Tree Volume Calculator</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Tree Volume Calculator</h1>
+
+
+<p>
+This behavior calculates the volume of tree trunks.  It can be used to find both merchantable volume and total volume. Make sure to distinguish between this behavior and the other tree volume behavior.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Taper Equation Initial Multiplier (a0)</td><td> The a<sub>0</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation DBH Exponent (a1)</td><td> The a<sub>1</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation Height Exponent (a2)</td><td> The a<sub>2</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 1 (b1)</td><td> The b<sub>1</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 2 (b2)</td><td> The b<sub>2</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 3 (b3)</td><td> The b<sub>3</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 4 (b4)</td><td> The b<sub>4</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 5 (b5)</td><td> The b<sub>5</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Taper Equation X Exponent 6 (b6)</td><td> The b<sub>6</sub> parameter in the taper equation below. </td></tr>
+
+<tr><td class="parname">Diameter-Outside-Bark Constant (a1)</td><td> The a<sub>1</sub> parameter in the equation for calculating tree diameter outside bark, below. </td></tr>
+
+<tr><td class="parname">Diameter-Outside-Bark First Degree Parameter (a2)</td><td> The a<sub>2</sub> parameter in the equation for calculating tree diameter outside bark, below. </td></tr>
+
+<tr><td class="parname">Diameter-Outside-Bark Second Degree Parameter (a3)</td><td> The a<sub>3</sub> parameter in the equation for calculating tree diameter outside bark, below. </td></tr>
+
+<tr><td class="parname">Height to Begin Calculating Trunk Volume, in cm</td><td> The height at which volume calculations begin.  For merchantable volume calculations, this can be thought of as the stump height.  The height is height off the ground in cm.</td></tr>
+
+<tr><td class="parname">Minimum Trunk Diameter for Volume Calculations, in cm</td><td>  The trunk diameter (inside the bark) at which volume calculations end.  For merchantable volume calculations, this is the minimum usable trunk diameter.  The diameter is in cm.</td></tr>
+
+<tr><td class="parname">Trunk Segment Length for Volume Calculations, in m</td><td> The length, in m, of segments into which the tree trunk is divided for volume calculations.  A smaller value means a greater degree of accuracy; a larger value means a faster processing time.</td><tr>
+
+</table>
+
+
+<h3>How it works</h3>
+<p>
+Tree volume is estimated by dividing the trunk into segments, and calculating the volume of each segment.  You control where the trunk starts and stops, and the length of segments used.
+</p>
+<p>
+Trunks start at the value in the <b>Height to Begin Calculating Trunk Volume, in cm</b> parameter.  To calculate merchantable volume, set this to the average stump height.  To calculate total volume, set this to zero.  Trunks end when their diameter inside the tree bark becomes smaller than the volume in the <b>Minimum Trunk Diameter for Volume Calculations, in cm</b> parameter.  For merchantable volume, set this to the minimum usable diameter.  For total volume, set this to zero.
+</p>
+<p>
+Trunks are divided into segments for volume calculations.  The length of these segments is set in the <b>Trunk Segment Length for Volume Calculations, in m</b> parameter.  Setting this to a smaller value increases the accuracy of the calculations.  Setting this to a larger value increases the speed at which the calculations are made.  The total tree's volume is the sum of the volumes of each of the segments.  Any segments whose beginning or ending diameter is less than the value in the <b>Minimum Trunk Diameter for Volume Calculations, in cm</b> parameter are not included in the volume total.
+</p>
+<p>
+The volume of a tree trunk segment is found as follows:
+</p>
+<center><i>V = ((A<sub>1</sub> + A<sub>2</sub>) / 2) * l</i></center><br>
+<p>
+where:
+</p>
+<ul>
+<li><i>A<sub>1</sub></i> is the cross-sectional area at the bottom of the trunk segment, in square meters</li>
+<li><i>A<sub>2</sub></i> is the cross-sectional area at the top of the trunk segment, in square meters</li>
+<li><i>V</i> is the volume of the trunk segment, in cubic meters</li>
+<li><i>l</i> is the length of the trunk segment (value in the <b>Trunk Segment Length for Volume Calculations, in m</b> parameter)</li>
+</ul>
+
+<p>
+The cross-sectional area of a tree trunk at a particular point above the ground (such as at the beginning or end of a trunk segment) is calculated as:
+</p>
+<center><i>A = &#960;(d / 2)<sup>2</sup></i></center>
+<p>
+where <i>A</i> is the cross-sectional area, in square meters, and <i>d</i> is the diameter of the tree inside the bark at that height, in meters.
+</p>
+
+<p>
+To find the diameter of the tree trunk inside the bark at a particular height above the ground, the taper equation is used.  (This equation comes from Kozak (2004) Forest Chronicle 80: 507 - 515; it's the "2002 model").  The equation is:
+</p>
+<center><img src="../data_files/taper_equation.gif" alt="Taper equation"/></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>X<sub>i</sub> = (1 - (h<sub>i</sub> / H)<sup>1/3</sup>) / (1 - p<sup>1/3</sup>)</i></li>
+<li><i>Q<sub>i</sub> = 1 - (h<sub>i</sub> / H)<sup>1/3</sup>)</i></li>
+<li><i>p = 1.3 / H</i></li>
+<li><i>z<sub>i</sub> = h<sub>i</sub> / H</i> (proportional height above the ground)</li>
+<li><i>D</i> is the outside bark diameter, in cm, at breast height (1.35 m) (equation below)</li>
+<li><i>H</i> is the total tree height (m)</li>
+<li><i>h<sub>i</sub></i> is the height from the ground (m) at which to calculate the diameter inside the bark</li>
+<li><i>d<sub>i</sub></i> is the inside bark diameter at <i>h<sub>i</sub></i> height from ground (cm)</li>
+<li><i>a<sub>0</sub></i> is the <b>Taper Equation Initial Multiplier (a0)</b> parameter</li>
+<li><i>a<sub>1</sub></i> is the <b>Taper Equation DBH Exponent (a1)</b> parameter</li>
+<li><i>a<sub>2</sub></i> is the <b>Taper Equation Height Exponent (a2)</b> parameter</li>
+<li><i>b<sub>1</sub></i> is the <b>Taper Equation X Exponent 1 (b1)</b> parameter</li>
+<li><i>b<sub>2</sub></i> is the <b>Taper Equation X Exponent 2 (b2)</b> parameter</li>
+<li><i>b<sub>3</sub></i> is the <b>Taper Equation X Exponent 3 (b3)</b> parameter</li>
+<li><i>b<sub>4</sub></i> is the <b>Taper Equation X Exponent 4 (b4)</b> parameter</li>
+<li><i>b<sub>5</sub></i> is the <b>Taper Equation X Exponent 5 (b5)</b> parameter</li>
+<li><i>b<sub>6</sub></i> is the <b>Taper Equation X Exponent 6 (b6)</b> parameter</li>
+</ul>
+
+<p>
+SORTIE-ND considers its DBH parameter to be diameter without bark.  To find the diameter outside the bark, the equation is:
+</p>
+<center><i>D = a<sub>1</sub> + a<sub>2</sub>DBH + a<sub>3</sub>DBH<sup>2</sup></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>D</i> is the diameter outside the bark, in cm</li>
+<li><i>DBH</i> is the diameter inside the bark, in cm (SORTIE's DBH)</li>
+<li><i>a<sub>1</sub></i> is the <b>Diameter-Outside-Bark Constant (a1)</b> parameter</li>
+<li><i>a<sub>2</sub></i> is the <b>Diameter-Outside-Bark First Degree Parameter (a2)</b> parameter</li>
+<li><i>a<sub>3</sub></i> is the <b>Diameter-Outside-Bark Second Degree Parameter (a3)</b> parameter</li>
+</ul>
+<p>
+<em>Important note.</em> The math in this behavior is particularly susceptible to producing extreme numbers if the parameters are not chosen very carefully.  These extreme numbers (incredibly large or small numbers) will crash SORTIE if they happen, and cannot be guarded against ahead of time.  Be very careful when selecting parameters, and test your parameters to ensure they produce sensible results for a wide range of tree sizes.  If you have problems with SORTIE crashing, try verifying that this behavior is the problem by removing it from the run and trying again.  If you can verify that this behavior is the problem, carefully re-examine your parameters.
+</p>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_tree_setup.html">Detailed output setup window</a> for trees will have a tree data member called "Tree Volume".  Add this to your detailed  output file to output volume in cubic meters.  You can then view charts and graphs with the resulting volume data using data visualization on your detailed output file. 
+</p>
+
+
+</body>
+</html>

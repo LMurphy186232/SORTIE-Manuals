@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The standard diameter-height relationships</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The standard diameter-height relationships</h1>
+<p>
+"Standard" is one of the names used to describe a set of allometric functions relating height to diameter.  There is one for adults and saplings, and one for seedlings.  These are called "standard" because they were the original SORTIE functions and until recently were the only choices.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Maximum Tree Height, in meters</td><td> The maximum tree height for a species, in meters. No tree, no matter what allometric function it uses, is allowed to get taller than this. Used by all species.</td></tr>
+
+<tr><td class="parname">Slope of Asymptotic Height</td><td> Exponential decay term in the adult and sapling standard function for DBH and height.</td></tr>
+
+<tr><td class="parname">Slope of Height-Diameter at 10 cm Relationship</td><td> The slope of the seedling standard function for diameter at 10 cm and height.</td></tr>
+
+</table>
+<p>
+The standard sapling and adult DBH - height function is:
+</p>
+<center><i>height = 1.35 + (H<sub>1</sub> - 1.35)(1 - e<sup>-B*DBH</sup>)</i></center>
+<p>
+where:
+</p> 
+<ul>
+<li><i>height</i> is tree height in meters</li>
+<li><i>H<sub>1</sub></i> is the <b>Maximum Tree Height, in m</b> parameter</li>
+<li><i>B</i> is the <b>Slope of Asymptotic Height</b> parameter</li>
+<li><i>DBH</i> is tree DBH in cm</li>
+</ul>
+<p>
+In some articles, <i>B</i> (<b>Slope of Asymptotic Height</b>) is a published parameter. Other articles instead use <i>H<sub>1</sub></i> and another parameter, <i>H<sub>2</sub></i>, which was called the DBH to height relationship. In this case, <i>B</i> can be calculated from published values as <i>B = H<sub>2</sub>/H<sub>1</sub></i>.
+</p>
+<p>
+The standard seedling diam<sub>10</sub> - height function is:
+</p>
+<center><i>height = 0.1 + 30*(1 - e<sup>(-&#945; * diam<sub>10</sub>)</sup>)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>height</i> is tree height in meters</li>
+<li><i>&#945;</i> is the <b>Slope of Height-Diameter at 10 cm Relationship</b> parameter</li>
+<li><i>diam<sub>10</sub></i> is tree diameter at 10 cm height, in cm</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE Developer's Manual - Behaviors</title>
+</head>
+
+<body>
+<h1>Behaviors</h1>
+In this document:
+<br><a href="#parameter_file">Behavior data in the parameter file</a>
+<br><a href="#submodels">Submodels</a> - how some existing SORTIE behaviors are organized
+<br><a href="#versioning">Versioning</a>
+<p>
+See the <a href="../../data/behaviors.html">user manual behavior documentation</a>.  When you extend SORTIE, you are probably writing a behavior.  Behaviors are code plug-ins that perform work.  Behaviors descend from clBehaviorBase.  There is more on this class in the <a href="cplusplus_architecture.html">Model architecture</a> topic, and the class documentation is <a href="../c_doc/classclBehaviorBase.html">here</a>.  There is a sample behavior <a href="sample_behavior.html">here</a>.
+</p>
+
+<a name="parameter_file"><h3>Behavior data in the parameter file</h3></a>
+<p>
+Behaviors are responsible for knowing what data they need from the parameter file and extracting it.  If you create a new behavior, it is a very helpful step to create a Document Type Definition file (DTD) for its XML data.  (An online XML tutorial should explain what a DTD is and how to write one.)  A DTD defines what kind of data can go in an XML file.  Someday, I'll validate the XML files against the DTDs, but for now I don't.  However, the DTD is still helpful as the standard reference on what the data tag names are, and can be used to keep both the C++ and Java code consistent.  If you have downloaded the C++ project, there is a folder within it called "XML" where all the existing DTDs are stored.
+</p>
+<p>
+For species-specific data, there is a standard SORTIE format.  When the data is written in this way, there are functions already written that can write the data for you in Java, and then extract it for you in C++.  The format is:
+<br><code>
+<br>&lt;parent_tag&gt;
+<br>&lt;child_tag species="species_1_name"&gt;value&lt;/child_tag&gt;
+<br>&lt;child_tag species="species_2_name"&gt;value&lt;/child_tag&gt;
+<br>&lt;/parent_tag&gt;
+</code>
+</p>
+<p>
+<br>For instance:
+<br><code>
+<br>&lt;max_tree_height_in_m&gt;
+<br>&lt;mh species="Cedar"&gt;15&lt;/mh&gt;
+<br>&lt;mh species="Oak"&gt;20&lt;/mh&gt;
+<br>&lt;/max_tree_height_in_m&gt;
+</code>
+</p>
+
+<a name="submodels"><h3>Submodels</h3></a>
+<p>
+Submodels are groupings of behaviors that provide a common biological process, like growth.  (This is an unofficial designation.)  Existing submodel behavior groupings often work together or are organized by a separate object in order to be more efficient.  I tend to use a common structure to do this, which I would like to explain.  (This is more for your benefit in trying to understand existing behaviors.  I don't place an expectation on how you will structure your own behaviors.)
+<p>
+Behaviors in a submodel grouping are separate but coordinate their actions through an organizational object.  The organizational object can recognize the behaviors it needs to organize (through a key character sequence in their namestrings) and places pointers to them in a table organized by species and type.  For example, it would know that saplings of species 2 use behavior X for their growth.
+</p>
+<p>
+A set of behaviors that needs to work together are all descended from a common base class that is in turn descended from clBehaviorBase.  One of the behaviors is "hooked" to the organizational object.  The base class takes care of function overriding such that when one of a behavior's trigger functions is called, it ignores the call unless it is "hooked", in which case it hands the call over to the organizational object. 
+</p>
+<p>
+When it comes time to process trees in a timestep, the organizational object will simply do an "all" search (which is fairly efficient) and point each tree it gets to the appropriate Behavior object in its table.
+</p>
+Further information on a couple of submodel groupings:
+<br><a href="light.html">Light submodel</a>
+<br><a href="mortality.html">Mortality submodel</a>
+
+<a name="versioning"><h3>Versioning</h3></a>
+<p>
+Behaviors have a version number associated with them.  Parameter files specify the version of the behavior that they are calling.  Only the most recent version will actually be available, but a behavior is capable of looking at the version number and, if it's prior to the current number, assessing whether it is in fact going to do what the user expects.  
+</p>
+<p>
+To do this, behaviors have both a current version number and a minimum version number.  The minimum version number represents the earliest version that still conforms to the present behavior.  (Both of these are data members in <a href="../c_doc/classclbehaviorbase.html">clBehaviorBase</a>.)  These numbers should be set in the constructor of any class descended from clBehaviorBase.  The values of the numbers are at the discretion of the programmer.  Once these values are set, clBehaviorBase takes care of validating the version numbers on incoming parameter files. 
+</p>
+<p>
+For instance:  Version 1 of clMyBehavior is released.  Several bug fixes and speed optimizations occur, and later version 1.5 is released.  Since 1.5 is not substantially functionally different from version 1, clMyBehavior's minimum version is kept at 1.  This means that old parameter files made at any time since version 1 was released are still valid and will still get the results that are expected.  Later, it is found that clMyBehavior's primary equation is wrong, and a new one is substituted, with different parameters.  Version 2 of clMyBehavior is released, and because it is so different from version 1, the minimum version is set at 2.  Parameter files calling versions 1.x now need updating because 1) they were made with assumptions which are now out-of-date (expecting the old wrong function) and 2) they need new parameter values.  These parameter files will be given an error message so the user can appropriately update them.
+</p>
+
+<p>
+For information on testing, see the <a href="../software/testing.html">testing</a> topic.
+</p>
+
+<!-- datestamp:begin -->25-May-2004 11:35 AM<!-- datestamp:end -->
+</body>
+</html>

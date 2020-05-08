@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Parameter file</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>The parameter file</h1>
+
+<h2>What is a parameter file?</h2>
+<p>
+A parameter file is a document containing all the data that the model needs to perform a simulation.  It is in the XML data format and is written in plain text.  Parameter files have a .xml extension.   
+</p>
+
+<h2>Contents of a parameter file</h2>
+<p>
+At the least, the parameter file must specify the <a href="../using/timesteps.html">length of the run</a>, describe the <a href="../data/plot.html">plot</a>, define the tree species and their attributes, list the <a href="../using/what_is_a_behavior.html">behaviors</a> in the order in which they will run, and provide whatever <a href="../using/behavior_parameters.html">parameters</a> the behaviors need.
+</p>
+<p>
+In addition, parameter files can define initial conditions for <a href="../using/tree_initial_conditions.html">trees</a> and <a href="../using/grids_initial_conditions.html">grids</a> using parameters or <a href="../using/output_as_input.html">maps from detailed output files</a>.
+</p>
+
+<h2>Editing a parameter file</h2>
+<p>
+The SORTIE-ND model interface gives you all the tools you need to create and modify your parameter files. Since they are in plain text, you can look at them in other programs, but modifying them directly is not recommended.   
+</p>
+<p>
+For detailed instructions on creating a new parameter file from scratch, see the <a href="../using/creating_parameter_file.html">Creating a parameter file</a> topic.  To edit existing parameter files, you can use the different choices in the <a href="../windows/edit_menu.html">Edit menu</a>.
+</p>
+
+<h2>Validating a parameter file</h2>
+<p>
+In order to run, a parameter file must be complete and all data in it valid.  As you edit a parameter file, the part that you are editing will be validated as part of the edit process. The complete file is validated every time you save it. You can save a file that does not pass validation, but you cannot run it.
+</p>
+
+<h2>Making a human-readable copy of the parameter file</h2>
+<p>
+The parameter file is in the XML data format and is not easily readable by humans. SORTIE will create tab-delimited text versions of data that you can open in any text editor or spreadsheet program. To save your parameter values, use the command File->Save parameter file as text. To save grid map values, use the <a href="../windows/grid_setup_window.html">Edit->Grid layer setup</a> window.   Files you save in this way are for your reference only.  They cannot be used as input. 
+</p>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Basic SORTIE modeling concepts</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Basic SORTIE modeling concepts</h1>
+
+<p>
+SORTIE is an individual-based forest simulator designed to study neighborhood processes. This means that the trees in the forest are modeled individually, not as averages or spatial aggregates. Each individual has a location in space. SORTIE specializes in modeling the interactions of trees with their nearest neighbors to study local neighborhood dynamics. 
+</p>
+<h2>SORTIE state data </h2>
+<p>
+The basic SORTIE model state is defined by the plot, trees, and grids. The <a href="../data/plot.html">plot</a> is the underlying location in which the simulation takes place. It has a particular size and shape, and attributes for climate and geographic location. The <a href="what_is_a_tree.html">trees</a> are the individuals making up the forest on the plot. <a href="what_is_a_grid.html">Grids</a> hold additional data that varies from place to place, such as soil chemistry or light level at the forest floor. All of these together define the model state at a particular time. 
+</p>
+<h2>Behaviors</h2>
+<p>
+The processes that act to change the model state are called <a href="what_is_a_behavior.html">behaviors</a>. Behaviors often correspond to biological processes. They are individually contained units, but often work together to create a complex, interacting system. For instance, a simulation might consist of three behaviors: a behavior to calculate light levels for trees, one to determine the amount of tree growth as a result of the amount of light, and one to select trees to die if they grow too slowly. Behaviors are placed in a certain order to correctly structure their interactions. 
+</p>
+<h2>The simulation</h2>
+<p>
+Forests tend to operate on annual cycles, and so does SORTIE. The unit of time in SORTIE is the <a href="timesteps.html">timestep</a>. It represents a set of one or more years. A single timestep consists of each behavior acting once, in their defined order. The process is repeated for the number of timesteps that you set, and that's a single simulation, or run.
+</p>
+<p>
+The basic structure of the SORTIE system is very simple. Its power lies in its incredible flexibility. Almost every aspect of the model is under direct user control. 
+</p>
+
+<h2>The parameter file</h2>
+<p>
+When you start the SORTIE software, you are using a tool that helps you to define the state data and behaviors that will make up a simulation. Once you have done this, you have created a <a href="../files/parameter_files.html">parameter file</a>. The parameter file completely defines a run. You can load and run your parameter file any time. 
+</p>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Edit Subplots Window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Edit Subplots Window</h1>
+<p>
+You reach this window by clicking the "Set up subplots..." button on either the <a href="summary_output.html">Summary output file setup window</a> or the <a href="detailed_output_setup.html">Setup detailed output file window</a>.  This window allows you to define <a href="../using/subplots.html">subplots</a> for output.  Subplots are subareas of the plot for which statistics will be tracked separately.  They can be as small as a single plot grid cell or as large as the entire plot.  They do not have to be continuous in area - you could define several separate patches and put them together in a single subplot.  You can define up to five separate subplots.  Subplots can overlap.
+</p>
+<p>
+In the center of the window is a map displaying the subplots.  At the right is the legend for any tree map trees which may exist.  Along the left panel of the window, you will see a space for the names of five subplots.  The colored squares indicate in what color that subplot will show up on the map in the center of the window.  At the bottom left are some controls for displaying additional useful information that may help you in defining your subplots.
+</p>
+
+
+
+<h2>Defining a subplot</h2>
+<p>
+Begin by clicking the radio button for the subplot you want to define (for instance, "Subplot # 1").  Type a name for this subplot.  Then choose the squares on the map which define the subplot's area.  You can click single squares, or click and drag to select a rectangle.  You can unselect a square by clicking it again.  The selected cells will show up in the current subplot's color.  Everything you click on the map is assumed to apply to the subplot that is currently selected, until you select a new one. 
+</p>
+<p>
+If two subplots overlap, only one of the subplot's colors will show up (the one with the greater number).  The hidden subplot still exists; it is okay for subplots to overlap.  However, the entire map is still active even for a subplot that is partly covered up. For example, you might select a subplot and then click cells that are covered by a subplot with a higher number.  Your clicks are still selecting and de-selecting cells for the subplot with the lower number, but you won't be able to see your selections because the subplot with the higher number is covering them up.  To avoid mistakes, you should completely finish each subplot before creating a new one, especially if their areas will overlap.  If you need to make changes to a partially hidden subplot, you might want to erase the higher subplot areas and then put them back in when you're done.  
+</p>
+<p>
+If you are setting up both summary and detailed output, and you want to use the same subplots for both, there is a button to copy subplots already defined for the other file type to the current file type.
+</p>
+
+<h2>Subplot grid cell size</h2>
+<p>
+You can change the size of the cells used to define subplots with the "Change subplot cell size" button. Harvests, mortality episodes, and planting events will display correctly even if their cell sizes are different; but the location of the edges may be an approximation in this case.
+</p>
+
+
+
+<h2>Displaying additional information</h2>
+<p>
+Subplots are often used to analyze the effects of specific episodic events such as silvicultural treatments. To help you with this, the subplots window will display episodic events for you on the map.  You can display <a href="../data/disturbance_behaviors/harvest.html">harvest</a>, <a href="../data/disturbance_behaviors/episodic_mortality.html">planned mortality episodes</a>, and <a href="../data/planting_behaviors/index.html">planting</a> events.  You scroll through the events in the same order in which they were created in the edit windows.  The button colors match the colors in which the events will display on the map.  Note that subplots will cover up episodic events that have the same area, and episodic events may cover each other as well.  If you are having trouble seeing an episodic event, use the buttons to set all the other episodic events to display the event number 0.  
+</p>
+
+
+<br>
+</body>
+</html>

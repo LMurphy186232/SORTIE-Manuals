@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Browsed Stochastic Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Browsed Stochastic Mortality</h1>
+<p>
+This simulates the effects of herbivory by allowing different background mortality rates for browsed and unbrowsed trees.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Background Mortality Rate</td><td> The proportion of trees that die each year, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Browsed Background Mortality Rate</td><td> The proportion of browsed trees that die each year, as a value between 0 and 1.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+Whether or not a tree is browsed is determined by the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior. For each tree, if it has not been browsed, that species's <b>Background Mortality Rate</b> parameter is used; if it has been browsed, the species's <b>Browsed Background Mortality Rate</b> parameter is used. A random number is compared to the appropriate rate to decide if the tree dies.</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior applied.
+</p>
+</body>
+</html>

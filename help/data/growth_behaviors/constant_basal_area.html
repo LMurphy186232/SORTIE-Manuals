@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Constant basal area growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Constant basal area growth</h1>
+
+<h3>Parameters for these behaviors</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Adult Constant Area Growth in sq. cm/yr</td><td> The constant amount of basal area by which to increase a tree's basal area.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>The amount of diameter increase is calculated from a constant basal area increment.  The increase is calculated as follows:</p>
+<center><i>Y = (g / diam) * 100 * T</i></center>
+<p>where</p>
+<ul>
+<li><i>Y</i> is the amount of diameter increase, in cm</li>
+<li><i>g</i> is the <b>Adult Constant Area Growth in sq. cm/yr</b> parameter</li>
+<li><i>diam</i> is the tree's diameter, in cm</li>
+<li><i>T</i> is the number of years per timestep </li>
+</ul> 
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You can use either the diam with auto height or diam only version.</p>
+</body>
+</html>

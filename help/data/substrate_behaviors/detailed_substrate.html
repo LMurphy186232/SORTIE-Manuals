@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Detailed Substrate</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Detailed Substrate</h1>
+<p>
+This behavior is a modification of the Substrate behavior that primarily incorporates greater detail in tracking log cover. In Detailed Substrate, the pool for logs is divided into up to 3 species groups, 2 size classes, and 5 decay classes, whereas the Substrate behavior has 1 species/size class and 2 decay classes for logs. Also, unlike Substrate, Detailed Substrate is designed to work with <a href="../snag_dynamics_behaviors/index.html">snag dynamics</a> behaviors that assign data members representing fall or break heights of trees and snags. This way, the processes of tree (and snag) breakage and fall are separated from their input into the log substrate pool. There is also a change from Substrate to the way harvesting adds new substrate, and values for log volume are calculated in addition to projected area (cover).
+</p>
+<p>
+Like Substrate, Detailed Substrate keeps track of the relative cover of forest floor litter, moss, scarified soil, tip-up mounds, and logs each timestep. Unless explained otherwise, the manner in which Detailed Substrate calculates and tracks these components is the same as for the Substrate behavior.
+</p>
+<p>
+Detailed Substrate divides logs into species groups, size classes, and decay classes. Logs in each combination of species group, size class, and decay class can have different initial proportions, proportions after harvest, and decay parameters from all other types of logs. Each species to which this behavior is assigned belongs to one species group (assigned with the <b>Species Group</b> parameter). As saplings, adults, and snags enter the substrate pool, they are added to the logs for the appropriate species group. Log substrate belongs to one of two size classes defined by diameter. The threshold diameter separating the two size classes is defined by the <b>Boundary Between Log Diam Classes (cm)</b> parameter. When a sapling, adult, or snag enters the substrate pool, the area input to each size class is calculated separately. The species group and size class to which log substrate is added do not change over time.
+</p>
+<p>
+Log substrate is also divided into 5 decay classes. Over time, decay class 1 logs decay into decay class 2 logs, then decay class 3 logs, then decay class 4 logs, then decay class 5 logs, then forest floor litter and moss. The relationship among these states, as well as tip-up mounds and scarified soil, is depicted in the figure below.
+</p>
+<center><img src="../data_files/detailed_substrate.gif" alt="Detailed Substrate cover diagram"></center>
+<p>
+Like in Substrate, decay among the log decay classes and for tip-up mounds and scarified soil (relationships 1-5, 7, and 9), is a function of substrate age according to the equation:
+</p>
+<br><center><img src="../data_files/substrate_exp_func.gif"></center>
+<p> 
+where t is time in years since the last decay transition. Decay calculations for the 5 log decay classes are performed on an annual basis so it is possible to advance by more than one decay class in a single multi-year timestep. At the end of each timestep, the age of all logs is rounded to the nearest multiple of the timestep duration. This is necessary to keep memory requirements manageable.
+</p>
+<p>
+Log substrate is created by the processes of tree fall and breakage along the bole (relationship 6). Detailed Substrate looks at flags set by <a href="../mortality_behaviors/index.html">mortality</a> and <a href="../snag_dynamics_behaviors/index.html">snag dynamics</a> behaviors to determine whether a sapling, adult tree, or snag has either fallen or broken to a certain height in the current timestep. If so, it adds the appropriate area to the log substrate pool. Like in Substrate, tree boles are modeled as cones. The projected horizontal area is therefore a triangle if the top of the tree is included, or a trapezoid if only considering the lower section of a tree. New log substrate does not need to enter in decay class 1: the <b>Prop. Live Trees Entering Decay Class X (0-1)</b> and <b>Prop. Snags Entering Decay Class X (0-1)</b> parameters determine the probability of entering the substrate pool in each of the 5 decay classes for both snags and dead saplings/adults.
+</p>
+<p>
+Detailed Substrate allows new substrate proportions to be specified following clear cut, gap, and partial harvesting. If the total proportion of substrate after harvesting specified by parameters is less than 1, the remainder will be distributed in proportion to pre-harvest substrate values. In comparison, remaining substrate after harvest is assigned to moss and litter pools in the Substrate behavior. This change is designed to allow legacy substrates, such as logs and tip-up mounds, to persist after a harvest event.
+</p>
+<p>
+In addition to tracking log area, Detailed Substrate also stores the volume of each type of log substrate in each grid cell. For new inputs, log volume is calculated as:
+</p>
+<center><i>LV = 1/3 * &#960; * (DBH / 2)<sup>2</sup> * h</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>LV</i> is new log volume, in m<sup>3</sup></li>
+<li><i>DBH</i> is the DBH of the fallen tree, in m</li>
+<li><i>h</i> is the height of the fallen tree, in m</li>
+</ul>
+<p>
+For initial volume and volume added after harvest:
+</p>
+<center><i>LV = 1/3 * &#960; * 100 * PLA * (MDBH / 2)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>LV</i> is initial log volume or volume added after harvest, in m<sup>3</sup>/ha</li>
+<li><i>PLA</i> is the proportional log area in the grid cell, from 0 to 1</li>
+<li><i>MDBH</i> is the mean DBH of logs of that type (either initial or added by harvest). These are set with parameters. A reasonable default is values of 0.5 and 1.5 of the diameter boundary are used for small and large size classes, respectively</li>
+</ul>
+<p>
+Log volume differs from log area proportions in that it does not have an upper bound. Each time new substrate is added, existing log substrate proportions are reduced so that the total of all substrate proportions is still less than or equal to 1. However, new inputs from tree fall and breakage do not reduce existing log volume (that is, logs can be on top of each other and still contribute to volume but not area). The volume of logs is reduced after harvesting when scarified soil is added (that is, log volume is destroyed in the area that is scarified). Log volume also decreases as pieces decay from decay class 5 to forest floor litter and moss.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Boundary Between Log Diam Classes (cm)</td><td> DBH boundary between the "small" and "large" log size classes, in cm.</td></tr>
+
+<tr><td class="parname">Clear Cut Large Logs Mean Diameter (cm)</td><td> After a clear cut harvest, the mean diameter of logs in the "large" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Clear Cut Small Logs Mean Diameter (cm)</td><td> After a clear cut harvest, the mean diameter of logs in the "small" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Small Logs Mean Diameter (cm)</td><td> After a gap cut harvest, the mean diameter of logs in the "small" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Large Logs Mean Diameter (cm)</td><td> After a gap cut harvest, the mean diameter of logs in the "large" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Tip-Up Mounds</td><td>  The proportion of substrate that is tip-up mounds substrate in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Small Logs Mean Diameter (cm)</td><td> After a gap cut harvest, the mean diameter of logs in the "small" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Large Logs Mean Diameter (cm)</td><td> After a gap cut harvest, the mean diameter of logs in the "large" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Tip-Up Mounds</td><td>  The proportion of substrate that is tip-up mounds substrate in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Scarified Soil</td><td> The proportion of plot substrate that is scarified soil when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored. </td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Tip-Up Mounds</td><td> The proportion of plot substrate that is tip-up mounds substrate when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored. </td></tr>
+
+<tr><td class="parname">Initial Large Logs Mean Diameter (cm)</td><td> For initial conditions, the mean diameter of logs in the "large" size class, in cm.</td></tr>
+
+<tr><td class="parname">Initial Small Logs Mean Diameter (cm)</td><td> For initial conditions, the mean diameter of logs in the "small" size class, in cm.</td></tr>
+
+<tr><td class="parname">Maximum Number of Years that Decay Occurs</td><td> The number of years that a substrate disturbance event has effect before it is deleted - the lifetime of a substrate cohort. </td></tr>
+
+<tr><td class="parname">Partial Cut Large Logs Mean Diameter (cm)</td><td> After a partial cut harvest, the mean diameter of logs in the "large" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Partial Cut Small Logs Mean Diameter (cm)</td><td> After a partial cut harvest, the mean diameter of logs in the "small" size class, in cm. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Prop. Live Trees Entering Decay Class X (0-1)</td><td> The proportion of live trees entering each of the five decay classes. The proportion for all five classes together must add up to 1.</td></tr>
+
+<tr><td class="parname">Prop. Snags Entering Decay Class X (0-1)</td><td> The proportion of snags entering each of the five decay classes. The proportion for all five classes together must add up to 1.</td></tr>
+
+<tr><td class="parname">Scarified Soil Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to scarified soil.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Scarified Soil Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to scarified soil.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Species Group</td><td> Which species group (1-3) each species is assigned to.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Clear Cut Log (0-1)</td><td> After a clear cut harvest, the proportion of substrate area that is large logs of species group X, decay class Y. All clear cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Species Group X Small Class Y Clear Cut Log (0-1)</td><td> After a clear cut harvest, the proportion of substrate area that is small logs of species group X, decay class Y. All clear cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Gap Cut Log (0-1)</td><td> After a gap cut harvest, the proportion of substrate area that is large logs of species group X, decay class Y. All gap cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Species Group X Small Class Y Gap Cut Log (0-1)</td><td> After a gap cut harvest, the proportion of substrate area that is small logs of species group X, decay class Y. All gap cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Initial Log Prop (0-1)</td><td> For the initial conditions, the proportion of substrate area that is large logs of species group X, decay class Y. All initial conditions values added together must be less than or equal to 1.</td></tr>
+
+<tr><td class="parname">Species Group X Small Class Y Initial Log Prop (0-1)</td><td> For the initial conditions, the proportion of substrate area that is small logs of species group X, decay class Y. All initial conditions values added together must be less than or equal to 1.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Log Decay Alpha</td><td> The &#945 exponent in the decay equation, as applied to large logs of species group X, decay class Y. This value must be a negative number.</td></tr>
+
+<tr><td class="parname">Species Group X Small Class Y Log Decay Alpha</td><td> The &#945 exponent in the decay equation, as applied to small logs of species group X, decay class Y. This value must be a negative number.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Log Decay Beta</td><td> The &#946 exponent in the decay equation, as applied to large logs of species group X, decay class Y.</td><tr>
+
+<tr><td class="parname">Species Group X Small Class Y Log Decay Beta</td><td> The &#946 exponent in the decay equation, as applied to small logs of species group X, decay class Y.</td></tr>
+
+<tr><td class="parname">Species Group X Large Class Y Partial Cut Log (0-1)</td><td> After a partial cut harvest, the proportion of substrate area that is large logs of species group X, decay class Y. All partial cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Species Group X Small Class Y Partial Cut Log (0-1)</td><td> After a partial cut harvest, the proportion of substrate area that is small logs of species group X, decay class Y. All partial cut values added together must be less than or equal to 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Tip-Up Mounds Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to tip-up mounds substrate.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Tip-Up Mounds Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to tip-up mounds substrate.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Uprooted Tree Radius Increase Factor for Root Rip-Out</td><td> The amount by which to multiply the tree's radius when calculating the size of the new tip-up mounds soil exposed by fallen trees (see equation below).  This is meant to allow for the effects of roots. </td></tr>
+
+<tr><td class="parname">Use Directional Tree Fall</td><td> If true, dead trees fall in a random direction and possibly contribute new fresh log across several Substrate grid cells.  If false, dead trees collapse vertically and contribute all their fresh log area to the cell in which they are rooted. </td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The relative proportions of each kind of substrate are tracked in the <a href="../grids/detailed_substrate_grid.html">Detailed Substrate</a> grid. Within each cell, the grid keeps track of each substrate's area as a proportion of the total area, as well as volume for each type of log substrate in m<sup>3</sup>/ha. The behavior also summarizes and copies values into the <a href="../grids/substrate_grid.html">Substrate</a> grid for compatibility with other behaviors that use that grid.
+</p>
+<p>
+Each timestep, Detailed Substrate looks for harvest events and new tree inputs. It finds harvest events by looking in the Harvest grid. Harvest events add new scarified soil, tip-up, and log substrate. The behavior finds fallen and broken trees by looking for the flags set by <a href="../mortality_behaviors/index.html">mortality</a> and <a href="../snag_dynamics_behaviors/index.html">snag dynamics</a> behaviors. Each fallen and broken tree (or snag) "rolls the dice" with a random number to determine the log decay class it will enter as substrate. Fallen adult trees and snags also use a random number to determine whether they expose tip-up mound substrate. All the new substrate created by harvest and tree inputs is then totaled up. When there is new substrate in a grid cell, Detailed Substrate reduces the other substrate amounts in the cell to make way for the amount of new substrate.
+</p>
+<p>
+All existing substrates are decayed each timestep as they age. After they reach their maximum lifespan, which is set by parameters, they are deleted. The final proportions of scarified soil, tip-up, and logs are found by adding up the values representing each substrate age. The final proportion of the moss/litter pool is whatever grid cell area is left over. The pool is further split into moss and litter by using fixed proportions of each in the pool, as specified by the <b>Proportion of Forest Floor Litter/Moss Pool that is Moss</b> parameter.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply Detailed Substrate to all trees which can create substrate by becoming fallen logs. This generally means that it should be applied to adults and snags of all species. Substrate cannot be applied to seedlings or saplings. Any tree species/type combination to which it is applied must also have a mortality and snag dynamics behavior applied.
+</p>
+
+</body>
+</html>

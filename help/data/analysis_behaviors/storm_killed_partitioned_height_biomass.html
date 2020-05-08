@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Storm Killed Partitioned Height Biomass</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Storm Killed Partitioned Height Biomass</h1>
+
+<p>
+This behavior calculates biomass of trees killed in storms as a linear function of tree height, partitioned into leaf and bole biomass.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Partitioned Height Biomass - Leaf Slope (a)</td><td> The slope in the linear biomass equation for leaves. </td></tr>
+
+<tr><td class="parname">Partitioned Height Biomass - Leaf Intercept (b)</td><td> The intercept in the linear biomass equation for leaves. </td></tr>
+
+<tr><td class="parname">Partitioned Height Biomass - Bole Slope (a)</td><td> The slope in the linear biomass equation for boles. </td></tr>
+
+<tr><td class="parname">Partitioned Height Biomass - Bole Intercept (b)</td><td> The intercept in the linear biomass equation for boles. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Biomass is calculated in exactly the same way and using the same parameters as for the <a href="partitioned_height_biomass.html">Partitioned Height Biomass</a> behavior, except it only calculates the biomass of those trees killed by the <a href="../disturbance_behaviors/storm_damage_killer.html">Storm damage killer</a> behavior. 
+</p>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/killed_partitioned_biomass_grid.html">Storm Killed Partitioned Biomass</a> grid. You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system. 
+</p>
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Light behaviors</title>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Light behaviors</h1>
+
+<p>
+Light is the key resource for trees in the SORTIE model. Consequently, great care is taken in SORTIE to calculate the amount of light that each tree gets - in fact, these calculations take up more processing time than any other during model runs.
+</p> 
+<p>
+There are two basic light index types used by SORTIE to describe the amount of light a tree receives. The first is the Global Light Index, or GLI. GLI is the percentage of full sun received at a point. The second index is the Sail Light index, which is the proportion of shade seen at a point, from none to total. (The name Sail Light comes from the fact that the shape of shading neighbor tree crowns is approximated by a 2D rectangle, like a sail).
+</p>
+<p><a href="light_calculations.html">How light calculations work</a></p>
+
+<table class="behaviorlist">
+<tr><th class="behname">Behavior</th><th>Description</th></tr>
+<tr><td class="behname"><a href="average_light.html">Average Light behavior</a></td><td>Averages GLI values to produce a set of values with a coarser spatial resolution.</td></tr>
+<tr><td class="behname"><a href="basal_area_light.html">Basal Area Light behavior</a></td><td>Calculates light levels as a function of the basal area of trees in a neighborhood.</td></tr>
+<tr><td class="behname"><a href="beers_law_light_filter.html">Beer's law light filter behavior</a></td><td>Simulates a filter that reduces light according to Beer's Law.</td></tr>
+<tr><td class="behname"><a href="constant_gli.html">Constant GLI behavior</a></td><td>Assigns a constant GLI value to all trees to which it is assigned.</td></tr>
+<tr><td class="behname"><a href="gap_light.html">Gap Light behavior</a></td><td>Shortcuts the light calculation process by considering GLI to be binary:  either full light or no light.</td></tr>
+<tr><td class="behname"><a href="gli.html">GLI light behavior</a></td><td>Calculates a Global Light Index (GLI) value for each individual.</td></tr>
+<tr><td class="behname"><a href="gli_map_creator.html">GLI Map Creator behavior</a></td><td>Calculates a GLI value for each cell in a grid to create a light map.</td></tr>
+<tr><td class="behname"><a href="gli_points_file_creator.html">GLI Points File Creator behavior</a></td><td>Calculates GLI values for individual points in the plot.</td></tr>
+<tr><td class="behname"><a href="quadrat_based_gli.html">Quadrat-based GLI light behavior</a></td><td>Calculates GLI for grid cells and assigns trees the GLI of their cell.</td></tr>
+<tr><td class="behname"><a href="sail_light.html">Sail light behavior</a></td><td>Calculates a Sail Light index value for each individual.</td></tr>
+<tr><td class="behname"><a href="storm_light.html">Storm Light behavior</a></td><td>Calculates light levels as a function of number of trees damaged in storms.</td></tr>
+
+</table>
+
+
+</body>
+</html>

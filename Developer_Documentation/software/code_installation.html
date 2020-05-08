@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Installing the Code</title>
+</head>
+<body>
+<h1>Installing the Code</h1>
+
+<p>In this document:</p>
+<ul>
+<li><a href="#platforms">Supported Platforms</a></li>
+<li><a href="#structure">Software Structure and Compiling Under Alternate Environments</a></li>
+<li><a href="#eclipse_setup">Step by Step Instructions for Setting Up Development Using Eclipse</a></li>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#directories">Directory Structure</a></li>
+<li><a href="#core_model">Project 1: The Core Model Code</a>
+		<ul>
+		<li><a href="#core_model_eclipse">Installing Eclipse and setting up the C++ project</a>
+        <ul>
+				<li><a href="#core_model_step_1">Step 1 [Windows only]:  Install MinGW and MSYS</a></li>
+				<li><a href="#core_model_step_4">Step 2: Install Eclipse</a></li>
+				<li><a href="#core_model_step_5">Step 3: Install C++ Development Tools for Eclipse</a></li>
+				<li><a href="#core_model_step_6">Step 4: Create the SORTIE Project in Eclipse</a></li>
+				</ul>
+		</li>
+		</ul>
+</li>
+<li><a href="#test_project">Project 2: The C++ Test Project</a>
+    <ul>
+		<li><a href="#test_code_eclipse">Setting up the C++ test project in Eclipse</a></li>
+		</ul>
+</li>
+<li><a href="#running_linux">Running SORTIE from Linux</a></li>
+<li><a href="#gui">Project 3: The Java GUI project</a>
+    <ul>
+		<li><a href="#gui_setup">Setting up the Java project in Eclipse</a>
+		</ul>
+<li><a href="#interface_dll">Project 4: The C++ Interface DLL</a></li>
+<li><a href="#interface_dll_java">Project 5: The C++ Interface DLL for Java</a></li>
+<li><a href="#eclipse_tips">Tips on running Eclipse</a></li>
+<li><a href="#incorporating">Incorporating changes into the SORTIE-ND software</a></li>
+</ul>
+
+<a name="platforms"><h2>Supported Platforms</h2></a>
+<p>
+The Windows environment is considered SORTIE's "native" environment and is fully supported. The core C++ model code is provided with appropriate modifications to run on Linux systems from the command line. The Java GUI should run on any environment with Java installed, but the direct link between it and the core model only operates on Windows. This means the GUI can be used to work with parameter files and output files, but simulations must be launched from the command line on other systems. See <a href="porting.html">Porting to another OS</a> for more information on what you need to know to attempt a build of SORTIE on another system.
+</p>
+
+<a name="structure"><h2>Software Structure and Compiling Under Alternate Environments</h2></a>
+<p>
+The core part of the SORTIE-ND software is the processing engine, written in C++. This can be used by itself from the command line if you have the appropriate parameter files prepared. The other half of the SORTIE-ND software is a Java program that provides a GUI for creating parameter files, launching the processing engine, and viewing output.
+</p>
+<p>
+I use the Eclipse development environment to write code for both parts, and I give very detailed instructions for setting it up below for those who may be new to this. In case you want to use a different environment or set up makefiles, here is how the code needs to be compiled:
+</p>
+<h3>The Core Model C++ Code</h3>
+<b>Dependencies:</b>
+<ul>
+<li>Xerces C++ parsing library 3.1.2 is installed</li>
+<li>GNU Scientific Library 1.16 is installed (other versions will probably work too, they don't seem to change their interfaces too much)</li>
+<li>The SORTIE interface library is compiled as a shared library and installed (see below)</li>
+</ul>
+<p>
+The main function is in the file SORTIE.cpp.
+</p>
+<p>
+All .cpp files are to be compiled in the root directory, the root/Behaviors directory, and the root/Behaviors/NCI directory.
+</p>
+<p>
+Define the symbol GENERATING_DLL_APP in the preprocessor.
+</p>
+<p>
+Includes:
+</p>
+<ul>
+<li>All source folders</li>
+<li>Header directory for Xerces C++ 3.1.2 library</li>
+<li>Directory for GNU Scientific Library 1.16</li>
+<li>Directory for the SORTIE interface DLL</li>
+</ul>
+<p>
+Link in the three aforementioned libraries.
+</p>
+<p>
+The executable is called "coremodel".
+</p>
+<p>
+The code makes external system calls to gzip and tar. Make sure that these are installed and their paths in your path environment variable.
+</p>
+<p>The SORTIE interface library has no external dependencies. Compile the code as a shared library.
+</p>
+
+<a name="eclipse_setup"><h2>Step by Step Instructions for Setting Up Development Using Eclipse</h2></a>
+<p>
+This section will guide you through setting up an environment to work with the code in SORTIE-ND. This is very detailed and assumes very little prior knowledge.
+</p>
+
+<a name="tools"><h2>Tools</h2></a>
+<p>
+In order to work with the code in SORTIE-ND, you need the following development tools installed:
+</p>
+
+<ul>
+<li>A program that can uncompress ZIP or .tar.gz format files. If you don't already have a program you like, I like <a href="http://www.7-zip.org/">7-zip</a>.</li>
+<li>Eclipse, MinGW, and MSYS for building both the C++ core and Java GUI.  Instructions for downloading and installing are below.</li>
+<li>Xerces 3.1.2 C++ DLL is used to parse the XML files (parameter and output files). (Note the version number: 3.1.2!)  Instructions for downloading and installing are below.</li>
+<li>GNU Scientific Library 1.16 does the mathematical heavy lifting.  Instructions for downloading and installing are below.</li>
+<li>To work directly with parameter and output files (XML) use any text editor.  You can find a more elaborate XML editor if you wish to pay for it. For a handy programmer's text editor, try <a href="http://www.jedit.org/">jEdit</a>. </li>
+</ul>
+ 
+<a name="directories"><h2>Directory Structure</h2></a>
+<p>
+There are five projects described below. Four of the projects (all except the SORTIE GUI) are written in C++. Some of these projects are dependencies for other projects. You probably do not need to work with all of them. I recommend placing at least the C++ projects together in the same root directory which has no spaces in the name.
+</p>
+
+<a name="core_model"><h2>Project 1: The Core Model Code</h2></a>
+<p>
+Get the source code for the core C++ model from this site. Uncompress the code into your code root directory, one that has no spaces in the path name. Three folders should be created in your code root: "Core_Model", "Interface_DLL", and "Interface_DLL_for_Java".  (See the example directory structure above.) If you are using the Linux version of the code, "Interface_DLL_for_Java" is ommitted.
+</p>
+<p>
+<b>"Core_Model" contains:</b>
+</p>
+<ul>
+<li>Code files (.cpp and .h)</li>
+<li>[Windows] "gzip.exe" and "tar.exe", third-party executables used by SORTIE-ND</li>
+<li>[Windows] "libxerces-c-3-1-1.dll", Xerces library, used for parsing XML files</li>
+<li>[Windows] "libgsl-0.dll" and "libgslcblas-0.dll", files for the GNU scientific library, used for mathematical operations </li>
+<li>[Windows] "libinterface.dll", the library that forms the link between SORTIE and the user (you have the source for these libraries in the "Interface DLL" folder)</li>
+<li>/Behaviors folder:  Source code for SORTIE-ND's behaviors.</li>
+</ul>
+<p>
+<b>"Interface_DLL" contains:</b>  Source code for a SORTIE-ND DLL.  This DLL manages the DOS interface that is used when you launch the core model directly, without using the user interface.  Modify this code at your own risk.
+</p>
+<p>
+<b>"Interface_DLL_for_Java" contains:</b>  Source code for a SORTIE-ND DLL.  This DLL allows the user interface and the core model to pass messages back and forth.  Modify this code at your own risk.
+</p>
+<p>
+The C++ project creates an executable called "coremodel.exe".
+</p>
+
+<a name="core_model_eclipse"><h3>Installing Eclipse and setting up the C++ projects</h3></a>
+<p>
+<a href="http://www.eclipse.org/">Eclipse</a> is an open-source development environment that can be used to write code in many different languages, including the C++ and Java used by SORTIE. Eclipse provides you with the tools to make code development easier.
+</p>
+<p>
+Eclipse does not actually compile the code itself, and is not required in order to compile and run SORTIE. It just makes life easier when writing the code. If you are using Windows, you have to download and separately install a compiler set for Eclipse to use.  By default, it works with the <a href="https://gcc.gnu.org/">GCC</a> (GNU Compiler Collection) tools. If you have Linux, you most likely already have all these tools installed.
+</p>
+<p>
+For Windows, there are several installs for GCC, the two most common of which are <a href="http://www.mingw.org">MinGW</a> and Cygwin. I have chosen MinGW because I had better luck getting its Windows libraries to work with SORTIE.
+</p>
+<p>
+If you have little or no programming and/or Windows power user experience: I have given step-by-step instructions for setting this up, but I warn you that this might hurt. Read the instructions before you start. If the terms used make no sense to you, do some reading first (on C++ development, Windows software development, GCC tools, etc). Before you start, you might want to find a guru to help you when you get stuck. Also, you should probably back up your data because you are going to do things that can seriously mess up your system if you get them wrong.  (Software development tends to be like that...)
+</p>
+<p>
+In the directions below, I use a lot of directory examples. In Windows, case doesn't matter in directory names; but in the Linux/UNIX world, case does matter. Since we're working with tools that are ports of Linux/UNIX software, case will matter sometimes. When in doubt, be consistent.  If your directory is "C:\MinGW", and I write "c:\mingw" as an example below, use your own directory's case.
+</p>
+<p>
+If you use Linux, skip to step 2. If you already have Eclipse installed, skip to step 4.
+</p>
+<a name="core_model_step_1"><h4>Step 1 [Windows only]: Install MinGW and MSYS</h4></a>
+<p>
+MinGW really consists of two parts, MinGW and MSYS.  From the MinGW website (<a href="http://www.mingw.org">www.mingw.org</a>):
+</p>
+<p>
+MinGW: A collection of freely available and freely distributable Windows specific header files and import libraries combined with GNU toolsets that allow one to produce native Windows programs that do not rely on any 3rd-party C runtime DLLs.
+</p>
+<p>
+MSYS: A Minimal SYStem to provide POSIX/Bourne configure scripts the ability to execute and create a Makefile used by make.
+</p>
+<p>
+You need both of these to use Eclipse and compile SORTIE. 
+</p>
+<ol>
+<li>Download and install MinGW + MSYS at <a href="http://sourceforge.net/projects/mingw/">http://sourceforge.net/projects/mingw/</a>. The current version of SORTIE has been installed with gcc version 4.6.1. <!--I used the file "mingw-get-inst-20111118.exe". This corresponds to gcc version 4.6.1. This version number is important; if you can't get the exact MinGW installer listed here, get one with the right gcc version number.--></li>
+<li><b>IMPORTANT:</b>  Install to a directory with no spaces in it, like "c:\MinGW". Use the default if you can, because Eclipse will automatically look for it there.</li>
+<li>When installing, you get a checklist of components you wish to install. Add the C++ compiler, MSYS, and the MinGW Developer Toolkit.</li>
+<li>Once you've finished installing, put the path C:\MinGW\bin and C:\MinGW\MSYS\1.0\bin (or your appropriate versions) in your PATH environment variable. This allows you to run the MinGW software from any directory, which is critical for Eclipse. <!--To set this on Windows, go to the Control Panel, open "System", then choose the "Advanced" tab.  Click the button that says "Environment Variables."  Under System variables, choose the one that says "Path" and add the values.  Put them at the beginning of the list.  DON'T ERASE ANY VALUES THAT ARE ALREADY THERE.  You may have to restart for this to take effect.--></li>
+</ol>
+
+<p>
+<b>CHECK:</b>
+To make sure you've done this correctly so far, open a command line window (to any directory EXCEPT \MinGW\bin) and type "gcc".  It should say "gcc: no input files".  Then type "g++".  It should say "g++: no input files".  If it says "[gcc or g++] is not recognized as an internal or external command, operable program or batch file", something's wrong.  Check to make sure that both "gcc.exe" and "g++.exe" are in your \MinGW\bin path.  If they aren't, reinstall MinGW and make sure you choose to install the correct components (C++ compiler, not C compiler!).  If the files are there, double-check the directory you added to your Path environment variable in step 4 above.
+</p>
+
+<a name="core_model_step_4"><h4>Step 2: Install Eclipse</h4></a>
+<p>
+Make sure you have a Java Runtime Environment installed. If you don't, you can download it from <a href="http://www.java.com">www.java.com</a>. (Note: if you plan on working with the SORTIE GUI code, skip to that section and just install the proper JDK.) You also need to have the Java directory in your Path environment variable. 
+</p>
+<p>
+There are a bewildering number of download options for Eclipse, with many different versions of each release. In the end, it doesn't really matter which configuration you choose, because you can always add any options you need later. You are going to need Eclipse with the C++ development tools installed in order to work with the core model code. If you want to work with the GUI code, you will need the Java development tools as well. 
+</p>
+<p>
+<b>Windows:</b>
+</p>
+<ol>
+<li>Download your preferred Eclipse version from <a href="http://www.eclipse.org/">http://www.eclipse.org/</a>.</li>
+<li>Unzip the file into the directory where you want Eclipse (such as c:\eclipse).  Again, no spaces in the filename.  This is all that is required to install Eclipse.</li>
+<li>Launch Eclipse by double-clicking the "eclipse.exe" in your Eclipse directory.  When you launch Eclipse for the first time, it will ask you in what directory you want to keep your workspace.  Use a directory with no spaces in the filename, and not a directory where you'll put any code.</li>
+</ol>
+<p>
+Linux users, if you use a distribution with a user interface rather than a command line, you probably have Eclipse as an available option in your software repository. Install according to your distribution.
+</p>
+ 
+<a name="core_model_step_5"><h4>Step 3: Install C++ Development Tools for Eclipse</h4></a>
+<p>
+Eclipse needs to have a plugin installed in order to work with C++ (the C++ Development Tools, or CDT). If you downloaded an Eclipse release for C\C++ developers, you've already got it. If you don't, you can do this from within Eclipse. Read the directions for your version of Eclipse to install the CDT.
+<p>
+You might want to pause here and find your way around Eclipse.  They have tutorials in the help.  
+</p>
+<b>CHECK:</b>
+<p>
+Compile and run a simple "Hello World" program.  This way, if you have trouble setting up SORTIE later, you'll know that you have your compilers and development software set up correctly.
+</p>
+<a name="core_model_step_6"><h4>Step 4: Create the SORTIE Project in Eclipse</h4></a>
+<p>
+<b>Libraries.  </b> There are two external libraries that SORTIE requires: the Xerces C++ XML parsing library, and the GNU Scientific Library (GSL).   
+</p>
+<p>
+Windows: The DLL files for these libraries are included in the SORTIE download, but you also need a set of header files for these libraries .  These can be downloaded from <a href="http://xerces.apache.org/xerces-c/download.cgi">http://xerces.apache.org/xerces-c/download.cgi</a> and <a href="http://www.gnu.org/software/gsl/">http://www.gnu.org/software/gsl/</a>. Make absolutely sure you get the correct versions. You may have to build the GSL library to get the header files.
+</p>
+<p>
+Linux: You can download and install the Xerces and GSL packages through your distribution. Make sure to get the "dev" packages in order to get the header files.
+</p>
+<p>
+<b>Note:</b> If you have a gcc compiler version other than the one noted above (type "gcc -v" at a command prompt to find out), the Xerces libraries may not link in correctly when building SORTIE. In that case, you will need to download and build the correct version of the Xerces library from source with your compiler. It looks extremely scary (to Windows types) but is in fact pretty easy once you carefully read the directions for building. If you do need to build the Xerces library, note that the following applies to gcc 4.6.1: The build instructions tell you to configure with the following command:
+</p>
+<p>
+<code>./configure LDFLAGS=-no-undefined</code>
+</p>
+<p>But you have to do this instead:
+</p>
+<p>
+<code>
+./configure<br/>
+make libxerces_c_la_LDFLAGS="-release 3.1 -no-undefined"
+</code>
+</p>
+<p>
+Now you are ready to set up the SORTIE project for compiling.  When I refer to directories here, something like "\Core_Model" refers to that directory in your root code directory.  For example, my root code directory is c:\sortie\code. So for me, "\Core_Model" means "c:\sortie\code\Core_Model".
+</p>
+<p>
+In Eclipse, create a new C++ executable project. (The exact menu options vary by release.) Wizard options:</p>
+<ul>
+<li>Choose whatever name you want for your project. Uncheck the box that says "Use default location" under project contents, and set the directory to the \Core_Model directory.</li>
+<li>Your "Project type" is the appropriate variation on C++ executable, empty project.</li>
+<li>If you have a choice of toolchains, choose "MinGW GCC".</li>
+</ul>
+
+<p>
+To control processes and see status, you can use the "Progress" tab.  It will be at the bottom of the screen with several tabs, marked "Problems", "Console", "Properties", etc.  If you don't see it, here's how to make it visible:  On the "Window" menu, go to "Show View"->"Other...".  Expand the "General" section, and click "Progress". Once you have the "Progress" tab, you can view it to get the status of background processes and cancel them.
+</p>
+<p>
+Now set the compiler settings. This is most likely under Project->Properties. Choose "C/C++ Build" at the left of the screen, and under that, "Settings". 
+</p>
+<ol>
+<li>[WINDOWS]: On the right of the screen, choose the "Binary Parsers" tab.  Make sure that only PE Windows Parser is checked. (Linux, obviously, skip this step.)</li>
+<li>[WINDOWS]: Choose the "Tool Settings" tab. Under "GCC C++ Compiler", choose "Preprocessor".  Under "Defined Symbols", add GENERATING_DLL_APP. This is to get it working correctly with the Interface DLL. (Linux, this define is not necessary.)</li>
+<li>Under "GCC C++ Compiler", choose "Directories".  (Linux, if you formally installed the Xerces and GSL development packages, Eclipse should be able to find the header files, assuming they ended up in /usr/include; if not, you may need to add the directories.) Add the following list of directories:
+<ul>
+<li>\Core_Model</li>
+<li>\Core_Model\Behaviors</li>
+<li>\Core_Model\Behaviors\NCI</li>
+<li>\Interface_DLL</li>
+<li>[xerces root]\include IF IT EXISTS, otherwise use [xerces root]\src</li>
+<li>GSL root directory</li>
+</ul></li>
+<li>Under "MinGW C++ Linker", choose "Libraries".  Under "Libraries (-l)", add (if Windows) "libxerces-c-3-1-2", "libgsl-0", and "libinterface" or (if Linux) "xerces-c", "gsl", "gslcblas", and "interface" (with no quotes).  Under "Library search path (-L)", add \Core_Model.</li>
+<li>Under Compiler Miscellaneous settings, add "-m32" to the "Other flags" line. This compiles the code as 32-bit, to maintain compatibility with 32-bit operating systems.</li>
+<li>Choose the "Build artifact" tab.  Under "Artifact name", put "../coremodel" (without the quotes).  This tells Eclipse to create an executable called coremodel.exe and put it in the root code directory.</li>
+</ol>
+<p>
+Now it's time to try building the project.  Choose Project->Build Project.  A complete build may take several minutes depending on the speed of your computer.
+</p>
+<p>
+Once the project is built, there should be a file called coremodel.exe in your \Core_Model directory.  You can launch it from DOS, or run it from Eclipse (for debugging, for example).  To run it from Eclipse, you need to create a run configuration:
+</p>
+<ol>
+<li>Choose "Run->Run Configurations..."</li>
+<li>Click on "C/C++ Local Application", and click "New".</li>
+<li>Name it whatever you want.  For "Project", make sure it says your project name.  Under "C\C++ Application", choose \Core_Model\coremodel.exe.</li>
+<li>Click the "Run" button.  SORTIE will launch in the console window at the bottom of the screen.</li>
+<li>[Windows]: Prepare debugging:  On the "Debugger" tab, choose "Cygwin GDB Debugger".</li>
+<li>To debug, click the debug icon after you have a run configuration set up.</li>
+</ol>
+<p>
+Notes: I had to build the Xerces library myself. None of the binaries I downloaded worked for me, on either Windows or Linux. The libraries I include are the ones I built. If you get errors that appear to come from Xerces, try building the library yourself from source. There are instructions for doing it that come with the download.
+</p>
+<p>
+If you get a "permission denied" error from the linker, check to see if you are running Microsoft Security Essentials. If so, you need to go to the settings and uncheck "Enable behavior monitoring."
+</p>
+ 
+<a name="test_project"><h2>Project 2: The C++ Test Project</h2></a>
+<p>
+The C++ test project contains test code for the C++ core model. The testing framework used is <a href="https://github.com/google/googletest">googletest</a>.  The test code is separate from the model code and is not required to compile the model. If you make model changes, though, do make a model test case for them.
+</p>
+<p>
+Get the source code for the C++ test project model from this site. It should be in a folder called "Core_Model_Tester".
+</p>
+<p>
+You will need to download googletest in order to get the header files. Download version 1.6 at <a href="https://github.com/google/googletest">https://github.com/google/googletest</a>. If you are working with a non-Windows system, or a different compiler version, you will need to build the gtest library.
+</p>
+<p>
+Note on gtest: I have been unable to get gtest to build on Windows after version 1.6.0. (If you need that version, get in touch.) In MSYS navigate to the "make" directory and just type "make". The samples may not compile but the main library will. Rename it to libgtest-main and off you go.
+</p>
+<p>
+The C++ test project contains:
+</p>
+<ul>
+<li>The test code files.  There is generally one test .cpp file for each SORTIE-ND .cpp file (although there are exceptions).</li>
+<li>[Windows]: Libraries, the same as for the core model.</li> 
+</ul>
+
+
+
+<a name="test_code_eclipse"><h3>Setting up the C++ test project in Eclipse</h3></a>
+<p>
+This assumes that you have set up the C++ project, and thus installed Eclipse, etc.
+</p>
+<ol>
+<li>In Eclipse, create a new C++ executable project. (The exact menu options vary by release.)</li>
+<li>On the screen that says "C++ Project", choose whatever name you want for your project.  Uncheck the box that says "Use default" under project contents, and set the directory to the \Core_Model_Tester directory.</li>
+<li>If you have a choice of toolchains, choose "MinGW GCC".</li>
+<li>Click "Finish".</li>
+</ol>
+<p>
+Now link to the SORTIE source. Click "File->New->Folder". Click the "Advanced>>" button. Check "Link to folder in the file system". Browse to the Core_Model directory.  
+</p>
+<p>
+There are some files we don't want to include in the build of the test. For each of the files listed below, right-click it <b>(under the test project)</b>, then choose  "Exclude from build..." and select all the checkboxes that come up.
+</p>
+<ul>
+<li>Core_Model\SORTIE.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_1\main.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_2\main.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_3\main.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_4\main.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_5\main.cpp</li>
+<li>Harvest_Interface_Test_Code\Fake_Harvester_6\main.cpp</li>
+</ul>
+<p>
+Now set the compiler settings. This is most likely under Project->Properties. Choose "C/C++ Build" at the left of the screen, and under that, "Settings". 
+</p>
+<ol>
+<li>[WINDOWS]: On the right of the screen, choose the "Binary Parser" tab. Make sure that only PE Windows Parser is checked. (Linux, obviously, skip this step.)</li>
+<li>Under "GCC C++ Compiler", choose "Directories".  Add the following list of directories:
+<ul>
+<li>\Core_Model_Tester</li>
+<li>\Core_Model</li>
+<li>\Core_Model\Behaviors</li>
+<li>\Core_Model\Behaviors\NCI</li>
+<li>[xerces root]\include IF IT EXISTS, otherwise use [xerces root]\src</li>
+<li>GSL root directory</li>
+<li>[gtest root]\include</li>
+</ul></li>
+<li>Under "MinGW C++ Linker", choose "Libraries".  Under "Libraries (-l)", add (if Windows) "libxerces-c-3-1-2", "libgsl-0", and "gtest_main" or (if Linux) "xerces-c", "gtest_main", "gsl", "gslcblas", and "dl" (with no quotes).  Under "Library search path (-L)", add \Core_Model_Tester.</li>
+</ol>
+<p>
+Now it's time to try building the project.  Choose Project->Build Project.  A complete build will take longer than for the core model since there are more files to build.
+</p>
+<p>
+Once the project is built, to run it from Eclipse, you need to create another run configuration:
+</p>
+<ol>
+<li>Choose "Run->Run Configurations..."</li>
+<li>Click on "C/C++ Local Application", and click "New".</li>
+<li>Name it whatever you want.  For "Project", make sure it says your project name.  Under "C\C++ Application", choose the executable.</li>
+<li>Click the "Run" button.  SORTIE will launch in the console window at the bottom of the screen.</li>
+<li>To debug, click the debug icon after you have a run configuration set up.</li>
+</ol>
+
+<p>
+You can control which tests to run in the Run Configuration for the tester code. In the "Arguments" tab, add the following: <code>--gtest_filter=*.*</code>  Adjust this expression to match the tests you want to run. For example, <code>--gtest_filter=GLIPoints.*</code> runs all tests in the GLIPoints unit (TestGLIPoints.cpp).  
+</p>
+
+<a name="running_linux"><h2>Running SORTIE from Linux</h2></a>
+<p>
+You can run the SORTIE core from the shell by navigating to the home directory and typing <code>./coremodel.exe</code>. This opens up a text-based interface that leads you through the steps of running a prepared parameter file. You can also type <code>./coremodel.exe filenam</code> with a parameter or batch file replacing "filename", and it will run automatically. (This works on DOS too, in Windows, leaving off the ./ bit of course.)
+</p>
+<p>
+You may need to set your library directory environment variable to include the path to the Xerces C++ parsing libraries and SORTIE's own text interface library. On Linux, this is LD_LIBRARY_PATH. Add the /lib directory in the Xerces root directory, and the Core_Model home folder. 
+</p>
+
+
+<a name="gui"><h2>Project 3: The Java GUI project</h2></a>
+<p>
+The current GUI is written for Java 7. If you do not have the Java 7 SDK installed, you may get errors and warnings.
+</p>
+<p>
+Get the source code for the Java user interface from this site.  Create a directory for the Java project, and unzip the file into there, preserving subfolders.
+</p>
+<p>
+The Java project creates a Java executable called "SORTIE.jar" and contains:
+</p>
+<p>
+<b>Main directory:</b>
+</p>
+<ul>
+<li>Manifest.mf - the manifest for the "SORTIE.jar" application file</li>
+<li>SORTIE jar description.jardesc - file for building the "SORTIE.jar" application file</li>
+</ul>
+<p>
+<b>[main]/lib:</b> A collection of Java libraries (as .jar files) that the SORTIE-ND user interface requires; most are third-party, one is the SORTIE-ND help file.
+</p>
+<p>
+<b>[main]/src:</b>  The source code.  This is divided into two directories for the two Java packages into which the user interface code is split:  "javawrapper" and "datavisualizer".
+</p>
+<p>
+<b>[main]/test:</b>  A collection of JUnit test files for testing the application.  (JUnit is built into JBuilder.)
+</p>
+
+<a name="gui_setup"><h3>Setting up the Java project in Eclipse</h3></a>
+<ol>
+<li>Switch to the Java perspective in Eclipse by choosing "Window"->"Open Perspective"->"Java" (or "Other"->"Java").</li>
+<li>Choose "File"->"New"->"Java Project...".</li>
+<li>Type whatever name you want under "Project name". Choose "Create project from existing source" and navigate to \JavaWrapper. Click "Next".</li>
+<li>Choose the "Libraries" tab. Make sure JUnit has been included. If not, click "Add library". Choose "JUnit". (This adds JUnit testing ability to the project.)</li>
+<li>Click "Finish."</li>
+</ol>
+<p>
+Make sure you will compile your project for the appropriate Java release. Set at least the SORTIE project to use the JRE from the current release minus one.
+</p>
+<p>
+Now you can try building the project by right-clicking the project name and choosing "Build Project". To create the SORTIE.jar file, right-click on the "SORTIE Jar Description.jardesc" file within the Java project and choose "Create JAR". 
+</p>
+<p>
+To run the project from within Eclipse:
+</p>
+<ol>
+<li>Select the project, then choose "Run"->"Run..."</li>
+<li>Select "Java Application" on the left and click the "New" icon above it. This should create a new option default-marked "New_configuration".</li>
+<li>Under "Name", rename it to something meaningful. Next to "Main class", click "Search". Choose "sortie.parfile.Model".</li>
+<li>Click "Run".</li>
+</ol>
+<p>
+If you want to run a JUnit test, open up the "test" folder in the left-hand "Package Explorer" pane. Right-click the test file you want to run, then choose "Run As"->"JUnit Test".
+</p>
+
+<a name="interface_dll"><h2>Project 4: The C++ Interface DLL</h2></a>
+<p>
+This is the library that allows SORTIE to communicate with a command line window.  <b>You almost certainly won't ever need to change this code or set up this project.</b>  Don't bother setting up this project if you don't need it.  You just need the directory here for the header files.
+</p>
+<p>
+If you've already installed the model code, then you will have a directory in your code root called Interface_DLL.
+</p>
+<a name="interface_dll_eclipse"><h3>Setting up the C++ Interface DLL project in Eclipse</h3></a>
+<p>
+This assumes that you have set up the C++ project, and thus installed Eclipse, etc.
+</p>
+<ol>
+<li>Create a new C++ shared library project.</li>
+<li>On the screen that says "New Project", choose whatever name you want for your project.  Uncheck the box that says "Use default" under project contents, and set the directory to the \Interface_DLL directory.</li>
+<li>If you have a choice of toolchains, choose "MinGW GCC".</li>
+</ol>
+<p>
+Now set the compiler settings. This is most likely under Project->Properties. Choose "C/C++ Build" at the left of the screen, and under that, "Settings". 
+</p>
+<ol>
+<li>Under "GCC C++ Compiler", choose "Directories". Add \Core_Model (add relative directory from workspace).</li>
+<li>Under Compiler Miscellaneous settings, add "-m32" to the "Other flags" line. This compiles the code as 32-bit, to maintain compatibility with 32-bit operating systems.</li>
+<li>Choose the "Build artifact" tab.  Under "Artifact name", put "interface" (without the quotes). Make sure the prefix is set to "lib" and extension set to "dll", so the whole library will be "libinterface.dll".</li>
+</ol>
+<p>
+Choose Project->Build Project to build.  There should be a new file called "libinterface.dll" in "Debug" or "Release".  
+</p>
+
+
+<a name="interface_dll_java"><h2>Project 5: The C++ Interface DLL for Java</h2></a>
+<p>
+This is the library that allows SORTIE to communicate with the Java GUI.  <b>You almost certainly won't ever need to change this code or set up this project.</b>  Don't bother setting up this project if you don't need it.
+</p>
+<p>
+If you've already installed the model code, then you will have a directory in your code root called "Interface_DLL_for_Java". Set this up the same way as the "Interface DLL" project.
+</p>
+
+
+
+
+<a name="eclipse_tips"><h2>Tips on running Eclipse</h2></a>
+<ul>
+<li>Eclipse isn't installed in the usual way on Windows, so it doesn't show up where programs usually do. It helps to find the "eclipse.exe" file and make a shortcut to it, and put the shortcut where you want it (for instance, on your desktop or quick launch toolbar).</li>
+<li>Once you have a list of multiple projects in Eclipse, make sure you select the right one before editing properties, running, etc.  Get in the habit of selecting the project you're working on in the left-hand pane before you open a menu command.  Or, do tasks by right-clicking on a project name.</li>
+<li>When you want to run a project from within Eclipse, it's a good idea to click the drop-down arrow next to the "Run" button and choose the project from there. Just because a project is selected doesn't mean that's the one Eclipse is going to run.</li>
+<li>Running and debugging are different operations. If you want to debug, double-click on the left gutter next to a line of code to set a breakpoint, then specifically click the "Debug" button. Clicking "Run" will not cause execution to stop at breakpoints.</li> 
+</ul>
+ 
+<a name="incorporating"><h2>Incorporating changes into the SORTIE-ND software</h2></a>
+<p>
+If you've made changes to either the user interface or the core model, you will at some point like to try them out.  Once you have compiled a new version of either "CoreModel.exe" or "SORTIE.jar", you can see how it interacts with the rest of the application.  The easiest way to do this is to install the SORTIE-ND user package, and then replace the appropriate file with your new version.
+</p>
+</body>
+</html>

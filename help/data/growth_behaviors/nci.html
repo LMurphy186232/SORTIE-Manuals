@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI growth</h1>
+<p>
+This behavior features a maximum growth rate that is adjusted using a set of factors of your choice. You can choose any combination you wish. In particular, this has several ways to implement the the effects of neighbor competitiveness to influence growth rates ("NCI" stands for neighborhood competition index).
+</p>
+<p>
+Each species has a maximum potential growth rate that is reduced for individual trees according to the effects you select.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Maximum Potential Growth, cm/yr</td><td> Maximum potential diameter growth for a tree, in cm/yr.</td></tr>
+
+<tr><td class="parname">Growth Increment Adjustment PDF</td><td> PDF to use to stochastically adjust the growth increment (including "none" for no adjustment).</td></tr>
+
+<tr><td class="parname">Std Deviation for Normal or Lognormal Adjustment</td><td> Value for standard deviation if the parameter <b>Growth Increment Adjustment PDF</b> is set to "normal" or "lognormal".</td></tr>
+
+
+</table>
+ 
+<h3>How it works</h3>
+
+<p>
+For a tree, the amount of growth is the maximum potential growth times any of a possible set of factors affecting growth:
+</p>
+<br><center><i>Growth = Max Growth * [Size Effects] * [Shading Effects] * [Crowding Effects] * [Damage Effects] * [Precipitation Effects] * [Temperature Effects] * [Nitrogen Effects] * [Infection Effects]</i></center><br>
+<p>
+Max Growth is the maximum diameter growth the tree can attain, in cm/yr, entered in the <b>NCI Maximum Potential Growth, cm/yr</b> parameter. You can have an effect in each category (or none at all) which acts to reduce the maximum growth rate. Each of these effects is a value between 0 and 1.
+</p>
+
+<p>
+Effects choices (note that only those effects that do not depend on a target individual are allowed):
+</p>
+<ul>
+<li><a href="../nci/nci_size_effects.html">Size effects</a></li>
+<li><a href="../nci/nci_shading_effects.html">Shading effects</a></li>
+<li><a href="../nci/nci_crowding_effects.html">Crowding effects</a></li>
+<li><a href="../nci/nci_damage_effects.html">Damage effects</a></li>
+<li><a href="../nci/nci_precipitation_effects.html">Precipitation effects</a></li>
+<li><a href="../nci/nci_temperature_effects.html">Temperature effects</a></li>
+<li><a href="../nci/nci_nitrogen_effects.html">Nitrogen effects</a></li>
+<li><a href="../nci/nci_infection_effects.html">Infection effects</a></li>
+</ul>
+
+
+
+<p>
+The amount of growth is in cm/year.  For multi-year timesteps, the behavior will calculate total growth with a loop.  Each loop iteration will increment diameter for one year.  For each year, any effects with diameter as a term are recalculated with the previous year's updated diameter value. (NCI values are constant throughout this loop - for neighbors only the size at the start of the timestep is used.)
+</p>
+
+<p>
+The growth increment can be applied as-is, or stochasticity can be added. To introduce stochasticity, set the value of the parameter <b>Growth Increment Adjustment PDF</b> to your choice of probability distribution function. The calculated growth increment will be used as the mean value in a random draw on that PDF, with the standard deviation set to the value in the <b>Std Deviation for Normal or Lognormal Adjustment</b>. If the value of the resulting draw is negative, the growth increment is set to zero to avoid negative growth.
+</p>
+
+
+ 
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. (Some effects have limitations on application to juveniles - check individual effects documentation.)  You can use either the diam with auto height or diam only version.
+</p>
+</body>
+</html>

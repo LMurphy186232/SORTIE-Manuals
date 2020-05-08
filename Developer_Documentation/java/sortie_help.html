@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>SORTIE-ND Help System</title>
+</head>
+<body>
+
+
+<h1>SORTIE-ND Help System</h1>
+<p>
+The SORTIE-ND help files are written in HTML and displayed using JavaHelp.  There are help authoring tools which support JavaHelp; if you want to use one, go ahead.  I do everything by hand because it's simple to do and doesn't take a lot of time.  The SORTIE-N help files are packaged together in a .jar file called "sortie_help.jar".  You can extract this jar to get the help source (you can use the Java JAR utility if you're a command-line guru, or many compression programs can handle the job by treating it like a ZIP file).  The help files should all be packaged within a top-level folder called "help".
+</p>
+
+
+
+<h3>Code documentation</h3>
+<p>
+The code documentation is generated using Doxygen.  You can download it <a href="http://www.doxygen.org">here</a>.  Read about how code should be commented in order to be auto-documented.  Doxygen is kind of picky, and I'm always finding mistakes in my code comments.  If you find any, let me know.  I do everything using Javadoc style.
+</p>
+
+
+
+<h3>User documentation - making updates to help</h3>
+<p>
+If you need to make updates to the help, here's the brief description for how to do it.  You can also email me (Lora Murphy); I'll get your updates into the official help along with your code.
+</p>
+<ol>
+<li>Either update an existing HTML document, or write a new one.  The SORTIE-ND help HTML is extremely simple. Mostly just plain text with headings and a graphic or two.  We're not fancy.  Follow the style of existing documents.</li>
+<li>Update the JavaHelp system files, if necessary (only if you've written a new file or want new keywords in the table of contents or index).  You should definitely consult the JavaHelp documentation here.</li>
+<ol>
+<li>If you've written a new document, update the map file (map.jhm).  This file names each of the help files and then gives its URL (which is CASE SENSITIVE).  This way, if you change directory structure, you can just change the URL in the map file and all the help code will still work.  (The HTML links will break, though.)</li>
+<li>Update the table of contents document, if necessary (toc.xml).  This lists the items to appear in the table of contents, in order and with appropriate nesting.</li>
+<li>Update the index, if you want new keywords to appear (index.xml).  This lists the items that appear in the index, in order and with appropriate nesting.</li>
+<li>You will not need to change the helpset file (sortiehelp.hs).  It only needs to be updated if there is a massive directory shuffle, and for that, talk to me directly.</li>  
+</ol>
+<li>Package the updated help back into a jar file.  To do this (assuming you have the Java JDK installed), navigate to the directory above the "help" top-level folder in the command line.  Then type "jar -cvf sortie_help.jar help".  A new "sortie_help.jar" file should be created.</li>
+<li>If you have created a new window in Java, you need to create a new link from the code to activate the window's help button and to capture the F1 key press.  To capture the F1 key press, add the following line of code (or something similar) to the window's constructor: "oHelpBroker.enableHelpKey(this.getRootPane(), "intro", null);".  Replace oHelpBroker with a reference to the system help broker in the MainWindow class, and replace "intro" with the topic ID name from the map file of the topic to display.  When you add an <a href="../java_doc/classsortie_1_1gui_1_1components_1_1OKCancelButtonPanel.html">OKCancelButtonPanel</a> to your window, if you pass it the help broker and the help topic ID, it will automatically create a help button for you.</li>
+</ol>
+
+
+<h3>Tips for writing help</h3>
+<p>
+Keep in mind that when writing HTML help topics, HTML 4.0 features may not be supported in the help viewer (although they show up fine in a browser).  I've noticed two:  entities for Greek letters and anchor tags.  When writing Greek letter entities, HTML 4.0 specifications allow writing them like this:  "&amp;lambda;".  However, the viewer chokes unless they are in the old decimal format, like this:  "&amp;#923;".  When doing anchor tags within a document, you can't use "&lt;a id="name"&gt;&lt;/a&gt;" with "&lt;a href="#name"&gt;link text&lt;/a&gt;".  You need to use the old name attribute, and do it this way:  "&lt;a name="name"&gt;&lt;/a&gt;" with "&lt;a href=#name&gt;link text&lt;/a&gt;".  (Keep track of those quotation marks.)  I recommend that you always preview your text in both a browser and the Java help viewer.  The JavaHelp documentation tells you how to use the help viewer. 
+</p>
+</body>
+</html>

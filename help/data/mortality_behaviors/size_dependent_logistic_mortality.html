@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Size Dependent Logistic Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Size Dependent Logistic Mortality</h1>
+<p>
+Size Dependent Logistic Mortality applies a mortality function that is a logistic function of tree size. Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Max Mortality (0-1)</td><td> Maximum mortality rate, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">X0</td><td> Logistic function X<sub>0</sub> parameter.</td></tr>
+
+<tr><td class="parname">Xb</td><td> Logistic function X<sub>b</sub> parameter.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+For each tree to which this behavior is applied, the following function is evaluated:
+</p>
+<center><img src="../data_files/size_dep_log_mort.gif"></center>
+<br>
+where: 
+<ul>
+<li><i>p</i> is the probability of mortality</li>
+<li><i>X<sub>0</sub></i> is the <b>X0</b> parameter, representing the inflection point of the curve</li>
+<li><i>X<sub>b</sub></i> is the <b>Xb</b> parameter</li>
+<li><i>diam</i> is d<sub>10</sub> for seedlings, and DBH for all other trees , in cm</li>
+</ul>
+<p>
+The probability is compared to a random number to determine whether the individual tree will die.
+</p> 
+<h3>How to apply it</h3>
+<p>This behavior may be applied to seedlings, saplings, and adults of any species.</p>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Average Light</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Average Light</h1>
+<p>
+This behavior averages GLI values to produce a set of values with a coarser spatial resolution.
+</p> 
+<h3>How it works</h3>
+<p>
+This behavior does not actually calculate GLI.  It averages the GLI values in the <a href="../grids/gli_map_grid.html">GLI Map</a> grid, which is created by the <a href="gli_map_creator.html">GLI Map Creator</a> behavior.
+</p>
+<p>
+This behavior creates its own map, called <a href="../grids/average_light_grid.html">Average Light</a>.  The value for each cell in this grid is an average of the cells of GLI Map in the same area.  If the size of the cells of Average Light is an exact multiple of the size of the cells of GLI Map, then a straight average is calculated.  If the size is not an exact multiple, each Average Light cell value is an average of the values of all the cells of GLI Map that overlap it in area, even if only partially.
+</p>
+<p>
+Make sure that the GLI Map Creator behavior is the first light behavior in the behavior run list, so its  values are refreshed for each timestep before Average Light runs. <b>Do not use multiple copies of the GLI Map Creator behavior with Average Light.</b>
+</p>
+<p>
+Trees to which this behavior are applied get the value of their location in the Average Light grid.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.  The <a href="gli_map_creator.html">GLI Map Creator</a> behavior must also be used, and must come before Average Light in the run order.  Once both behaviors have been added to your run, set up the cell sizes of the two grids the way you want them using the <a href="../../windows/grid_setup_window.html">Grid Setup window</a>.
+</p>
+</body>
+</html>

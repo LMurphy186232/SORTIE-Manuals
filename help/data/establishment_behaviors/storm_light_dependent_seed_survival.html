@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Storm Light Dependent Seed Survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Storm Light Dependent Seed Survival</h1>
+<p>
+This behavior assesses seed survival as a function of the light level of the location in which a seed lands.  Light level calculations are performed by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.  (This behavior is exactly like Light Dependent Seed Survival except for the method of light level calculation.)
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">GLI of Optimum Establishment, 0-100</td><td> The GLI value of optimum survival for seeds, as a value between 0 and 100.</td></tr>
+
+<tr><td class="parname">Slope of Dropoff Above the Optimum GLI</td><td> The slope of the line describing the drop off in seedling survival as a function of GLI above the optimum GLI.</td></tr>
+
+<tr><td class="parname">Slope of Dropoff Below Optimum GLI</td><td> The slope of the line describing the dropoff in seedling survival as a function of GLI below the optimum GLI.</td></tr>
+
+</table>
+ 
+<h3>How it works</h3>
+
+<p>The effects of light levels on seed survival is graphed as:<br>
+</p>
+<center><img src="../data_files/gli_estab_diagram.gif" alt="Light dependent seed survival GLI diagram"></center>
+
+<p>
+To assess the effects of light level on the number of seeds that survive, this behavior retrieves the light level from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid that corresponds to the point in the center of each <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid cell.
+</p>
+<p>
+The proportion of seeds that survive for a given species is calculated as:
+</p>
+<ul>
+<li>If GLI &lt; GLI<sub>opt</sub>, LE = 1 - (S<sub>lo</sub>(GLI<sub>opt</sub> - GLI))</li>
+<li>If GLI = GLI<sub>opt</sub>, LE = 1</li>
+<li>If GLI &gt; GLI<sub>opt</sub>, LE = 1 - (S<sub>hi</sub>(GLI - GLI<sub>opt</sub>))</li>
+</ul>
+<p> 
+where
+</p>
+<ul>
+<li>GLI is the light level at the center of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid cell</li>
+<li>GLI<sub>opt</sub> is the <b>GLI of Optimum Establishment, 0-100</b> parameter</li>
+<li>S<sub>lo</sub> is the <b>Slope of Dropoff Below Optimum GLI</b> parameter</li>
+<li>S<sub>hi</sub> is the <b>Slope of Dropoff Above the Optimum GLI</b> parameter</li>
+</ul> 
+<p>
+Once the proportion of seeds that survive at the given light level has been calculated, this value is multiplied by the number of seeds to reduce them by the proper amount.  The new reduced number of seeds is put back in the Dispersed Seeds grid.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to seeds of your desired species. Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> and the  <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior applied.
+</p>
+</body>
+</html>

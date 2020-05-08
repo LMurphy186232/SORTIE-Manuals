@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE Developer's Manual - Third Party Stuff</title>
+</head>
+
+<body>
+<h1>Third Party Stuff</h1>
+<p>
+All third-party code and tools used by SORTIE are open-source and free of charge.  This means that we have no official tech support for their use.  However, all have active user communities with message boards and forums and I have had good luck in getting advice and help when initially working with them.  Please let me know of any trouble you run into with any of these so I can keep track of solutions to problems that others may run into.
+</p>
+
+<h3>Xerces 3.1.2 for C++</h3>
+<p>
+The Xerces 3.1.2 library is used to parse XML files into DOM trees for easy access to parameters.  The version matters!
+</p>
+<p>
+The Xerces library can be downloaded as source if you need to recompile it. Compiling is easy on Linux and Windows ports like MinGW - there are build instructions on the website. When running runConfigure, be sure to specify the same compiler that you will use to compile SORTIE (g++ most likely). Otherwise you may get error messages.
+</p>
+
+<h3>GNU Scientific Library 1.16 for C++</h3>
+<p>
+The GSL provides most of SORTIE's math capability, including random number generation and probability density functions.  You can download it at <a href="http://www.gnu.org/software/gsl/">http://www.gnu.org/software/gsl/</a>.
+</p>
+
+
+<h3>Xerces for Java</h3>
+<p>
+The Xerces 2.11.0 library is used to parse XML in Java.  It needs no special handling to work - just download the library at <a href="http://xml.apache.org/dist/xerces-j/">http://xml.apache.org/dist/xerces-j</a>.  Either build the .jar library yourself or download the .jar directly.  
+</p>
+
+<h3>JFreeChart 1.0.19 for Java</h3>
+<p>
+JFreeChart draws charts and graphs in the Java interface.  You can download it <a href="http://www.jfree.org/jfreechart/index.html">here</a>.  You can build the source using Ant or just use the .jar file directly.
+</p>
+<p>
+The Java interface contains some modifications of JFreeChart classes.
+</p>
+
+<h3>TAR.exe</h3>
+<p>
+TAR is a utility called by the C++ core to archive together multiple files together into a single file (similar to the action of WinZip).  The version I am using can be downloaded <a href="http://unxutils.sourceforge.net/">here</a>.
+</p>
+<p>
+This is NOT a library - it is a separate executable called by a shell command in the code.  See <a href="porting.html">Porting to another OS.</a>
+</p>
+
+<h3>GZIP.exe</h3>
+<p>
+GZIP is a utility called by the C++ core to compress text files.  The version I am using can be downloaded at <a href="http://water.usgs.gov/GIS/gzip/">http://water.usgs.gov/GIS/gzip/</a>.
+</p>
+<p>
+This is NOT a library - it is a separate executable called by a shell command in the code.  See <a href="porting.html">Porting to another OS.</a>
+</p>
+
+<h3>JavaTar 2.5 for Java</h3>
+<p>
+JavaTar is a library used by the Java interface to extract files archived together by the C++ core.  It can be downloaded <a href="http://www.trustice.com/java/tar/">here</a>.  Build or download the .jar, and then bundle in like any other library.
+</p>
+
+<h3>JavaHelp 2.0</h3>
+<p>
+JavaHelp displays the SORTIE help files from the application. Alas, it is no longer supported by Oracle. Also see the <a href="../java/sortie_help.html">SORTIE help system</a> topic.
+</p>
+</body>
+
+</html>

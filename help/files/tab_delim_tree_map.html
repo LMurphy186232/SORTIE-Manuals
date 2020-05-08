@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Tab-delimited tree maps</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Tab-delimited tree maps</h1>
+<p>
+You can use tab-delimited tree maps to create your own tree map data. You can save files of this type in many programs, particularly spreadsheet programs like Microsoft Excel. You can use these maps to create <a href="../using/tree_initial_conditions.html">tree initial conditions</a>.
+</p>
+<p>
+Files must be in plain text with a ".txt" extension.
+</p>
+
+<h2>Tree map format</h2>
+<p>
+Here is an example of a tree map:
+</p>
+
+
+<table class="plaintable">
+<tr><th class="plaintable">X</th><th class="plaintable">Y</th><th class="plaintable">Species</th><th class="plaintable">Type</th><th class="plaintable">Diam</th><th class="plaintable">Height</th></tr>
+<tr><td class="plaintable">10.34</td><td class="plaintable">62.1</td><td class="plaintable">Maple</td><td class="plaintable">Seedling</td><td class="plaintable">0.24</td><td class="plaintable">0</td></tr>
+<tr><td class="plaintable">9.33838</td><td class="plaintable">88.9771</td><td class="plaintable">Beech</td><td class="plaintable">Sapling</td><td class="plaintable">4.567</td><td class="plaintable">0</td></tr>
+<tr><td class="plaintable">5.73746</td><td class="plaintable">5.16968</td><td class="plaintable">Hemlock</td><td class="plaintable">Adult</td><td class="plaintable">15.887</td><td class="plaintable">15.3</td></tr>
+<tr><td class="plaintable">127.039</td><td class="plaintable">146.606</td><td class="plaintable">Beech</td><td class="plaintable">Snag</td><td class="plaintable">35.41</td><td class="plaintable">28.7</td></tr>
+<tr><td class="plaintable">122.571</td><td class="plaintable">14.06372</td><td class="plaintable">Oak</td><td class="plaintable">Sapling</td><td class="plaintable">2.91</td><td class="plaintable">0</td></tr>
+<tr><td class="plaintable">9.31396</td><td class="plaintable">50.0366</td><td class="plaintable">Maple</td><td class="plaintable">Adult</td><td class="plaintable">23.554</td><td class="plaintable">14.82</td></tr>
+</table>
+
+<p>
+The first six columns are required, and must be in that order.
+</p>
+<p>
+The first row is column headers.
+</p>
+<p>
+Each subsequent row is the data for one tree. Trees can appear in any order. There is no limit to the number of trees.
+</p>
+<p>
+The first two columns are the X and Y coordinates of the tree. In the SORTIE-ND coordinate system, the origin is at the southwest corner of the plot. X increases to the east; Y to the north. There are no negative numbers. If there are trees outside the plot boundaries, you are warned of this; if you elect to continue loading the file, those trees are discarded.
+</p>
+<p>
+The third column is species. The species names must match those that appear in the parameter file, including case, EXCEPT that spaces in the species name must be replaced with underscores. For instance, if the species name is Red Maple, in the file the species is Red_Maple. SORTIE-ND will reject a tree map with an unrecognized species name. To find out what the species names are for your parameter file, use the <a href="../windows/edit_species_list_window.html">Edit species list window</a> to view the list.
+</p>
+<p>
+The fourth column is tree life history stage. Possible values are "Seedling", "Sapling", "Adult", and "Snag". (Case is unimportant.)
+</p>
+<p>
+The fifth column is tree diameter in cm. If the life history stage is "Seedling", this value is the diameter at 10 cm height. For all other types, this is DBH. If the diameter value and the life history stage do not match, diameter takes precedence. For instance: if the parameter file specifies that the minimum adult DBH is 10 cm, and the tree map contains a tree designated as a "sapling" with a diameter of 15 cm, then SORTIE-ND will create an adult with a DBH of 15.
+</p>
+<p>
+The sixth column is tree height in meters. If this value is set to 0, SORTIE-ND will use the allometry equations to calculate tree height. If this value is non-zero, then this height is assigned to the tree, even if the allometric equations would produce a different result. This feature is useful if you intend to use <a href="../data/growth_behaviors/index.html">growth behaviors</a> that separately increment diameter and height for your trees. When in doubt, use 0.
+</p>
+
+<h2>Adding extra data to the tree map</h2>
+<p>
+You can add additional data to the tree map beyond the first six columns. You can add extra columns for any item in the <a href="../data/tree_data_member_list.html">Tree data member list</a>. Put the short code name in the column header. There must be a value for each tree for each column, but if that data piece does not apply to that tree, it will be ignored. Even data that will be ignored must be of the proper type - don't use a value such as "NA" in a column of integers, for example.
+</p>
+
+<h2>Using tree maps</h2>
+<p>
+Tree maps can be loaded into SORTIE-ND only if there is a parameter file loaded as well. The data in the tree map is expected to match the parameter file: all species in the tree map must be present in the parameter file, and height values must not exceed the maximum height limits.
+</p>
+The the
+<p>
+Once you have prepared a tree map file according to the format below, and once you have loaded a compatible parameter file, use the "File->Open file" command to load your tab-delimited tree map file. If you save your parameter file after this point, the tree map will be included in it. To work with the tree map trees further, including removing them, use the <a href="../windows/manage_tree_maps_window.html">Manage tree maps window</a>.
+</p>
+<p>
+SORTIE-ND will not alter your tab-delimited tree map file.
+</p>
+
+
+
+
+<h2>Converting pre-6.0 SORTIE tree map files</h2>
+<p>
+If you have a tree map file from before SORTIE 6.0, you can simply copy and paste the columns with the following exception: The old version of SORTIE has reversed coordinate axes. So paste the old "X" values into the new "Y" column, and vice versa.
+</p>
+Last updated: 
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Weibull Climate Survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Weibull Climate Survival</h1>
+<p>
+This behavior assesses tree survival as a function of climate and larger neighbor trees.  A tree has a maximum potential annual probability of survival that is reduced due to several possible factors.  
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Competition Effect "C"</td><td>   The C parameter for the competition effect.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Competition Effect "D"</td><td>  The D parameter for the competition effect.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Competition Gamma</td><td> The gamma parameter for the competition effect. This controls the response of a target tree to competition as a function of its size.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Max Survival Prob (0-1)</td><td> The maximum possible annual probability of survival for a target tree, expressed as a probability between 0 and 1.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Precip Effect "A"</td><td> The A parameter for the precipitation effect. Units of precipitation are millimeters per year. </td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Precip Effect "B"</td><td> The B parameter for the precipitation effect. Units of precipitation are millimeters per year.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Precip Effect "C"</td><td> The C parameter for the precipitation effect. Units of precipitation are millimeters per year. </td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Size Effect X0</td><td> The mode of the size effect curve.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Size Effect Xb</td><td> The variance of the size effect curve.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Temp Effect "A"</td><td> The A parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Temp Effect "B"</td><td> The B parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Temp Effect "C"</td><td> The C parameter for the temperature effect. The effect is based on mean annual temperature in degrees Celsius. </td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Max Neighbor Search Radius (m)</td><td>  The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Minimum Neighbor DBH (cm)</td><td> The minimum DBH for trees of that species to compete as neighbors. Used for all species, not just those using Weibull Climate growth.</td></tr>
+
+<tr><td class="parname">Weibull Climate Survival - Size Effect Minimum DBH</td><td>  The minimum possible DBH for size effect.  Trees with a DBH less than this value will use this value in the size effect calculation instead.</td><tr>
+
+</table>
+<h3>How it works</h3>
+
+<p>
+For a tree, the annual probability of survival is calculated as:
+</p>
+<br><center><i>Survival Probability = Max Survival Probability * Size Effect * Precipitation Effect * Crowding Effect * Temperature Effect</i></center><br>
+<p>
+Max Survival Probability is the maximum possible annual survival probability, entered in the <b>Weibull Climate Survival - Max Survival Prob (0-1)</b> parameter. <i>Size Effect</i>, <i>Precipitation Effect</i>, <i>Crowding Effect</i>, and <i>Temperature Effect</i> are all factors which act to reduce the maximum survival probability and will vary depending on the conditions a tree is in.  Each of these effects is a value between 0 and 1.
+</p>
+
+<p>
+<i>Size Effect</i> is calculated with a lognormal function, as follows:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/nci_size_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>DBH </i>is of the target tree, in cm</li>
+<li><i>X<sub>0</sub></i> is the <b>Weibull Climate Survival - Size Effect X0</b> parameter; this is the mode of the function, expressed in cm</li>
+<li><i>X<sub>b</sub></i> is the <b>Weibull Climate Survival - Size Effect Xb</b> parameter; this is the variance of the function, expressed in cm </li>
+</ul>
+<p>
+You can set a minimum DBH for the size effect in the <b>Weibull Climate Survival - Size Effect Minimum DBH</b> parameter.  Any target tree whose DBH is less than this value will get a size effect based on the minimum DBH instead.  This allows you to avoid problems with very small trees that can occur because of the shape of the lognormal function.
+</p>
+
+<p>
+<i>Precipitation Effect</i> is calculated as:
+</p>
+<center><i>PE = </i><img alt=" Weibull Climate Survival precipitation effect equation" src="../data_files/weib_precip.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>A</i> is the <b>Weibull Climate Survival - Precip Effect "A"</b> parameter</li>
+<li><i>B</i> is the <b>Weibull Climate Survival - Precip Effect "B"</b> parameter</li>
+<li><i>C</i> is the <b>Weibull Climate Survival - Precip Effect "C"</b> parameter</li>
+
+<li><i>P</i> is the plot's annual precipitation, in millimeters, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+
+<p>
+<i>Temperature Effect</i> is calculated as:
+</p>
+<center><i>TE = </i><img alt=" Weibull Climate Survival temperature effect equation" src="../data_files/weib_temp.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>A</i> is the <b>Weibull Climate Survival - Temp Effect "A"</b> parameter</li>
+<li><i>B</i> is the <b>Weibull Climate Survival - Temp Effect "B"</b> parameter</li>
+<li><i>C</i> is the <b>Weibull Climate Survival - Temp Effect "C"</b> parameter</li>
+
+<li><i>T</i> is the plot's annual mean temperature, in degrees Celsius, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+
+
+<p>
+<i>Crowding Effect</i> is calculated as:
+</p>
+<center><img alt="Weibull Climate Survival crowding effect equation" src="../data_files/weib_clim_crowding_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>Weibull Climate Survival - Competition Effect "C"</b> parameter</li>
+<li><i>DBH</i> is of the target tree, in cm</li>
+<li><i>&#947;</i> is the <b>Weibull Climate Survival - Competition Effect gamma </b> parameter</li>
+<li><i>D</i> is the <b>Weibull Climate Survival - Competition Effect "D"</b> parameter</li>
+<li><i>ND</i> is the number of neighbors with a DBH greater than the target tree's DBH </li>
+</ul>
+
+<p>
+The <i>ND</i> value is a count of all larger neighbors with a DBH at least that of the <b> Weibull Climate Survival - Minimum Neighbor DBH, in cm</b> parameter, out to a maximum distance set in the <b> Weibull Climate Survival - Max Neighbor Search Radius (m)</b> parameter.  The value is a straight count - it is not scaled or relativized in any way.  Seedlings never compete.    
+</p>
+
+<p>
+The probability of survival is for a single year.  For multi-year timesteps, the timestep survival probability is the annual probability raised to the power of the number of years per timestep. Once the probability has been calculated, a random number is used to determine whether a tree lives or dies.    
+</p>
+
+
+ 
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species. It cannot be applied to seedlings.
+</p>
+</body>
+</html>

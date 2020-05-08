@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Beer's law light filter</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Beer's law light filter</h1>
+<h3>How it works</h3>
+<p>
+This behavior simulates a filter that reduces light according to Beer's Law.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Height of Light Filter, in m</td><td> Height, in meters, at which the Beer's law light filter hangs.</td></tr>
+
+<tr><td class="parname">Light Filter Light Transmission Coefficient</td><td> Amount of light that is blocked by the light filter.</td></tr>
+
+</table>
+<h3>How it works</h3>
+<p>
+Imagine a fog that hangs out on the forest floor and ends abruptly at a certain height. All trees shorter than the top of the fog layer will have their light attenuated but not blocked completely. The closer they get to the top of the fog the more light is let in. The amount of light which actually gets through is calculated according to Beer's Law, where <i>transmission = e<sup>-az</sup></i>, where <i>a</i> is the <b>Light Filter Light Transmission Coefficient</b> parameter and <i>z</i> = thickness of the filter, in meters (which is the distance from the light point to the top of the filter - the <b>Height of Light Filter, in m</b> parameter). This filter behavior can be used to, for instance, replicate the effects of an herbaceous layer in reducing light to young seedlings. The height of the filter is randomized slightly each time the thickness of the filter over the light point is calculated to introduce a stochastic element.
+</p>
+<p>
+Trees can be given a respite from the effects of the filter.  This behavior does not set the respite counter but it will respect any values which another behavior has put in. 
+</p>
+<p>
+Trees can be given a rooting height in addition to their normal height. This value is added to their existing height to get their effective height, which is what will be applied when determining the thickness of the filter overhead. Again, this behavior does not set this height but will use it if another behavior sets it.
+</p>
+<p>
+This behavior DOES NOT ACTUALLY CALCULATE LIGHT LEVELS. Any tree species and types to which this filter is applied must also have one of the other light behaviors assigned to it. This behavior assumes the value is a GLI value; using Sail Light will probably not produce good results.
+</p>
+<p>
+This behavior only affects tree types and species to which it is applied in the behavior list of the parameter file. It will ignore all other trees, even if they are short enough to be beneath the filter level.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

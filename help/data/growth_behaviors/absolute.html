@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Absolute growth behaviors</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Absolute growth behaviors</h1>
+<p>Several behaviors apply an absolute growth version of the Michaelis-Menton function.</p>
+
+<h3>Parameters for these behaviors</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Adult Constant Area Growth in sq. cm/yr</td><td> The constant amount of basal area by which to increase a tree's basal area. Applies to basal-area-increment-limited behaviors.</td></tr>
+
+<tr><td class="parname">Adult Constant Radial Growth in mm/yr</td><td> The constant value by which to increase a tree's radius at breast height. Applies to radial-increment-limited-growth behaviors.</td></tr>
+
+<tr><td class="parname">Asymptotic Diameter Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light - function term A below.</td></tr>
+
+<tr><td class="parname">Slope of Growth Response (S)</td><td> Slope of the Michaelis-Menton growth function at zero light - function term S below.</td></tr>
+
+<tr><td class="parname">Length of Current Release Factor</td><td> Controls the magnitude of the effects of release.</td></tr>
+
+<tr><td class="parname">Length of Last Suppression Factor</td><td> Controls the magnitude of the effects of suppression.</td></tr>
+
+<tr><td class="parname">Mortality Threshold for Suppression</td><td> Defines the growth rate for suppressed status in terms of tree mortality. The value is expressed as the proportion of trees which die at the growth rate which defines suppressed status, expressed as a fraction between 0 and 1. For instance, if this value is 0.1, the growth
+rate for suppressed status is one at which 10% of trees die with that growth.</td></tr>
+
+<tr><td class="parname">Years Exceeding Threshold Before a Tree is Suppressed</td><td> The number of years for which a tree's growth must be below the defined suppression threshold before it is considered to be suppressed.</td></tr>
+
+</table>
+
+<p>
+Absolute growth is calculated with the equation:
+</p>
+<center><img src="../data_files/absolute_mm.gif"></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y = log10(radial growth + 1)</i></li>
+<li><i>SF</i> is the suppression factor</li>
+<li><i>A</i> is the <b>Asymptotic Diameter Growth (A)</b> parameter</li> 
+<li><i>S</i> is the <b>Slope of Growth Response (S)</b> parameter </li>
+<li><i>GLI</i> is the global light index, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+</ul>
+<p>
+Amount of diameter growth per timestep is calculated as 
+</p>
+<center><i>growth = (((10<sup>Y</sup> - 1) * 2 )/ 10) * T</i></center>
+<p>
+where T is the number of years per timestep.
+</p>
+
+ 
+<p>
+The absolute growth behaviors also take into account suppression status. A tree is considered suppressed if its growth rate for the previous timestep falls below a certain threshold.  That threshold is the rate of growth at which X% of juveniles die, where X is a user-settable parameter. The threshold is calculated for each species by solving the <a href="../mortality_behaviors/index.html">BC mortality equation</a> for G (growth), where m is the threshold growth rate.
+</p>
+<p>
+A tree's suppression state is a multiplicative factor in its growth rate. If a tree is not suppressed, the suppression factor in the growth equation is set to 1 (no effect on growth). If the tree is suppressed, the suppression factor is calculated as follows:
+</p>
+<center><i>SF = e<sup>((g*YLR) - (d*YLS))</sup></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>SF</i> is the suppression factor</li>
+<li><i>g</i> is the <b>Length of Current Release Factor</b> parameter</li>
+<li><i>YLR</i> is the length of the last (or current) period of release,
+in years</li>
+<li><i>d</i> is the <b>Length of Last Suppression Factor</b> parameter</li>
+<li><i>YLS</i> is the length of the last (or current) period of
+suppression, in years</li>
+</ul>
+<p>
+Details of this model are published in <a href="../../more_info/further_reading.html">Wright et al 2000</a>. 
+</p>
+ 
+<a name="abs_rad"><h2>Absolute growth limited to radial increment</h2></a>
+<h3>How it works</h3>
+<p>This behavior calculates an amount of diameter growth according to the absolute growth equation. Growth is limited to a maximum of the constant radial increment for the species of tree to which it is being applied.  The increment is calculated as described in the "Constant radial growth" behavior. Note that the increment parameter specifies <b>radial</b> growth; the behavior makes all necessary conversions.</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You can use either the diam with auto height or diam only version.</p>
+
+
+
+
+<a name="abs_ba"><h2>Absolute growth limited to basal area increment</h2></a>
+<h3>How it works</h3>
+<p>This behavior calculates an amount of diameter growth according to the absolute growth equation. Growth is limited to a maximum of a constant basal area increment. The amount of diameter increase is calculated by dividing the annual basal area increment of the tree's species by the diameter of the tree.  The increment is calculated as described in the "Constant basal area growth" behavior.</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You can use either the diam with auto height or diam only version.</p>
+
+
+
+
+<a name="abs_unlim"><h2>Non-limited absolute growth - diam with auto height</h2></a>
+<h3>How it works</h3>
+The amount of diameter increase returned by the absolute growth equation is applied to the tree. 
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You can use either the diam with auto height or diam only version.</p>
+</body>
+</html>

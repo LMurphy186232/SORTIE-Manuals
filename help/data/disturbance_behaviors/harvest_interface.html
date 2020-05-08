@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Harvest interface</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Harvest interface</h1>
+
+<p>
+The harvesting interface allows SORTIE to work directly with another program.  SORTIE tells the other program what trees are eligible for harvesting, and the other program replies with its choices.  This lets users write code for harvesting without having to modify SORTIE itself.
+</p>
+<p>
+Warning - this link between SORTIE and another program is inefficient.  It may be very slow when there are large numbers of trees.  It is for convenience, not speed.
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "harvest".
+</p>
+
+<h3>How it works</h3>
+<p>
+After adding the Harvest Interface behavior to your run, you set it up using the <a href="../../windows/edit_harvest_interface_window.html">Harvest Interface</a> window. Parameters in this documentation are defined by their names on that screen.
+</p>
+<p>
+You either create or find a separate program (an executable) that reads a text file of trees, makes decisions about which to kill, then writes those trees to kill to another text file.  You tell SORTIE where to find this executable using <b>Path and filename of the executable</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.
+</p>
+<p>
+Source code for one external module can be found in the "Other downloads" section of the <a href="http://www.sortie-nd.org">SORTIE website.</a>
+</p>
+<p>
+Each harvest timestep, SORTIE writes a text file with a list of trees eligible for harvest.  The trees in the list are those to which the Harvest Interface behavior is applied.  You choose which trees those are in <b>Behavior currently assigned to</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window. Once the file is written, SORTIE then launches your executable.  Your executable writes a file in response with the list of trees it wishes SORTIE to kill.
+</p>
+<p>
+Trees that are cut are treated exactly like those in SORTIE harvest.  That is, they disappear completely and do not become snags.  See the documentation on <a href="harvest.html">Harvest</a> for more details. The cut details for each timestep are written to the <a href="../grids/harvest_grid.html">Harvest Results grid</a>. (Warning - if you put both the Harvest and Harvest Interface behavior in the same run, they will overwrite each other's results in the grid.)
+</p>
+<p>
+Because the process can be slow, you can set harvests to occur less often than every timestep.  To do this, use <b>How often to harvest, in years</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.
+</p>
+<p>
+Optionally, you can also add new tree data members that are controlled by the executable.  The executable can write a file with a list of trees to update, and the new values for those variables for each tree.
+</p>
+
+<h4>File formats</h4>
+<p>
+Each harvesting timestep, SORTIE begins by writing a file of all trees eligible for harvest.  You give SORTIE the path and name of that file in <b>Tree file that SORTIE will write</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.  SORTIE does not care what the filename nor file extension is.  The file is tab-delimited text.  It has the following format:
+</p>
+<p>
+Line 1, two columns: Current timestep, total number of timesteps<br/>
+Line 2, column names, 6+n columns:  "X", "Y", "Species", "Type", "Diam", "Height",  [...]<br/>
+Subsequent lines, 6+n columns, one line per tree: X, Y, species number, type number, DBH/diam10, height, [...].  
+</p>
+<p>
+Species is given as a number from 0 to x - 1, where x is the number of species.  The number counts the species in the order in which they are listed in the parameter file, which is the same as the order they are listed in the <a href="../../windows/edit_species_list_window.html">Edit Species</a> window.
+</p>
+<p>
+Type is given as a number as well.  The type numbers are:
+</p>
+<ol>
+<li>Seedling</li>
+<li>Sapling</li>
+<li>Adult</li>
+<li>Stump</li>
+<li>Snag</li>
+</ol>
+<p>
+Stumps are not available for harvesting.
+</p>
+<p>
+The "Diam" value is diameter at 10 cm if the tree type is seedling, and DBH in all other cases.  Both of these values are in cm.
+</p>
+<p>
+The "Height" value is the height of the tree in meters.
+</p>
+<p>
+The [...] represents additional columns that you can ask SORTIE to include.  You set this up using the <b>File columns</b> section of the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.  You can choose any other <a href="../tree_data_member_list.html">tree data member</a> that applies to all of the kinds of trees to which the harvest interface is applied, including new ones that you add.  The list of tree data members depends on the other behaviors in the run.  The column header matches the internal SORTIE name of the data member (which is what is displayed to you when you choose new data members).  You cannot change the first six default columns. 
+</p>
+<p>
+The executable writes a file in response with the trees that it wishes to harvest (<b>Tree harvest file that the executable will write</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window).  If you have set up new tree data members, the executable also writes a second file with a list of live trees to update (<b>Tree update file that the executable will write</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window).  All trees in both of these files must come from the tree list that SORTIE wrote for that timestep.  No tree may appear in both files.
+</p>
+<p>
+The file format of the user response files is identical to that of the SORTIE file, with the same columns in the same order.
+</p>
+<p>
+Each harvest timestep, all these files are overwritten.
+</p>
+<p>
+If there are no trees eligible for harvesting, SORTIE still writes a file with only the first two header lines (no individual tree lines).  It expects the executable to do the same if it does not want trees harvested or updated.
+</p>
+
+<h4>Adding new variables</h4>
+<p>
+You can request that SORTIE create new data members under the executable's control for the trees to which this behavior applies.  Set this up in the <b>New tree data members to add</b> section of the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.  You can create as many as you want.  You can give them any name up to 9 characters long. They each hold a float value.  The values are uninitialized in newly created trees.
+</p>
+<p>
+If you want the new data members to be written to the file that SORTIE writes, make sure you put them in the list of file columns.
+</p>
+<p>
+If new data members have been created, SORTIE expects the executable, each time it is called, to write a file with the list of trees it wishes to update, and the new values for these data members.  You can only make changes to the new data members that you create.  You cannot change any other attribute of a tree.
+</p>
+
+<h4>The user executable</h4>
+<p>
+The user executable launches, runs, and quits once per harvest timestep.  SORTIE waits for it to finish before resuming.  This means it must do any necessary initialization and setup each harvest timestep.
+</p>
+<p>
+The executable can be written in any language, and can do anything it wishes.  The only two requirements is that it be a standalone executable, and that it produce the file of trees to harvest that SORTIE expects.
+</p>
+<p>
+The executable should be prepared for the condition that there are no trees in the file SORTIE writes, and should write empty files if it doesn't want any trees harvested or updated.
+</p>
+<p>
+SORTIE's behavior cannot be guaranteed in the event of a crash in the user executable.
+</p>
+<p>
+The executable probably has its own input data for setup. If it takes arguments during launch, you can give SORTIE a string to pass to the executable in <b>Arguments to pass to the executable</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window. 
+</p>
+<p>
+SORTIE provides a convenience feature for those executables that read setup parameters from a file.  You may wish to set up a SORTIE batch run where your executable uses different parameters for each run.  You can give SORTIE a file of all the parameters for the entire batch in a text file, and for each run, it will separate out that run's parameters and write them to a file for your executable.  The parameters for a single run must be on a single line of the entire batch file, and will be written to a one-line file for the individual run.  Specify the entire-batch parameters file in <b>Parameters file for batch run</b>, and the single-run file in <b>Single-run parameters file for batch run</b> on the <a href="../../windows/edit_harvest_interface_window.html">Edit Harvest Interface</a> window.
+</p>
+<p>
+For example, suppose there is an executable that takes three parameters.  It reads these parameters from a one-line file named "par.txt", like this:
+</p>
+<table class="plaintable">
+<tr><td class="plaintable">par1</td><td class="plaintable">par2</td><td class="plaintable">par3</td></tr>
+</table>
+<p>
+You can set up a batch of three runs, then set up all the parameters in a single file, like this:
+</p>
+<table class="plaintable">
+<tr><td class="plaintable">par1_1</td><td class="plaintable">par2_1</td><td class="plaintable">par3_1</td></tr>
+<tr><td class="plaintable">par1_2</td><td class="plaintable">par2_2</td><td class="plaintable">par3_2</td></tr>
+<tr><td class="plaintable">par1_3</td><td class="plaintable">par2_3</td><td class="plaintable">par3_3</td></tr>
+</table>
+<p>
+You give SORTIE this file, and tell it to write "par.txt" for each run.  The first run in the batch, SORTIE will write the first line to "par.txt"; the second run in the batch, it will write the second line to "par.txt", etc.
+</p>
+<b>Tips:</b><br/>
+<p>
+If you are having trouble with SORTIE not finding your code's output file, try explicitly writing out directories in your code (i.e. "C:\sortie\file.txt" instead of just "file.txt").
+</p>
+
+<h3>How to apply it</h3>
+<p>
+It is easiest if you add the harvest interface after the rest of your parameter file is complete, so that you have full access to data members.  Open <a href="../../windows/edit_harvest_interface_window.html">Edit->Harvest Interface</a> and complete the setup.  This adds the harvest interface behavior to your run.  To remove it, use the <a href="../../windows/model_flow_window.html">Model flow window</a>. 
+</p>
+
+</body>
+</html>

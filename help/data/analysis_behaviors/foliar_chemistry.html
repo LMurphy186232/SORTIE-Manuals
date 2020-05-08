@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Foliar Chemistry</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Foliar Chemistry</h1>
+
+<p>
+This behavior calculates chemistry components as a function of DBH. The components calculated are N, P, specific leaf area (SLA), percent acid detergent fiber, percent acid detergent cellulose, percent acid detergent lignin, percent condensed tannins, and total phenolics.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Foliar Chemistry - Cellulose Concentration</td><td> The proportion of foliar dry weight (0-1) that is acid detergent cellulose. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Fiber Concentration</td><td> The proportion of foliar dry weight (0-1) that is acid detergent fiber. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Foliar Weight (a)</td><td> The "a" parameter in the equation for foliar dry weight. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Foliar Weight (b)</td><td> The "b" parameter in the equation for foliar dry weight. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Lignin Concentration</td><td> The proportion of foliar dry weight (0-1) that is acid detergent lignin. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - N Concentration</td><td> The proportion of foliar dry weight (0-1) that is N. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - P Concentration</td><td> The proportion of foliar dry weight (0-1) that is P. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Phenolics Concentration</td><td> The proportion of foliar dry weight (0-1) that is phenolics. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - SLA Concentration</td><td> The proportion of foliar dry weight (0-1) that is specific leaf area. </td></tr>
+
+<tr><td class="parname">Foliar Chemistry - Tannins Concentration</td><td> The proportion of foliar dry weight (0-1) that is tannins. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+For each tree, the foliar dry weight is calculated as:
+</p>
+<center><i>F = a * DBH <sup> b</sup></i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>F</i> = foliar dry weight in kg</li>
+<li><i>a</i> = the <b>Foliar Chemistry - Foliar Weight (a)</b> parameter </li>
+<li><i>b</i> = the <b>Foliar Chemistry - Foliar Weight (b)</b> parameter </li>
+<li><i>DBH</i> = tree's DBH in cm
+</ul>
+<p>
+For each component, the amount is the tree's foliar dry weight multiplied by the parameter for that component's concentration.  
+</p>
+<p>
+The weight of each component, in metric tons, is summed for each species and saved in a grid called <a href="../grids/foliar_chem_grid.html">Foliar Chemistry</a>.  You can save these values in a detailed output file for analysis. You of course can skip any of the components by entering 0's for their concentration parameter values.
+</p>
+
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/foliar_chem_grid.html">Foliar Chemistry</a> grid. You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system. 
+</p>
+
+
+</body>
+</html>

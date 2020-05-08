@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI size effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI size effects</h1>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+<hr/>
+<h2>Default size effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Size Effect Mode, in cm (X0)</td><td> The mode of the size effect curve. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Variance, in cm (Xb)</td><td> The variance of the size effect curve.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/nci_size_effect_diam.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Size Effect Mode, in cm (X0)</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Size Effect Variance, in cm (Xb)</b></li>
+</ul>
+
+
+
+
+
+
+
+<hr/>
+<h2>Size effect w/ lower bound</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Size Effect Mode, in cm (X0)</td><td> The mode of the size effect curve. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Variance, in cm (Xb)</td><td> The variance of the size effect curve.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Minimum Diameter</td><td> The minimum possible diameter for size effect.  Trees with a diameter less than this value will use this value in the size effect calculation instead.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/nci_size_effect_diam.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Size Effect Mode, in cm (X0)</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Size Effect Variance, in cm (Xb)</b></li>
+</ul>
+<p>
+You can set a minimum diameter for the size effect in the <b>NCI Size Effect Minimum Diameter</b> parameter.  Any target tree whose diameter is less than this value will get a size effect based on the minimum diameter instead. This allows you to avoid problems with very small trees that can occur because of the shape of the lognormal function.
+</p>
+
+
+
+
+
+
+
+<hr/>
+<h2>Size effect power function</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Size Effect "a"</td><td> Size effect power function scaling factor "a" parameter.</td></tr>
+
+<tr><td class="parname">NCI Size Effect "b"</td><td> Size effect exponent "b" parameter.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+Size Effect is calculated as: 
+</p>
+<center><i>SE = a * diam<sup>b</sup></i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>a</i> is the <b>NCI Size Effect "a"</b> parameter</li>
+<li><i>b</i> is the <b>NCI Size Effect "b"</b> parameter</li>
+</ul>
+
+
+
+
+
+
+
+<hr/>
+<h2>Size effect shifted lognormal</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Size Effect Minimum Diameter</td><td> The minimum possible diameter for size effect.  Trees with a diameter less than this value will use this value in the size effect calculation instead.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Mode, in cm (X0)</td><td> The mode of the size effect curve. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Variance, in cm (Xb)</td><td> The variance of the size effect curve.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Shift, in cm (Xp)</td><td> The amount of peak shift.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/shifted_lognormal_size_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Size Effect Mode, in cm (X0)</b> parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Size Effect Variance, in cm (Xb)</b></li>
+<li><i>X<sub>p</sub></i> is the <b>NCI Size Effect Shift, in cm (Xp)</b></li>
+</ul>
+<p>
+You can set a minimum diameter for the size effect in the <b>NCI Size Effect Minimum Diameter</b> parameter.  Any target tree whose diameter is less than this value will get a size effect based on the minimum diameter instead. This allows you to avoid problems with very small trees that can occur because of the shape of the lognormal function.
+</p>
+
+
+
+
+
+
+
+<hr/>
+<h2>Size effect compound exponential</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">Size Effect "a"</td><td> The "a" parameter in the compound exponential function. </td></tr>
+
+<tr><td class="parname">Size Effect "b"</td><td> The "b" parameter in the compound exponential function. </td></tr>
+
+<tr><td class="parname">Size Effect "c"</td><td> The "c" parameter in the compound exponential function. </td></tr>
+
+<tr><td class="parname">Size Effect "d"</td><td> The "d" parameter in the compound exponential function. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/size_effect_compound_exp.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, <b>IN METERS</b> (d10 for seedlings, DBH for all others)</li>
+<li><i>a</i> is the <b>Size Effect "a"</b> parameter</li>
+<li><i>b</i> is the <b>Size Effect "b"</b> parameter</li>
+<li><i>c</i> is the <b>Size Effect "c"</b> parameter</li>
+<li><i>d</i> is the <b>Size Effect "d"</b> parameter</li>
+</ul>
+
+
+
+
+
+
+
+
+
+<hr/>
+<h2>Size effect shifted lognormal w/ infestation</h2>
+<p>
+This size effect features two different sets of parameters, one for healthy trees and one for trees with an infestation of a pest or pathogen.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Size Effect Minimum Diameter</td><td> The minimum possible diameter for size effect.  Trees with a diameter less than this value will use this value in the size effect calculation instead.</td></tr>
+
+<tr><td class="parname">NCI Size Effect X0, Uninfested Trees</td><td> The mode of the size effect curve, for healthy trees. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Xb, Uninfested Trees</td><td> The variance of the size effect curve, for healthy trees.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Xp, Uninfested Trees</td><td> The amount of peak shift, for healthy trees.</td></tr>
+
+<tr><td class="parname">NCI Size Effect X0, Infested Trees</td><td> The mode of the size effect curve, for trees infested with a pest or pathogen. </td></tr>
+
+<tr><td class="parname">NCI Size Effect Xb, Infested Trees</td><td> The variance of the size effect curve, for trees infested with a pest or pathogen.</td></tr>
+
+<tr><td class="parname">NCI Size Effect Xp, Infested Trees</td><td> The amount of peak shift, for trees infested with a pest or pathogen.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Trees to which this is assigned must also be assigned a behavior that simulates a pest or pathogen outbreak, such as <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> or <a href="../disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a>. 
+</p>
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/shifted_lognormal_size_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, in cm (d10 for seedlings, DBH for all others)</li>
+<li><i>X<sub>0</sub></i> is either the <b>NCI Size Effect X0, Uninfested Trees</b> or the <b> NCI Size Effect X0, Infested Trees</b> parameter</li>
+<li><i>X<sub>b</sub></i> is either the <b>NCI Size Effect Xb, Uninfested Trees</b> or the <b> NCI Size Effect Xb, Infested Trees</b> parameter</li>
+<li><i>X<sub>p</sub></i> is either the <b>NCI Size Effect Xp, Uninfested Trees</b> or the <b> NCI Size Effect Xp, Infested Trees</b> parameter</li>
+</ul>
+<p>
+Trees which have not yet been marked as infested by the pest/pathogen behavior get the "uninfested" set of parameters; those that are infested get the "infested" set of parameters.
+</p>
+<p>
+You can set a minimum diameter for the size effect in the <b>NCI Size Effect Minimum Diameter</b> parameter.  Any target tree whose diameter is less than this value will get a size effect based on the minimum diameter instead. This allows you to avoid problems with very small trees that can occur because of the shape of the lognormal function.
+</p>
+
+
+
+
+
+
+<hr/>
+<h2>Size effect compound exponential w/ infestation</h2>
+<p>
+This size effect features two different sets of parameters, one for healthy trees and one for trees with an infestation of a pest or pathogen.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">Size Effect "a", Uninfested Trees</td><td> The "a" parameter in the compound exponential function, for healthy trees. </td></tr>
+
+<tr><td class="parname">Size Effect "b", Uninfested Trees</td><td> The "b" parameter in the compound exponential function, for healthy trees. </td></tr>
+
+<tr><td class="parname">Size Effect "c", Uninfested Trees</td><td> The "c" parameter in the compound exponential function, for healthy trees. </td></tr>
+
+<tr><td class="parname">Size Effect "d", Uninfested Trees</td><td> The "d" parameter in the compound exponential function, for healthy trees. </td></tr>
+
+<tr><td class="parname">Size Effect "a", Infested Trees</td><td> The "a" parameter in the compound exponential function, for trees infested with a pest or pathogen. </td></tr>
+
+<tr><td class="parname">Size Effect "b", Infested Trees</td><td> The "b" parameter in the compound exponential function, for trees infested with a pest or pathogen. </td></tr>
+
+<tr><td class="parname">Size Effect "c", Infested Trees</td><td> The "c" parameter in the compound exponential function, for trees infested with a pest or pathogen. </td></tr>
+
+<tr><td class="parname">Size Effect "d", Infested Trees</td><td> The "d" parameter in the compound exponential function, for trees infested with a pest or pathogen. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Trees to which this is assigned must also be assigned a behavior that simulates a pest or pathogen outbreak, such as <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> or <a href="../disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a>. 
+</p>
+<p>
+<i>Size Effect</i> is calculated as:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/size_effect_compound_exp.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>diam</i> is the diameter of the target tree, <b>IN METERS</b> (d10 for seedlings, DBH for all others)</li>
+<li><i>a</i> is either the <b>Size Effect "a", Uninfested Trees</b> or <b>Size Effect "a", Infested Trees</b> parameter</li>
+<li><i>a</i> is either the <b>Size Effect "b", Uninfested Trees</b> or <b>Size Effect "b", Infested Trees</b> parameter</li>
+<li><i>a</i> is either the <b>Size Effect "c", Uninfested Trees</b> or <b>Size Effect "c", Infested Trees</b> parameter</li>
+<li><i>a</i> is either the <b>Size Effect "d", Uninfested Trees</b> or <b>Size Effect "d", Infested Trees</b> parameter</li>
+</ul>
+<p>
+Trees which have not yet been marked as infested by the pest/pathogen behavior get the "uninfested" set of parameters; those that are infested get the "infested" set of parameters.
+</p>
+
+
+
+</body>
+</html>

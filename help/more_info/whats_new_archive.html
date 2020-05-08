@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>What's New Archive</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>What's New Archive</h1>
+
+<h2>Version 7.4</h2>
+<ul>
+<li>Added the <a href="../data/state_change_behaviors/monthly_climate_data_importer.html">Monthly Climate Data Importer</a> behavior.</li>
+<li>Improvements to various charts and graphs</li> 
+<li>Bug fixes</li>
+</ul>
+
+<h2>Version 7.3</h2>
+<ul>
+<li>You can choose a different azimuth direction for north when doing solar calculations in the <a href="../data/light_behaviors/gli_points_file_creator.html">GLI Points File Creator</a> behavior.</li>
+<li>The behaviors <a href="../data/disturbance_behaviors/insect_infestation.html">Insect Infestation</a> and <a href="../data/disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a> now have parameters to add end dates to infestations.</li> 
+<li>Bug fixes</li>
+</ul>
+
+<h2>Version 7.2</h2>
+<p>
+<b>Note</b>: If you have a parameter file from an earlier version, load your file and save it. SORTIE-ND will automatically make any needed adjustments to your parameter file. If there are errors,  your file may be too old. Load and save into 6.11, then into 7.2.<br>
+</p>
+<br><b>New in version 7.2:</b><br>
+<ul>
+<li>New <a href="../windows/model_settings_window.html">parameter editing system</a> that keeps all setup in one place</li>
+<li>Created new versions of the <a href="../data/growth_behaviors/nci.html">NCI growth</a>, <a href="../data/growth_behaviors/nci_quadrat_growth.html">NCI quadrat growth</a>, and <a href="../data/mortality_behaviors/nci.html">NCI mortality</a> behaviors that allow you to completely customize the multiplicative effects on growth and survival</li>
+<li>New behavior <a href="../data/disturbance_behaviors/dens_dep_infestation.html">Density dependent infestation</a> to simulate pest and pathogen outbreaks</li>
+<li>New behavior <a href="../data/mortality_behaviors/size_dependent_logistic_mortality.html">Size dependent logistic mortality</a></li>
+<li>New behavior <a href="../data/disperse_behaviors/stoch_double_log_temp_dep_neigh_disperse.html">Stochastic Double Logistic Temp Dependent Neighborhood Disperse</a></li>
+<li>New behavior <a href="../data/mortality_behaviors/clim_comp_dep_neighborhood.html">Climate and Competition Dependent Neighborhood Survival</a></li>
+<li>New behavior <a href="../data/state_change_behaviors/seasonal_water_deficit.html">Seasonal Water Deficit</a></li>
+<li>New climate variables in the <a href="../data/plot.html">Plot</a> object: Annual Nitrogen Deposition, Seasonal Precipitation, and Water Deficit</li>
+<li>User-defined distribution and sapling mortality for <a href="../data/disturbance_behaviors/generalized_harvest_regime.html">Generalized Harvest Regime</a></li>
+</ul>
+
+<h2>Version 7.0 beta</h2>
+<p>
+There have been some big changes in the inner workings of SORTIE-ND to allow more flexibility and function. These changes have been extensively tested but until they get used day-to-day, we know problems can still appear. Therefore we decided to officially release version 7.0 as a beta. Please report all problems to tech support and we will resolve them as quickly as possible.
+</p>
+<p>
+<b>Note</b>: If you have a parameter file from an earlier version, load your file and save it. SORTIE-ND will automatically make any needed adjustments to your parameter file. If there are errors,  your file may be too old. Load and save into 6.11, then into 7.1.<br>
+</p>
+<br><b>New in version 7.0:</b><br>
+<ul>
+<li>You can now add multiple copies of behaviors to your runs and apply them to different tree life history stages with different parameters.</li>
+<li>The user manual has been rewritten to expand on basic ideas and help guide you through run setup.</li>
+<li>Data visualization charting controls have been simplified in order to help you manage all the possible chart options for an output file.</li>
+<li>A new menu option called <a href="../windows/tools_menu.html">Tools</a> holds useful utilities for working with SORTIE-ND.</li>
+<li>A new option in the "Tools" menu allows you to <a href="../windows/tools_copy_detailed_output_file_window.html">copy and rename detailed output files</a>.</li>
+<li>A new option in the "Tools" menu allows you to <a href="../windows/batch_extract_detailed_output_files_window.html">extract data from multiple output files at the same time.</a></li>
+<li>A "recent" charts button lets you find your favorite charts easily each time you load an output file.</li>
+<li>SORTIE-ND tracks open chart windows at the top of the screen so you can quickly pull up the one you want.</li>
+<li>A file history in the "File" menu keeps track of recently opened parameter and output files.</li>
+</ul>
+
+<h2>Version 6.11, released April 20, 2011</h2>
+<p><b>Note</b>: If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.10, load your file and save it. SORTIE-ND will automatically make any needed adjustments to your parameter file.</p>
+
+<br><b>New in version 6.11:</b><br>
+<ul>
+<li>Output now has full support for saving information on dead trees.</li>
+<li>The new Tree Fern Establishment behavior simulates epiphytic seedling establishment.</li>
+<li>The new Conspecific tree density dependent seed survival behavior assesses seed survival as a function of the local density of conspecific trees.</li>
+<li>The new Gompertz Density Self Thinning Mortality behavior calculates the probability of mortality of an individual tree as a function of the density of conspecific neighborhood trees.</li>
+<li>The new Juvenile NCI growth behavior adapts neighborhood competition growth to juveniles.</li>
+<li>The new behaviors Precipitation Climate Change and Temperature Climate Change change climate variables for the plot over the course of a run.</li>
+<li>The new behaviors Weibull climate growth, Weibull climate quadrat growth, and Weibull Climate Survival model tree growth and survival as a function of climate (temperature and precipitation).</li>
+<li>The new Temperature dependent neighborhood disperse behavior disperses seeds based on annual mean temperature and the basal area of neighborhood adults.</li>
+<li>The new Temperature dependent neighborhood survival behavior assesses tree survival as a function of mean annual temperature and neighbor adult basal area.</li>
+<li>The new State Reporter behavior reports the values of state variables like climate information.</li>
+<li>The new Generalized harvest regime is a very flexible way to model harvest events.</li>
+<li>The new behaviors Insect Infestation and Insect Infestation Mortality model insect infestation and subsequent tree mortality.</li>
+<li>The new Suppression duration mortality behavior evaluates mortality as a function of tree age. This is particularly useful for simulating suppression in seedlings.</li>
+<li>Michaelis-Menton with negative growth now has optional autocorrelation and stochasticity.</li>
+<li>Light calculations support the southern hemisphere growing season.</li>
+<li>The Stochastic bi-level mortality behavior now supports GLI light.</li>
+</ul>
+
+<br><b>Minor changes and bug fixes:</b><br>
+<ul>
+<li>A bug was fixed for NCI mortality which may have caused it to slightly undercount neighbors.</li>
+<li>Histograms can now show all species for species specific grid results together in a single graph.</li>
+<li>You can now select and unselect life history stages for many graphs.</li>
+<li>The Dimension analysis behavior now has a parameter for the meaning of the "dia" term.</li>
+<li>The Dead tree remover behavior now automatically enables itself when a mortality behavior is used.</li>
+</ul>
+
+
+<h2>Version 6.10, released March 5, 2010</h2>
+
+<p><b>Note:</b> If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.10, load your file and save it. SORTIE-ND will automatically make any needed adjustments to your parameter file.</p> 
+
+<br><b>New in version 6.10:</b><br>
+<ul>
+<li>SORTIE now uses Java version 6. You'll need to download this version if you do not already have it.</li>
+<li>New allometry functions for crown shape - non-spatial density dependent calculates crown shape as a function of overall plot density, and NCI calculates crown shape as a function of local neighborhood composition.</li>
+<li>The Lagged post harvest growth behavior incorporates a lag period after a harvest during which tree growth is slowed.</li>
+<li>The Michaelis Menton with negative growth behavior uses a modified Michaelis Menton function that allows for negative height growth.</li>
+<li>The Michaelis Menton with photoinhibition behavior uses a modified Michaelis Menton function that allows additional control over the influence of light levels on growth.</li>
+<li>Michaelis Menton relative growth can now be used in height growth with the Relative growth - height only behavior.</li>
+<li>The Post harvest skidding mortality behavior provides an increase in tree mortality after harvesting due to skidding damage or other effects.</li>
+<li>The Masting non spatial disperse behavior behavior adds masting and inter year variation to basic seed rain.</li>
+<li>The Foliar chemistry behavior calculates various leaf chemical components as a function of DBH.</li>
+<li>You can now use height growth functions as your principle growth functions with the aid of the Allometric diameter growth behavior.</li>
+<li>The NCI growth and NCI Mortality behaviors are now more flexible - all of the modifying effects are now optional to allow you to use only the ones you need.</li>
+<li>The Quadrat-based GLI light behavior now has a flag to force calculation of GLI in every grid cell to allow this behavior to double as a light map creator even when trees to which the behavior is applied are not present.</li>
+<li>The values of a tree's crown radius and depth are now available as output variables.</li>
+<li>The tree map now displays DBH values at actual size at all scales.</li>
+<li>A new crown radius output display map shows crown radii at actual size, allowing visualization of crown overlaps.</li>
+<li>SORTIE now uses the GNU Scientific Library for mathematical calculations, thus expanding the range of possible function forms and probability distributions support.</li>
+<li>The Functional response seed predation and Neighborhood seed predation behaviors can now be linked together so that the number of seed predators can determine the number of seeds eaten, and neighborhood can determine where seeds are eaten.</li>
+</ul>
+
+<h2>Version 6.09, released February 1, 2008</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.09, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.<br>
+
+<br><b>New in version 6.09:</b><br>
+<ul>
+
+<li>The new Storm Direct Killer behavior kills trees as a direct result of storm intensity, without resorting to a separate damage step. This behavior can be used for seedlings.</li>
+<li>The new Detailed Substrate behavior uses a greatly expanded log decay model.</li>
+<li>The new Competition Harvest behavior removes trees based on their competitive effects on their neighbors.</li>
+<li>The new Ripley's K and Relative Neighborhood Density Calculator behaviors provide new spatial indexes.</li>
+<li>You can now schedule a specific set of storms for the Storm disturbance behavior, either alone or in combination with a storm regime.</li>
+<li>Tree maps can be added as a link to a text file rather than imported into the parameter file. This allows easier use of very large tree maps.</li>
+<li>Several more components have been added to the Partitioned DBH Biomass behavior, and there is now a line graph chart option for the Partitioned Biomass grid.</li>
+<li>The Storm Light behavior now uses trees that died of natural mortality in addition to storm damage in its calculations of light levels.</li>
+<li>Storm results for the Storm disturbance behavior now have a table option in the data visualization system for detailed output files.</li>
+</ul>
+
+<br><b>Minor changes and bug fixes:</b><br>
+<ul>
+<li>You can now change the cell resolution when defining subplots.</li>
+<li>There were several bug fixes related to creating and using detailed output files.</li>
+<li>The Harvest Interface behavior now stores its results in the Harvest Results grid, allowing reporting and compatibility with certain other behaviors.</li>
+<li>Storm events were made more independent for the Storm disturbance behavior.</li>
+<li>The Random Browse behavior can now vary its browse probabilities each timestep according to a normal distribution.</li>
+</ul>
+
+<h2>Version 6.08 released May 24, 2007</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.08, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.<br>
+
+<br><b>New in version 6.08:</b><br>
+<ul>
+<li>The new behavior Snag Decay Class Dynamics introduces a new method for simulating snag decay and fall</li>
+<li>The new behavior Random browse simulates herbivory</li>
+<li>The new Browsed relative growth behaviors simulate the effects of herbivory on tree growth</li>
+<li>The new Browsed Stochastic Mortality behavior simulates the effects of herbivory on tree mortality</li>
+<li>The new Masting spatial disperse behavior simulates periodic masting in seed dispersal</li>
+<li>The new Neighborhood seed predation behavior simulates seed predation as a function of neighborhood and recent masting events</li>
+<li>The addition of browse to Height-GLI Weibull Mortality with Browse allows this behavior to simulate the effects of herbivory on tree mortality</li>
+<li>The new analysis behaviors Storm Killed Partitioned DBH Biomass and Storm Killed Partitioned Palm Biomass allow the tracking of biomass killed in storm events</li>
+<li>You can copy a species, including all its behaviors and parameters, using the Tree setup window</li>
+<li>You can change the order of species using the Tree setup window</li>
+<li>The Storm disturbance behavior now includes optional cyclicity in storm patterns</li>
+<li>The Storm Light behavior now uses a proportion of trees with damage instead of a straight count when figuring light levels</li> 
+<li>The Basal Area Light behavior now searches a neighborhood with a defined radius rather than just the trees within a grid cell</li>
+</ul>
+
+<br><b>Minor changes and bug fixes:</b><br>
+<ul>
+<li>Hovering the mouse over a cell in a grid map will cause the value at that point to be displayed</li>
+<li>You can now remove the "Total" line from line graphs</li>
+<li>The output for histograms is now written in table format when saving a text file for the entire run</li>
+<li>When creating a batch file, you can now select and add multiple files at once</li>
+<li>The size of DBH circles on the XY Tree Map change size to match zooming</li>
+<li>The summary output file plot table now has a "go to timestep" control</li>
+<li>The values in the Dispersed Seeds grid are now available for output</li>
+<li>Fixed bugs relating to the adding, removing, and renaming of species</li>
+<li>Fixed a bug with how the Planting behavior dealt with plot edges</li>
+</ul>
+
+<h2>Version 6.07 released November 30, 2006</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.05, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.<br>
+
+<br><b>New in version 6.07:</b><br>
+<ul>
+<li>You can now track subplots for detailed output files</li>
+<li>The File menu now has an option for setting a working directory</li>
+<li>New analysis behavior - Partitioned DBH Biomass, which calculates biomass separated out by branch, leaf, and bole</li>
+<li>New analysis behavior - Partitioned Palm Biomass, which calculates biomass separated out by leaf and bole</li>
+<li>New light behavior - Average Light, which averages together existing GLI calculations</li>
+<li>New disturbance behavior - Harvest Interface, which provides a link between SORTIE and a separate application for doing harvests</li>
+<li>New mortality behavior - Aggregated Mortality, which clumps together tree death in both time and space</li>
+<li>New mortality behavior - Exponential Growth and Resource-Based Mortality, which calculates mortality as a probability of growth and a second resource</li>
+<li>New light behavior - Constant GLI, which provides the same value of GLI to every tree (this behavior replaces the Constant full GLI behavior)</li>
+<li>Added the possibility of cyclicity in storm frequency and intensity through time to Windstorm</li>
+</ul>
+
+<br><b>Minor changes and bug fixes:</b><br>
+<ul>
+<li>Clicking on an output graph to bring it to the front causes its legend to come to the front as well</li>
+<li>The extra step of clicking a button to save a file has been eliminated when editing a batch file</li>
+<li>The XY Tree Map now has a minimum display DBH control</li>
+<li>If multiple output files are open and you choose "File->Close output file" from the main menu, you will have an option to close all of the files at once</li>
+<li>The Tree setup window has a new button for adding a tree map to the current parameter file</li>
+<li>If multiple behaviors use the same grid, that grid will display correctly for entering grid maps</li>
+<li>The Grid value edit window now correctly saves the last value entered even if the cell is still in edit mode</li>
+<li>Fixed bug that caused changes to output settings for members of grids to become new entries rather than replacement entries; this also caused the output settings for grids and trees to behave in the same way</li>
+<li>Fixed a bug allowing Puerto Rico semi-stochastic growth to set a negative tree DBH in some circumstances</li>
+<li>Fixed a bug that caused designing complicated subplots to slow and eventually crash when too many cells were clicked</li>
+<li>Changed the way neighbor storm damage was treated for NCI growth and NCI mortality</li>
+</ul>
+
+<h2>Version 6.06 released March 31, 2006</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.05, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.<br>
+
+<br><b>New in version 6.06:</b><br>
+<ul>
+<li>New allometry equation for saplings - the power diameter-height relationship</li>
+<li>Updated allometry equation - the DBH - diameter at 10 cm relationship now has an intercept term</li>
+<li>New seed survival behavior - Storm Light Dependent Seed Survival, which works with the light levels produced by the Storm Light behavior</li>
+<li>New mortality behavior - Stochastic Bi-Level Mortality, which uses two different mortality rates in high and low light</li> 
+<li>New disturbance behavior - Windstorm, which follows a given storm regime to produce storms and kill trees as a result</li>
+<li>New growth behavior - Basal Area NCI Growth, which calculates tree growth as a function of neighborhood basal area</li>
+<li>New light behavior - Basal Area Light, which calculates light levels as a function of neighborhood basal area of angiosperms and conifers</li>
+<li>New disturbance behavior - Storm Killer - that kills trees damaged in storms.  This behavior takes over and expands a function previously performed by the Storm Damage Applier behavior</li>
+<li>New analysis behavior - Tree Age, which tracks tree ages</li>
+<li>New mortality behavior - Height-GLI Weibull Mortality, which calculates tree mortality as a function of tree height and light levels</li>
+<li>New growth behavior - Puerto Rico Storm Bi-Level Growth, which uses two functions to calculate growth before and after storms</li>
+<li>New analysis behavior - Merchantable Timber Value, which calculates the value of merchantable timber in a plot</li>
+<li>New analysis behavior - Carbon Value, which calculates the amount of carbon in a plot and its value</li>
+<li>Stand and Stock output tables now display species-specific values as well as plot total values</li>
+<li>The Storm Light behavior has an updated equation for light calculation</li>
+<li>The main window is now equipped with scroll bars, to allow you to use more space when viewing charts and graphs</li>
+<li>The Tree Setup window is now capable of changing the name of a species</li>
+<li>The Density Dependent Seed Survival behavior's survival area has been standardized to per square meter</li>
+<li>The Relative Michaelis-Menton growth behaviors now have an additional exponent on diameter</li>
+<li>The Substrate behavior uses a new equation for decayed log decay</li>
+<li>Developers:  The C++ model code has been ported to the GCC compiler set and the Eclipse development environment</li>
+</ul>
+
+
+<h2>Version 6.05 released August 3, 2005</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.04, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.
+<br><b>New in version 6.05:</b><br>
+<ul>
+<li>The Substrate behavior has been rewritten to combine all current substrate models into one behavior</li>
+<li>New establishment behavior - Establishment with Microtopography - that allows seedlings to have a rooting height above the ground</li>
+<li>Two new allometry equations for crown shape - the Chapman-Richards function</li>
+<li>The stock and stand tables for detailed output now have a mean DBH column</li>
+<li>The equation for mean annual increment in the stock table has changed</li>
+<li>Bug fix - seedlings that use either the GLI light or Sail light behaviors automatically use a top-of-crown fisheye photo point</li>
+<li>Changes have been made to the Parameters window to make parameter editing easier</li>
+<li>Changes have been made to output table formatting to make them easier to read</li>
+</ul>
+
+
+<h2>Version 6.04 released May 16, 2005</h2>
+<b>Note</b>:  If you have a parameter file from an earlier version, and you are using behaviors that have been updated in version 6.04, load your file and save it.  SORTIE-ND will automatically make any needed adjustments to your parameter file.
+<br><b>New in version 6.04:</b><br>
+<ul>
+<li>You can now choose the appropriate allometry equation for each species for each life history stage</li>
+<li>You can now set the height boundary between seedlings and saplings for trees</li>
+<li>The establishment behaviors have been restructured, allowing you to mix and match seed survival effects</li>
+<li>The Storm damage applier behavior can create tip-ups from storm-killed trees</li>
+<li>New harvest behavior - Selection harvest - that allows SORTIE-ND to decide when to perform harvests based on target basal area levels</li>
+<li>New behavior - GLI Points File Creator - which calculates GLI at certain specific points</li>
+<li>New light behavior - Storm Light behavior - that uses storm damage as a proxy for finding light levels</li>
+<li>New growth behavior - Puerto Rico semi-stochastic growth</li>
+<li>New growth behavior - Linear bi-level growth - that can grow trees with two sets of parameters based on light level</li>
+<li>New growth behavior - Lognormal bi-level growth - that can grow trees with two sets of parameters based on light level</li>
+<li>New mortality behavior - Logistic Bi-Level Mortality - that can use two sets of parameters based on light level</li>
+<li>NCI growth and NCI Mortality now each have a flag for whether or not to include snags in NCI calculations</li>
+<li>Refinement of substrate dynamics for snags, allowing them to tip-up at different rates from live trees</li>
+</ul>
+
+<h2>Version 6.03 released April 6, 2005</h2>
+<b>New in version 6.03:</b><br>
+<ul>
+<li>New function form for the NCI Mortality behavior</li>
+<li>New mortality behavior which calculates mortality as a function of neighbor density - the Density Self-Thinning Mortality behavior</li>
+<li>New format for tab-delimited tree maps, which can be prepared in any spreadsheet program and added to SORTIE-ND</li> 
+<li>New data visualization chart type - histograms for grid values</li>
+<li>New behavior for calculating tree volume - the Tree bole volume calculator behavior</li>
+<li>Updated Substrate behavior documentation</li>
+<li>New behavior for calculating tree biomass - the Dimension analysis behavior</li>
+<li>New feature for running batches</li>
+<li>NCI behaviors (NCI Mortality and NCI growth) now have a parameter for minimum DBH of crowding neighbors</li>
+<li>The Storm damage applier behavior now can kill trees immediately as a result of storm damage</li>
+<li>Changes to the File menu options</li>
+</ul> 
+
+
+<h2>Version 6.02 released March 10, 2005</h2>
+<b>New in version 6.02:</b><br>
+
+<ul>
+<li>New tree data members for Light level and Diameter Growth</li>
+<li>New behavior for creating GLI maps - Gap Light behavior.</li>
+<li>New line graphs in data visualization for relative volume and absolute volume.</li>
+<li>Seedling initial density can now be controlled by three height classes.</li>
+<li>New growth-based mortality behavior - Competition Mortality.</li>
+<li>New mortality as a function of growth and a second resource - Growth and Resource-Based Mortality.</li>
+<li>New function form for the NCI growth behaviors.</li>
+<li>New growth functions using a double Michaelis-Menton function of light and a second resource - Double resource relative growth.</li>
+<li>New light behavior which simplifies GLI calculations for extremely competitive gap dynamics - Gap Light behavior.</li>
+<li>New growth behavior for simulating extremely competitive gap dynamics - Stochastic gap growth.</li>
+<li>Snag size classes for the Weibull snag mortality behavior are now species-specific.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Logistic growth w/ size dependent asymptote</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Logistic growth w/ size dependent asymptote</h1>
+<p>This behavior does either diameter or height growth as a function of tree size and GLI.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Diam Intercept (a)</td><td>   Intercept of the size dependent annual growth potential, for diameter growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Diam Shape Param 1 (c)</td><td>  Shape parameter 1 for  shade reduction of annual growth, for diameter growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Diam Shape Param 2 (d)</td><td>  Shape parameter 2 for  shade reduction of annual growth, for diameter growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Diam Slope (b)</td><td>   Slope of the size dependent annual growth potential, for diameter growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Height Intercept (a)</td><td>   Intercept of the size dependent annual growth potential, for height growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Height Shape Param 1 (c)</td><td>  Shape parameter 1 for  shade reduction of annual growth, for height growth. </td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Height Shape Param 2 (d)</td><td>  Shape parameter 2 for  shade reduction of annual growth, for height growth.</td></tr>
+
+<tr><td class="parname">Size Dep. Logistic - Height Slope (b)</td><td>   Slope of the size dependent annual growth potential, for height growth.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior calculates annual diameter or height increases as:
+</p>
+<center><img src="../data_files/size_dep_logistic_growth.gif"></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> = amount of diameter increase, in mm, or the amount of height increase, in cm</li>
+<li><i>a</i> = <b>Size Dep. Logistic - Diam Intercept (a)</b> parameter (for diameter growth) or the <b>Size Dep. Logistic - Height Intercept (a)</b> parameter (for height growth)</li>
+<li><i>b</i> = <b>Size Dep. Logistic - Diam Slope (b)</b> parameter (for diameter growth) or the <b>Size Dep. Logistic - Height Slope (b)</b> parameter (for height growth)</li>
+<li><i>c</i> = <b>Size Dep. Logistic - Diam Shape Param 1 (c)</b> parameter (for diameter growth) or the <b>Size Dep. Logistic - Height Shape Param 1 (c)</b> parameter (for height growth)</li>
+<li><i>d</i> = <b>Size Dep. Logistic - Diam Shape Param 2 (d)</b> parameter (for diameter growth) or the <b>Size Dep. Logistic - Height Shape Param 2 (d)</b> parameter (for height growth)</li>
+<li><i>GLI</i> = global light index, as a percentage between 0 and 100, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>	
+<li><i>diam</i> = diameter (diameter at 10 cm for seedlings and saplings, DBH for adults)</li>
+</ul>
+<p>
+For diameter growth: Assume that the number of years per timestep is X.  In order to find the total amount of diameter increase for a timestep, the logistic growth equation is calculated X times, with the diameter incremented by the amount of diameter increase for the previous year.  The total diameter increment is the sum of the X individual diameter increments. 
+</p>
+<p>
+For height growth: In order to find the total amount of height increase for a timestep, the behavior takes as an input the amount of diameter growth increase.  Assume that the number of years per timestep is X.  The amount of diameter increase is divided by X.  Then the logistic growth equation is calculated X times, with the diameter incremented by the amount of diameter increase per timestep each time.  The total height increment is the sum of the X individual height increments.
+</p>  
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied. You can choose either a diam with auto height, diam only, or height only version.
+</p>
+</body>
+</html>

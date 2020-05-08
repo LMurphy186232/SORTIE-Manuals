@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Choosing behaviors for a run</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Choosing behaviors for a run</h1>
+
+<p>
+Setting up behaviors is the most important step in creating a new simulation. To choose which behaviors to include in the run and how to apply them, use the <a href="../windows/model_flow_window.html">Model flow window</a>.
+</p>
+<p>
+There are a few general guidelines for choosing a set of behaviors from scratch.
+</p>
+
+<h2>Start with the trees</h2>
+<p>
+Behaviors that act on trees are assigned to trees based on species and <a href="tree_life_history_stages.html"> life history stage</a> (otherwise referred to as tree type). Move through the tree life cycle for each species and pick behaviors for growth, mortality, and reproduction. There may not be a behavior that does exactly what you want, but with the creative use of <a href="behavior_parameters.html"> behavior parameters</a>, you may be able to achieve the same effect. For instance, there may be a parameter that when assigned a particular value cancels out a function term you don't need, or a set of parameter values that can cause a function to mimic another function shape.
+</p>
+<p>
+Carefully check the behavior assignments to particular trees. Behaviors often have some rules about how they can be applied, but these tend to be limited in the interests of maximum flexibility.  The model doesn't try to second-guess what you are doing beyond making sure the simulation can run as described. Make sure that you applied a complete set of lifecycle behaviors to each species and life history stage. 
+</p>
+
+<h2> Check the dependencies</h2>
+<p>
+Many behaviors rely on the work of other behaviors. Check the documentation for the set of behaviors you have so far to see if you need to add others. For instance, if you have a behavior that calculates growth as a function of light level, you will need to add a behavior to calculate the light level. Each behavior's documentation will give you all dependency requirements.
+</p>
+
+<h2> Add analysis and output</h2>
+<p>
+Forest metrics and output are handled by behaviors just like everything else in SORTIE. Basic metrics like stem density and basal area are handled directly by the output behavior. You can add additional behaviors (called <a href="../data/analysis_behaviors/index.html"> analysis behaviors</a>) to calculate extra metrics like biomass or tree spatial distribution indexes.
+</p>
+<p>
+Output is one of a set of behaviors that uses a separate interface for setup - in this case, the <a href="../windows/output_setup_window.html">Output setup window</a>.
+</p>
+<p>
+It is generally a good idea to finish setting up a parameter file at this point and to run it. There is generally troubleshooting to be done on the basic lifecycle behaviors and the fewer behaviors that are in a run, the easier it is to identify and fix problems.
+</p>
+
+<h2> Add external events</h2>
+<p>
+If you have behaviors you would like to use beyond the basic tree lifecycle, add them at this point. These include things like disturbance events and climate change.
+</p>
+
+<h2>Check behavior order</h2>
+<p>
+The <a href="../files/parameter_files.html">parameter file</a> specifies which behaviors to include in the simulation, and in which order they should be run.  Theoretically it is possible to put behaviors in any order, but of course, most simulations constructed that way would not make sense.  When you structure a run, the behaviors are placed in functional groups.  To prevent nonsensical simulations, you cannot move a behavior outside of its functional group in the overall run order; however, you can re-order behaviors within the functional groups.  Sometimes this will have an effect on the overall simulation outcome, and sometimes it won't. Refer to the documentation for individual behaviors and functional groups to learn how run order might affect a behavior.
+</p>
+
+</body>
+</html>

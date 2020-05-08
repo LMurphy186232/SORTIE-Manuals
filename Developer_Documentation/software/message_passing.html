@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Message Passing</title>
+</head>
+<body>
+<h1>Message Passing</h1>
+<p>
+The SORTIE-ND software exists in two parts:  the core model and the graphical user interface (GUI).  These two pieces are each standalone and communicate with each other through rudimentary message passing.
+</p>
+<p>
+When the user starts to put together a simulation, they use the GUI to create a parameter file.  When the user tells the GUI to start a run with the parameter file, the GUI launches the core model as a process in a separate thread.  This can be thought of as the software equivalent to the user launching the core model through the command line.  The parameter file is passed as an argument to the core model.
+</p>
+<p>
+As the core model runs, it outputs simple progress messages to the standard output stream (<code>stdout</code>), or writes errors to the standard error stream (<code>stderr</code>).  Because the GUI launched the core model as a process, it can capture these streams and report their contents to the user.  Anything in <code>stdout</code> is written to a location on the GUI window for messages; anything in <code>stderr</code> is treated as evidence of a fatal error and displayed in a message window to the user.   
+</p>
+<p>
+The GUI also has to be able to tell the model to pause or quit.  The GUI can always kill the model process programmatically, but it could not be restarted and this would not allow the model to perform its memory cleanup.  So if the user requests a pause or a quit while the model is running, the GUI writes a small text file to a certain location.  Periodically, the model checks for the existence of this file; if it is present, it reads its contents and performs the correct action.   
+</p>
+<br><!-- datestamp:begin -->15-Feb-2005 01:58 PM<!-- datestamp:end -->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE-ND Developer Manual - Versioning</title>
+</head>
+<body>
+<h1>Behavior Versioning</h1>
+<p>
+Behaviors have a version number associated with them.  Parameter files specify the version of the behavior that they are calling.  Only the most recent version will actually be available, but a behavior is capable of looking at the version number and, if it's prior to the current number, assessing whether it is in fact going to do what the user expects.  
+</p>
+<p>
+To do this, behaviors have both a current version number and a minimum version number.  The minimum version number represents the earliest version that still conforms to the present behavior.  (Both of these are data members in <a href="../c_doc/classclbehaviorbase.html">clBehaviorBase</a>.)  These numbers should be set in the constructor of any class descended from clBehaviorBase.  The values of the numbers are at the discretion of the programmer.  Once these values are set, clBehaviorBase takes care of validating the version numbers on incoming parameter files. 
+</p>
+<p>
+For instance:  Version 1 of clMyBehavior is released.  Several bug fixes and speed optimizations occur, and later version 1.5 is released.  Since 1.5 is not substantially functionally different from version 1, clMyBehavior's minimum version is kept at 1.  This means that old parameter files made at any time since version 1 was released are still valid and will still get the results that are expected.  Later, it is found that clMyBehavior's primary equation is wrong, and a new one is substituted, with different parameters.  Version 2 of clMyBehavior is released, and because it is so different from version 1, the minimum version is set at 2.  Parameter files calling versions 1.x now need updating because 1) they were made with assumptions which are now out-of-date (expecting the old wrong function) and 2) they need new parameter values.  These parameter files will be given an error message so the user can appropriately update them.
+</p>
+</body>
+</html>

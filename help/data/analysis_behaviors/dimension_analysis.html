@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Dimension Analysis</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Dimension Analysis</h1>
+
+<p>
+This behavior calculates the biomass of trees based on DBH.  This approach comes from <a href="../../more_info/further_reading.html">Jenkins et al, 2004</a>.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Dimension Analysis Biomass Units</td><td> The units of biomass that the chosen biomass equation is expected to produce, based on the parameters entered.  SORTIE-ND will use this to convert the biomass value to metric tons (Mg). </td></tr>
+
+<tr><td class="parname">Dimension Analysis Correction Factor</td><td> The correction factor needed by some biomass equations that calculate ln(biomass), log<sub>10</sub>(biomass), or log<sub>100</sub>(biomass).  This value is ignored if the value for the <b>Dimension Analysis: Use Correction Factor?</b> parameter for this species is false.</td></tr>
+
+<tr><td class="parname">Dimension Analysis DBH Units</td><td> The units of DBH that are appropriate to the biomass equation coefficients being entered.  SORTIE-ND will convert a tree's DBH to these units before calculating biomass. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Equation ID</td><td> The biomass equation ID to use when calculating biomass for a particular species. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Parameter (a)</td><td> The value for <i>a</i> in a biomass equation.  The appropriate value and units for this parameter depend on the values entered in the <b>Dimension Analysis Equation ID</b>, <b>Dimension Analysis DBH Units</b>, and <b>Dimension Analysis Biomass Units</b> parameters. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Parameter (b)</td><td> The value for <i>b</i> in a biomass equation.  The appropriate value and units for this parameter depend on the values entered in the <b>Dimension Analysis Equation ID</b>, <b>Dimension Analysis DBH Units</b>, and <b>Dimension Analysis Biomass Units</b> parameters. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Parameter (c)</td><td> The value for <i>c</i> in a biomass equation.  Whether this parameter is used, and the appropriate value and units for this parameter, depend on the values entered in the <b>Dimension Analysis Equation ID</b>, <b>Dimension Analysis DBH Units</b>, and <b>Dimension Analysis Biomass Units</b> parameters. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Parameter (d)</td><td> The value for <i>d</i> in a biomass equation.  Whether this parameter is used, and the appropriate value and units for this parameter, depend on the values entered in the <b>Dimension Analysis Equation ID</b>, <b>Dimension Analysis DBH Units</b>, and <b>Dimension Analysis Biomass Units</b> parameters. </td></tr>
+
+<tr><td class="parname">Dimension Analysis Parameter (e)</td><td> The value for <i>e</i> in a biomass equation.  Whether this parameter is used, and the appropriate value and units for this parameter, depend on the values entered in the <b>Dimension Analysis Equation ID</b>, <b>Dimension Analysis DBH Units</b>, and <b>Dimension Analysis Biomass Units</b> parameters. </td></tr>
+
+<tr><td class="parname">Dimension Analysis: Use Correction Factor?</td><td> Whether or not the chosen biomass equation requires a correction factor to be multiplied by the result. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The paper above outlines 9 different biomass equations in Table 6, as follows:
+</p>
+<table class="plaintable">
+<tr><th class="plaintable">ID</th><th class="plaintable">Equation</th></tr>
+<tr><td class="plaintable">1</td><td class="plaintable">log10 biomass = a + b * (log10(dia<sup> c</sup>))</td></tr>
+<tr><td class="plaintable">2</td><td class="plaintable">ln biomass = a + b * dia + c * (ln(dia <sup>d</sup>))</td></tr>
+<tr><td class="plaintable">3</td><td class="plaintable">ln biomass = a + b * ln(dia) + c * (d + (e * ln(dia)))</td></tr>
+<tr><td class="plaintable">4</td><td class="plaintable">biomass = a + b * dia + c * (dia<sup> d</sup>)</td></tr>
+<tr><td class="plaintable">5</td><td class="plaintable">biomass = a + (b * dia) + c * (dia<sup> 2</sup>) + d * (dia<sup> 3</sup>)</td></tr>
+<tr><td class="plaintable">6</td><td class="plaintable">biomass = a * (exp(b + (c * ln(dia)) + (d * dia)))</td></tr>
+<tr><td class="plaintable">7</td><td class="plaintable">biomass = a + ((b * (dia<sup> c</sup>)) / ((dia<sup> c</sup>) + d))</td></tr>
+<tr><td class="plaintable">8</td><td class="plaintable">log100 biomass = a + (b * log10(dia))</td></tr>
+<tr><td class="plaintable">9</td><td class="plaintable">ln biomass = ln(a) + (b * ln(dia))</td></tr>
+</table>
+<p>
+In all equations, <i>dia</i> is DBH.  You choose the equation ID that you wish to use for each species.
+</p>
+<p>
+There are many different published parameters using the equation forms above, which use a range of different units.  Thus, you specify what units <i>dia</i> (that is, DBH) is in, and what units of biomass the equation is expected to produce.  The possible DBH units are millimeters (mm), centimeters (cm), and inches (in); the possible biomass units are grams (g), kilograms (kg), and pounds (lb).  This behavior handles all unit conversions so that biomass is appropriately calculated.  The final biomass values are reported in metric tons (Mg).
+</p>
+<p>
+For those equations that calculate log10, log100, or ln biomass, some papers specify a correction factor to remove bias that may be introduced when biomass is calculated.  If you wish, you may use such a correction factor.  Set the value of the <b>Dimension Analysis: Use Correction Factor?</b> parameter to "true", then specify the appropriate correction factor in the <b>Dimension Analysis Correction Factor</b> parameter.  This value is multiplied by the final biomass value.
+</p>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_tree_setup.html">Detailed output setup window</a> for trees will have a tree data member called "Tree Biomass".  Add this to your detailed  output file to output biomass in metric tons (Mg).  You can then view charts and graphs with the resulting volume data using data visualization on your detailed output file. 
+</p>
+</body>
+</html>

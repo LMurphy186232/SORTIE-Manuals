@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Lagged post harvest growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Lagged post harvest growth</h1>
+<p>This behavior increments growth as a function of DBH and neighboring basal area, and incorporates a lag period after harvesting during which trees acclimate to their post-harvest growing conditions.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Post Harvest Growth - DBH Growth Effect</td><td> The effect of DBH on growth. </td></tr>
+
+<tr><td class="parname">Post Harvest Growth - DBH NCI Effect</td><td> The effect of DBH on the neighborhood competition index. </td></tr>
+
+<tr><td class="parname">Post Harvest Growth - Max Growth Constant</td><td> Maximum annual radial growth, in mm.</td></tr>
+
+<tr><td class="parname">Post Harvest Growth - NCI Constant</td><td> A constant adjusting the effects of NCI.</td></tr>
+
+<tr><td class="parname">Post Harvest Growth - NCI Distance (m)</td><td> The maximum distance at which neighboring trees can have competitive effects.</td></tr>
+
+<tr><td class="parname">Post Harvest Growth - Time Since Harvest Rate Param</td><td> A parameter controlling the rate at which the actual growth approaches the potential growth after a harvest.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+A tree's <i>potential</i> growth is calculated by: 
+</p>
+<center><i>PARG = &#945; * exp(-&#948; * DBH) * exp(-&#951; BA * exp(-&#969; * DBH))</i></center> 
+
+<p> 
+where:
+</p>
+<ul>
+<li><i>PARG</i> is potential annual radial growth (mm/y)</li>
+<li><i>DBH</i> is in cm</li>
+<li><i>BA</i> is the basal area (in sq m) of adult trees within the distance given in the <b>Post Harvest Growth - NCI Distance (m)</b> parameter</li>
+<li><i> &#945; </i> is the <b>Post Harvest Growth - Max Growth Constant</b> parameter, the maximum radial growth in millimeters per year</li>
+<li><i> &#948; </i> is the <b>Post Harvest Growth - DBH Growth Effect</b> parameter</li>
+<li><i> &#951; </i> is the <b>Post Harvest Growth - NCI Constant</b> parameter</li>
+<li><i> &#969; </i> is the <b>Post Harvest Growth - DBH NCI Effect</b> parameter</li>
+</ul>
+
+<p>
+If no harvest has occurred yet in this run, then the tree's actual growth, ARG, equals PARG.  If a harvest has occurred at some point during this run, then ARG is calculated by:    
+</p>
+<center><i>ARG = ARG<sub>pre</sub> + (PARG - ARG<sub>pre</sub>) * (1 - exp(-&#964; * H * t))</i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>ARG</i> is annual radial growth (mm/y) for the current timestep</li>
+<li><i>ARG<sub>pre</sub></i> is annual radial growth for the last timestep prior to harvest</li>
+<li><i>H</i> is the number of timesteps since the last harvest</li>
+<li><i>t</i> is the number of years per timestep</li>
+<li><i>&#964; </i> is the <b>Post Harvest Growth - Time Since Harvest Rate Param</b> parameter</li>
+</ul>
+<p>
+Annual radial growth ARG is used to calculate timestep diameter growth using 
+</p>
+<center><i>DG = ARG * t * 2/10</i></center>
+<p>
+where <i>t</i> is the number of years per timestep.
+</p>
+<p>
+Model forms are based on those in Thorpe et al. 2010.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species.
+</p>
+
+</body>
+</html>

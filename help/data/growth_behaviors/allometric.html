@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Allometric diameter and height growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Allometric diameter and height growth</h1>
+<h3>How it works</h3>
+<p>
+These behaviors are designed to be secondary growth behaviors. If you have a behavior that primarily updates one tree dimension (diameter or height), one of these behaviors can be used on the other dimension to ensure even growth. These behaviors calculate a growth amount based on the allometry equations. The amount of growth is:
+</p>
+<center><i>Y = f(X<sub>t+1</sub>) - f(X<sub>t</sub>)</i></center>
+<p>
+where <i>Y</i> is the amount of growth calculated by this behavior, <i>f(X)</i> is the <a href="../allometry/index.html">allometry</a> equation relating diameter and height, <i>X<sub> t</sub></i> is the other tree dimension (either height or diameter) before the primary growth is applied, and <i>X<sub> t+1</sub></i> is the other tree dimension after primary growth is applied. The allometric diameter growth behavior can be paired with any height-only growth behavior, and the allometric height growth behavior can be paired with any diam-only growth behavior.
+</p>
+<h3>How to apply it</h3>
+<p>
+These behaviors can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have a growth behavior applied that grows the opposite tree dimension.
+</p>
+</body>
+</html>

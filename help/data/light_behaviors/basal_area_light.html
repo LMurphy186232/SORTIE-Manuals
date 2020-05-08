@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Basal Area Light behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Basal Area Light behavior</h1>
+<p>
+This behavior calculates light levels as a function of the basal area of trees in a neighborhood.  The light levels are randomized using a lognormal probability distribution.  Because of this random element, to ensure some continuity through time, light levels only change when the local neighborhood tree basal area has changed by a certain amount. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Basal Area Light - Angiosperm "b" Parameter</td><td> The "b" value used to calculate mean GLI from angiosperm basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Angiosperm "c" Parameter</td><td> The "c" value used to calculate mean GLI from angiosperm basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Conifer "b" Parameter</td><td> The "b" value used to calculate mean GLI from conifer basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Conifer "c" Parameter</td><td> The "c" value used to calculate mean GLI from conifer basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Lognormal PDF Sigma</td><td> Sigma value for the lognormal probability distribution. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Mean GLI "a" Parameter</td><td> The "a" value used to calculate mean GLI from basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Minimum BA Change for New GLI (m2)</td><td> The amount by which total basal area (angiosperm plus conifer), in square meters, must change in order to trigger a new GLI calculation in a grid cell.</td></tr>
+
+<tr><td class="parname">Basal Area Light - Minimum DBH for Trees</td><td> The minimum DBH, in cm, of trees that count towards basal area. </td></tr>
+
+<tr><td class="parname">Basal Area Light - Search Radius for Neighbors (m)</td><td> The radius, in meters, of the circle that is searched for neighbors.</td></tr>
+
+<tr><td class="parname">Basal Area Light - Species Type</td><td> Whether each species is a conifer or an angiosperm, for the purposes of light calculations. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior uses a <a href="../../using/what_is_a_grid.html">grid</a> called <a href="../grids/ba_light_grid.html">Basal Area Light</a> to manage light levels.  Light levels are calculated for each cell in the grid; trees to which this behavior are assigned receive the light level of the cell in which they are located.
+</p>
+<p>
+The behavior begins by calculating the total basal area and angiosperm basal area in the neighborhood of each Basal Area Light grid cell. The neighborhood is a circle with its center on the center of the grid cell, and a radius given in the <b>Basal Area Light - Search Radius for Neighbors (m)</b> parameter. Whether a neighborhood tree  counts as angiosperm or conifer depends on what its species is set to in the <b>Basal Area Light - Species Type</b> parameter.  Seedlings and snags are never included in these basal area totals.  Other trees are only included if their DBH is equal to or greater than the value set in the <b>Basal Area Light - Minimum DBH for Trees</b> parameter.  Once the basal areas are calculated, the behavior adds them together to create a total basal area, and compares this value to the previous timestep's total basal area.  If the value has not changed by more than the amount set in the <b>Basal Area Light - Minimum BA Change for New GLI (m2)</b> parameter, no further action is taken.  The previous timestep's GLI and basal area values are kept.
+</p>
+<p>
+For each grid cell in which a new GLI is to be calculated, a mean GLI value is calculated as follows:
+</p>
+<center><img src="../data_files/ba_light_mean_gli.gif" alt="Mean GLI from basal area"/></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>GLI<sub>m</sub></i> is the mean GLI value, as a value between 0 and 100</li>
+<li><i>a</i> is the <b>Basal Area Light - Mean GLI "a" Parameter</b></li>
+<li><i>b<sub>a</sub></i> is the <b>Basal Area Light - Angiosperm "b" Parameter </b></li>
+<li><i>c<sub>a</sub></i> is the <b>Basal Area Light - Angiosperm "c" Parameter</b></li>
+<li><i>BA<sub>a</sub></i> is the angiosperm basal area for that grid cell, in square meters</li>
+<li><i>b<sub>c</sub></i> is the <b>Basal Area Light - Conifer "b" Parameter </b></li>
+<li><i>c<sub>c</sub></i> is the <b>Basal Area Light - Conifer "c" Parameter</b></li>
+<li><i>BA<sub>c</sub></i> is the conifer basal area for that grid cell, in square meters</li>
+</ul>
+<p>
+This mean GLI is translated into a &#950; value for the lognormal random draw as follows:
+</p>
+<center><i>&#950; =  ln(GLI<sub>m</sub>) - (&#963; <sup>2</sup>/2)</i></center>
+<p>
+where <i>GLI<sub>m</sub></i> is the mean GLI value calculated above, and <i>&#963; </i> is the <b>Basal Area Light - Lognormal PDF Sigma</b> parameter.
+</p>
+<p>
+This value is then used to produce a random lognormally distributed number, from the following distribution:
+</p>
+<center><img src="../data_files/lognormal_pdf.gif" alt="Lognormal function"></center>
+<p>
+where <i>&#950; </i> is the value calculated above, and <i>&#963; </i> is the <b>Basal Area Light - Lognormal PDF Sigma</b> parameter.  This number is the GLI value, between 0 and 100.
+</p>
+<p>
+Once each Basal Area Light grid cell has gotten a GLI value, trees to which this behavior applies get the value of GLI from the grid cell in which they are located. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

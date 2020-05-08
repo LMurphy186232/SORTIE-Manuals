@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Temperature Climate Change</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Temperature Climate Change</h1>
+<p>
+This behavior changes the value of the <a href="../plot.html#parameters">Mean Annual Temperature</a> parameter of the SORTIE plot. This can be used to simulate the effects of climate change. If the run does not have a behavior that  uses temperature, this will have no effect.  
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Temperature Change - B</td><td> "B" in the function for varying temperature through time.</td><tr>
+<tr><td class="parname">Temperature Change - C</td><td> "C" in the function for varying temperature through time.</td><tr>
+<tr><td class="parname">Temperature Change - Temp Lower Bound</td><td> The lower bound for allowed temperature values. </td><tr>
+<tr><td class="parname">Temperature Change - Temp Upper Bound</td><td> The upper bound for allowed temperature values.</td><tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The value for plot temperature is a function of time elapsed since the start of the run, as follows: 
+</p>
+<center><i>T = T<sub>1</sub> + B * t<sup>C</sup></i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>T</i> is the mean annual temperature, in degrees C, at time t</li>
+<li><i>T<sub>1</sub></i> is the mean annual temperature value at the start of the run, as assigned in the <a href="../plot.html#parameters">Plot parameters </a> </li>
+<li><i>B</i> is the <b>Temperature Change - B</b> parameter </li>
+<li><i>C</i> is the <b>Temperature Change - C</b> parameter </li>
+<li><i>t</i> is the time elapsed, in years, since the start of the run </li>
+</ul>
+<p>
+This value is then given to the <a href="../plot.html">Plot</a> object which makes it available to other behaviors in the run.  </p>
+<p>
+You can set bounds on the possible temperature values using the <b>Temperature Change - Temp Lower Bound</b> and <b>Temperature Change - Temp Upper Bound</b> parameters.  Values are not allowed to go outside these limits. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Add this behavior to the run.  You can use it alone or in addition to the <a href="precipitation_change.html">Precipitation Climate Change</a> behavior.  You do not need to assign this behavior to trees.  
+</p>
+</body>
+</html>

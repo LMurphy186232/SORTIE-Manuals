@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Plot</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Plot</h1>
+
+<p>
+The plot in SORTIE is the simulation of the physical space in which the model runs.  It has a size, a climate, and a geographical location.
+</p>
+<h2>Plot size</h2>
+<p>
+You can think of the plot as a rectangle (although it's not really - more on that later).  You tell the plot what its east-west and north-south dimensions are.  It's useful to keep your plot size in mind when you are setting up your parameters and viewing your output, since many SORTIE values are per hectare units.  The size of your plot also makes a difference in run time - the larger the plot, the longer the run.  The absolute minimum size of a plot is 100 meters by 100 meters; 200 meters by 200 meters is a more realistic minimum.  It is a careful balance to find a plot size big enough to see the effects you are interested in but not so big that your runs take too long to be practical.  Since the length of the run depends on many other factors in addition to plot size, you may need to tweak plot size a bit until you've found a good value.
+
+<h2>The SORTIE Coordinate System</h2>
+<p>
+SORTIE uses X-Y coordinates, starting at (0, 0), which is at the southwest corner of the plot.  Positive Y coordinates increase to the north; positive X coordinates increase to the east.  There are no negative plot location values.  The coordinate values are in meters. 
+</p>
+<center><img src="data_files/plot.gif" alt="Plot diagram"></center>
+
+<h2>Plot shape: the torus forest</h2>
+
+<p>
+When you are working with the plot, you think of it as a rectangle.  In fact, it is a torus (donut).  Each edge connects to the edge on the opposite side.  To picture this, imagine a sheet of paper.  Roll the sheet of paper into a tube, then bend the tube around so its ends meet.  This is what the SORTIE forest looks like.  The purpose of this shape is to eliminate edges in the forest.  Trees near the "edges" of the plot torus "see" trees on the far "edge" as being right next to them.
+</p>  
+<p>
+The torus shape is what controls the minimum plot size in SORTIE.  Some processes in SORTIE require searching a portion of the plot - for instance, to find all the trees in a given circle.  If that search took place over too great an area compared to the size of the plot, it would run the risk of searching "around the world."  It would work its way around the torus and back to (and past) the place it started, finding the same trees multiple times.
+</p>
+<h2>Plot climate and location</h2>
+<p>
+The plot also has a climate and a geographical location. Some behaviors use this information but others do not. This information is ignored if it is not needed. 
+</p>
+
+<h3>Plot parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+<tr><td class="parname">Number of timesteps</td><td> The number of timesteps to run the model. See <a href="../using/timesteps.html">more on timesteps</a>.</td><tr>
+<tr><td class="parname">Number of years per timestep</td><td> The length of the timestep, in years.  It is recommended that this value be a whole number.</td><tr>
+<tr><td class="parname">Random seed</td><td> An integer to use as the seed for SORTIE's random number generator.  Zero means that SORTIE chooses its own new seed every time, and repeat runs with the same parameter file will come out different.  Any non-zero value triggers one particular sequence of random numbers.  In that case, repeat runs with the same parameter file will be the same.</td><tr>
+<tr><td class="parname">Plot Length in the X (E-W) Direction, in meters</td><td> The length of the plot in the east-west direction, in meters.</td><tr>
+<tr><td class="parname">Plot Length in the Y (N-S) Direction, in meters</td><td> The length of the plot in the north-south direction, in meters.</td><tr>
+<tr><td class="parname">Plot Latitude, in decimal degrees</td><td> The plot latitude, expressed in decimal degrees (i.e. 39.10).  This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+<tr><td class="parname">Annual Precipitation, mm</td><td> The annual precipitation of the plot, in millimeters. This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+<tr><td class="parname">Mean Annual Temperature, degrees C</td><td> The mean annual temperature of the plot, in degrees Celsius. This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+<tr><td class="parname">Annual Nitrogen Deposition</td><td> The annual amount of nitrogen deposition in the plot. This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+<tr><td class="parname">Seasonal Precipitation</td><td> The seasonal precipitation for the plot. This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+<tr><td class="parname">Water Deficit</td><td> The water deficit for the plot. This information may not be needed in the run, depending on the behaviors that you select; if it is not needed, this value will be ignored.</td><tr>
+</table>
+</body>
+</html>

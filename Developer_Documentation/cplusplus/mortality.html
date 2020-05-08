@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE Developer's Manual - Mortality Submodel</title>
+</head>
+
+<body>
+<h1>Mortality</h1>
+<p>
+Mortality starts with the basic submodel object structure, but with an important difference.  In mortality multiple Behaviors can be applied to the same tree.  The organizational object applies the mortality Behaviors in the order in which they appear
+ in the parameter file.  Mortality merely marks trees for death, since Substrate wants to know what trees died before they're removed from memory.  Thus there is another Behavior, clLGMTreeKiller, which actually removes the trees.
+</p>
+<p>
+If we build in more support for dead tree types, the extra tree killing behavior may not be necessary.
+</p>
+</body>
+</html>

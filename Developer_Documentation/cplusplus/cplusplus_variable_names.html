@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - C++ Variable Naming Conventions</title>
+</head>
+
+<body>
+<h1>Variable naming conventions</h1>
+<h3>Code modules</h3>
+<p>
+Code modules should be organized with readability in mind.  In general, functions should be shorter and more numerous.  
+</p>
+<h3>Documentation</h3>
+<p>
+All code should be documented so that it can be understood by someone with basic programming knowledge.  \This means that something like memory allocation doesn't need documentation, but more obscure tricks such as bitwise shifts should be noted and explained if at all complicated.  
+</p>
+<p>
+Class documentation should be contained in the header file.  Each member function should have complete information about how to use it, including what each argument is.  This applies to both public and private functions.  Each member variable should have a full description associated with it, which can just be a comment off to the side.  We use <a href="http://www.doxygen.org">Doxygen</a> to automatically generate documentation from header files; all header comments should follow the JavaDoc style.
+</p>
+<p>
+Functions which are not a member of a class (and there shouldn't be many of these, I think) should be fully documented with a title header section just before the function declaration.  Local variables should have a description associated with them when they are declared.
+</p>
+<p>
+Each function and class should have an edit history section where any changes are noted, when the change occurred, and who did it.  The line in the code which is changed should be marked with the date and the user's initials.  When a new version of the code comes out, the edit histories can be cleared.
+</p>
+<h3>Variables</h3>
+<p>
+Variable names will follow a slightly simplified Hungarian notation.  We will not differentiate between all possible variable types because I don't think it's necessary.  The names themselves should be descriptive.  They should begin with a prefix which identifies their type.  After the prefix, each word should begin with a capital letter.  The prefixes are as follows:
+</p>
+<ul>
+<li>b - boolean
+<li>c - character or character string
+<li>str -C++ string or AnsiString
+<li>i - integer
+<li>f - floating point, all precisions
+<li>fs - file stream
+<li>io - input or output stream
+<li>cl - class
+<li>o - object
+<li>stc - structure
+</ul>
+<p>
+In addition, the variable should have an additional letter if it is one of the following:
+</p>
+<ul>
+<li>m_ -	member variable of a struct or class
+<li>p_ - pointer, either to an individual thing or an array
+</ul>
+<p>
+Strictly avoid single letter variable names except for loop counters. This should include published model parameter variables, even if those are single letters. 
+</p>
+<p>
+Example: iSampleInt, m_cSampleClassMemberChar, clSampleClass, p_oSamplePointerToObject.
+</p>
+<p>
+Note - I wrote this about naming conventions before I wrote most of the code.  It was a while ago and I realize I didn't strictly stick to this.  But it is the ideal and I may bring old code into line when I modify it.
+</p>
+<h3>Functions</h3>
+<p>
+Function names should be descriptive.  They should begin with an uppercase letter and multiple words should be distinguished with uppercase letters, as in SampleFunctionName().  
+</p>
+<h3>Constants</h3>
+<p>
+Constant names should appear in all upper-case.
+</p>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Tree data member list</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Tree data member list</h1>
+
+<p>
+This is a list of the possible data that a tree can have. You can save this data in a <a href="../files/detailed_output_files.html">detailed output file</a> by using the <a href="../windows/detailed_output_tree_setup.html">Setup tree save options</a> window.
+</p>
+<p>
+Not all data is always available. Certain sets of behaviors require additional information about a tree. One of the ways in which behaviors communicate with one another is by defining new pieces of data for trees and then setting and reading values for those data. A piece of data created by a behavior is only attached to those tree species and tree types to which the behavior is applied.
+</p>
+
+<table class="plaintable">
+<tr>
+<th class="plaintable">Long name</th><th class="plaintable">Short code name</th><th class="plaintable">Data type</th><th class="plaintable">Description</th><th class="plaintable">Created by</th>
+</tr>
+
+<tr><td class="plaintable">X</td><td class="plaintable">X</td><td class="plaintable">Float</td><td class="plaintable">The coordinate of the tree, in meters, on the X axis in the <a href="plot.html">SORTIE plot</a>.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Y</td><td class="plaintable">Y</td><td class="plaintable">Float</td><td class="plaintable">The coordinate of the tree, in meters, on the Y axis in the <a href="plot.html">SORTIE plot</a>.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">DBH</td><td class="plaintable">DBH</td><td class="plaintable">Float</td><td class="plaintable">The diameter at breast height of a tree, in cm. This does not apply to seedlings.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Diameter at 10 cm</td><td class="plaintable">Diam10</td><td class="plaintable">Float</td><td class="plaintable">The tree's diameter at 10 cm height, in cm. This applies only to seedlings and saplings.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Height</td><td class="plaintable">Height</td><td class="plaintable">Float</td><td class="plaintable">The tree's height in meters.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Crown Radius</td><td class="plaintable">Crown Radius</td><td class="plaintable">Float</td><td class="plaintable">The tree's crown radius in meters. Note that this value is updated only on an as-needed basis. This means that the value may show up as -1, meaning that the tree's crown radius was not requested this time step. Also, this value will almost certainly reflect the tree's size at the beginning of the timestep, when crown dimension calculations are made, rather than the end of the timestep, as with the other tree dimensions. This does not apply to seedlings.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Crown Depth</td><td class="plaintable">Crown Depth</td><td class="plaintable">Float</td><td class="plaintable">The tree's crown depth in meters. The same warning applies as with crown radius. This does not apply to seedlings.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Age</td><td class="plaintable">Age</td><td class="plaintable">Integer</td><td class="plaintable">The time since death, in years. Only for snags.</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Why dead</td><td class="plaintable">Why dead</td><td class="plaintable">Integer</td><td class="plaintable">Reason code for why a tree died. Only for snags. Integer of one of the following: 1 = harvest, 2 = natural causes, 3 = disease, 4 = fire, 5 = insects, or 6 = storm</td><td class="plaintable">Tree population - always available</td></tr>
+
+<tr><td class="plaintable">Light level</td><td class="plaintable">Light</td><td class="plaintable">Float</td><td class="plaintable">Light level for the tree. This could be GLI, or percent shade (if Sail Light is used).</td><td class="plaintable">Any of the <a href="light_behaviors/index.html">light behaviors</a> except the Beer's Law light filter</td></tr>
+
+<tr><td class="plaintable">Growth</td><td class="plaintable">Growth</td><td class="plaintable">Float</td><td class="plaintable">Amount of radial growth per year in mm.</td><td class="plaintable">Any of the <a href="growth_behaviors/index.html">growth behaviors</a> that increment diameter growth</td></tr>
+
+<tr><td class="plaintable">Light filter respite counter</td><td class="plaintable">lf_count</td><td class="plaintable">Integer</td><td class="plaintable">Number of years of respite for a new seedling from the effects of the light filter.</td><td class="plaintable"> <a href="light_behaviors/beers_law_light_filter.html">Beer's law light filter</a></td></tr>
+
+<tr><td class="plaintable">Rooting height</td><td class="plaintable">z</td><td class="plaintable">Float</td><td class="plaintable">The height, in mm, above ground level at which a seedling is rooted.</td><td class="plaintable"><a href="light_behaviors/beers_law_light_filter.html">Beer's law light filter</a></td></tr>
+
+<tr><td class="plaintable">Years released</td><td class="plaintable">ylr</td><td class="plaintable">Integer</td><td class="plaintable"> The length of the current release period, in years.</td><td class="plaintable">The <a href="growth_behaviors/absolute.html">absolute growth</a> behaviors</td></tr>
+
+<tr><td class="plaintable">Years suppressed</td><td class="plaintable">yls</td><td class="plaintable">Integer</td><td class="plaintable"> The length of the current suppression period, in years.</td><td class="plaintable">The <a href="growth_behaviors/absolute.html">absolute growth</a> behaviors</td></tr>
+
+<tr><td class="plaintable">Dead flag</td><td class="plaintable">dead</td><td class="plaintable">Integer</td><td class="plaintable">A flag for whether a tree has died and why. Integer of one of the following: 0 = not dead, 1 = harvest, 2 = natural causes, 3 = disease, 4 = fire, 5 = insects, or 6 = storm. This is used by the <a href="dead_tree_behaviors/index.html">dead tree remover</a> behavior to find the trees it should remove.</td><td class="plaintable">Any of the <a href="mortality_behaviors/index.html">mortality</a> behaviors </td></tr>
+
+<tr><td class="plaintable">Storm Damage Value</td><td class="plaintable">stm_dmg</td><td class="plaintable">Integer</td><td class="plaintable"> An integer value with the damage level of a storm and how long it has been damaged. A value of 0 means no damage; a value starting with 1 means medium damage; a value starting with 2 means complete damage. The digits at the end count how many years since the damaging event. For example, a value of 1005 is a tree that received medium damage 5 years ago.</td><td class="plaintable"><a href="disturbance_behaviors/storm_damage_killer.html">Storm damage applier</a></td></tr>
+
+<tr><td class="plaintable">Tree Bole Volume</td><td class="plaintable">Bole Vol</td><td class="plaintable">Float</td><td class="plaintable"> The volume of a tree, in cubic feet.</td><td class="plaintable"><a href="analysis_behaviors/tree_bole_volume_calculator.html">Tree bole volume calculator</a></td></tr>
+
+<tr><td class="plaintable">Tree Volume</td><td class="plaintable">Volume</td><td class="plaintable">Float</td><td class="plaintable"> Volume of the tree, in cubic meters.</td><td class="plaintable"><a href="analysis_behaviors/tree_volume_calculator.html">Tree volume calculator</a></td></tr>
+
+<tr><td class="plaintable">Tree Biomass</td><td class="plaintable">Biomass</td><td class="plaintable">Float</td><td class="plaintable"> Biomass of the tree, in metric tons (Mg).</td><td class="plaintable"><a href="analysis_behaviors/dimension_analysis.html">Dimension analysis</a></td></tr>
+
+<tr><td class="plaintable">Tree Age</td><td class="plaintable">Tree Age</td><td class="plaintable">Integer</td><td class="plaintable"> Age of the tree, in years.</td><td class="plaintable"><a href="analysis_behaviors/tree_age.html">Tree age</a></td></tr>
+
+<tr><td class="plaintable">Snag Decay Class</td><td class="plaintable">SnagDecayClass</td><td class="plaintable">Integer</td><td class="plaintable">Snag decay class.</td><td class="plaintable"><a href="snag_dynamics_behaviors/snag_decay_class_dynamics.html">Snag Decay Class Dynamics</a></td></tr>
+
+<tr><td class="plaintable">New Break Height</td><td class="plaintable">NewBreakHeight</td><td class="plaintable">Float</td><td class="plaintable">Snag break height, if the break occurred this timestep. -1 if the snag is unbroken.</td><td class="plaintable"><a href="snag_dynamics_behaviors/snag_decay_class_dynamics.html">Snag Decay Class Dynamics</a></td></tr>
+
+<tr><td class="plaintable">Snag Old Break Height</td><td class="plaintable">SnagOldBreakHeight</td><td class="plaintable">Float</td><td class="plaintable"> Snag break height, if the break occurred in a previous timestep. -1 if the snag is unbroken.</td><td class="plaintable"><a href="snag_dynamics_behaviors/snag_decay_class_dynamics.html">Snag Decay Class Dynamics</a></td></tr>
+
+<tr><td class="plaintable">Fall</td><td class="plaintable">Fall</td><td class="plaintable">Boolean</td><td class="plaintable">Whether a tree that has died this timestep has fallen (true), or remains standing as a snag (false).</td><td class="plaintable"><a href="snag_dynamics_behaviors/snag_decay_class_dynamics.html">Snag Decay Class Dynamics</a></td></tr>
+
+<tr><td class="plaintable">Pre-harvest growth</td><td class="plaintable">PreHarvGr</td><td class="plaintable">Float</td><td class="plaintable"> Growth prior to the last harvest.</td><td class="plaintable"><a href="growth_behaviors/lagged_post_harvest_growth.html">Lagged post harvest growth</a></td></tr>
+
+<tr><td class="plaintable">Last stochastic</td><td class="plaintable">autocorr</td><td class="plaintable">Float</td><td class="plaintable">The previous year's stochastic growth factor.</td><td class="plaintable"><a href="growth_behaviors/michaelis_menton_with_negative_growth.html">Michaelis Menton with negative growth - height only </a></td></tr>
+
+<tr><td class="plaintable">Years Infested</td><td class="plaintable">YearsInfested</td><td class="plaintable">Integer</td><td class="plaintable">The number of years that a tree has been infested with insects or pathogens.</td><td class="plaintable"><a href="disturbance_behaviors/insect_infestation.html">Insect Infestation</a> and <a href="disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a></td></tr>
+
+<tr><td class="plaintable">Density Dependent Resistance Status</td><td class="plaintable">DensDepResistanceStatus</td><td class="plaintable">Integer</td><td class="plaintable">The resistance status of a tree. 1 = resistant; 2 = conditionally susceptible; 3 = susceptible.</td><td class="plaintable"><a href="disturbance_behaviors/dens_dep_infestation.html">Density Dependent Infestation</a></td></tr>
+
+<tr><td class="plaintable">Vigorous</td><td class="plaintable">vigorous</td><td class="plaintable">Boolean</td><td class="plaintable">Whether a tree is vigorous or not (true or false).</td><td class="plaintable"><a href="management_behaviors/quality_vigor_classifier.html">Tree Quality Vigor Classifier</a></td></tr>
+
+<tr><td class="plaintable">Sawlog</td><td class="plaintable">sawlog</td><td class="plaintable">Boolean</td><td class="plaintable">Whether a tree is sawlog quality or not (true or false).</td><td class="plaintable"><a href="management_behaviors/quality_vigor_classifier.html">Tree Quality Vigor Classifier</a></td></tr>
+
+<tr><td class="plaintable">Tree class</td><td class="plaintable">treeclass</td><td class="plaintable">Integer</td><td class="plaintable">Tree class number, 1-6.</td><td class="plaintable"><a href="management_behaviors/quality_vigor_classifier.html">Tree Quality Vigor Classifier</a></td></tr>
+
+</table>
+</body>
+</html>

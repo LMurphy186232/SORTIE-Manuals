@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Sample Behavior</title>
+</head>
+<body>
+<h1>Sample behavior</h1>
+<p>
+This is a set of files called "MyBehavior.cpp" and "MyBehavior.h", with code for the class "clMyBehavior".  It tells you where to put your code to create a new behavior.  This code is not guaranteed to compile; it is just a guide.
+<br><a href="#h">MyBehavior.h</a>
+<br><a href="#cpp">MyBehavior.cpp</a>
+</p>
+
+<a name="h"><h3>MyBehavior.h</h3></a>
+<code>
+<br>#ifndef MyBehaviorH
+<br>#define MyBehaviorH
+<br>
+<br>#include "BehaviorBase.h"
+<br>
+<br><i>/**
+<br>The slash and two asterisks, closed by an asterisk and a single slash, denotes a comment for automatic documentation by <a href="http://www.doxygen.org">Doxygen.</a>  You are politely requested to comment your header files in Doxygen format, so that they can automatically go into the overall SORTIE documentation.  The Doxygen web site has more on how to do that, and there are examples throughout this header file and in existing SORTIE code.  (See the <a href="../java/sortie_help.html">SORTIE help</a> topic for more on SORTIE documentation.)  Doxygen's C++ output for SORTIE is <a href="../c_doc/index.html">here</a>, if you want to see what it looks like.  Put this comment immediately before your class declaration. 
+<br>
+<br>Each behavior (in fact, each population and grid as well) has a name string.  This string is a unique identifier.  Other objects can use the name string to find and access this one.  So document your name string where it can be seen.  If you don't want other objects to access your code, don't skip the name string; just seal up your data.  This behavior's name string will be "my behavior".
+<br>*/</i>
+<br>
+<br>class clMyBehavior : virtual public clBehaviorBase {
+<br><i>//note: you need the virtual keyword to avoid base class ambiguity.</i>
+<br>public:
+<br>
+<br><i>/**
+<br>Constructor.  You must have a constructor, if only to initialize the base class constructors.  Again, note the Doxygen commenting.
+<br>
+<br>@param p_oSimManager Sim Manager object.  The "@param" is the Doxygen format for commenting a function argument.  "@return" documents a function's return value, if applicable.  "@throws" documents errors thrown by the function.  Remember those, and the fact that the special comment goes right before the thing commented in the header file, and you can write almost all, if not all, of your documentation Doxygen-compliant.
+<br>*/</i>
+<br>clMyBehavior(clSimManager *p_oSimManager);
+<br>
+<br><i>/**
+<br>  Destructor.  You are responsible for freeing your behavior's memory here.  This function is not required if you don't need it. 
+<br>*/</i>
+<br> ~clMyBehavior();
+<br>
+<br><i>/**
+<br>This function is overridden from <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.  It automatically executes once per timestep, at this behavior's turn in the behavior order.  This is probably where the bulk of your behavior's functionality will go.  Write your code into the function body and it will get called at the right time.  I haven't written a sample body for action in this file.
+<br>*/</i>
+<br>void Action();
+<br>
+<br><i>/**
+<br>This function is overridden from <a href="../c_doc/classclWorkerBase.html">clWorkerBase</a>.  It automatically executes at the end of the timestep, after Action() has been called for all behaviors.  You could use this to, for instance, take a grid that is used by several different behaviors and re-initialize it, ready for the next timestep.  You don't have to override this function if you don't need it.  I haven't written a function body for this in this example.
+<br>*/</i>
+<br>void TimestepCleanup();
+<br>
+<br><i>/**
+<br>This function is overridden from <a href="../c_doc/classclWorkerBase.html">clWorkerBase</a>.  It automatically executes at the end of the run, before any objects have been destroyed.  You might use it to, for example, compile log statistics and write them to a file.  You don't have to override this function if you don't need it.  I haven't written a function body for this in this example.
+<br>*/</i>
+<br>void EndOfRunCleanup();
+<br>
+<br>protected:
+<br>
+<br><i>/**
+<br>This function is overridden from <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.  It automatically executes at the beginning of the run.  Behaviors can assume that the tree population and grid objects have already been set up from the parameter file when this function is called.  
+<br>
+<br>The p_oDoc parameter is the parsed parameter file.  Each behavior is responsible for extracting what it needs from the parameter file, and throwing errors if it gets bad data.  (The functions defined in <a href="../c_doc/ParsingFunctions_8h.html">ParsingFunctions.h</a> are there to help you read data from the parameter file.)  You can find out more about behavior data definition in the <a href="behaviors.html">behaviors</a> topic.  
+<br>
+<br>All behavior setup code should go here, or in functions called from this function.  This function is protected because it doesn't have to be public; it is called by the parent class's clBehaviorBase::DoSetup() function.
+<br>
+<br>@param p_oDoc DOM tree of the parsed input file.
+<br>*/</i>
+<br>void GetData(DOMDocument *p_oDoc);
+<br>
+<br><i>/**
+<br>Our hypothetical behavior needs a grid, and so we'll write this function to set it up and call it from GetData().  If someone is using a parameter file that contains setup information for this grid, such as changing the default resolution or reading in a map of initial conditions values, the grid may already exist.  This function will take that into account and create the grid if it's not already created. 
+<br>*/</i>
+<br>void SetUpGrid();
+<br>
+<br><i>/**
+<br>This is a pointer to a grid that this behavior needs.  Obviously, some behaviors don't need grids.  Variable naming conventions are described <a href="cplusplus_variable_names.html">here</a>. 
+<br>
+<br>Sometimes, a behavior just needs to find a grid that another behavior created.  But our behavior plans to create this one.  If you do, be sure to document the namestring of the grid, what data members it has, what the default grid cell resolution is, etc.
+<br>
+<br>This grid is called "mygrid".  It contains one bool data member called "the_bool".  The default master grid resolution is fine here.
+<br>*/</i>
+<br>clGridBase *mp_oMyGrid;
+<br>
+<br><i>/**This is an example of some species-specific data that is needed.*/</i>
+<br>float *mp_fMySpeciesData;
+<br>
+<br><i>/**This is an example of a single value that is needed.*/</i>
+<br>int m_iMySingleData;
+<br>
+<br><i>/**This is the data return code for our grid's data member, so we can easily access it later.*/</i>
+<br>short int m_iTheBoolCode;
+<br>
+<br>};
+<br>#endif
+</code>
+
+
+
+
+<a name="cpp"><h3>MyBehavior.cpp</h3></a>
+<code>
+<br>
+<br>#include "MyBehavior.h"
+<br>#include "GridBase.h"
+<br>#include "ParsingFunctions.h"
+<br>
+<br><i>/*
+<br>Constructor.  This is how I do headers in the actual file.  You can do yours however you want.  Once you have released your code back to the SORTIE source, make sure it has an edit history there so we can track changes.
+<br> Edit history:
+<br> -------------
+<br> April 28, 2004 - Submitted in beta version (LEM)
+<br>*/</i>
+<br>clMyBehavior::clMyBehavior(clSimManager *p_oSimManager) :
+   clBehaviorBase(p_oSimManager), clWorkerBase(p_oSimManager)  {
+<br>try {
+<br> <i>//Set the name string</i> 
+<br> strcpy(m_cNameString, "my behavior");
+<br>
+<br> <i>/*Set the behavior versions.  There is a behavior version number in the parameter file, which will be validated against these numbers.  This happens automatically; all you have to do is set the numbers.  These numbers are defined in <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>. See more about versioning in the <a href="behaviors.html">behaviors</a> topic.*/</i>
+<br> 
+<br>   mp_fVersionNumber = 1;
+<br>   mp_fMinimumVersionNumber = 1;
+<br>
+<br>   <i>/*Set the allowed <a href="../c_doc/DataTypes_8h.html#a10">file types</a> that are allowed as setup to this behavior.  All behaviors should accept parameter files and rundata files.  In addition, perhaps this behavior is able to accept another kind of file as setup as well, but almost certainly not.  These variables are defined in <a href="../c_doc/classclWorkerBase.html">clWorkerBase</a>.*/</i>
+<br>
+<br>   m_iNumAllowedTypes = 2;
+<br>   mp_iAllowedFileTypes = new int[m_iNumAllowedTypes];
+<br>   mp_iAllowedFileTypes[0] = parfile;
+<br>   mp_iAllowedFileTypes[1] = rundata;
+<br>
+<br> <i>/*Set the number of new tree data members that this behavior intends to register.  In our case, we're not registering any (in which case we don't need these lines because they default to 0).  But if your behavior was going to register a new data member, put how many of each you want here, then register them in GetData().  A new data member of the appropriate type will be added for each species/type combination that your behavior applies to, ready to be registered with a name.  The species/type combinations to which the behavior is applied are accessed through m_iNumSpeciesTypeCombos and mp_whatSpeciesTypeCombos, both defined in <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.*/</i>
+<br>
+<br>m_iNumNewTreeInts = 0;
+<br>m_iNumNewTreeFloats = 0;
+<br>m_iNumNewTreeChars = 0;
+<br>m_iNumNewTreeBools = 0;
+<br>
+<br>   <i>/*Standard memory setup so that we can fail gracefully if the destructor is called before the object is set up*/</i>
+<br>   mp_oMyGrid = NULL;
+<br>   mp_fMySpeciesData = NULL;
+<br>
+<br> }
+<br> <i>/*Most functions should be encapsulated in a try-catch block.  Certainly all the major ones should.  You can use your discretion with smaller functions unlikely to produce errors.  The idea here is, in the case of unexpected errors, to fail gracefully in a way that allows the <a href="../c_doc/classclSimManager.html">clSimManager object</a> to clean up, producing a SORTIE error message in the process that can be reported to the user in a standard way.
+<br>
+<br>The first two catch statements simply make sure that any errors or messages thrown lower down in the stack are not caught here and accidentally re-thrown as unknown errors produced by this function.  The last catch statement is for unexpected errors.*/</i>
+<br>
+<br> catch(modelErr &#38;err) {throw(err);} 
+<br> catch (modelMsg &#38;msg) {throw(msg);} //non-fatal error
+<br> catch(...) {
+<br>   modelErr stcErr;
+<br>   stcErr.iErrorCode = UNKNOWN;
+<br>   strcpy(stcErr.cFunction, "clMyBehavior::clMyBehavior");
+<br>   throw(stcErr);
+<br> }
+<br>}
+
+<br>
+<br><i>/*
+<br>Destructor
+<br> Edit history:
+<br> -------------
+<br> April 28, 2004 - Submitted in beta version (LEM)
+<br>*/</i>
+clMyBehavior::~clMyBehavior() {
+<br>
+<br><i>/*Delete array*/</i>
+<br>delete[] mp_fMySpeciesData;
+<br><i>/*No need to delete the grid object - that will happen automatically*/</i>
+<br>}
+
+<br>
+<br><i>/*
+<br>GetData()
+<br>Edit history:
+<br>-------------
+<br>April 28, 2004 - Submitted in beta version (LEM)
+<br>*/</i>
+<br>void clMyBehavior::GetData(DOMDocument *p_oDoc) {
+<br>try {
+<br>DOMElement = p_oDoc->getDocumentElement();
+<br><i>/*Get the tree population object*/</i>
+<br>clPopulationBase *p_oTemp = mp_oSimManager->GetPopulationObject("treepopulation");
+<br>clTreePopulation *p_oPop = (clTreePopulation*) p_oTemp;
+<br>floatVal *p_fTempValues;
+<br>int iNumSpecies = p_oPop->GetNumberOfSpecies(), i;
+<br>
+<br><i>/*First, let's read some parameter file values*/</i>
+<br>
+<br><i>/*Start with our single value.  Assume that all tag names have been properly defined.  We can call a function to fill this value for us, and tell the function that this value is required.  Then, an error will be thrown if the value is not present in the parameter file.*/</i>
+<br>
+<br>FillSingleValue(p_oElement, "my_tag", &#38;amp;m_iMySingleData, true);
+<br>
+<br><i>/*Now for the species-specific value.  The important thing to remember with species-specific values is that you cannot assume that your behavior will be applied to all species.  It is important to make sure that you only try to load and work with values for species to which the
+behavior applies.  You can have quick access to the species to which this behavior has been applied through m_NumBehaviorSpecies and mp_iWhatSpecies, both defined in <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.*/</i>
+<br>
+<br><i>/*First, declare our array.  Again, there are a few different options.  Since this behavior only has one array, I will declare it to be sized the total number of species; then, a species' number will be the array index for its value.  If there are some species not used, then we'll just be careful not to access those array indexes.  If you had many species-specific arrays, it would save some memory to declare them to only be as large as m_iNumBehaviorSpecies, and have one master array that translated species numbers to array indexes.*/</i>  
+<br>
+<br>mp_fMySpeciesData = new float[iNumSpecies];
+<br>
+<br><i>/*We can automatically collect values only for those species to which this behavior is applied.  To do that, we will engage the help of a temporary array.  What we do is declare an array of <a href="../c_doc\DataTypes_8h.html">floatVals</a>.  This structure packages together a value and the species code associated with it.  (You could use this structure to hold species-specific data in your behavior, if you wanted.)  In order to use our array to read values from the parameter file, declare it, then load all the species codes to which this behavior applies into it.  We can then call a function that will match those codes to values from the parameter file and load those in.*/</i>
+<br>
+<br>p_fTempValues = new floatVal[m_iNumBehaviorSpecies];
+<br>for (i = 0; i &#38;lt; m_iNumBehaviorSpecies; i++)
+<br>p_fTempValues[i].code = mp_iWhatSpecies[i];
+<br>
+<br><i>/*Now we can load values from the file - make them required so an error will be thrown if they aren't all there*/</i>
+<br>FillSpeciesSpecificValue(p_oElement, "my_parent_tag", "my_child_tag", p_fTempValues, m_iNumBehaviorSpecies, p_oPop, true);
+<br>
+<br><i>/*Now that we've read our parameter file data, let's finish setup by setting up our grid*/</i>
+<br>
+<br>SetUpGrid();
+<br>
+<br> } //end of try block
+<br> catch (modelErr &#38;err) {throw(err);}
+<br> catch (modelMsg &#38;msg) {throw(msg);} //non-fatal error
+<br> catch(...) {
+<br>   modelErr stcErr;
+<br>   stcErr.iErrorCode = UNKNOWN;
+<br>   strcpy(stcErr.cFunction, "clMyBehavior::GetData");
+<br>   throw(stcErr);
+<br> }
+<br>}
+
+<br>SetUpGrid()
+<br>Edit history:
+<br>-------------
+<br>April 28, 2004 - Submitted in beta version (LEM)
+<br>*/
+<br>void clMyBehavior::SetUpGrid() {
+<br>
+<br><i>/*Check first to see if our grid was defined in the parameter file.  If you didn't want to allow the user to enter any setup information for your grid, just create it again.  Any existing grid with the same name will be overwritten.*/</i>
+<br>
+<br>mp_oMyGrid = mp_oSimManager->GetGridObject( "mygrid" );
+<br>
+<br>if ( !mp_oMyGrid )
+<br>    {
+<br><i>/*Our grid was not created in the parameter file so create it now*/</i>
+<br>
+<br> mp_oMyGrid = mp_oSimManager->CreateGrid( "ygrid"", 0, 0, 0, 1 );
+<br>
+<br><i>/*Register our data member*/</i>
+<br>m_iTheBoolCode = mp_oMyGrid->RegisterBool( "the_bool" );
+<br>    }
+<br>    else
+<br>    {
+<br><i>/*Our grid had been created in the parameter file.  Make sure that our data member was registered.  If it wasn't, that's a fatal error since we can't register it now that the grid's been created.*/</i>
+<br>
+<br>m_iTheBoolCode = mp_oMyGrid->GetBoolDataCode( "the_bool" );
+<br>      if ( -1 == m_iTheBoolCode )
+<br>      {
+<br>        modelErr stcErr;
+<br>        stcErr.iErrorCode = BAD_DATA;
+<br>        strcpy( stcErr.cFunction, "clMyBehavior::SetUpGrid" );
+<br>        strcpy( stcErr.cMoreInfo, "The \"mygrid\" grid was incorrectly set up in the parameter file.  The bool \"the_bool\" is missing." );
+<br>        throw( &#38; stcErr );
+<br>      }
+<br>    }
+<br>		}
+<br>
+</code>
+<!-- datestamp:begin -->04-May-2004 02:22 PM<!-- datestamp:end -->
+</body>
+</html>

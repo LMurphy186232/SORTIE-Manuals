@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Timesteps and run length</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Timesteps and run length</h1>
+
+<p>
+A run is a single model simulation.  It starts at time zero and continues until its defined endpoint is reached.  A run is defined by its <a href="../files/parameter_files.html">parameter file</a>.  This tells the model how long to run, and what to do during the run.  
+</p>
+<h2>Timesteps</h2>
+<p>
+The basic time unit in the run is the timestep.  You set the length and number of the timesteps.  Each timestep, the model asks each <a href="what_is_a_behavior.html">behavior</a> to do its work, whatever that work may be.  The behaviors are run in the order in which they are listed in the parameter file. (You can see the order using the <a href="../windows/model_flow_window.html">Model flow window</a>.)  The model counts off the timesteps until it has finished the specified number, then cleans up its memory and shuts down.
+</p>
+<p>
+The length of a timestep is defined in years. Setting a longer timestep means that you can simulate long stretches of time more quickly and with less computer processing time. For example, you could create two parameter files using the same behavior set, each for a run of 100 timesteps. Parameter file A has a timestep length of one year. Parameter file B has a timestep length of five years. Both will take about the same amount of time to run, because each behavior is called upon the same number of times in each run - once per timestep. However, at the end of the run for parameter file A, 100 virtual years will have passed, while for parameter file B, 500 years will have passed. The forests at the end of each of the two runs would probably look quite different. 
+</p>
+<p>
+There is, of course, a tradeoff. When a timestep is more than one year long, behaviors do their best to approximate what happens in those successive years. They can only do that based on the model state at the beginning of the timestep, without knowing how things might change from year to year because of other behaviors. Depending on the simulation, this approximation might create results that are very different from the results that would have come from a single year timestep simulation.    
+</p>
+
+<h2>Choosing a timestep length</h2> 
+<p>
+A one year timestep is the default choice, because it makes sure that SORTIE can model short term interactions directly instead of approximating them. There are two main reasons for choosing a multi-year timestep: shortening processing time for runs that are otherwise unreasonably long, and using parameters that have been estimated for multiple years and cannot easily be rescaled.
+</p>
+<p>
+That second reason can only apply in rare situations, since most behaviors require parameters scaled to one year, even when a multi-year timestep is being used. Study the documentation for each behavior you want to use. In some cases, behaviors insist on a particular timestep length to ensure proper functioning.
+</p>
+<p>
+It is difficult to guess how long a parameter file will take to run, so first, try running your parameter file with a one year timestep. If you're happy with how long it took SORTIE to run your parameter file, use one year timesteps.
+</p>
+<p>
+If you think you might need a multi-year timestep, check the behavior documentation again. Each behavior will describe how it handles timesteps of different lengths. Make sure you think the approach is reasonable. Then, try running two versions of your parameter file, one with one year timesteps and one with multi-year timesteps, with both files modeling the same amount of total time (for instance, 100 one year timesteps and 20 five year timesteps). Make sure you think the difference is reasonable.      
+</p>
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Storm direct killer</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Storm direct killer</h1>
+
+<p>
+This behavior kills trees based on storm severity, without an intervening damage step. 
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "storm".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Storm Direct Killer - a</td><td> The "a" value in the probability of mortality logit function.</td></tr>
+
+<tr><td class="parname">Storm Direct Killer - b</td><td> The "b" value in the probability of mortality logit function.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+When storms occur, trees to which this behavior are applied have the following probability of mortality:
+</p>
+<center><img src="../data_files/logit_eq.gif" alt="p equals exp(a + b * D) / (1 + exp(a + b * D)))"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>p</i> is the tree's probability of mortality, between 0 and 1</li>
+<li><i>a</i> is the <b>Storm Direct Killer - a</b> parameter</li>
+<li><i>b</i> is the <b>Storm Direct Killer - b</b> parameter</li>
+<li><i>D</i> is the storm damage at the tree's location</li>
+</ul>
+<p>
+Once the mortality probability has been calculated, this behavior uses a random number to determine whether it lives or dies. If more than one storm has occurred in the current timestep, each storm gets a separate, independent chance to kill trees. 
+</p>
+<p>
+Trees that die have a "dead" flag set to true and are treated in the rest of the run like trees that have died due to natural mortality. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to the trees that can be killed in storms. You must also use the <a href="storm_disturbance.html">Storm disturbance</a> behavior and have any kind of <a href="../mortality_behaviors/index.html">mortality behavior</a> applied to each tree species and life history stage to which this behavior is applied. 
+</p>
+
+</body>
+</html>

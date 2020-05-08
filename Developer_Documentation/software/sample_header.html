@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Sample Behavior Header</title>
+</head>
+<body>
+<h1>Sample behavior header</h1>
+<p>
+This header is for our sample biomass calculation behavior, with notes on how to write for other behaviors.  This code is not guaranteed to compile; it is just a guide.  Our class name is <code>clSampleBehavior</code>, so our filenames should be "SampleBehavior.h" and "SampleBehavior.cpp".
+</p>
+<h3>SampleBehavior.h</h3>
+<code>
+<br><b>#ifndef SampleBehaviorH</b>
+<br><b>#define SampleBehaviorH</b>
+<br>
+<br><b>#include "BehaviorBase.h"</b>
+<br>
+<br><i>/**
+<br>The slash and two asterisks, closed by an asterisk and a single slash, denotes a comment for automatic documentation by <a href="http://www.doxygen.org">Doxygen.</a>  The Doxygen web site has a manual, and there are examples throughout this header file and in existing SORTIE code for how to comment in Doxygen format.  (See the <a href="../java/sortie_help.html">SORTIE help</a> topic for more on SORTIE documentation.)  Doxygen's C++ output for SORTIE is <a href="../c_doc/index.html">here</a>, if you want to see what it looks like.  Put this comment immediately before your class declaration. 
+<br>
+<br>Now to document what this behavior actually does.  This behavior calculates biomass for adult trees according to the following equation:
+<br><center>B = a * DBH<sup> d</sup></center>
+<br>where:
+<ul>
+<li>B = biomass in metric tons</li>
+<li>a = slope of biomass equation</li>
+<li>DBH = tree's DBH, in cm</li>
+<li>d = exponent of biomass equation</li>
+</ul>
+Biomass is totaled in a grid object created by this behavior, called "Biomass Map".  Each cell in biomass map contains the average biomass for all adult trees in that cell.
+<br>
+<br>Each behavior (in fact, each population and grid as well) has a name string.  This string is a unique identifier.  Other objects can use the name string to find and access this one.  So document your name string where it can be seen.  If you don't want other objects to access your code, don't skip the name string; just seal up your data.  This behavior's name string will be "sample biomass behavior".  Call it in the parameter file (if it were real) with the string "sample biomass behavior".
+<br>
+<br>@author Lora E. Murphy
+<br>Copyright 2005 Charles D. Canham
+<br>
+<br>Edit history:
+<br>-------------------
+<br>February 16, 2005:  Created (LEM)
+<br>*/</i>
+<br>
+<br><b>class clSampleBehavior : virtual public clBehaviorBase {</b>
+<br><i>//note: you need the virtual keyword to avoid base class ambiguity.</i>
+<br><b>public:</b>
+<br>
+<br><i>/**
+<br>Constructor.  (You must have a constructor, if only to initialize the base class constructors.  Again, note the Doxygen commenting.)
+<br>
+<br>This constructor sets all array pointers to NULL.  Doing this avoids access violations if this object is destroyed before the arrays are allocated.
+<br> 
+<br>@param p_oSimManager Sim Manager object.  (The "@param" is the Doxygen format for commenting a function argument.  "@return" documents a function's return value, if applicable.  "@throws" documents errors thrown by the function.  Remember those, and the fact that the special comment goes right before the thing commented in the header file, and you know almost everything you need to to make your documentation Doxygen-compliant.)
+<br>*/</i>
+<br><b>clMyBehavior(clSimManager *p_oSimManager);</b>
+<br>
+<br><i>/**
+<br>  Destructor.  (You are responsible for freeing your behavior's memory here.  This function is not required if you don't need it.) The sample behavior frees the array memory here.
+<br>*/</i>
+<br> <b>~clMyBehavior();</b>
+<br>
+<br><i>/**
+<br>(This function is overridden from <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.  It automatically executes once per timestep, at this behavior's turn in the behavior order.)  
+<br>
+<br>What this function does:
+<ol>
+<li>Clears the biomass map of the previous timestep's values by setting the "avg" and "count" data members to zero for the "Biomass Map" grid (grid documentation below).</li>
+<li>Uses the clTreePopulation's Find() method to gain access to all adult trees.</li>
+<li>For each adult tree, calculates its biomass and adds it to "avg", and increments "count" by one.</li>
+<li>For each cell in the biomass map, divide the value in "avg" by "count" and assign back to "avg".</li>
+</ol>  
+*/</i>
+<br><b>void Action();</b>
+<br>
+<br><b>protected:</b>
+<br>
+<br><i>/**
+<br>(This function is overridden from <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.  It automatically executes at the beginning of the run.  Behaviors can assume that the tree population and grid objects have already been set up from the parameter file when this function is called. All behavior setup code should go here, or in functions called from this function. 
+<br>
+<br>The p_oDoc parameter is the parsed parameter file.  Each behavior is responsible for extracting what it needs from the parameter file, and throwing errors if it gets bad data.  The functions defined in <a href="../c_doc/ParsingFunctions_8h.html">ParsingFunctions.h</a> are there to help you read data from the parameter file.)
+<br>
+<br>This function performs setup for this behavior.  It reads in parameters from the parameter file and validates them.  Then it sets up the "Biomass Map" grid.
+<br>
+<br>@param p_oDoc DOM tree of the parsed input file.
+<br>@throws modelErr if a value for a is less than 0.
+<br>*/</i>
+<br><b>void GetData(DOMDocument *p_oDoc);</b>
+<br>
+<br><i>/**
+<br>Biomass map grid.  This behavior will create this grid.  Its name is "Biomass Map".  It has two data members:  the first is a float value called "avg" which will be used to first total the biomass values in the cell and then hold the average biomass.  The second member is an int value called "count" which holds the number of adult trees in the cell, for calculating the average.  The user can enter a new grid cell resolution if they want to.
+<br>*/</i>
+<br><b>clGridBase *mp_oBiomassGrid;</b>
+<br>
+<br><i>/**Slope of the biomass equation (a).  This is an array sized number of species.*/</i>
+<br><b>float *mp_fSlopeA;</b>
+<br>
+<br><i>/**Exponent of the biomass equation (d).  This is an array sized number of species.*/</i>
+<br><b>float *mp_fExpD;</b>
+<br>
+<br><i>/**This is the data return code for the "avg" data member of the "Biomass Map" grid.*/</i>
+<br><b>short int m_iAvgCode;</b>
+<br>
+<br><i>/**This is the data return code for the "count" data member of the "Biomass Map" grid.*/</i>
+<br><b>short int m_iCountCode;</b>
+<br><b>};</b>
+<br><b>#endif</b>
+</code>
+<br><!-- datestamp:begin -->16-Feb-2005 01:03 PM<!-- datestamp:end -->
+</body>
+</html>

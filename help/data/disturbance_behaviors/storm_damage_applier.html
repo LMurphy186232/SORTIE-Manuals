@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Storm damage applier</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Storm damage applier</h1>
+<p>
+The purpose of this behavior is to apply storm damage to individual trees.  This behavior decides which trees are damaged when a storm has occurred and how badly.  It also keeps track of the time since damage for damaged trees, and after a "healing period" returns them to healthy (undamaged) status.  
+</p>
+<p>
+There are three possible damage categories for a tree:  no damage, medium damage, and heavy damage.  Other behaviors can use the damage categories to determine what effects the storm damage had on a tree (slow growth, death, etc). 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Minimum DBH for Storm Damage, in cm</td><td>  The minimum DBH for trees that can be damaged or killed by storms.  Trees smaller than this are never damaged no matter what storms occur.</td></tr>
+
+<tr><td class="parname">Number of Years Damaged Trees Take to Heal</td><td>  The number of years it takes a damaged tree to heal.  After this time it is considered undamaged. </td></tr>
+
+<tr><td class="parname">Storm Damage Intercept (a) for Medium Damage</td><td>  The storm damage intercept parameter (a) for the equation calculating the probability of medium damage. </td></tr>
+
+<tr><td class="parname">Storm Damage Intercept (a) for Heavy Damage</td><td>  The storm damage intercept parameter (a) for the equation calculating the probability of heavy damage. </td></tr>
+
+<tr><td class="parname">Storm DBH Coefficient (d)</td><td>  The storm DBH coefficient (d) for the equations calculating the probability of damage. </td></tr>
+
+<tr><td class="parname">Storm Intensity Coefficient (b)</td><td>  The storm intensity coefficient (b) for the equations calculating probability of damage. </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The behavior <a href="storm_disturbance.html">Storm disturbance</a> determines whether a storm has occurred.  When it does, an individual tree can either get no damage, medium damage, or heavy damage.  The tree's probability of damage in a given damage category is:
+</p>
+<center><img src="../data_files/storm_prob_eqn.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>i</i> is the damage category, either medium or heavy</li>
+<li><i>a<sub>i</sub></i> is the storm damage intercept for that tree's species for that damage category, either the <b>Storm Damage Intercept (a) for Medium Damage</b> parameter or the <b>Storm Damage Intercept (a) for Heavy Damage</b> parameter</li>
+<li><i>b</i> is the <b>Storm Intensity Coefficient (b)</b> parameter for that tree's species</li>
+<li><i>c</i> is the storm's severity at the tree's location, between 0 and 1, as calculated by the <a href="storm_disturbance.html">Storm disturbance</a> behavior</li>
+<li><i>d</i> is the <b>Storm DBH Coefficient (d)</b> parameter for that tree's species</li>
+</ul>
+<p>
+This behavior uses a random number to determine what damage category a tree falls in.  If the random number is less than the probability for medium damage, the tree is undamaged.  If the random number is greater than the probability for medium damage but less than the probability for heavy damage, the tree gets medium damage.  If the random number is greater than the probability for heavy damage, the tree gets heavy damage.
+</p>
+<p>
+If a tree is damaged, a counter is set for time since damage.  This behavior checks this counter every timestep.  When the amount of time specified in the <b>Number of Years Damaged Trees Take to Heal</b> has passed, the tree is considered healed and no longer has a record of storm damage.
+</p>
+<p>
+If a damaged tree is damaged again in a new storm, it gets the most severe damage category that can apply to it and must go through the maximum healing time again in order to become undamaged.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to the trees that can receive storm damage.  You may not apply this behavior to seedlings.  If you wish to use the <a href="storm_damage_killer.html">Storm damage killer</a> behavior to create snags from storm-killed trees, you must apply this behavior to the snag tree type.  Along with this behavior, you must also add the <a href="storm_disturbance.html">Storm disturbance</a> behavior. 
+</p>
+</body>
+</html>

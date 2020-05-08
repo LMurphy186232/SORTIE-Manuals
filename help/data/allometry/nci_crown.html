@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The NCI crown depth and radius relationships</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The NCI crown depth and radius relationships</h1>
+<p>
+This calculates crown dimensions as a function of tree size and local crowding. The equations are the same for crown depth and crown radius, but they each have separate parameters.    
+</p>
+<h3>NCI Crown Depth Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crown Depth - Alpha</td><td> NCI function exponent.</td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Beta</td><td> NCI function exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Crowding Effect "n"</td><td> Crowding effect exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Gamma</td><td> NCI function exponent. </td></tr>
+ 
+<tr><td class="parname">NCI Crown Depth Lambda for Species X Neighbors</td><td> The competitive effect of neighbors of species X. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Max Potential Depth (m)</td><td> The maximum possible value for crown depth, in m. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Max Search Distance for Neighbors (m)</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Minimum Neighbor DBH (cm)</td><td> The minimum DBH for trees of that species to compete as neighbors. Values are needed for all species. </td></tr>
+
+<tr><td class="parname">NCI Crown Depth - Size Effect "d"</td><td> Size effect function exponent. </td></tr>
+
+</table>
+
+<h3>NCI Crown Radius Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Crown Radius - Alpha</td><td> NCI function exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Beta</td><td> NCI function exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Crowding Effect "n"</td><td> Crowding effect exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Gamma</td><td> NCI function exponent. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius Lambda for Species X Neighbors</td><td> The competitive effect of neighbors of species X. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Max Potential Radius (m)</td><td> The maximum possible value for crown radius, in m. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Max Search Distance for Neighbors (m)</td><td> The maximum distance, in m, at which a neighboring tree has competitive effects on a target tree. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Minimum Neighbor DBH (cm)</td><td> The minimum DBH for trees of that species to compete as neighbors. Values are needed for all species. </td></tr>
+
+<tr><td class="parname">NCI Crown Radius - Size Effect "d"</td><td> Size effect function exponent. </td></tr>
+
+</table>
+<p>
+The crown dimensions are calculated as: 
+</p>
+<center><i>CR / CD = [Max CR / Max CD] * Size Effect * Crowding Effect</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>CR</i> is the crown radius, in m</li>
+<li><i>CD</i> is the crown depth, in m</li>
+<li><i>Max CR</i> is the <b>NCI Crown Radius - Max Potential Radius (m)</b> parameter</li>
+<li><i>Max CD</i> is the <b>NCI Crown Depth - Max Potential Depth (m)</b> parameter</li>
+</ul>
+
+<p>
+Size Effect is calculated as:
+</p>
+<center><i>SE = 1 - exp(-d * DBH)</i></center>
+<p>where:</p>
+<ul>
+<li><i>SE</i> is the size effect, between 0 and 1</li>
+<li><i>d</i> is either the <b>NCI Crown Depth - Size Effect "d"</b> parameter or the <b>NCI Crown Radius - Size Effect "d"</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+</ul>
+
+<p>
+Crowding Effect is calculated as:
+</p>
+<center><i>CE = exp(-n * NCI)</i></center>
+<p>where:</p>
+<ul>
+<li><i>CE</i> is the crowding effect, between 0 and 1</li>
+<li><i>n</i> is the <b>NCI Crown Radius - Crowding Effect "n"</b> parameter or the <b>NCI Crown Depth - Crowding Effect "n"</b> parameter</li>
+<li><i>NCI</i> is calculated as below</li>
+</ul>
+
+<p>NCI is calculated as:</p>
+<center><img src="../data_files/nci_crown.gif" alt=""/></center>
+<p>where:</p>
+<ul>
+<li>the calculation sums over <i>j = 1...S</i> species and <i>k = 1...N</i> neighbors of each species of at least a DBH of <b>NCI Crown Radius - Minimum Neighbor DBH </b> or <b>NCI Crown Depth Minimum Neighbor DBH, in cm</b>, out to a distance of <b>NCI Crown Radius - Max Search Distance for Neighbors (m)</b> or <b>NCI Crown Radius - Max Search Distance for Neighbors (m)</b></li>
+<li><i>&#945;</i> is the <b>NCI Crown Radius - Alpha</b> parameter or the <b>NCI Crown Depth - Alpha</b> parameter </li>
+<li><i>&#946;</i> is the <b>NCI Crown Radius - Beta </b> parameter or the <b>NCI Crown Depth - Beta</b> parameter </li>
+<li><i>&#947;</i> is the <b>NCI Crown Radius - Gamma </b> parameter or the <b>NCI Crown Depth - Gamma</b> parameter </li>
+<li><i>&#955;<sub>ik</sub></i> is the <b>NCI Crown Radius Lambda for Species X Neighbors</b> parameter or the <b>NCI Crown Depth Lambda for Species X Neighbors</b> for the target species relative to the kth neighbor's species</li>
+<li><i>DBH<sub>jk</sub></i> is the DBH of the kth neighbor, in cm</li>
+<li><i>DBH<sub>t</sub></i> is the DBH of the target tree for which to calculate crown dimensions, in cm</li>
+<li><i>distance<sub>ik</sub></i> is distance from target to neighbor, in m</li>
+</ul> 
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Storm Light behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Storm Light behavior</h1>
+<p>
+This behavior calculates light levels as a function of number of trees damaged in <a href="../disturbance_behaviors/index.html">storms</a>.  Light levels are stored in a grid for later retrieval by other behaviors; this behavior does not directly assign light to trees. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Storm Light - Intercept of Light Function</td><td>  Intercept of the function to determine light level. </td></tr>
+
+<tr><td class="parname">Storm Light - Max Radius (m) for Damaged Neighbors</td><td>  The maximum distance, in meters, within which the Storm Light behavior searches for damaged trees. </td></tr>
+
+<tr><td class="parname">Storm Light - Max Years Damaged Trees Affect Light</td><td>  The maximum amount of time, in years, after storm damage that a tree will still be counted in the number of damaged trees. </td></tr>
+
+<tr><td class="parname">Storm Light - Max Years Snags Affect Light</td><td>  The maximum amount of time, in years, after death that a snag will still be counted in the number of damaged trees. </td></tr>
+
+<tr><td class="parname">Storm Light - Minimum Trees For Full Canopy</td><td> The minimum number of adult trees and snags within the value in <b>Storm Light - Max Radius (m) for Damaged Neighbors</b> for the point to be considered under full canopy. </td></tr>
+
+<tr><td class="parname">Storm Light - Slope of Light Function</td><td>  Slope of the function to determine light level. </td></tr>
+
+<tr><td class="parname">Storm Light - Standard Deviation</td><td>  If the value in the <b>Storm Light - Stochasticity</b> parameter is "Normal" or "Lognormal", the standard deviation of the probability distribution function. If stochasticity is "Deterministic", this value is ignored.</td></tr>
+
+<tr><td class="parname">Storm Light - Stochasticity</td><td>  What method to use for randomizing light values, if desired. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior uses a <a href="../../using/what_is_a_grid.html">grid</a> called <a href="../grids/storm_light_grid.html">Storm Light</a> to manage light levels.  Each timestep, it calculates the light level at the center of each grid cell and places it in the grid.
+</p>
+<p>
+The light level is calculated as follows:
+</p>
+<center><i>GLA = ((1 - T/M) * 100) + (a + b * N)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>GLA</i> is the light level, as a value between 0 and 100</li>
+<li><i>T</i> is the number of adult trees and snags within the search radius</li>
+<li><i>M</i> is the <b>Storm Light - Minimum Trees For Full Canopy</b> parameter</li>
+<li><i>a</i> is the <b>Storm Light - Intercept of Light Function</b> parameter</li>
+<li><i>b</i> is the <b>Storm Light - Slope of Light Function</b> parameter</li>
+<li><i>N</i> is the proportion of trees that are dead or were heavily damaged in recent storms</li>
+</ul>
+<p>
+This behavior calculates the light levels at the center of each grid cell by examining the trees within the distance given in the <b>Storm Light - Max Radius (m) for Damaged Neighbors</b> parameter.
+</p>
+<p>
+The first term in the equation, <i>((1 - T/M) * 100)</i>, corrects the light level if the point is not under full canopy.  All adults and snags, no matter what storm damage, are counted up and assigned to T.  If T &gt;= M, then the first term is set to 0 and only the second part, <i>(a + b * N)</i>, is evaluated.  If T &lt; M, then the first term adds to the linear portion the proportion of full sun equal to the proportion of trees missing from the full canopy.  
+</p>
+<p>
+For the second, linear term, the behavior counts the number of dead and heavily damaged trees as a proportion of all adults and snags.  Trees count as heavily damaged if they are either snags that were created as a result of a storm killing an adult tree, or live adults with heavy storm damage.  All storm damaged trees have a time-since-damage counter; only those eligible trees with a counter value less than or equal to the value in the <b>Storm Light - Max Years Damaged Trees Affect Light</b> parameter are counted.  Saplings and seedlings never count.  All snags count, whether they were created by a tree or another mortality process. Their age as a snag must also be less than the <b>Storm Light - Max Years Snags Affect Light</b> parameter.
+</p>
+<p>
+The GLA value can be used as-is, or it can be used as the mean in a PDF to introduce a stochastic element. You can choose either "Normal" or "Lognormal" in the <b>Storm Light - Stochasticity</b> parameter, then supply a standard deviation in the <b>Storm Light - Standard Deviation</b> parameter. Using "Deterministic" as the stochasticity causes the GLA to be used as-is.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+You do not need to apply this behavior to individual trees.  While it is recommended that you also include the <a href="../disturbance_behaviors/index.html">Storm damage applier</a> behavior in your run, this is not required.
+</p>
+</body>
+</html>

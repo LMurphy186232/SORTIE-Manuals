@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Creating a parameter file</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Creating a parameter file</h1>
+<p>
+This topic covers creating a <a href="../files/parameter_files.html">parameter file</a> from scratch.  To make a basic parameter file, you need to define the tree population, choose the list of behaviors that will run, and enter parameter values for your file.  You can save your work at any point in the process and come back to it later. 
+</p>
+
+
+<h2>Setting up the tree population</h2>
+<p>
+You can use the <a href="../windows/file_menu.html">File menu</a> and choose the option "New parameter file" for a short wizard that will get you started.  First you will see the <a href="../windows/edit_species_list_window.html">Edit species list window</a>.  Enter a list of tree species. You can always come back to this window to edit the list later by choosing "Edit->Tree setup".
+</p>
+<h2>Setting up the behavior list</h2>
+<p>
+After you have entered a species list, the wizard will take you to the <a href="../windows/model_flow_window.html">Edit simulation flow window</a> so you can set up the list of behaviors for your run.  You can approach this from either the tree perspective by setting up the list of behaviors for each tree type, or from the behavior perspective by starting with a list of behaviors and assigning each to specific groups of trees.  See the link above for detailed instructions on choosing behaviors.  Again, you can always come back to this window to make changes by choosing the menu option "Edit->Model flow".  At this point the new parameter file wizard ends.
+</p>
+<h2>Setting parameter values</h2>
+<p>
+You must complete the steps above before you can edit parameters, because it is the tree population and the list of behaviors that defines what parameters are needed.  Once those steps are complete, you can enter your parameter values by choosing the menu option "Edit->Model Settings", which will open the <a href="../windows/model_settings_window.html">Model settings window</a>.
+</p> 
+<h2>Output</h2>  
+<p>A basic parameter file creates no output by default. (You can perform a run with it but there will be no results.) There are two kinds of output files:  <a href="../files/short_output_files.html">summary output files</a> and <a href="../files/detailed_output_files.html">detailed output files</a>.  You can set up either or both of these using the <a href="../windows/output_setup_window.html">Edit->Output options</a> menu command from the main SORTIE-ND window.
+</p>
+<h2>Initial conditions</h2>
+<p>
+Set initial conditions for <a href="tree_initial_conditions.html">trees</a> and <a href="grids_initial_conditions.html">grids</a> to define the <a href="modeling_concepts.html">model state</a> at the beginning of the run. Initial conditions can have a big effect on run outcome.
+</p>
+<h2>Replicating a point in another run</h2>
+<p>
+You can replicate a point in another run in your parameter file in order to have it as the starting point in a new run.  You might do this to create a "branch point" where you determine what might have happened if the parameters in the first run had been a little different, or perhaps you did a run solely to create mature-forest initial conditions for a new run.  The first run should have saved a <a href="../files/detailed_output_files.html">detailed output file</a> with as much data as possible.  The new parameter file should be compatible with the first - it should have a common species set and most of the same behaviors.  You can then load the data from any timestep of the previous run as initial conditions in the current parameter file.   For more on entering the maps from a detailed output file, see the <a href="output_as_input.html">Using output as input to a new run</a> topic. 
+</p>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The standard crown depth and radius relationships</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The standard crown depth and radius relationships</h1>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Crown Height Exponent</td><td> The exponent in the standard equation for calculating crown depth.</td></tr>
+
+<tr><td class="parname">Crown Radius Exponent</td><td> The exponent in the standard equation for determining the crown radius.</td></tr>
+
+<tr><td class="parname">Maximum Crown Radius (Standard) (m)</td><td> The maximum crown radius allowed, in meters.</td></tr>
+
+<tr><td class="parname">Slope of Asymptotic Crown Height</td><td> Slope of the standard equation for determining crown depth.</td></tr>
+
+<tr><td class="parname">Slope of Asymptotic Crown Radius</td><td> Slope of the standard equation for determining crown radius.</td></tr>
+
+</table>
+<p>
+Crown radius is calculated as:
+</p>
+<center><i>rad = C<sub>1</sub> * DBH <sup>a</sup></i></center>
+<p>
+where:
+</p> 
+<ul>
+<li><i>rad</i> is the crown radius, in meters</li>
+<li><i>C<sub>1</sub></i> is the <b>Slope of Asymptotic Crown Radius</b> parameter</li>
+<li><i>a</i> is the <b>Crown Radius Exponent</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+</ul>
+<p>
+Crown radius is limited to a maximum of the value put in the parameter <b>Maximum Crown Radius (Standard) (m)</b>.
+</p>
+<p>
+Crown depth is calculated as
+</p>
+<center><i>ch = C<sub>2</sub> * height <sup>b</sup></i></center>
+<p>
+where
+</p> 
+<ul>
+<li><i>ch</i> is the distance from the top to the bottom of the crown cylinder, in meters</li>
+<li><i>C<sub>2</sub></i> is the <b>Slope of Asymptotic Crown Height</b> parameter</li>
+<li><i>height</i> is the tree's height in meters</li>
+<li><i>b</i> is the <b>Crown Height Exponent</b> parameter</li>
+</ul>
+</body>
+</html>

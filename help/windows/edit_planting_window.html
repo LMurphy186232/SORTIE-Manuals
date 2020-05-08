@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Edit Planting Window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Edit Planting Window</h1>
+
+<p>
+This window is reached by clicking the setup button for <a href="../data/planting_behaviors/index.html">Planting</a> from the <a href="model_setup_window.html">Model setup window</a>.
+</p>
+<p>
+This window is where you design all your planting events for a run. You can create new planting events and edit existing ones. This base window displays the current set of plantings.
+</p>
+<p>
+At the top of the window are two buttons for scrolling through plantings that have been defined. On the left is information about the currently displayed planting. On the right is a map of the plot. On this map is displayed the plot grid cells to which a planting is applied. In addition, if there has been a tree map defined, existing trees are also displayed.
+</p>
+
+<h2>Creating and editing plantings</h2>
+<p>
+Click the "New" button to create a planting. To edit an existing planting, display it, then click "Edit". A window will be displayed where you can enter planting data. 
+</p>
+
+<h2>Entering data about the planting</h2>
+<p>
+<b>Timestep.</b>  Enter the timestep in which you wish the planting to occur.  You can create more than one planting per timestep.
+</p>
+<p>
+<b>Percentage of each species.</b>  For each species, enter the percentage of total trees planted that should be of that species, as a value between 0 and 100.  Enter zero in order to not plant a species.  Values should add up to 100.  When SORTIE plants a seedling, it compares a random number to these values to determine its species.  This ensures a random distribution of species in the planted population, but it also means that, if the number of seedlings to plant is small, the actual percentages of each species planted may not exactly match the entered values.
+</p>
+<p>
+<b>Plant spacing.</b>  Select the seedling spacing.  If you select "Gridded", the seedlings are placed at a fixed distance from each other.  If you select "Random", the seedlings are randomly scattered around the plant area.
+</p>
+<p>
+<b># total trees/ha.</b>  You enter this value if the "Plant spacing" is set to "Random".  This is the total number of seedlings to plant, as a value per hectare.  SORTIE determines the actual number to plant by multiplying this value by the planting area.
+</p>  
+<p>
+<b>Spacing (m).</b>  You enter this value if the "Plant spacing" is set to "Gridded".  This is the distance, in meters, between newly planted seedlings in an 8 meter by 8 meter plot grid cell.  If this distance is larger than 4, only one seedling per grid cell will be planted. 
+</p>
+
+<h2>Choosing the area to which to apply the planting</h2>
+<p>
+To specify the plot area to which to apply the planting, select the appropriate cells on the map.  Cells are each 8 meters by 8 meters.  Selected cells will show up in color, and unselected cells will be white.  You can click and drag to mark out an area, or click on individual cells.  Clicking or dragging on selected (colored) cells causes them to become unselected (white).
+</p>
+<p>
+You can display existing harvests, mortality episodes, and planting events in the plot area to help you match designs.
+</p>
+
+</body>
+</html>

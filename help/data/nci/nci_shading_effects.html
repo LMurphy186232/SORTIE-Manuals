@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI shading effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI shading effects</h1>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+<hr/>
+
+<h2>Default shading effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><td class="parname">NCI Shading Effect Coefficient (m)</td><td>  The coefficient in the shading effect equation.</td></tr>
+  
+<tr><td class="parname">NCI Shading Effect Exponent (n)</td><td>  The exponent in the shading effect equation.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Shading Effect</i> is calculated as:
+</p>
+<center><img alt="NCI shading effect equation" src="../data_files/nci_shading_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>m</i> is the <b>NCI Shading Effect Coefficient (m)</b> parameter</li>
+<li><i>n</i> is the <b>NCI Shading Effect Exponent (n)</b> parameter</li>
+<li><i>S</i> is the amount of shade cast by neighbors, from 0 (no shade) to 1 (full shade).  This value should come from the <a href="../light_behaviors/sail_light.html">Sail light behavior</a>.</li>
+</ul>
+
+<h3>How to apply it</h3>
+<p>The trees to which this behavior is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied - the Sail light behavior is the one designed to work with the NCI behavior.  The use of any other light behavior is at your own risk.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Creating a new behavior part 2 - preparing to code</title>
+</head>
+<body>
+<h1>Creating a new behavior</h1>
+<h2>Part 2: Preparing to code</h2>
+<p>
+In this part, you get ready to write the behavior code. You define parameter inputs and write your header file.
+</p>
+<h3>Step 1: Define parameters</h3>
+<p>
+Any inputs needed by your behavior must come from the parameter file. (The need for external data sources is not allowed in behaviors that end up in the SORTIE-ND code base.) You choose what format your parameters are in and what their tag names are. There are two standard formats. When you define parameters with these formats, you will find it much easier to extract parameter data from the parameter file since there are already standard functions written to help you do this. Any valid XML-formatted data is allowed but if it is not one of the standard formats, you must write custom data reading and writing code.
+</p>
+<p>
+The first format is for a single piece of data, like this:<br/><br/>
+<code>&lt;li_julianDayGrowthStarts&gt;120&lt;/li_julianDayGrowthStarts&gt; </code><br/><br/>
+This particular parameter is the first day of the growing season, for light behaviors.
+</p>
+<p>
+The second format is for species-specific parameters, like this:
+</p>
+<code>
+&lt;tr_canopyRadiusExponent&gt;<br/>
+  &lt;tr_creVal species="ACRU"&gt;1.0&lt;/tr_creVal&gt;<br/> 
+  &lt;tr_creVal species="ACSA"&gt;1.0&lt;/tr_creVal&gt; <br/>
+  &lt;tr_creVal species="BEAL"&gt;1.0&lt;/tr_creVal&gt; <br/>
+  &lt;/tr_canopyRadiusExponent&gt;<br/><br/>
+</code>
+<p>
+This parameter is an equation exponent for tree allometry for each species.
+</p>
+<p>
+Parameter file tag names must be unique. To help ensure this, I use a prefix identifying to which type of behavior they belong. (This is not a hard rule.) Prefixes are:
+</p>
+<ul>
+<li><code>an_</code> for analysis behaviors</li>
+<li><code>di_</code> for disperse behaviors</li>
+<li><code>es_</code> for seed establishment behaviors</li>
+<li><code>gr_</code> for growth behaviors</li>
+<li><code>ha_</code> for harvest behaviors</li>
+<li><code>li_</code> for light behaviors</li>
+<li><code>ma_</code> for management behaviors</li>
+<li><code>mo_</code> for mortality behaviors</li>
+<li><code>pl_</code> for tree planting behaviors</li>
+<li><code>su_</code> for substrate behaviors</li>
+</ul>
+<p>
+In our example behavior, we have two parameters: "slope of biomass equation (a)" and "exponent of biomass equation (d)". We might define our parameters to look like this:
+</p>
+<code>
+&lt;!-- slope of biomass equation (a)--&gt;<br/>
+&lt;an_slopeBiomassEq&gt;<br/>
+  &lt;an_sbeVal species="ACRU"&gt;1.0&lt;/an_sbeVal&gt;<br/>
+  &lt;an_sbeVal species="ACSA"&gt;1.0&lt;/an_sbeVal&gt;<br/>
+  &lt;an_sbeVal species="BEAL"&gt;1.0&lt;/an_sbeVal&gt;<br/>
+&lt;/an_slopeBiomassEq&gt;<br/>
+<br/>
+&lt;!-- exponent of biomass equation (d)--&gt;<br/>
+&lt;an_exponentBiomassEq&gt;<br/>
+&lt;an_ebeVal species="ACRU"&gt;1.0&lt;/an_ebeVal&gt;<br/>
+&lt;an_ebeVal species="ACSA"&gt;1.0&lt;/an_ebeVal&gt;<br/>
+&lt;an_ebeVal species="BEAL"&gt;1.0&lt;/an_ebeVal&gt;<br/>
+&lt;/an_exponentBiomassEq&gt;<br/>
+</code>
+<p>
+The name should be descriptive. I chose to prefix with "an_" because these are parameters for an "analysis" behavior.
+</p>
+
+
+<h3>Step 2:  Write your header file</h3>
+<p>
+Writing the header file in C++ lets you make sure everything is in order one last time before you start to code.
+</p>
+<p>
+Each new behavior is its own class.  These behavior classes descend from <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a>.  Pick your class name.  By SORTIE-ND convention, it should start with a "cl" prefix.  Usually you will name your files the same as your class, just ommitting the prefix.  For our example, our class name is <code>clSampleBehavior</code>, so our filenames should be "SampleBehavior.h" and "SampleBehavior.cpp".
+</p>
+<p>
+Use the documentation for <a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a> to decide which functions you need to override.
+</p>
+<p>
+I have written the sample behavior header <a href="sample_header.html">here</a>.  (I've put in far more commenting than you would typically need, so you can use it as a guide.  You can use any real SORTIE-ND header file as a guide to writing comments.)
+</p>
+
+<h3>Note on adding certain types of behaviors</h3>
+<p>
+Certain types of behaviors, such as growth and mortality behaviors, work together.  They do this to be more efficient.  Consider growth behaviors.  There may be several in a single run, applied to different species and life history stages.  If each growth behavior searched through all the trees looking for just the trees to which it applied, that would be much slower than if the trees were searched only once and each tree assigned to the correct growth behavior.  That's why these types of behaviors work together.  They designate an organizational object to do the tree searching and parameter management for them.
+</p>
+<p>
+If you add or change a behavior that works together like this, your approach will be different than if you were writing a behavior that worked alone.  Read this to get an idea of how the organization works, then pay close attention to class documentation to understand how to write that kind of behavior.
+</p>
+<p>
+Behaviors in a submodel grouping are separate but coordinate their actions through an organizational object.  The organizational object can recognize the behaviors it needs to organize (through a key character sequence in their namestrings) and places pointers to them in a table organized by species and type.  For example, it would know that saplings of species 2 use behavior X for their growth.
+</p>
+<p>
+A set of behaviors that needs to work together are all descended from a common base class that is in turn descended from clBehaviorBase.  One of the behaviors is "hooked" to the organizational object.  The behavior group base class overrides the functions of clBehaviorBase such as <code>GetData()</code> and <code>Action()</code>.  When one of these functions is called, if a behavior is the "hooked" behavior, it hands the call over to the organizational object.  Otherwise it ignores it.  This system guarantees that the overall group of behaviors performs their work only once per timestep, no matter how many behaviors are in the group. 
+</p>
+<p>
+When it comes time to process trees in a timestep, the organizational object will simply do an "all" search (which is fairly efficient) and point each tree it gets to the appropriate Behavior object in its table.
+</p>
+</body>
+</html>

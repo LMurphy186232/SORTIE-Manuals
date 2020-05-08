@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Weibull snag mortality behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Weibull snag mortality behavior</h1>
+<p>
+This behavior controls <a href="../../using/tree_life_history_stages.html">snag</a> fall.  Snags are standing dead trees.  Obviously, they can't die again, so the word "mortality" is a bit of a misnomer.  We call the behavior a mortality behavior because it functionally fits in this behavior class.  
+</p>
+<p>
+Snags that are "killed" by this behavior are considered to have fallen over.  If <a href="../substrate_behaviors/index.html">Substrate behaviors</a> are enabled, then these fallen trees are available to become new fresh log substrate.  Any that are not picked up by substrate will be dealt with by the <a href="../dead_tree_behaviors/index.html">Dead tree remover</a> behavior. 
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Weibull Annual "a" Parameter for Snag Size Class 1 Mortality</td><td> Weibull annual "a" parameter for those trees whose DBH is less than or equal to the value in "Upper DBH of snag size class 1". </td></tr>
+
+<tr><td class="parname">Weibull Annual "a" Parameter for Snag Size Class 2 Mortality</td><td> Weibull annual "a" parameter for those trees whose DBH is greater than the value in "Upper DBH of snag size class 1" but less than or equal to the value in "Upper DBH of snag size class 2". </td></tr>
+
+<tr><td class="parname">Weibull Annual "a" Parameter for Snag Size Class 3 Mortality</td><td> Weibull annual "a" parameter for those trees whose DBH is greater than the value in "Upper DBH of snag size class 2". </td></tr>
+
+<tr><td class="parname">Weibull Annual "b" Parameter for Snag Size Class 1 Mortality</td><td> Weibull annual "b" parameter for those trees whose DBH is less than or equal to the value in "Upper DBH of snag size class 1". </td></tr>
+
+<tr><td class="parname">Weibull Annual "b" Parameter for Snag Size Class 2 Mortality</td><td> Weibull annual "b" parameter for those trees whose DBH is greater than the value in "Upper DBH of snag size class 1" but less than or equal to the value in "Upper DBH of snag size class 2". </td></tr>
+
+<tr><td class="parname">Weibull Annual "b" Parameter for Snag Size Class 3 Mortality</td><td> Weibull annual "b" parameter for those trees whose DBH is greater than the value in "Upper DBH of snag size class 2". </td></tr>
+
+<tr><td class="parname">Weibull Upper DBH of Snag Size Class 1</td><td>  The upper DBH value of trees in size class 1. </td><tr> 
+<tr><td class="parname">Weibull Upper DBH of Snag Size Class 2</td><td>  The upper DBH value of trees in size class 2.  Trees with a value greater than this are considered to be in size class 3. </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The behavior uses a Weibull function to determine the number of snags of a certain age left standing at a given time.  The equation is:
+<p>
+<center><img src="../data_files/weib_snag_mort.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>S</i> is proportion of snags still standing, between 0 and 1
+<li><i>a</i> and <i>b</i> are Weibull parameters (<b>Weibull Annual "a" Parameter for Snag Size Class X Mortality</b> parameter and <b>Weibull Annual "b" Parameter for Snag Size Class X Mortality</b> parameter)
+<li><i>T</i> is the snag age in years
+</ul>
+<p>
+Different sizes of snags fall at different rates.  This behavior allows you to define three snag size classes and enter different "a" and "b" parameters for each.
+</p>
+<p>
+A random number is used against this equation for a given tree to determine if it falls in the current timestep.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to snags of any species.
+</p>
+</body>
+</html>

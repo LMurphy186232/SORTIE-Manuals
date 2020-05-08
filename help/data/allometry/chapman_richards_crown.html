@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The Chapman-Richards crown depth and radius relationships</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The Chapman-Richards crown depth and radius relationships</h1>
+<h3>Crown Depth Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Chapman-Richards Asymptotic Crown Height</td><td> The asymptotic crown depth (or length), in m, of the Chapman-Richards crown depth equation.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Height Intercept</td><td> The intercept of the Chapman-Richards crown depth equation. This represents the crown depth, in m, of the smallest possible sapling.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Height Shape 1 (b)</td><td> The first shape parameter, b, of the Chapman-Richards crown depth equation.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Height Shape 2 (c)</td><td> The second shape parameter, c, of the Chapman-Richards crown depth equation.</td></tr>
+
+</table>
+
+<h3>Crown Radius Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Chapman-Richards Asymptotic Crown Radius</td><td> The asymptotic crown radius, in m, of the Chapman-Richards crown radius equation.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Radius Intercept</td><td> The intercept of the Chapman-Richards crown radius equation. This represents the crown radius, in m, of the smallest possible sapling.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Radius Shape 1 (b)</td><td> The first shape parameter, b, of the Chapman-Richards crown radius equation.</td></tr>
+
+<tr><td class="parname">Chapman-Richards Crown Radius Shape 2 (c)</td><td> The second shape parameter, c, of the Chapman-Richards crown radius equation.</td></tr>
+
+</table>
+
+<p>
+The Chapman-Richards equation for calculating crown radius is:
+</p>
+<center><i>rad = i + a (1 - e <sup>-b * DBH</sup>) <sup>c</sup> </i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>rad</i> is the crown radius, in meters</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+<li><i>i</i> is the <b>Chapman-Richards Crown Radius Intercept</b> parameter, which represents the crown radius of the smallest possible sapling</li> 
+<li><i>a</i> is the <b>Chapman-Richards Asymptotic Crown Radius</b> parameter</li>
+<li><i>b</i> is the <b>Chapman-Richards Crown Radius Shape 1 (b)</b> parameter</li>
+<li><i>c</i> is the <b>Chapman-Richards Crown Radius Shape 2 (c)</b> parameter</li>
+</ul>
+
+<p>
+The Chapman-Richards equation for calculating crown depth is:
+</p>
+<center><i>ch = i + a (1 - e <sup>-b * H</sup>) <sup>c</sup> </i></center>
+<p>
+where
+</p> 
+<ul>
+<li><i>ch</i> is the distance from the top to the bottom of the crown cylinder, in meters</li>
+<li><i>H</i> is the tree's height, in m</li>
+<li><i>i</i> is the <b>Chapman-Richards Crown Height Intercept</b> parameter, which represents the crown depth of the smallest possible sapling</li> 
+<li><i>a</i> is the <b>Chapman-Richards Asymptotic Crown Height</b> parameter</li>
+<li><i>b</i> is the <b>Chapman-Richards Crown Height Shape 1 (b)</b> parameter</li>
+<li><i>c</i> is the <b>Chapman-Richards Crown Height Shape 2 (c)</b> parameter</li>
+</ul>
+</body>
+</html>

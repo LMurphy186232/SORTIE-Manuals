@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Math and functional forms</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Math and functional forms</h1>
+
+<h2>Randomness in SORTIE-ND</h2>
+<p>
+SORTIE uses the Mersenne Twister algorithm to generate random numbers. You can supply a seed to the random number generator in the <a href="../data/plot.html">Plot parameters</a>. Supplying a seed with a value other than 0 causes the random number generator to produce the same sequence of values each time, which would cause two runs of the same parameter file to come out identically. Setting the seed value to zero causes SORTIE to choose its own random seed based on the current machine time.
+</p>
+
+<h2>Probability distribution functions</h2>
+<p>
+An important part of SORTIE's functionality is simulating stochasticity in natural processes. In order to do this, many behaviors use a random draw on a probability distribution function to make decisions.
+</p>
+<p>The normal distribution is:<br/>
+</p>
+<center><img src="../data/data_files/normal_pdf.gif" alt="Normal function"></center>
+<p>
+where &#963; is the function standard deviation. Mean is zero.
+</p>
+ 
+<p>The lognormal distribution is:<br/>
+</p>
+<center><img src="../data/data_files/lognormal_pdf.gif" alt="Lognormal function"></center>
+<p>
+where &#955; is the function mean and &#963; is the standard deviation. <br/>
+</p>
+ 
+<p>The Poisson distribution is:<br/>
+</p>
+<center><img src="../data/data_files/poisson_pdf.gif" alt="Poisson function"></center>
+<p>
+where &#955; is the function mean. <br/>
+</p>
+ 
+<p>The negative binomial distribution is:<br/>
+</p>
+<center><img src="../data/data_files/negative_binomial_pdf.gif" alt="Negative binomial function"></center>
+<p>
+where <i>u</i> is the function mean and <i>k</i> is the clumping parameter. This is Equation 3.103 from <a href="../more_info/further_reading.html">Hilborn and Mangel</a>.
+</p>
+
+<p>The gamma distribution is:<br/>
+</p>
+<center><img alt="Gamma function" src="../data/data_files/gamma_pdf.gif"></center>
+<p>
+where a is the shape parameter and s is the scale parameter. The function mean is a*s.
+</p>
+
+</body>
+</html>

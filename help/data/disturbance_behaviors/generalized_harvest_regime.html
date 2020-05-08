@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Generalized Harvest Regime</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Generalized Harvest Regime</h1>
+<p>
+This behavior can perform harvest very flexibly, depending on the parameters used. The behavior itself decides when harvests will occur and how much to cut, then chooses trees to cut with the help of a preference algorithm.
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "harvest".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "A"</td><td> "A" in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "B"</td><td> "B" in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "C"</td><td> "C" in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "Alpha"</td><td> Alpha in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "Beta"</td><td> Beta in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "Beta"</td><td> Beta in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "Gamma"</td><td> Gamma in the function that calculates cut preference of individual trees.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Cut Preference "Mu"</td><td> Mu in the function that calculates cut preference of individual trees.</td></tr>
+
+
+
+<tr><td class="parname">Gen Harvest Regime Harvest Probability "A"</td><td> "A" term in the function that determines the probability that the plot will be harvested this time step.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Harvest Probability "B"</td><td> "B" term in the function that determines the probability that the plot will be harvested this time step.</td></tr> 
+<tr><td class="parname">Gen Harvest Regime Harvest Probability "M"</td><td> "M" term in the function that determines the probability that the plot will be harvested this time step.</td></tr>
+
+<tr><td class="parname">What should calculations be based on?</td><td>Flag for whether calculations should be based on total adult biomass or total adult basal area.</td></tr>
+
+<tr><td class="parname">Do sapling mortality as a result of harvest?</td><td> Whether or not harvests cause associated sapling mortality.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Sapling Mortality "p"</td><td> "p" in the function to calculate amount of sapling mortality. Ignored if "Do sapling mortality as a result of harvest?" is set to No.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Sapling Mortality "m"</td><td> "m" in the function to calculate amount of sapling mortality. Ignored if "Do sapling mortality as a result of harvest?" is set to No.</td></tr>
+
+<tr><td class="parname">Gen Harvest Regime Sapling Mortality "n"</td><td> "n" in the function to calculate amount of sapling mortality. Ignored if "Do sapling mortality as a result of harvest?" is set to No.</td></tr>
+
+
+<tr><td class="parname">Distribution controlling harvest amount</td><td> Whether to use a gamma distribution or a user-defined class-based distribution to determine the amount to harvest.</td></tr>
+
+<tr><td class="parname">Gamma Distribution Mean Function "Alpha"</td><td>"Alpha" term in the function that determines mean amount of basal area to be removed from the plot. This mean is used in a random draw on a gamma distribution to determine actual target removal. This parameter is ignored if the distribution controlling harvest amount is not set to gamma.</td></tr> 
+
+<tr><td class="parname">Gamma Distribution Mean Function "Beta"</td><td>"Beta" term in the function that determines mean amount of basal area to be removed from the plot. This mean is used in a random draw on a gamma distribution to determine actual target removal. This parameter is ignored if the distribution controlling harvest amount is not set to gamma.</td></tr> 
+
+<tr><td class="parname">Gamma Distribution Mean Function "Mu"</td><td>"Mu" term in the function that determines mean amount of basal area to be removed from the plot. This mean is used in a random draw on a gamma distribution to determine actual target removal. This parameter is ignored if the distribution controlling harvest amount is not set to gamma.</td></tr>
+
+<tr><td class="parname">Gamma Distribution Scale Parameter</td><td>C Scale parameter for the gamma probability distribution function random draw to determine actual target removal. This parameter is ignored if the distribution controlling harvest amount is not set to gamma.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 1 Upper Bound</td><td> Upper bound in the first intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Lower bound on this class is 0. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 2 Upper Bound</td><td> Upper bound in the second intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 3 Upper Bound</td><td> Upper bound in the third intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 4 Upper Bound</td><td> Upper bound in the fourth intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 5 Upper Bound</td><td> Upper bound in the fifth intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 6 Upper Bound</td><td> Upper bound in the sixth intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 7 Upper Bound</td><td> Upper bound in the seventh intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 8 Upper Bound</td><td> Upper bound in the eighth intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 9 Upper Bound</td><td> Upper bound in the ninth intensity class in the user-defined distribution to determine target harvest removal. This is expressed as a proportion of adult basal area removed between 0 and 1. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 1 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the first intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 2 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the second intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 3 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the third intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 4 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the fourth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 5 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the fifth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 6 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the sixth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 7 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the seventh intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 8 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the eighth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 9 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the ninth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+<tr><td class="parname">User Distribution Intensity Class 10 Probability</td><td> The probability that a harvest will remove an amount of adult basal area within the range defined in the tenth intensity class. This is expressed as a probability between 0 and 1. All class probabilities must add up to 1. Zeroes are allowed. Ignored if the distribution controlling harvest amount is not set to user-defined.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The behavior calculates many probabilities to decide whether and what to cut. These calculations can be based on either total adult biomass in the plot (Mg/ha), or total adult basal area in the plot (m2/ha). The parameter <b>What should calculations be based on?</b> indicates which to use. If biomass is chosen, biomass is calculated using the <a href="../analysis_behaviors/dimension_analysis.html">Dimension analysis</a> behavior.
+</p>
+<h3>Deciding whether a harvest occurs in a timestep</h3>
+<p>
+The behavior begins the timestep by deciding whether or not a harvest will occur. The probability of harvest is calculated as follows:
+</p>
+<center><img alt="P equals a exp(-mAmt^b)" src="../data_files/ghr_log_prob.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>P</i> is the probability that the plot will be harvested this time step</li>
+<li><i>Amt</i> is either the total plot adult biomass (Mg/ha) or the total plot adult basal area (m<sup>2</sup>/ha)</li>
+<li><i>a</i> is the <b>Gen Harvest Regime Harvest Probability "A"</b> parameter</li>
+<li><i>m</i> is the <b>Gen Harvest Regime Harvest Probability "M"</b> parameter</li>
+<li><i>b</i> is the <b>Gen Harvest Regime Harvest Probability "B"</b> parameter</li>
+</ul>
+<p>
+A random number is compared to this probability to decide whether or not a harvest will occur. The frequency of harvest in previous timesteps is not taken into account.
+</p>
+<h3>Deciding the target amount of basal area to remove</h3>
+<p>
+Target removal amount is drawn from a probability distribution function. There are two choices: the gamma function, or a user-defined function with ten intensity classes and associated probabilities for each. Choose the function you want with the <b>Distribution controlling harvest amount</b> parameter.
+</p>
+<p>
+If the gamma is used, the mean of the distribution (as percentage of adult basal area to remove between 0 and 100) is calculated as follows:
+</p>
+<center><img alt="BAR equals alpha*exp(-mu*Amt^beta)" src="../data_files/ghr_ba_remove.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>BAR</i> is the mean percent of total plot adult basal area to remove, between 0 and 100</li>
+<li><i>Amt</i> is either the total plot adult biomass (Mg/ha) or the total plot adult basal area (m<sup>2</sup>/ha)</li>
+<li><i>&#945; </i> is the <b>Gen Harvest Regime Remove Amount "Alpha"</b> parameter</li>
+<li><i>&#946; </i> is the <b>Gen Harvest Regime Remove Amount "Beta"</b> parameter</li>
+<li><i>&#956; </i> is the <b>Gen Harvest Regime Remove Amount "Mu"</b> parameter</li>
+</ul>
+<p>
+This mean value is used, along with the <b>Gen Harvest Regime Gamma Scale Parameter</b>, in a draw on the <a href="../../more_info/math.html">gamma distribution</a> in order to get the actual target removal rate. If a value above 100% is drawn, this value is discarded and the draw is repeated until a value of less than 100% is drawn.
+</p>
+<p>
+The adult plot biomass or basal area in the equations above is the total for all species. All species must participate in harvest, and only adults are counted and cut.
+</p>
+<p>
+If the probability distribution function is user-defined, you define ten harvest intensity classes and the probability that the harvest will fall into each of these. Enter the upper bound of each intensity class, as a proportion of total basal area removed, in the <b>User Distribution Intensity Class X Upper Bound</b> parameter. The lower bound of the first class is 0. The upper bound of class 10 is 1. Values must increase with each class but classes do not have to be the same size.
+</p>
+<p>For each intensity class, the value in the parameter <b>User Distribution Intensity Class X Probability</b> is the probability, between 0 and 1, that a harvest within the range of removal values defined by that class will occur. Zeroes are allowed, and harvests within a class of 0 probability will never occur. All ten class probabilities must add up to 1.
+</p>
+<p>
+This behavior turns the probabilities for all the classes into a cumulative probability function. A random number drawn on the uniform distribution between 0 and 1 is used against the cumulative probabilities to determine which class the harvest falls into. Then a second uniform random draw on the range of values in that class is used to choose the target proportion of adult basal area to remove.
+</p>
+<h3>Deciding which individuals to cut</h3>
+<p>
+A preference function determines the probability that an individual will be cut, as follows:
+</p>
+<center><img alt="P equals (1 - gamma * exp(-beta * BAR ^ alpha)) * (exp(-0.5*((DBH - mu)/sigma)^2))" src="../data_files/ghr_pref.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>P<sub>i</sub></i> is the probability that individual i will be cut</li>
+<li><i>&#945; <sub>i</sub></i> is the <b>Gen Harvest Regime Cut Preference "Alpha"</b> parameter for the species of individual i</li>
+<li><i>&#946; <sub>i</sub></i> is the <b>Gen Harvest Regime Cut Preference "Beta"</b> parameter for the species of individual i</li>
+<li><i>&#947; <sub>i</sub></i> is the <b>Gen Harvest Regime Cut Preference "Gamma"</b> parameter for the species of individual i</li>
+<li><i>&#956; <sub>i</sub></i> is the <b>Gen Harvest Regime Cut Preference "Mu"</b> parameter for the species of individual i</li>
+<li><i>BAR</i> is the percent of total adult basal area to remove, between 0 and 100</li>
+<li><i>DBH</i> is the individual's DBH</li>
+</ul>
+<p>
+The term &#963; is:
+</p>
+<center><i>&#963; = a + b * BAR <sup>c</sup></i></center>
+<p>where:</p>
+<ul>
+<li><i>a</i> is the <b>Gen Harvest Regime Cut Preference "A"</b> parameter</li>
+<li><i>b</i> is the <b>Gen Harvest Regime Cut Preference "B"</b> parameter</li>
+<li><i>c</i> is the <b>Gen Harvest Regime Cut Preference "C"</b> parameter</li>
+<li><i>BAR</i> is the percent of total adult basal area to remove, between 0 and 100</li>
+</ul>
+<p>
+An individual's probability of removal is compared with a random number to determine if that individual is cut. 
+</p>
+<p>
+The preference function takes into account the target basal area removal rate of the plot. However, the function shape does not necessarily produce a mean removal probability equal to that of the target removal rate, particularly near 0 and 100. If you wish, the behavior can refine the probabilities on a second pass to get closer to the target. You can set a tolerance using the <b>Gen Harvest Acceptable Deviation From Cut Target</b> parameter. This is expressed as a proportion of the removal rate, between 0 and 1. So a value of 0.1 allows first-pass acceptable deviation of 10 percent from the target. If the actual removal rate falls outside this limit, the function adjusts all preferences by a correction factor and re-evaluates individual cut decisions. No more than two passes will be made, even if the second pass does not achieve a removal rate within the tolerance. Setting a high tolerance such that a second pass is not often needed eliminates a lot of calculations and will allow a run to be faster.
+</p>
+
+<p>
+Saplings can be subjected to an increased mortality rate as a consequence of harvesting. You can turn this on by setting the parameter <b>Do sapling mortality as a result of harvest?</b> to "Yes". (Setting it to "No" means there is no effect of harvest on sapling mortality at all.)
+</p>
+<p>
+The function for the probability of sapling mortality as a result of a harvest event is:
+</p>
+<center><img src="../data_files/gen_harv_sap_mort.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>PCR</i> is the percent of basal area removed in this harvest, between 0 and 100</li>
+<li><i>p</i> is the <b>Gen Harvest Regime Sapling Mortality "p"</b> parameter</li>
+<li><i>m</i> is the <b>Gen Harvest Regime Sapling Mortality "m"</b> parameter</li>
+<li><i>n</i> is the <b>Gen Harvest Regime Sapling Mortality "n"</b> parameter</li>
+</ul>
+<p>
+Saplings are randomly chosen to die at this rate. All species are affected equally. Saplings are killed with a mortality code of "harvest".
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to the adults of all species. If you choose to make calculations based on biomass, you must also apply the <a href="../analysis_behaviors/dimension_analysis.html">Dimension analysis</a> behavior to the same trees.
+</p>
+</body>
+</html>

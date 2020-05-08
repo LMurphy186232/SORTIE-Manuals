@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Partitioned DBH Biomass</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Partitioned DBH Biomass</h1>
+
+<p>
+This behavior calculates biomass as a linear function of DBH, partitioned into leaf, branch, and bole biomass.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Bole Slope (a)</td><td> The slope in the linear biomass equation for boles. </td></tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Bole Intercept (b)</td><td> The intercept in the linear biomass equation for boles. </td></tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Branch Slope (a)</td><td> The slope in the linear biomass equation for branches. </td></tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Branch Intercept (b)</td><td> The intercept in the linear biomass equation for branches. </td></tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Leaf Slope (a)</td><td> The slope in the linear biomass equation for leaves.  </td></tr>
+
+<tr><td class="parname">Partitioned DBH Biomass - Leaf Intercept (b)</td><td> The intercept in the linear biomass equation for leaves. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The mass of all components is calculated using the same equation, but using different parameters.  The equation is:
+</p>
+<center><i>Bio<sub>i</sub> = a<sub>i</sub> * DBH + b<sub>i</sub></i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Bio<sub>i</sub></i> = biomass in kg dry weight of the component in question</li>
+<li><i>a<sub>i</sub></i> = the "a" parameter for the component</li>
+<li><i>b<sub>i</sub></i> = the "b" parameter for the component</li>
+<li><i>DBH</i> = tree's DBH in cm
+</ul>
+<p>
+The amount of each type of biomass, in metric tons, for each species is saved in a grid called <a href="../grids/partitioned_biomass_grid.html">Partitioned Biomass</a>.  You can save these values in a detailed output file for analysis. You of course can skip any of the components by entering 0's for their parameter values.
+</p>
+
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/partitioned_biomass_grid.html">Partitioned Biomass</a> grid. You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system. 
+</p>
+
+
+</body>
+</html>

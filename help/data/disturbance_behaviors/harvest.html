@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Harvest</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Harvest</h1>
+<p>
+Trees removed by this behavior will have a mortality reason code of "harvest".
+</p>
+
+<h3>How it works</h3>
+<p>
+SORTIE can implement complex silvicultural treatments. Harvest events are defined by species, timestep, amount to remove, type of cut, and area of the plot. You can define as many harvest events as you wish. For information on planting new seedlings, see the <a href="../planting_behaviors/index.html">Planting behaviors</a> topic.
+</p>
+<p>
+There are three types of harvest: gap cut, partial cut, and clear cut. The primary function of entering the harvest type is to control <a href="../substrate_behaviors/index.html">substrate</a> composition after the harvest occurs. In a partial cut harvest, though, you have more flexibility in choosing which trees are cut. You can define up to four size classes, and specify the amount of trees to remove in one of four ways: as a percentage of total basal area, as an absolute amount of basal area, as a percentage of total tree density, or as an absolute amount of tree density. 
+</p>
+<p>
+The Harvest behavior selects the trees to remove in the same way for all three harvest types. In the case of a percentage-of-density cut, all trees in the target size ranges have an equal probability of being cut. For all other cut types, you have two options for tree selection: cutting from largest to smallest, or from smallest to largest. You can mix the cutting styles in a single run's harvests.
+</p>
+<p>
+In a largest-to-smallest cut, Harvest starts by finding the largest tree in the area of the plot affected by the harvest. It works its way through the trees from largest to smallest, assessing whether to cut each one until it either runs out of trees or reaches its cut target. This process preferentially removes the largest trees in each size range. If Harvest is cutting a percentage of basal area or an absolute amount of basal area, it will only cut a tree if its basal area will not cause the total to be more than the target. This means that, for basal-area-defined cuts, the Harvest behavior may skip some bigger trees and cut smaller ones in order to more exactly cut its target. Each species is cut separately. So, a request to remove 20% of three species will remove 20% of each of them, no matter what their relative proportions to each other.
+</p>
+<p>
+In a smallest-to-largest cut, Harvest finds the smallest tree in each size range and works up towards the tallest trees. If the cut is a percentage of basal area or an absolute amount of basal area, Harvest cuts up until the next tree would put the total basal area cut over the target cut amount. Whether it then cuts the next tree depends on which action would bring it closest to the target cut amount: cutting the next tree or not cutting it. 
+</p>
+<p>
+Trees can be prioritized for harvest. You can choose a <a href="../tree_data_member_list.html">tree data member</a> and a range of values for that data member. For instance, you could prioritize trees with growth values between 5 and 10. Trees meeting a priority are cut first.
+</p>
+<p>
+You can set up to three priorities. All trees meeting the first priority are cut first, then all trees meeting the second priority, then all meeting the third, then all other trees. Cutting stops when the target removal amount has been met. DBH ranges are honored. If there is a priority tree outside the cut DBH ranges, it will not be cut under any circumstances. Harvest will not continue to cut trees if there are any priority trees left in the target cut size ranges. The implication of this is that if Harvest has a basal area cut target, and there aren't that many priority trees or they are all large, the difference between the cut amount and the cut target may be larger than it would be in a non-priority cut. Priorities may not be applied to percent of density cuts, because these cuts are stochastic in nature so prioritization is meaningless. You can prioritize by the same data member more than once; for instance, first cut trees with growth between 5 and 10, then with growth between 0 and 5. 
+</p>
+<p>
+Although seedlings are not properly harvested, a harvest can kill them just the same. You can specify the proportion of seedlings that are killed within the harvest area for each species. The seedlings of a species can be killed even if that species is not being harvested. Seedlings in the harvest area are randomly chosen to die based on the mortality rate for their species. They are given "harvest" as a mortality reason.
+</p>
+<p>
+Trees that are harvested are removed immediately. When light is calculated for that timestep, gaps opened up by the harvest will be visible. If there are behaviors which apply to <a href="../../using/tree_life_history_stages.html">stumps</a>, a stump is created for each logged tree. Otherwise, the tree completely disappears.
+</p>
+<p>
+The actual amount of tree harvest may not be exactly what was specified, since the Harvest behavior can't remove part of a tree to get the numbers right. The behavior stores how much it actually cut each timestep in the <a href="../grids/harvest_grid.html">Harvest Results grid</a>. To optimize the accuracy of the Harvest behavior, use larger cut ranges and high proportions of the plot area to make sure there is a big pool of trees to choose from.
+</p>
+<p>
+For more detail on how harvests are specified, see the <a href="../../windows/edit_harvest_window.html">Edit Harvest Window</a> topic.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Add the behavior to the run through the <a href="../../windows/model_flow_window.html">Model Flow window</a>. You do not apply it to particular trees at that time. The behavior setup will allow you to design your harvests.
+</p>
+</body>
+</html>

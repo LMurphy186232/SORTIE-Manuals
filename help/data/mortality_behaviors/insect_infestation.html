@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Insect Infestation Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Insect Infestation Mortality</h1>
+<p>
+This behavior causes mortality in trees that are infested with insects, as determined by the <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> behavior.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "insect".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Insect Mortality - Intercept</td><td> The mortality rate, between 0 and 1, at the first timestep of infestation. </td></tr>
+
+<tr><td class="parname">Insect Mortality - Max Mortality Rate (0-1)</td><td>  Maximum mortality rate, between 0 and 1. </td></tr>
+
+<tr><td class="parname">Insect Mortality - X0</td><td> The time at which 0.5 of the maximum mortality rate occurs. </td></tr>
+
+<tr><td class="parname">Insect Mortality - Xb</td><td> Parameter controlling the steepness of the rise of the mortality rate. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The mortality rate of trees as a function of time infested is as follows:
+</p>
+<center><img alt="Insect infestation equation" src="../data_files/insect_infestation_eq.gif"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>P</i> is the mortality rate, between 0 and 1.</li>
+<li><i>I</i> is the <b>Insect Mortality - Intercept</b> parameter, as a value between 0 and 1. This is the function intercept, or the mortality rate at the first timestep of infestation. </li>  
+<li><i>Max</i> is the <b>Insect Mortality - Max Mortality Rate (0-1)</b> parameter, as a value between 0 and 1. This is the maximum mortality rate that will occur regardless of how long a tree has been infested.</li> 
+<li><i>T</i> is the time, in years, that an individual has been infested.</li> 
+<li><i>X<sub>0</sub></i> is the <b>Insect Mortality - X0</b> parameter.  This is the time at which half of the maximum mortality rate is reached.</li> 
+<li><i>X<sub>b</sub></i> is the <b>Insect Mortality - Xb</b> parameter. This controls the steepness of the rise of the curve.</li>
+</ul>
+<p>
+Once the mortality rate for an infested individual has been determined, a random number determines whether it will live or die.  
+</p>
+<p>
+The <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> behavior decides which trees become infested, and tracks the amount of time each individual has been infested.   
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to saplings and/or adults of any species. Any tree to which this behavior is applied must also have the <a href="../disturbance_behaviors/insect_infestation.html">Insect Infestation</a> behavior applied.  
+</p>
+</body>
+</html>

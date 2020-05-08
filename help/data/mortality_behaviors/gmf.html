@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>GMF mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>GMF mortality</h1>
+<p>
+GMF mortality is a growth-based mortality behavior.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Light-Dependent Mortality</td><td> Light-dependent mortality. </td></tr>
+
+<tr><td class="parname">Mortality at Zero Growth</td><td> Mortality rate at zero growth. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The GMF mortality model evaluates the following function to determine the probability of a tree's mortality:
+</p>
+<center><i>m = m<sub>1</sub>*e<sup>-m<sub>2</sub>G</sup></i></center>
+<br>
+where: 
+<ul>
+<li><i>m</i> is the probability of mortality</li>
+<li><i>m<sub>1</sub></i> is the <b>Mortality at Zero Growth</b> parameter, for mortality over 2.5 years (see Kobe et al 1995)</li>
+<li><i>m<sub>2</sub></i> is the <b>Light-Dependent Mortality</b> parameter, for mortality over 2.5 years (see Kobe et al 1995)</li>
+<li><i>G</i> is amount of radial growth, in mm/yr, added to the tree's diameter
+this timestep</li>
+</ul>
+<p>
+The GMF mortality equation is for a 5 year timestep. The mortality parameters are for a 2.5 year probability of mortality. To calculate the 5 year probability of mortality, SORTIE uses p' = 1 - (1 - p)<sup>2</sup>. 
+Once the probability of mortality is calculated for a tree, SORTIE generates a random number to which to compare it to determine whether the tree will live or die. 
+</p>
+ 
+<p>
+This model was originally described in <a href="../../more_info/further_reading.html">Kobe et al 1995</a>.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+The GMF mortality function assumes a timestep length of five years, so that must be your <a href="../../using/timesteps.html">timestep length</a> in order to use this behavior. This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also
+have a <a href="../growth_behaviors/index.html">growth behavior</a> applied.
+</p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Output strategies</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Output strategies</h1>
+<p>
+Choosing what output to save is a bit of an art form.  Save too much data, and your files will be too large and very slow to process.  Save too little, and you won't have the data you need after your run.  Here are some strategies to help you decide what to save.
+</p>
+<p>
+<b>What you save depends on what you want to look at.</b>  Each chart that SORTIE can display requires a specific set of information. There are several output types: <a href="../data_visualization/line_graphs.html">line graphs</a>, <a href="../data_visualization/histograms.html">histograms</a>, <a href="../data_visualization/tree_maps.html">tree maps</a>, <a href="../data_visualization/grid_maps.html">grid maps</a>, and <a href="../data_visualization/tables.html">tables</a>. Also be aware that, for overall data, the <a href="../files/short_output_files.html">summary output file</a> is a better choice than the detailed output file.  It loads much faster and contains raw data in a format you can use outside of SORTIE without any kind of conversion.  If you want to look at changes in tree basal area and density through time, save a summary output file and use it to look at these charts. 
+</p>
+<p>
+<b>When you are first setting up new runs,</b> you are likely to be testing your parameters to make sure they are all right.  You will probably be doing several short runs until you are confident that you have chosen the correct behaviors and entered your parameters correctly.  At this point you might want to save a lot of data and run for small numbers of timesteps so you can examine all aspects of a run to make sure it is progressing the way you want.  Create a detailed output file, and have it save at least X, Y, and diameter information for all trees; save grids for things such as substrate conditions and dispersed seeds so you can look at maps; and save a summary output file so you can quickly examine line graphs and tables of basal area and density through time.  Do short runs and examine output until you are confident that your parameter file is set up correctly.
+</p>
+<p>
+<b>When you are doing a set of research runs, OR you are doing long runs,</b> save the bare minimum of data that you require in order to make your output files as small as possible and to make working with them quicker and easier.  If all you care about is plotwide amounts of basal area and density, use a summary file only.  If you want that plus a DBH distribution, save only DBH for saplings and adults.  If you want to keep tabs on a type of data but you don't need a lot of detail, consider saving this data less often than every timestep.  Use a summary file to get plotwide information instead of a detailed output file where possible.
+</p>
+<p>
+<b>When you are interested in spatial variation,</b> such as when you are working with harvest treatments, you might wish to get statistics on just one area within the plot.  You can create <a href="subplots.html">subplots</a> in either summary output or detailed output files.  This is also helpful if you have an extremely large plot but you want a lot of detail.  In that case, the detailed output file can become too large to work with.  A representative subplot may give you the information you need.
+</p>
+<p>
+<b>To study an interesting effect that you wish to be able to reproduce,</b> you may want to save a detailed output file that you can use as initial conditions in a subsequent run.  In this case, you would use the "Save everything" button in the <a href="../windows/detailed_output_setup.html">Setup detailed output file window</a>.  This file is likely to be extremely large, but can be very useful.  As an example:  you find that around timestep 15, the curve of sapling density curves up sharply in a very unexpected way.  You want to be able to experiment with the growth parameters at timestep 15 to see if you can find what conditions that curve is sensitive to.  You could "Save everything" for a run of 20 or so timesteps.  You could create a parameter file with new growth parameters, find the timestep in the previous run where the interesting curve shape started, then use that timestep as initial conditions to your new run.  For your new run, you would save less data.  (For more information on using detailed output output as initial conditions, see the <a href="output_as_input.html">Using output as input to a new run</a> topic.)
+</p>
+</body>
+</html>

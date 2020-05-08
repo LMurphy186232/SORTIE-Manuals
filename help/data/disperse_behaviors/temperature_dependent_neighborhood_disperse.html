@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Temperature dependent neighborhood disperse behavior</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Temperature dependent neighborhood disperse behavior</h1>
+
+<p>This behavior calculates seed density based on annual mean temperature and the basal area of neighborhood adults.  </p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - A</td><td> A in the seed density calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - B</td><td> B in the seed density calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - M</td><td> M in the seed density calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - N</td><td> N in the seed density calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - Max Distance for Conspecific Adults (m)</td><td> The maximum distance to search for conspecific adults. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - Presence B</td><td> B in the presence test calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - Presence M</td><td> M in the presence test calculation. </td></tr>
+
+<tr><td class="parname">Temp Dep Neigh Disperse - Presence Threshold (0-1)</td><td> Threshold value, between 0 and 1, of the presence test function above which a species will be allowed to disperse in the absence of parents. 0 always includes a species, 1 always excludes it. </td></tr>
+
+</table>
+
+<h3>How it works </h3>
+<p>
+This behavior examines the neighborhood of each grid cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid to determine how many seeds to place in that cell. Expected seed density in a cell for a particular species is calculated as:
+</p>
+<center><i>Seeds = A + fec * BAC</i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>Seeds</i> is number of seeds per square meter</li>
+<li><i>A</i> is the <b>Temp Dep Neigh Disperse - A</b> parameter</li>
+<li><i>BAC</i> is the total basal area of neighborhood conspecific adults in square meters</li>
+<li><i>fec</i> is a fecundity term</li>
+</ul>
+<p>
+"fec" is a per capita seedling production (fecundity) term.  It is a function of temperature and is calculated as:
+</p>
+<center><img src="../data_files/temp_dep_disp_fec.gif" alt="fec eq B*exp(-0.5*(((T-M)/N)^2))"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>B</i> is the <b>Temp Dep Neigh Disperse - B</b> parameter</li>
+<li><i>M</i> is the <b>Temp Dep Neigh Disperse - M</b> parameter</li>
+<li><i>N</i> is the <b>Temp Dep Neigh Disperse - N</b> parameter</li>
+<li><i>T</i> is the annual mean temperature, in degrees Celsius, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+<p>
+BAC is the basal area of all conspecific adult trees found within a given radius of the grid cell center.  The radius is set using the <b>Temp Dep Neigh Disperse - Max Distance for Conspecific Adults (m) </b> parameter.  
+</p>
+<p>
+Note that the A parameter is an intercept, potentially allowing bath rain of seeds for species for which there are no parents present. To manage this, the behavior uses a "presence test", which is the normalized probability of finding a species on a plot as a function of temperature:
+</p>
+<center><img src="../data_files/temp_dep_presence.gif" alt="P eq exp(-0.5*(((T-M)/B)^2))"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>P</i> is the normalized presence probability</li>
+<li><i>B</i> is the <b>Temp Dep Neigh Disperse - Presence B</b> parameter, which controls the width of the peak</li>
+<li><i>M</i> is the <b>Temp Dep Neigh Disperse - Presence M</b> parameter, which is the function mean, or the temperature (in degrees Celsius) at which the probability of finding the species equals 1</li>
+<li><i>T</i> is the annual mean temperature, in degrees Celsius, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+<p>
+You control the acceptable threshold for the presence test using the <b>Temp Dep Neigh Disperse - Presence Threshold (0-1)</b> parameter. If the value of the presence test function is above this value, the species is allowed to disperse in the absence of adults in the plot. A threshold value of 0 always allows the species to disperse; a value of 1 always excludes it. Note that if there are adults of that species in the plot, the species disperses, no matter what the presence test says. 
+</p>
+<p>
+Once the number of seeds per square meter for a species has been calculated, it is multiplied by the grid cell area and number of years per timestep to determine the final number of seeds to add to the grid cell.   
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to adults of the species you wish to use.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Growth behaviors</title>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Growth behaviors</h1>
+
+<p>Growth behaviors change the size of a tree. A tree has two basic size dimensions:  diameter and height.  A growth behavior can change the tree size dimensions using one of two methods.  
+</p>
+<p>
+In the first method, the behavior calculates an amount of diameter change, and then adds this amount to the tree's diameter.  The tree's new height is calculated from the new diameter using the appropriate <a href="../allometry/index.html">allometry equation</a>.  This is the default method.  Behaviors using this method have the tag "diam with auto height" in their name.
+</p>
+<p>
+In the second method, diameter change and height change are calculated separately by two different behaviors. Behaviors that operate on diameter and height independently must be paired together. Behaviors using this method have the tag "diam only" or "height only" in their names.
+</p>
+<p>
+When incrementing a tree's diameter with new growth, seedlings and saplings have the amount of growth change applied to their diameter at 10 cm. Adults have the amount applied to their DBH. For more on tree types and their measurements, see the <a href="../../using/tree_life_history_stages.html">tree life history stages</a> topic. For more on tree size relationships, including how trees transition between life history stages, see the <a href="../allometry/index.html">allometry</a> topic.
+</p>
+<p>
+<b>Note: All behaviors convert growth to diameter growth in cm for internal consistency.  The equations below reflect this.  Some behaviors may take parameters in mm, or for radial growth.  Take careful note of your behavior's parameters.</b>
+</p>
+<p>
+It is important to be careful when using different behaviors for height and diameter growth. The values are not required to conform to the tree's <a href="../allometry/index.html">allometry equation.</a> This may create trees whose dimensions are no longer linked with an allometric function. This is not considered a problem, although it may have unintended effects. For instance:  if tree seedlings or saplings get separate diameter and height increments, then their diameters and heights will be "uncoupled."  This means that you cannot use one of the size dimensions to predict the other through an allometric equation.  Trees with the same diameter will have different heights, and vice versa. If  you assign the adults to a behavior that increments diameter and then automatically updates height according to the allometry equations, you are likely to notice strange results for new adult trees.  You will lose the variability in height/diameter ratio that was developed.  Suddenly, all trees with the same diameter will have the same height again, and vice versa.  This means that individuals may suddenly jump in height, or even shrink.  
+</p>
+<p>
+The "Allometric height growth" and "allometric diameter growth" behaviors were developed to help bridge this gap. When used with a behavior that only increments diameter or height, they will preserve height or diameter differences that have developed across individuals in a species.  
+</p>
+
+
+<table class="behaviorlist">
+<tr><th class="behname">Behavior</th><th>Description</th></tr>
+<tr><td class="behname"><a href="absolute.html">Absolute growth limited to radial increment</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton absolute growth equation. Growth is limited to a maximum of a constant radial increment.</td></tr>
+
+<tr><td class="behname"><a href="absolute.html">Absolute growth limited to basal area increment</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton absolute growth equation. Growth is limited to a maximum of a constant basal area increment.</td></tr>
+
+<tr><td class="behname"><a href="absolute.html">Non-limited absolute growth</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton absolute growth equation.</td></tr>
+
+<tr><td class="behname"><a href="allometric.html">Allometric diameter growth - diam only</a></td><td>If you have a behavior that primarily updates tree height, this behavior updates diameter to ensure even growth.</td></tr>
+
+<tr><td class="behname"><a href="allometric.html">Allometric height growth</a></td><td>If you have a behavior that primarily updates tree diameter, this behavior updates height to ensure even growth.</td></tr>
+
+<tr><td class="behname"><a href="constant_basal_area.html">Constant basal area growth</a></td><td>Calculates the amount of diameter change from a constant basal area increment.</td></tr>
+
+<tr><td class="behname"><a href="browsed_relative_growth.html">Browsed relative growth</a></td><td>Simulates herbivory by allowing trees to grow at different rates when browsed versus unbrowsed.</td></tr>
+
+<tr><td class="behname"><a href="constant_radial.html">Constant radial growth</a></td><td>Calculates the amount of diameter change from a constant radial increment.</td></tr>
+
+<tr><td class="behname"><a href="double_resource_relative.html">Double resource relative growth</a></td><td>Uses a double Michaelis-Menton function to calculate relative growth based on two resources: light and a second resource.</td></tr>
+
+<tr><td class="behname"><a href="lagged_post_harvest_growth.html">Lagged post harvest growth</a></td><td>Increments growth as a function of DBH and neighboring basal area, and incorporates a lag period after harvesting during which trees acclimate to their post-harvest growing conditions.</td></tr>
+
+<tr><td class="behname"><a href="linear.html">Linear growth</a></td><td>Does either diameter or height growth as a linear function of GLI.</td></tr>
+
+<tr><td class="behname"><a href="linear_bi_level.html">Linear bi-level growth</a></td><td>Increments growth according to a simple linear equation, with the possibility of two sets of parameters for each species: one for high-light conditions and one for low-light conditions.</td></tr>
+
+<tr><td class="behname"><a href="linear_with_exponential_shade_reduction.html">Linear growth w/ exponential shade reduction</a></td><td>Calculates either diameter or height growth as a function of GLI.</td></tr>
+
+<tr><td class="behname"><a href="logistic.html">Logistic growth</a></td><td>Calculates either diameter or height growth as a logistic function of GLI.</td></tr>
+
+<tr><td class="behname"><a href="logistic_with_size_dependent_asymptote.html">Logistic growth w/ size dependent asymptote</a></td><td>Calculates either diameter or height growth as a function of tree size and GLI.</td></tr>
+
+<tr><td class="behname"><a href="lognormal_bi_level.html">Lognormal bi-level growth - height only</a></td><td>Increments growth according to a lognormal equation, with the possibility of two sets of parameters for each species: one for high-light conditions and one for low-light conditions.</td></tr>
+
+<tr><td class="behname"><a href="lognormal_with_exponential_shade_reduction.html">Lognormal with exponential shade reduction</a></td><td>Calculates either diameter or height growth as a function of tree size and GLI.</td></tr>
+
+<tr><td class="behname"><a href="michaelis_menton_with_negative_growth.html">Michaelis Menton with negative growth - height only</a></td><td>Uses a modified Michaelis-Menton function to do height growth.  You can optionally add autocorrelation and a degree of stochasticity to the growth.</td></tr>
+
+<tr><td class="behname"><a href="michaelis_menton_with_photoinhibition.html">Michaelis Menton with photoinhibition - height only</a></td><td>Uses a modified Michaelis-Menton function to do height growth.</td></tr>
+
+<tr><td class="behname"><a href="nci.html">NCI growth</a></td><td>Uses multiple effects, including neighbor competitiveness, to calculate growth rates.</td></tr>
+
+<tr><td class="behname"><a href="nci_quadrat_growth.html">NCI quadrat growth</a></td><td>Uses multiple effects, including neighbor competitiveness, to calculate growth rates. For processing efficiency, growth is calculated for each species on a per grid cell basis.</td></tr>
+
+<tr><td class="behname"><a href="power_height_only.html">Power growth - height only</a></td><td>Uses a power function to do height growth.</td></tr>
+
+<tr><td class="behname"><a href="pr_semi_stochastic.html">Puerto Rico semi-stochastic - diam only</a></td><td>Combines a deterministic growth function for small trees with completely stochastic growth for larger trees.  It's meant to be used when a species uses a height growth behavior as the primary growth method.</td></tr>
+
+<tr><td class="behname"><a href="pr_storm_bi_level.html">Puerto Rico storm bi-level growth - diam with auto height</a></td><td>Increments growth according to two possible growth equations, one to be used in low-light conditions and the other to be used in high-light conditions.  This behavior was originally created for the Puerto Rico model.</td></tr>
+
+<tr><td class="behname"><a href="relative.html">Relative growth limited to radial increment</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton relative growth equation. Growth is limited to a maximum of a constant radial growth increment.</td></tr>
+
+<tr><td class="behname"><a href="relative.html">Relative growth limited to basal area increment</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton relative growth equation. Growth is limited to a maximum of the constant basal area growth increment.</td></tr>
+
+<tr><td class="behname"><a href="relative.html">Non-limited relative growth</a></td><td>Calculates an amount of diameter growth according to the Michaelis-Menton relative growth equation.</td></tr>
+
+<tr><td class="behname"><a href="relative.html">Relative growth - height only</a></td><td>Calculates an amount of height growth according to the Michaelis-Menton relative growth equation.</td></tr>
+
+<tr><td class="behname"><a href="stochastic_gap_growth.html">Stochastic gap growth</a></td><td>Uses a shortcut for simulating gap dynamics with very competitive conditions.  This behavior causes rapid growth in high light, with a unique "winner"; low light produces no growth at all.</td></tr>
+
+</table>
+
+
+</body>
+</html>

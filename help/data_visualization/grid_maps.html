@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Grid maps</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Grid maps</h1>
+<p>
+Maps are available for almost any kind of grid value.  The values are shown in grayscale.  Maps of boolean values (true/false) will be displayed as black (false) and white (true); any other kind of numerical value allows you to adjust the grayscale for best viewing with the controls to the left of the map.
+</p>   
+<ul>
+<li><b>Min brightness</b> - the darkest color that shows up on the map, as a value between 0 and 255.  This defaults to pure black (value of 0).
+<li><b>Min value</b> - the minimum grid value where the grayscale starts.  Any grid values below this value will show up the min brightness color.  This defaults to the smallest value for the map. 
+<li><b>Knee brightness</b> - the color that corresponds to the knee value, as a value between 0 and 255.  The knee brightness defaults to gray halfway between black and white. 
+<li><b>Knee value</b> - the grid value corresponding to the knee brightness color.  This defaults to halfway between the minimum and maximum grid values.  If the map does not show a lot of contrast, this may be because the values are not evenly distributed between the minimum and the maximum grid values.  If the map is too dark, set the knee value lower; if it's too light, set it higher.
+<li><b>Max brightness</b> - the lightest color that shows up on the map, as a value between 0 and 255.  This defaults to pure white (value of 255).
+<li><b>Max value</b> - the maximum grid value where the grayscale ends.  Any grid values above this value will show up the max brightness color.  This defaults to the largest value for the map.
+</ul>
+<p>
+The color lightness increases linearly with map value from the minimum to the knee, and linearly again from the knee to the maximum.
+</p>
+<p>
+Once you have adjusted your display values, click the "Update" button.  Updating can be slow.  If you can't see a difference, try minimizing and then restoring the chart window; this guarantees that it has refreshed. 
+</p>
+
+</body>
+</html>

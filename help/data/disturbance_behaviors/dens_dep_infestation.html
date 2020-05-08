@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Density Dependent Infestation</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Density Dependent Infestation</h1>
+<p>
+This behavior simulates an outbreak of a pest or pathogen in the plot. It chooses and marks affected trees, allowing other behaviors to make use of this information. The number of affected trees is a function of time since infestation began. The infestation has no spatial pattern.
+</p>
+<p>
+This behavior only chooses trees for infestation. It does not kill them or alter their dynamics in any way. Other behaviors may take advantage of the infestation status of trees. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Infestation "a"</td><td> The value of "a" in the equation for determining the proportion of infested trees.</td></tr>
+
+<tr><td class="parname">Infestation "bx"</td><td> The value of "bx" in the equation for determining the proportion of infested trees.</td></tr>
+
+<tr><td class="parname">Infestation "by"</td><td> The value of "by" in the equation for determining the proportion of infested trees.</td></tr>
+
+<tr><td class="parname">Infestation Cohort DBH Threshold</td><td> The minimum DBH for a tree to be in the larger cohort for infestation. Use 0 if you don't want to divide the trees into cohorts.</td></tr>
+
+<tr><td class="parname">Infestation Max Rate</td><td> The "max" value in the equation for determining the proportion of infested trees, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Infestation Min DBH</td><td> The minimum DBH at which a tree can become infested.</td></tr>
+
+<tr><td class="parname">First Year of Infestation Relative to Start</td><td> The year that an infestation starts, relative to the beginning of the run (it is year 0 before the first timestep begins). A negative value means the infestation started before the run did.</td></tr> 
+
+<tr><td class="parname">Last Year of Infestation (-1 if no end)</td><td> The timestep that an insect infestation ends. If -1, this indicates that the infestation should not be ended but allowed run its course throughout the run.</td></tr>
+
+<tr><td class="parname">Proportion of Conditionally Susceptible Trees (0-1)</td><td> The proportion of the trees in the plot that are to be classed as conditionally susceptible, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Proportion of Resistant Trees (0-1)</td><td> The proportion of the trees in the plot that are to be classed as resistant, as a value between 0 and 1.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+Trees fall into three categories: resistant, conditionally susceptible, and susceptible. Trees classed as resistant are never infected. Trees classed as conditionally susceptible and susceptible are treated the same by this behavior but may be treated differently by others. The proportion of trees that are resistant and conditionally susceptible are entered in the <b>Proportion of Resistant Trees (0-1)</b> and <b>Proportion of Conditionally Susceptible Trees (0-1)</b> parameters, respectively, as a value between 0 and 1. Trees are randomly assigned to these categories according to these proportions and retain their categorization for life. This assignment is recorded in a <a href="../tree_data_member_list.html">tree data member</a> called "Resistance Status".
+</p>
+
+<p>
+The proportion of trees of a particular species infested as a function of time is as follows:
+</p>
+<center><img alt="BBD infestation equation" src="../data_files/bbd_infestation.gif"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>P</i> is the proportion of the eligible tree population infested.</li>
+<li><i>a</i> is the <b>Infestation "a"</b> parameter. </li>  
+<li><i>max</i> is the <b>Insect Infestation Max Rate</b> parameter, as a value between 0 and 1. This is the maximum infestation rate that will occur regardless of how long the infestation lasts.</li> 
+<li><i>T</i> is the time, in years, since the start of the infestation.</li> 
+</ul>
+<p>
+"b" is calculated as follows:
+</p>
+<center><i>b = bx * BA + by</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>bx</i> is the <b>Infestation "bx"</b> parameter</li>
+<li><i>by</i> is the <b>Infestation "by"</b> parameter</li>
+<li><i>BA</i> is the proportion of tree basal area in the plot of individuals with DBH above the minimum infestible DBH </li>
+</ul>
+<p>
+BA is the basal area of trees in to which this species applies (above the minimum infestible DBH) divided by total plot basal area. Both resistant and non-resistant trees count towards the basal area of the behavior trees. For total plot basal area, all saplings and adults count.
+</p>
+<p>
+The proportion of trees infested at time T does not depend on additions to or subtractions from the pool of eligible trees. Each timestep, the number of infested trees of each species is counted and additional trees are randomly selected for new infestation until approximately the right number are infested. If for some reason there are more trees infested than there should be at that time, no additional trees are infested.
+</p>
+<p>
+Susceptible individuals can be split into two size cohorts, with the cutoff DBH set as the <b>Infestation Cohort DBH Threshold</b> parameter. All the individuals above this DBH are infected before any below the cutoff are. (Note that when the value of <b>Infestation Max Rate</b> is less than one, it is possible that no individuals below the DBH cutoff will ever be infected.)
+</p>
+<p>
+When selecting trees for infestation, the location of the trees is not considered. It is assumed that all trees have an equal chance of becoming infested no matter where they are in the plot. This behavior uses a <a href="../tree_data_member_list.html">tree data member</a> called "Years Infested" to track which trees are infested and how long they have been so.  
+</p>
+<p>
+You choose when an infestation begins with the <b>First Year of Infestation Relative to Start</b> parameter. The first year is relative to the start of the run (year 0 is just before the start of timestep 1; at the end of timestep 1, the current year is equal to the number of years per timestep). The infestation start year can be negative, indicating that the infestation is already in progress at the start of the run. In this case, the behavior will calculate the current proportion of infested trees according to the equation above and choose the appropriate number from the initial conditions trees. They will be randomly assigned an infestation time corresponding to the distribution of times expected after that many years of infestation.
+</p>
+<p>
+Once started, an infestation only ends if you have set a value in the <b>Last Year of Infestation</b> parameter. If it ends, it never restarts. Otherwise, infestation never ends even if all trees in the infestible pool die. Any new trees of infestible species that enter the plot will be eligible for infestation. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to saplings and/or adults of any species. All species to which this behavior applies are treated as a common pool for determining things like proportion of basal area.
+</p>

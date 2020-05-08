@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Insect Infestation</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Insect Infestation</h1>
+<p>
+This behavior simulates an insect outbreak.  It chooses and marks affected trees, allowing other behaviors to make use of this information. The number of affected trees is a function of time since infestation began. The infestation has no spatial pattern.   
+</p>
+<p>
+This behavior only chooses trees for infestation. It does not kill them or alter their dynamics in any way. Other behaviors may take advantage of the infestation status information of trees. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Insect Infestation First Timestep</td><td> The timestep that an insect infestation begins.</td></tr>
+
+<tr><td class="parname">Insect Infestation Last Timestep (-1 if no end)</td><td> The timestep that an insect infestation ends. If -1, this indicates that the infestation should not be ended but allowed run its course throughout the run.</td></tr>
+
+<tr><td class="parname">Insect Infestation Initial Rate</td><td> The rate of infestation on the first timestep of the outbreak.</td></tr>
+
+<tr><td class="parname">Insect Infestation Max Rate</td><td> The maximum rate of infestation.</td></tr>
+
+<tr><td class="parname">Insect Infestation Min DBH</td><td> The minimum DBH of trees that can become infested.</td></tr>
+
+<tr><td class="parname">Insect Infestation X0</td><td> The time at which 0.5 of the maximum infestation rate occurs.</td></tr>
+
+<tr><td class="parname">Insect Infestation Xb</td><td> Parameter controlling the steepness of the rise of the infestation rate.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The proportion of trees of a particular species infested as a function of time is as follows:
+</p>
+<center><img alt="Insect infestation equation" src="../data_files/insect_infestation_eq.gif"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>P</i> is the proportion of the eligible tree population infested.</li>
+<li><i>I</i> is the <b>Insect Infestation Initial Rate</b> parameter, as a value between 0 and 1. This is the function intercept, or the infestation rate at the first timestep of infestation. </li>  
+<li><i>Max</i> is the <b>Insect Infestation Max Rate</b> parameter, as a value between 0 and 1. This is the maximum infestation rate that will occur regardless of how long the infestation lasts.</li> 
+<li><i>T</i> is the time, in years, since the start of the infestation.</li> 
+<li><i>X<sub>0</sub></i> is the <b>Insect Infestation X0</b> parameter.  This is the time at which half of the maximum infestation rate is reached.</li> 
+<li><i>X<sub>b</sub></i> is the <b>Insect Infestation Xb</b> parameter. This controls the steepness of the rise of the curve.</li>
+</ul>
+<p>
+You choose when an infestation begins with the <b>Insect Infestation First Timestep</b> parameter. Infestation ends if it is directed to (using the <b>Insect Infestation Last Timestep</b> parameter) or if there are no more infested trees in the plot. If infestation ends, it does not start again.
+</p>
+<p>
+You can set a minimum DBH of infestation, using the <b>Insect Infestation Min DBH</b> parameter.
+</p>
+<p>
+The proportion of trees infested at time T does not depend on additions to or subtractions from the pool of eligible trees. Each timestep, the number of infested trees of each species is counted and additional trees are randomly selected for new infestation until approximately the right number are infested. If for some reason there are more trees infested than there should be at that time, no additional trees are infested.
+</p>
+<p>
+When selecting trees for infestation, the location of the trees is not considered. It is assumed that all trees have an equal chance of becoming infested no matter where they are in the plot. This behavior uses a <a href="../tree_data_member_list.html">tree data member</a> called "Years Infested" to track which trees are infested and how long they have been so.  
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to saplings and/or adults of any species.
+</p>
+</body>
+</html>

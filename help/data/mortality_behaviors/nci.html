@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI mortality</h1>
+
+<p>
+This behavior features a maximum survival rate that is adjusted using a set of factors of your choice. You can choose any combination you wish. In particular, this has several ways to implement the the effects of neighbor competitiveness to influence survival rates ("NCI" stands for neighborhood competition index).
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Max Survival Probability (0-1)</td><td>  The maximum probability of survival, as a value between 0 and 1.  </td></tr>
+
+<tr><td class="parname">NCI Parameter Period (years)</td><td> If your parameters are for a period other than one year, the length of time (in years) of that period. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+For a tree, the annual probability of survival is the maximum survival probability times any of a possible set of factors affecting survival:
+</p>
+<br><center><i>Prob. Survival = Max Survival * [Size Effects] * [Shading Effects] * [Crowding Effects] * [Damage Effects] * [Precipitation Effects] * [Temperature Effects] * [Nitrogen Effects] * [Infection Effects]</i></center><br>
+<p>
+<i>Max Survival</i> is the <b>NCI Max Survival Probability (0-1)</b> parameter. You can have an effect in each category (or none at all) which acts to reduce the maximum survival rate. Each of these effects is a value between 0 and 1.
+</p>
+<p>
+Parameters are not always analyzed on an annual basis. If this is the case, use the <b>NCI Parameter Period (years)</b> parameter to specify the length of time in years that your parameters are based on. This behavior will adjust each tree's survival probability to an appropriate timestep length. <strong>Note that this will apply to all effects added as well; parameters for all effects should be for the same time period.</strong>
+</p>
+
+<p>
+Effects choices:
+</p>
+<ul>
+<li><a href="../nci/nci_size_effects.html">Size effects</a></li>
+<li><a href="../nci/nci_shading_effects.html">Shading effects</a></li>
+<li><a href="../nci/nci_crowding_effects.html">Crowding effects</a></li>
+<li><a href="../nci/nci_precipitation_effects.html">Precipitation effects</a></li>
+<li><a href="../nci/nci_temperature_effects.html">Temperature effects</a></li>
+<li><a href="../nci/nci_nitrogen_effects.html">Nitrogen effects</a></li>
+<li><a href="../nci/nci_infection_effects.html">Infection effects</a></li>
+</ul>
+
+<p>
+The survival probability as calculated above is an annual probability.  For multi-year timesteps, the timestep probability is <i>AP<sup>X</sup></i>, where AP is the annual probability and X is the number of years per timestep.  Once a tree's timestep survival probability has been calculated, it is compared to a random number to determine whether the tree lives or dies.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. (Some effects have limitations on application to juveniles - check individual effects documentation.)
+</p>
+</body>
+</html>

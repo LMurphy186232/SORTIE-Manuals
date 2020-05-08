@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Browsed relative growth behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Browsed relative growth behavior</h1>
+<p>
+This behavior simulates herbivory by allowing trees to grow at different rates when browsed versus unbrowsed.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Asymptotic Diameter Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light - function term A below.</td></tr>
+
+<tr><td class="parname">Slope of Growth Response (S)</td><td> Slope of the Michaelis-Menton growth function at zero light - function term S below.</td></tr>
+
+<tr><td class="parname">Relative Michaelis-Menton Growth - Diameter Exponent</td><td>  The exponent to be used with diameter when calculating relative growth. </td></tr>
+
+<tr><td class="parname">Browsed Asymptotic Diameter Growth (A)</td><td> Asymptote of the Michaelis-Menton growth function at high light when a plant has been browsed.</td></tr>
+
+<tr><td class="parname">Browsed Slope of Growth Response (S)</td><td> Slope of the Michaelis-Menton growth function at zero light when a plant has been browsed.</td></tr>
+
+<tr><td class="parname">Browsed Diameter Exponent</td><td> The diameter exponent for growth when a plant has been browsed.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>Trees grow according to the relative growth version of the Michaelis-Menton function. The same function is used for both browsed and unbrowsed trees, but the parameters are different. The function is:<br>
+</p>
+<center><img src="../data_files/relative_mm.gif"></center>
+<p>
+where:
+</p> 
+<ul>
+<li><i>Y</i> is the amount of annual relative growth</li>
+<li><i>A</i> is the <b>Asymptotic Diameter Growth (A)</b> or <b>Browsed Asymptotic Diameter Growth (A)</b> parameter</li>
+<li><i>S</i> is the <b>Slope of Growth Response (S)</b> or <b>Browsed Slope of Growth Response (S)</b> parameter</li>
+<li><i>GLI</i> is the global light index, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+</ul>
+<p>
+Growth is compounded over multiple timesteps with the equation:<br>
+</p>
+<center><i>G = ((Y + 1)<sup>T</sup> - 1) * diam <sup>X</sup></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>G</i> is the amount of diameter growth for the timestep, in cm</li>
+<li><i>diam</i> is the diameter of the tree in cm (at 10 cm height if seedling or sapling, or DBH if adult)</li>
+<li><i>T</i> is the number of years per timestep</li>
+<li><i>X</i> is the <b>Relative Michaelis-Menton Growth - Diameter Exponent</b> or <b>Browsed Diameter Exponent</b> parameter</li>
+</ul>
+<p>
+Whether or not a tree is browsed is determined by the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> and the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior applied. You can use either the diam with auto height or diam only version.
+</p>
+</body>
+</html>

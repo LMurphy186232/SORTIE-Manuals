@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Relative Neighborhood Density Calculator</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Relative Neighborhood Density Calculator</h1>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Relative Neighborhood Density - Maximum Distance (m)</td><td> The maximum distance out to which to calculate Relative Neighborhood Density Index (&#937;) values. </td></tr>
+
+<tr><td class="parname">Relative Neighborhood Density - Distance Increment (m)</td><td> The distance increments at which the Relative Neighborhood Density Index (&#937;) will be calculated. Smaller increments mean a smoother curve but also more processing time. </td></tr>
+
+</table>
+
+<p>
+This behavior calculates the relative neighborhood density index (&#937;) as described in Condit et al 2000. &#937; is a measure of the aggregation of a species. It is the average density of conspecific neighbors at a certain distance divided by the overall density of trees in the plot. A perfectly random distribution of individuals for a species would result in &#937; = 1. &#937; &gt; 1 at short distances indicates species aggregation. &#937; &lt; 1 at short distances indicates spacing among individuals.
+</p>
+
+
+<h3>How it works</h3>
+<p>
+&#937; values are calculated for each species for a succession of distances out to a maximum. For each tree, the conspecific neighbors are counted in an ring described by the radii x to &#916;x. This value is divided by the area of the ring to get the density of neighbors at that distance. This density is averaged over all trees of each species. This average density of neighbors at a given distance is then relativized by dividing by the density of that species across the plot.
+</p>
+<center><img src="../data_files/condits_omega_eq.gif" alt="Condit's Omega Equation"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>&#937;</i> is the relative neighborhood density at distance x to &#916;x for a species</li>
+<li><i>N<sub>x</sub></i> is the total number of conspecific neighbors for that species found between x and &#916;x</li>
+<li><i>T</i> is the total number of saplings and adults of that species in the plot</li>
+<li><i>A<sub>x</sub></i> is the area of the ring x + &#916;x</li>
+<li><i>den</i> is the total plot density for trees of that species</li>
+</ul>
+<p>
+The size of the distance increment, x, is given in the <b>Relative Neighborhood Density - Distance Increment (m)</b> parameter. The maximum distance out to which to calculate &#937; is given in the <b>Relative Neighborhood Density - Maximum Distance (m)</b> parameter.
+</p>
+<p>
+Only saplings and adult trees are included in &#937; calculations.
+</p>
+<p>
+The resulting &#937; values are stored in the <a href="../grids/condits_omega_grid.html">Relative Neighborhood Density</a> grid.
+</p>
+
+<h3>How to apply it</h3>
+<p>Add this behavior to your run. There is no need to apply it to specific tree species or types. Indeed, any such specifications will be ignored. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/condits_omega_grid.html">Relative Neighborhood Density</a> grid. Save all the data members of this grid. You can then view the &#937; values as a <a href="../../data_visualization/line_graphs.html">line graph</a> and use the graph to save the &#937; values as a text file.
+</p>
+
+
+</body>
+</html>

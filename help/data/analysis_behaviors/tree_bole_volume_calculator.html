@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Analysis behaviors</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Tree Bole Volume Calculator</h1>
+
+<p>
+This behavior calculates merchantable tree volume.  Make sure to distinguish between this behavior and the other tree volume behavior.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Bole Volume Form Class, 60% - 100%</td><td>  Calculates the amount of taper to the top of the first 16-foot log in a tree.  This is the diameter at the top of that log, as a percentage of DBH between 60 and 100.</td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b0)</td><td>  The <i>b0</i> parameter for the bole volume equation. </td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b1)</td><td>  The <i>b1</i> parameter for the bole volume equation. </td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b2)</td><td>  The <i>b2</i> parameter for the bole volume equation. </td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b3)</td><td>  The <i>b3</i> parameter for the bole volume equation. </td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b4)</td><td>  The <i>b4</i> parameter for the bole volume equation. </td></tr>
+
+<tr><td class="parname">Bole Volume Parameter (b5)</td><td>  The <i>b5</i> parameter for the bole volume equation. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Tree volume is calculated as follows:
+</p>
+<center><i>V = b0 + (b1 * DBH <sup>b2</sup>) + (b3 * DBH <sup>b4</sup> * Height <sup>b5</sup>)</i></center><br>
+<p>
+where:
+</p>
+<ul>
+<li><i>V</i> = gross volume in cubic feet</li>
+<li><i>Height</i> = bole length in feet, as a multiple of 16 (for usable 16-foot logs)</li>
+<li><i>DBH</i> = DBH in inches</li>
+<li><i>b0</i> - <i>b5</i> are the following parameters:  <b>Bole Volume Parameter (b0)</b>, <b>Bole Volume Parameter (b1)</b>, <b>Bole Volume Parameter (b2)</b>, <b>Bole Volume Parameter (b3)</b>, <b>Bole Volume Parameter (b4)</b>, and <b>Bole Volume Parameter (b5)</b></li>
+</ul>
+<p>
+The bole length is the number of 16-foot logs the tree can provide, in feet (i.e. 3 logs = bole length of 48 feet).  The base of the bole is the top of the cut stump; the top of the bole is the merchantable height.  This behavior defines the merchantable height as the height at which the trunk diameter inside the bark tapers to 60% of DBH.
+</p>
+<p>
+To determine at what bole length the merchantable height occurs, the behavior tries fitting in as many 16-foot logs as possible before the 60% taper occurs.  The amount of taper at the top of the first 16-foot log is established by the form classes.  A species's form class is the percentage of DBH to which the bole has tapered at the top of the first 16-foot log.  This value is entered as the <b>Bole Volume Form Class, 60% - 100%</b> parameter.
+</p>
+<p> 
+Then the behavior determines how many more logs the tree contains.  The amount of taper at the top of the first 16-foot log is subtracted from the DBH, to see how much taper is left before the 60% merchantable-height diameter is reached.  There is no formula that establishes clearly how many logs will fit; the behavior uses a trial-and-error approach taken from <a href="../../more_info/further_reading.html">Messavage and Girard, 1956</a>.  This paper includes the table below for upper-log taper for trees of various DBH and bole heights.  The behavior uses this table to determine the maximum number of logs it can fit into the taper available.
+</p>
+<p>
+Trees below 10 inches of DBH have no volume.  Trees greater than 40 inches of DBH are treated like 40-inch trees.
+</p>
+
+<table class="plaintable">
+<tr><th class="plaintable" rowspan="2">DBH (in)</th><th class="plaintable">2-log tree</th><th class="plaintable" colspan="2">3-log tree</th><th class="plaintable" colspan="3">4-log tree</th><th class="plaintable" colspan="4">5-log tree</th><th class="plaintable" colspan="5">6-log tree</th></tr>
+<tr><th class="plaintable">2d log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">5th log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">5th log</th><th class="plaintable">6th log</th></tr>
+
+<tr><td class="plaintable">10</td><td class="plaintable">1.4</td><td class="plaintable">1.2</td><td class="plaintable">1.4</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">12</td><td class="plaintable">1.6</td><td class="plaintable">1.3</td><td class="plaintable">1.5</td><td class="plaintable">1.1</td><td class="plaintable">1.4</td><td class="plaintable">1.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">14</td><td class="plaintable">1.7</td><td class="plaintable">1.4</td><td class="plaintable">1.6</td><td class="plaintable">1.2</td><td class="plaintable">1.5</td><td class="plaintable">2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">16</td><td class="plaintable">1.9</td><td class="plaintable">1.5</td><td class="plaintable">1.7</td><td class="plaintable">1.2</td><td class="plaintable">1.6</td><td class="plaintable">2.1</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">18</td><td class="plaintable">2</td><td class="plaintable">1.6</td><td class="plaintable">1.8</td><td class="plaintable">1.3</td><td class="plaintable">1.7</td><td class="plaintable">2.2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">20</td><td class="plaintable">2.1</td><td class="plaintable">1.7</td><td class="plaintable">1.9</td><td class="plaintable">1.4</td><td class="plaintable">1.8</td><td class="plaintable">2.4</td><td class="plaintable">1.1</td><td class="plaintable">1.6</td><td class="plaintable">2.2</td><td class="plaintable">2.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">22</td><td class="plaintable">2.2</td><td class="plaintable">1.8</td><td class="plaintable">2</td><td class="plaintable">1.4</td><td class="plaintable">2</td><td class="plaintable">2.5</td><td class="plaintable">1.1</td><td class="plaintable">1.7</td><td class="plaintable">2.3</td><td class="plaintable">2.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">24</td><td class="plaintable">2.3</td><td class="plaintable">1.8</td><td class="plaintable">2.2</td><td class="plaintable">1.5</td><td class="plaintable">2.2</td><td class="plaintable">2.6</td><td class="plaintable">1.1</td><td class="plaintable">1.8</td><td class="plaintable">2.4</td><td class="plaintable">3.1</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">26</td><td class="plaintable">2.4</td><td class="plaintable">1.9</td><td class="plaintable">2.3</td><td class="plaintable">1.5</td><td class="plaintable">2.3</td><td class="plaintable">2.7</td><td class="plaintable">1.1</td><td class="plaintable">1.9</td><td class="plaintable">2.5</td><td class="plaintable">3.2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">28</td><td class="plaintable">2.5</td><td class="plaintable">1.9</td><td class="plaintable">2.5</td><td class="plaintable">1.6</td><td class="plaintable">2.4</td><td class="plaintable">2.8</td><td class="plaintable">1.2</td><td class="plaintable">1.9</td><td class="plaintable">2.6</td><td class="plaintable">3.3</td><td class="plaintable">0.9</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.4</td></tr>
+
+<tr><td class="plaintable">30</td><td class="plaintable">2.6</td><td class="plaintable">2</td><td class="plaintable">2.6</td><td class="plaintable">1.7</td><td class="plaintable">2.5</td><td class="plaintable">3</td><td class="plaintable">1.2</td><td class="plaintable">2</td><td class="plaintable">2.7</td><td class="plaintable">3.5</td><td class="plaintable">0.9</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.5</td></tr>
+
+<tr><td class="plaintable">32</td><td class="plaintable">2.7</td><td class="plaintable">2</td><td class="plaintable">2.7</td><td class="plaintable">1.7</td><td class="plaintable">2.5</td><td class="plaintable">3.1</td><td class="plaintable">1.2</td><td class="plaintable">2.1</td><td class="plaintable">2.9</td><td class="plaintable">3.7</td><td class="plaintable">1</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.6</td></tr>
+
+<tr><td class="plaintable">34</td><td class="plaintable">2.8</td><td class="plaintable">2.1</td><td class="plaintable">2.7</td><td class="plaintable">1.8</td><td class="plaintable">2.5</td><td class="plaintable">3.3</td><td class="plaintable">1.3</td><td class="plaintable">2.1</td><td class="plaintable">3</td><td class="plaintable">3.8</td><td class="plaintable">1</td><td class="plaintable">1.4</td><td class="plaintable">2.2</td><td class="plaintable">3.3</td><td class="plaintable">4.7</td></tr>
+
+<tr><td class="plaintable">36</td><td class="plaintable">2.8</td><td class="plaintable">2.1</td><td class="plaintable">2.8</td><td class="plaintable">1.8</td><td class="plaintable">2.6</td><td class="plaintable">3.4</td><td class="plaintable">1.3</td><td class="plaintable">2.2</td><td class="plaintable">3</td><td class="plaintable">3.9</td><td class="plaintable">1.1</td><td class="plaintable">1.5</td><td class="plaintable">2.2</td><td class="plaintable">3.3</td><td class="plaintable">4.9</td></tr>
+
+<tr><td class="plaintable">38</td><td class="plaintable">2.9</td><td class="plaintable">2.1</td><td class="plaintable">2.8</td><td class="plaintable">1.9</td><td class="plaintable">2.6</td><td class="plaintable">3.4</td><td class="plaintable">1.3</td><td class="plaintable">2.2</td><td class="plaintable">3.1</td><td class="plaintable">3.9</td><td class="plaintable">1.1</td><td class="plaintable">1.5</td><td class="plaintable">2.3</td><td class="plaintable">3.4</td><td class="plaintable">5.1</td></tr>
+
+<tr><td class="plaintable">40</td><td class="plaintable">2.9</td><td class="plaintable">2.2</td><td class="plaintable">2.8</td><td class="plaintable">1.9</td><td class="plaintable">2.7</td><td class="plaintable">3.4</td><td class="plaintable">1.4</td><td class="plaintable">2.3</td><td class="plaintable">3.2</td><td class="plaintable">4</td><td class="plaintable">1.2</td><td class="plaintable">1.5</td><td class="plaintable">2.4</td><td class="plaintable">3.5</td><td class="plaintable">5.3</td></tr>
+</table>
+
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_tree_setup.html">Detailed output setup window</a> for trees will have a tree data member called "Tree Bole Volume".  Add this to your detailed  output file to output volume in cubic feet.  You can then view charts and graphs with the resulting volume data using data visualization on your detailed output file. 
+</p>
+
+</body>
+</html>

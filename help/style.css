@@ -1,0 +1,52 @@
+.plaintable {
+  border:1px solid black;
+  border-collapse:collapse;
+  padding:5px;
+}
+
+.behaviorlist table, td, th
+{
+  border:1px solid white;
+}
+.behaviorlist th
+{
+  background-color:#C0C0C0;
+}
+.behaviorlist tr
+{
+  background-color:#F0F0F0;
+}
+.behname {
+  width:100px;
+}
+
+.parlist table, td, th
+{
+  border:1px solid white;
+  padding:5px;
+}
+.parlist th
+{
+  background-color:#C0C0C0;
+}
+.parlist tr
+{
+  background-color:#F0F0F0;
+}
+.parname {
+  width:150px;
+}
+
+.gridlist table, td, th
+{
+  border:1px solid white;
+  padding:5px;
+}
+.gridlist th
+{
+  background-color:#C0C0C0;
+}
+.gridlist tr
+{
+  background-color:#F0F0F0;
+}

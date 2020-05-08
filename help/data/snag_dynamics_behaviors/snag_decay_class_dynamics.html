@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Snag Decay Class Dynamics</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Snag Decay Class Dynamics</h1>
+<p>
+This behavior controls transitions among snag decay classes and snag falls.  There are two fall models, one that applies to trees that die in the current time step (and may fall without become a snag), and one that applies to pre-existing snags. Fall probability is a function of tree size, decay class, neighborhood basal area, and recent harvest activity. Trees and snags that do not fall are run through a snag decay class transition matrix.
+</p>
+<p>
+Model forms are based on those in <a href="../../more_info/further_reading.html">Vanderwel et al. 2006</a>.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Alpha</td><td> Snag fall alpha parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Beta</td><td> Snag fall beta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Eta</td><td> Snag fall eta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Gamma 2</td><td> Snag fall gamma 2 parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Gamma 3</td><td> Snag fall gamma 3 parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Gamma 4</td><td> Snag fall gamma 4 parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Gamma 5</td><td> Snag fall gamma 5 parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Kappa</td><td> Snag fall kappa parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Snag Fall Zeta</td><td> Snag fall zeta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Alpha</td><td> Tree fall alpha parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Beta</td><td> Tree fall beta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Delta</td><td> Tree fall delta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Iota</td><td> Tree fall iota parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Lambda</td><td> Tree fall lambda parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Tree Fall Theta</td><td> Tree fall theta parameter.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Live To Class 1 Prob (0-1)</td><td> Probability of a snag that did not fall moving from live (killed this timestep) to decay class 1.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Live To Class 2 Prob (0-1)</td><td> Probability of a snag that did not fall moving from live (killed this timestep) to decay class 2.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Live To Class 3 Prob (0-1)</td><td> Probability of a snag that did not fall moving from live (killed this timestep) to decay class 3.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Live To Class 4 Prob (0-1)</td><td> Probability of a snag that did not fall moving from live (killed this timestep) to decay class 4.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Live To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall moving from live (killed this timestep) to decay class 5.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 1 To Class 1 Prob (0-1)</td><td> Probability of a snag that did not fall remaining in decay class 1.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 1 To Class 2 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 1 to decay class 2.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 1 To Class 3 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 1 to decay class 3.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 1 To Class 4 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 1 to decay class 4.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 1 To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 1 to decay class 5.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 2 To Class 2 Prob (0-1)</td><td> Probability of a snag that did not fall remaining in decay class 2.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 2 To Class 3 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 2 to decay class 3.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 2 To Class 4 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 2 to decay class 4.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 2 To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 2 to decay class 5.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 3 To Class 3 Prob (0-1)</td><td> Probability of a snag that did not fall remaining in decay class 3.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 3 To Class 4 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 3 to decay class 4.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 3 To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 3 to decay class 5.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 4 To Class 4 Prob (0-1)</td><td> Probability of a snag that did not fall remaining in decay class 4.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 4 To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall moving from decay class 4 to decay class 5.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Class 5 To Class 5 Prob (0-1)</td><td> Probability of a snag that did not fall remaining in decay class 5. This value is always 1.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Maximum Snag Break Height</td><td> Maximum height at which snags break. The actual height is a random draw between this value and the minimum.</td></tr>
+
+<tr><td class="parname">Snag Decay Class Dynamics Minimum Snag Break Height</td><td> Minimum height at which snags break. The actual height is a random draw between this value and the maximum.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+Trees that died in the current timestep have a certain probability of falling before the end of the current timestep. (Note that trees that die in a mortality episode do NOT count as trees that died in the current timestep, but as existing snags.) The behavior represents the probability of falling before the end of the timestep as:
+</p>   
+<center><img src="../data_files/snag_logistic.gif"></center><br/>
+<center><i>f(x) = &#945; + &#946;<sub>spp</sub> + &#948; DBH + &#952; BA + &#953; H + &#955; (DBH * H)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Pr(fall)</i> is the probability of the tree falling</li>
+<li><i>&#945;</i> is the <b>Snag Decay Class Dynamics Tree Fall Alpha</b> parameter</li>
+<li><i>&#946;<sub>spp</sub></i> is the <b>Snag Decay Class Dynamics Tree Fall Beta</b> parameter for the tree's species</li>
+<li><i>DBH</i> is the DBH in cm</li>
+<li><i>&#948;</i> is the <b>Snag Decay Class Dynamics Tree Fall Delta</b> parameter</li>
+<li><i>&#952;</i> is the <b>Snag Decay Class Dynamics Tree Fall Theta</b> parameter</li>
+<li><i>BA</i> is the basal area (m2/ha) of live trees in the current tree's cell of the <a href="../grids/snag_ba_grid.html">Snag Decay Class Dynamics Basal Area</a> grid</li>
+<li><i>&#953;</i> is the <b>Snag Decay Class Dynamics Tree Fall Iota</b> parameter</li>
+<li><i>H</i> is whether (1) or not (0) a harvest occurred this timestep</li>
+<li><i>&#955;</i> is the <b>Snag Decay Class Dynamics Tree Fall Lambda</b> parameter</li>
+</ul>
+<p>
+For snags that were created in a previous timestep, the behavior represents the probability of falling during the timestep as:
+</p>
+<center><img src="../data_files/snag_logistic.gif"></center><br/>
+<center><i>f(x) = &#945; + &#946;<sub>spp</sub> + &#947;<sub>dc</sub> + &#950; ln(DBH) + &#951; ln(DBH)<sup>2</sup> + &#954; BA<sub>H</sub></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Pr(fall)</i> is the probability of the snag falling</li>
+<li><i>&#945;</i> is the <b>Snag Decay Class Dynamics Snag Fall Alpha</b> parameter</li>
+<li><i>&#946;<sub>spp</sub></i> is the <b>Snag Decay Class Dynamics Snag Fall Beta</b> parameter for the tree's species</li>
+<li><i>&#947;<sub>dc</sub></i> is the <b>Snag Decay Class Dynamics Snag Fall Gamma X</b> parameter, where X is the snag's decay class</li>
+<li><i>DBH</i> is the DBH in cm</li>
+<li><i>&#950;</i> is the <b>Snag Decay Class Dynamics Snag Fall Zeta</b> parameter</li>
+<li><i>&#951;</i> is the <b>Snag Decay Class Dynamics Snag Fall Eta</b> parameter</li>
+<li><i>&#954;</i> is the <b>Snag Decay Class Dynamics Snag Fall Kappa</b> parameter</li>
+<li><i>BA<sub>H</sub></i> is the basal area (m2/ha) of harvested trees in the current snag's cell of the <a href="../grids/snag_ba_grid.html">Snag Decay Class Dynamics Basal Area</a> grid</li>
+</ul>
+<p>
+If a tree or snag does not fall, its condition at the end of the timestep will be represented by a snag decay class.  Decay class 1 is the least decayed condition and decay class 5 is the most decayed.  Parameters should be entered to specify the probability of going from a live tree or one of five decay classes to each of the higher decay classes over a five year timestep, given that the snag is still standing.  The transition probabilities for each initial condition must sum to 1.
+</p>
+<p>
+For all models, parameter values should correspond to the probability of fall for a five-year timestep.  The behavior will re-scale the probability of fall for other timestep lengths if necessary.
+</p>
+<p>
+Basal area amounts are tracked in the <a href="../grids/snag_ba_grid.html">Snag Decay Class Dynamics Basal Area</a> grid. Each timestep, the amount of basal area, in square meters per hectare, is totaled across all species for live trees (live adults and adults that died in the current timestep) and harvested trees. The size of the grid cells is approximately 400 square meters. A tree's neighborhood basal area is the value in the grid cell where the tree is located.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to adults and snags of any species.  It should be executed after mortality and dead tree remover behaviors have been applied in each timestep.
+</p>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Creating a new behavior part 3 - writing code and testing</title>
+</head>
+<body>
+<h1>Part 3:  Writing code and testing</h1>
+<p>
+At this point you've finished the behavior design, and written its C++ header file.  (The C++ header file for our sample behavior is <a href="sample_header.html">here</a>.)  Now you're ready to write your code and test it. 
+</p>
+<h3>Step 1:  Write the automated test code</h3>
+<p>
+I like to write my automated test code first, before I write my behavior code.  Of course, you could write it afterwards too, just as long as you write it.  (Yes, you have to.  Why?  Because long after you've finished your behavior, I still have to test it whenever new changes come into the model.  I will not test your behavior by hand.  Therefore, I do not accept new behaviors into the code repository if they don't also have an automated test class.)
+</p>
+<p>
+The automated testing environment for the C++ code is based on CppUnit.  You can download the code in the downloads area.  There are installation instructions <a href="code_installation.html">here</a>.  
+</p>
+<p>
+Here's how to create your automated test code:
+</p>
+<p><b>1.  Organize the test data you created in <a href="cookbook_1.html">Part 1</a> into test runs.</b>  Your behavior may be the only behavior in the run.  Your test runs should test all of your behavior's functionality.  Usually, I can get to all parts of my behavior by putting in parameter files and examining the results of a timestep's run.  This is best testing method, because it tests the behavior just like it will be used during actual simulations.  If it is absolutely necessary, add your test class as a friend class of your behavior class so you can examine private behavior data directly to make sure the behavior is working.
+</p>
+<p>
+For our sample behavior, we could use two runs for our test data.
+</p>
+<ol>
+<li>Normal processing.  On the first timestep, there would be no trees.  After the first timestep, we would create our list of trees and run another timestep.  After each timestep, we will examine every grid cell in the grid "Biomass Map" to make sure it is right.</li>
+<li>Error processing.  The parameter file contains the fatal parameter errors.  This run will not get past setup.</li>
+</ol>
+<p>
+At this point we write parameter files that will set up each run.
+</p>  
+<p>
+<b>2.  Write your automated test code.</b> It is helpful to group your tests into a single master test function.  Your code creates test runs by the following basic steps:
+</p>
+<ol>
+<li>Create a clSimManager object, or get passed one from a master test function.
+<li>Write out a parameter file for a run.
+<li>Pass the parameter filename to the clSimManager using clSimManager::ReadFile().
+<li>Produce the proper initial conditions, if they weren't already in your parameter file.  For instance, say you wanted to test your behavior's ability to count trees.  You could use the clSimManager object to get a pointer to the clTreePopulation object, and then create 100 trees.  Later, you could verify that your behavior counted 100 trees.
+<li>Verify behavior setup, if applicable.
+<li>Run timesteps and verify results.  You don't have to run timesteps all at once.  clSimManager::RunSim() accepts as an argument a number of timesteps to run.  Say your behavior was supposed to kill 30% of the trees of Species 1.  You could create 100 trees of Species 1 in your initial conditions, run 1 timestep, count the trees to make sure 30% are dead, add 500 more trees, run another timestep, count and verify, etc.   
+</ol>
+<p>
+Your test code verifies results by using the macro CPPUNIT_ASSERT(test_condition_evaluating_to_true_or_false).  When you do this, if the condition fails, a message will be passed to you at runtime.
+</p>
+
+
+<h3>Step 2:  Write the behavior code</h3>
+<p>
+Now you write the ".cpp" file to go with your C++ header file.  At this point, it should be simple.  You've already written out what all your functions do, so now you just fill in the code. 
+</p>
+<p>
+Some tips:
+</p>
+<ul>
+<li>If you need access to trees, use the <code><a href="../c_doc/classclTreePopulation.html">clTreePopulation::Find()</a></code> method.  With this method you tell the tree population what kind of trees you need, and those are the trees you get.  Our biomass calculation example behavior would ask the tree population for all adult trees.  Remember that your behavior should only act on the trees to which it is applied.  You can find out to which trees your behavior is applied by examining the <code>mp_whatSpeciesTypeCombos</code> attribute of your behavior (defined in the <code><a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a></code> class).</li>
+<li>If your behavior creates a grid object, you need to watch for grid setup that the user might have included in the parameter file.  The user can specify a grid resolution and include a map of initial grid values.  All you need to do is check to see if your grid has already been created by using the <code><a href="../c_doc/classclSimManager.html">clSimManager::GetGridObject()</a></code> method.  If it returns NULL, then you know the user didn't enter any grid objects and you can create the grid from scratch.</li>
+<li>You must assume that your behavior does not apply to all species.  If you have a large number of species-specific parameters, and you declared all your parameter arrays to be equal in size to the total number of tree species, you will waste a lot of memory when your behavior is not applied to all species.  The attribute <code>m_iNumBehaviorSpecies</code> is defined in <code><a href="../c_doc/classclBehaviorBase.html">clBehaviorBase</a></code> and automatically given a value.  You can use it to manage array size.  Also, be sure your code will not throw errors if parameters are absent for species to which the behavior is not applied.</li>
+</ul>
+
+
+<h3>Step 3:  Test your behavior</h3>
+<p>
+Run your automated tests until it passes.  There will be bugs in both your automated test code and your behavior code, but it is highly unlikely that you will duplicate the exact same bug in both places. 
+</p>
+</body>
+</html>

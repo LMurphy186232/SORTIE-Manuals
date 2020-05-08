@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - File I/O</title>
+</head>
+
+<body>
+<h1>I/O</h1>
+<p>
+There is one main type of input file in the model - the parameter file.  There are two kinds of output files - the short, or summary, output file, and the detailed output file.  Detailed output files can be incorporated into parameter files to act as input.
+</p>
+<p>
+The parameter file and the detailed output file are written in XML.  The detailed output file is then compressed.  Short output files are written in tab-delimited text.
+</p>
+<p>
+XML files are plaintext files.  Data within the files is tagged in a SORTIE-ND-specific way.  (If you need to know more about XML, W3C has a good XML tutorial at <a href="http://www.w3schools.com/xml/default.asp">http://www.w3schools.com/xml/default.asp</a>.)  Files written in XML can be traded between different kinds of computers with no conversions.  XML is an open web standard and is widely used, which means other people have already written lots of software for dealing with it.  SORTIE-ND uses a few of these third-party tools for its own XML.
+</p>
+<ul>
+<li>See the <a href="../../help/files/parameter_files.html">parameter file</a> topic for more on how parameter files are used.</li>
+<li>See the <a href="../../help/files/detailed_output_files.html">detailed output file</a> topic for more on how detailed output files are used.</li>
+<li>See the <a href="../../help/files/short_output_files.html">short output file</a> topic for more on how short output files are used.</li>
+</ul>
+
+<h3>File type codes</h3>
+<p>
+Each file has a code at the beginning that identifies the file format and version.  The code has 8 digits.  The first two are the major model version, the second two are the minor model version, the third two are the file type, and the fourth two are the file version.  Here are the file type codes:
+</p>
+<ul>
+<li>01 - parameter file       
+<li>02 - tree definition file (initial densities and/or tree map in combination)
+<li>03 - tree map file only
+<li>04 - batch file
+<li>05 - grid map file
+<li>06 - detailed output file
+<li>07 - detailed output timestep file
+</ul>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Selection harvest</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Selection harvest</h1>
+
+<p>
+This behavior allows you to specify target basal areas for a tree population as a method of harvest input, instead of designing specific harvest events.
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "harvest".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 1 Lower DBH (cm)</td><td>  The lower bound of the first DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 1 Upper DBH (cm)</td><td>  The upper bound of the first DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 1 Target Basal Area (m2/ha)</td><td>  The target basal area, in square meters per hectare, of the first cut range. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 2 Lower DBH (cm)</td><td>  The lower bound of the second DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 2 Upper DBH (cm)</td><td>  The upper bound of the second DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 2 Target Basal Area (m2/ha)</td><td>  The target basal area, in square meters per hectare, of the second cut range. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 3 Lower DBH (cm)</td><td>  The lower bound of the third DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 3 Upper DBH (cm)</td><td>  The upper bound of the third DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 3 Target Basal Area (m2/ha)</td><td>  The target basal area, in square meters per hectare, of the third cut range. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 4 Lower DBH (cm)</td><td>  The lower bound of the fourth DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 4 Upper DBH (cm)</td><td>  The upper bound of the fourth DBH cut range, in cm. </td></tr>
+
+<tr><td class="parname">Selection Harvest Cut Range 4 Target Basal Area (m2/ha)</td><td>  The target basal area, in square meters per hectare, of the fourth cut range. </td></tr>
+
+<tr><td class="parname">Selection Harvest Initial Age</td><td>  The initial age. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+You can specify up to four DBH ranges.  You provide the lower and upper DBH bounds of these ranges, and the target amount of basal area for each.  Each timestep, this behavior calculates the amount of basal area in each of these ranges.  If it is greater than the target, this behavior signals to the Harvest behavior that it should remove enough basal area to bring each range back down to its target basal area.  Since Harvest actually does the tree removal, see that behavior's documentation for the method used.  If the amount of basal area in any given range is less than the target, no trees are cut in that range.
+</p>
+<h3>How to apply it</h3>
+<p>
+Add this behavior to your run.  Harvest is also needed in the run, and should be placed after Selection Harvest in the behavior order.
+</p>
+
+</body>
+</html>

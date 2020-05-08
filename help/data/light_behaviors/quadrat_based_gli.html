@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Quadrat-based GLI light</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Quadrat-based GLI light</h1>
+<p>             
+For more on what GLI is and how it is calculated, see <a href="light_calculations.html">here</a>.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Number of Altitude Sky Divisions for Quadrat Light Calculations</td><td> Number of grid cells into which the sky is divided from horizon to zenith, for the purpose of calculating light direction.</td></tr>
+
+<tr><td class="parname">Number of Azimuth Sky Divisions for Quadrat Light Calculations</td><td> Number of grid cells into which the sky is divided around the horizon, for the purpose of calculating light direction.</td></tr>
+
+<tr><td class="parname">Quadrat GLI - Always Calculate All GLIs</td><td> Whether or not to always calculate a GLI for all cells in the Quadrat GLI grid. If false, GLIs are only calculated when needed by a tree. Set this value to true if you are planning to save and use maps of the Quadrat GLI grid. If not, leaving it to false makes SORTIE run faster.</td></tr>
+
+<tr><td class="parname">Height at Which GLI is Calculated for Quadrats, in meters</td><td> Height at which GLI is calculated.</td></tr>
+
+<tr><td class="parname">Minimum Solar Angle for Quadrat Light, in rad</td><td> This is the minimum angle at which sunlight is seen, in radians. Below this value the sky is assumed to be dark due to shading neighbors.</td></tr>
+</table>
+
+<h3>General light parameters used by this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Beam Fraction of Global Radiation</td><td> The fraction of total solar radiation that is direct beam radiation (as opposed to diffuse). Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Clear Sky Transmission Coefficient</td><td> Used to determine the amount of solar radiation seen at the plot location.</td></tr>
+
+<tr><td class="parname">First Day of Growing Season</td><td> The first day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Last Day of Growing Season</td><td> The last day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Amount Canopy Light Transmission (0-1)</td><td> Fraction of light transmitted through the tree crown for each species. Expressed as a fraction between 0 and 1. A value must be provided for all species, even if they don't all use light.</td></tr>
+
+<tr><td class="parname">Snag Age Class 1 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 1".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 2 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 1", but is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 3 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 1</td><td>  The upper age limit, in years, defining the first age class of snag light transmission.  Snags with an age less than or equal to this age have a light transmission coefficient matching "Snag Age Class 1 Light Transmission Coefficient".  If your run does not work with snags, you can ignore this.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 2</td><td>  The upper age limit, in years, defining the second age class of snag light transmission.  Snags with an age greater than the upper limit for size class 1, but less than or equal to this age, have a light transmission coefficient matching "Snag Age Class 2 Light Transmission Coefficient".  Snags with an age greater than this value are in age class three.  If your run does not work with snags, you can ignore this.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior uses a <a href="../../using/what_is_a_grid.html">grid</a> object, called <a href="../grids/quadrat_gli_grid.html">Quadrat GLI</a>, to help it assign GLI values to the trees to which it is assigned. The grid cells are the quadrats, in this case; this is a throwback to old SORTIE terminology. Each grid cell in which there is a tree to which this behavior applies has a GLI value calculated at its center, at a height that the user specifies. All other trees to which this behavior applies that are in that same grid cell get that same GLI value. This behavior saves having to calculate a different GLI value for each tree.  GLI values range from 0 (no sun) to 100 (full sun).
+</p>
+<p>
+For efficiency, this behavior does not calculate the value of a grid cell if there are no trees in that cell. In this case, the light value of the cell is -1. To force it to always calculate all GLIs (useful if you intend to save maps of the Quadrat GLI grid), set the <b>Quadrat GLI - Always Calculate All GLIs</b> parameter to true.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

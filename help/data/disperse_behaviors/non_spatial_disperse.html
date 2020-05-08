@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Non-spatial disperse</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Non-spatial disperse</h1>
+
+
+<p>The "non-spatial" in non-spatial disperse refers to the fact that this behavior ignores the location of parent trees and scatters seeds uniformly across the plot. Non-spatial disperse has two components: basal-area-dependent seed rain and non-density-dependent (bath) seed rain, the two of which are independent and can be used together or separately. For basal-area-dependent seed rain, the number of seeds added is in direct proportion to the amount of basal area of parent trees of a given species. Bath seed rain adds a constant number of seeds each timestep, even if there are no parent trees of that species in the plot.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Intercept of Mean Non-Spatial Seed Rain, seeds/m<sup>2</sup>/yr</td><td> The intercept of the non-spatial seed rain function. This is the bath seed rain term. Set this value to zero to turn off bath non-spatial seed rain. </td></tr>
+
+<tr><td class="parname">Slope Mean Non-Spatial Seed Rain, seeds/m<sup>2</sup>/ha of BA/yr</td><td> The slope of the non-spatial seed rain function. This is the basal-area-dependent seed rain term. Set this value to zero to turn off basal-area-dependent non-spatial seed rain. </td></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>Non-spatial disperse calculates how many seeds to distribute as:<br/>
+</p>
+<center><i>&#955; = &#956;*BA + &#954;</i></center>
+<br/>
+where: 
+<ul>
+<li><i>&#955;</i> is the mean number of seeds per m<sup>2</sup></li>
+<li><i>&#956;</i> is the <b>Slope Mean Non-Spatial Seed Rain, seeds/m2/ha of BA/yr</b> parameter</li>
+<li><i>BA</i> is the basal area of the parent species in
+m<sup>2</sup></li>
+<li><i>&#954;</i> is the <b>Intercept of Mean Non-Spatial Seed Rain, seeds/m2/yr</b> parameter</li>
+</ul>
+From this, the number of seeds per grid cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid is
+calculated, and then that number is added to each grid cell. <br/>
+<br/>
+ 
+<p>
+In the equation above, <i>&#956;</i> is the basal-area-dependent seed rain term. Setting this value to zero turns off density-dependent seed rain. <i>&#954;</i> is the bath seed rain term. Setting this value to zero turns off bath seed rain.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to adults of the species you wish to use non-spatial disperse.
+</p>
+
+</body>
+</html>

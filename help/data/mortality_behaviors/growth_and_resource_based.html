@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Growth and Resource-Based Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Growth and Resource-Based Mortality</h1>
+<p>
+This behavior calculates probability of survival as a function of growth and some second resource.  The identity of the second resource is unimportant and could be anything, from exchangeable calcium levels to soil moisture.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Growth/Resource - Scaling Factor (rho)</td><td> Scaling factor to reduce survival at the mode of the survival probability function. </td></tr>
+
+<tr><td class="parname">Growth/Resource - Function Mode (mu)</td><td> Determines the mode of the function along a gradient of the resource R (the mode is the optimal niche of a species). </td></tr>
+
+<tr><td class="parname">Growth/Resource - Survival Increase with Growth (delta)</td><td> Specifies the increase in survival caused by amount of growth. </td></tr>
+
+<tr><td class="parname">Growth/Resource - Low-Growth Survival Parameter (sigma)</td><td> Affects the shape of the survival probability distribution in low-growth conditions. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The probability of survival for a tree is calculated with the following equation:
+</p>
+<center><img src="../data_files/resource_mort.gif" alt="Growth and resource mortality equation"></center>
+where:
+<ul>
+<li><i>Prob</i> is the annual probability of survival, as a value between 0 and 1</li>
+<li><i>R</i> is the amount of the second resource</li>
+<li><i>G</i> is the amount of radial growth, in mm/yr</li>
+<li><i>&#961;</i> is the <b>Growth/Resource - Scaling Factor (rho)</b> parameter, which is a scaling factor to reduce survival at the mode of the survival probability function</li>
+<li><i>&#956;</i> is the <b>Growth/Resource - Function Mode (mu)</b> parameter, which determines the mode of the function along a gradient of the resource R (this corresponds to the optimal niche of a species, meaning where it is the top competitor, the absolute winner of competition)</li>
+<li><i>&#948;</i> is the <b>Growth/Resource - Survival Increase with Growth (delta)</b> parameter, which specifies the increase in survival caused by amount of growth</li>
+<li><i>&#963;</i> is the <b>Growth/Resource - Low-Growth Survival Parameter (sigma)</b> parameter, which affects the shape of the survival probability distribution in low-growth conditions</li>
+</ul>
+
+<p>
+The amount of the second resource is captured in a grid object called <a href="../grids/resource_grid.html">Resource</a>.  Currently it is up to you to enter a map of the values for this resource grid; for instructions on how to do this, see the <a href="../../windows/grid_setup_window.html">Grid Setup Window</a> topic.  This behavior does not in any way alter the values in this grid.
+</p>
+<p>
+The survival probability as calculated above is an annual probability. For multi-year timesteps, the timestep probability is AP<sup>X</sup>, where AP is the annual probability and X is the number of years per timestep. Once a tree's timestep survival probability has been calculated, it is compared to a random number to determine whether the tree lives or dies.
+</p> 
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also
+have a <a href="../growth_behaviors/index.html">growth behavior</a> applied. You must also enter a map of second resource values into the <a href="../grids/resource_grid.html">Resource</a> grid.
+</p>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Monthly Climate Data Importer</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Monthly Climate Data Importer</h1>
+<p>
+This behavior allows you to import montly climate data directly. This behavior will then use that data to calculate all of the temperature and precipitation based climate variables used in SORTIE: <a href="../plot.html#parameters">Annual Precipitation, Mean Annual Temperature, Seasonal Precipitation, and Water Deficit</a>. If you use this behavior, any values entered in the <a href="../plot.html#parameters">Plot</a> for those variables will be ignored.  
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Available Water Storage in Top 100 cm Soil</td><td> Maximum available water storage in the top 100 cm of the soil, in mm.</td><tr>
+
+<tr><td class="parname">January Radiation (cal/cm2)</td><td> Global radiation received during the month of January, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">February Radiation (cal/cm2)</td><td> Global radiation received during the month of February, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">March Radiation (cal/cm2)</td><td> Global radiation received during the month of March, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">April Radiation (cal/cm2)</td><td> Global radiation received during the month of April, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">May Radiation (cal/cm2)</td><td> Global radiation received during the month of May, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">June Radiation (cal/cm2)</td><td> Global radiation received during the month of June, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">July Radiation (cal/cm2)</td><td> Global radiation received during the month of July, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">August Radiation (cal/cm2)</td><td> Global radiation received during the month of August, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">September Radiation (cal/cm2)</td><td> Global radiation received during the month of September, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">October Radiation (cal/cm2)</td><td> Global radiation received during the month of October, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">November Radiation (cal/cm2)</td><td> Global radiation received during the month of November, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">December Radiation (cal/cm2)</td><td> Global radiation received during the month of December, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">Precipitation for timestep X</td><td> Precipitation for each month for that timestep, in mm. You must provide data for all months and all timesteps. SORTIE can read this data from a file - see the <a href="../../windows/edit_monthly_climate_data_importer_window.html">Edit Monthly Climate Data Importer Window</a> for more.</td><tr>
+  
+<tr><td class="parname">Temperature for timestep X</td><td> Mean temperature for each month for that timestep, in degrees C. You must provide data for all months and all timesteps. SORTIE can read this data from a file - see the <a href="../../windows/edit_monthly_climate_data_importer_window.html">Edit Monthly Climate Data Importer Window</a> for more.</td><tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+Each timestep, this behavior retrieves the monthly precipitation and temperature data and uses them to calculate each climate variable in SORTIE. If the length of the timestep is more than one year, the calculated values will be used for the entire duration of the timestep for those processes that repeat annually.
+</p>
+<p>
+Radiation values and soil water storage are required to calculate Water Deficit and Seasonal Precipitation. If your run does not require either Water Deficit or Seasonal Precipitation, you can leave those parameters at 0.
+<p>
+<b>Annual Precipitation</b> is calculated by summing the monthly precipitation values for the current timestep.
+</p>
+<p>
+<b>Mean Annual Temperature</b> is calculated by taking the mean of the monthly temperature values for the current timestep.
+</p>
+<p>
+<b>Water Deficit</b> is calculated using the same method as the <a href="seasonal_water_deficit.html">Seasonal Water Deficit</a> behavior. 
+</p>
+<p>
+<b>Seasonal Precipitation</b> is calculated as the sum of soil water storage, growing season precipitation, and potential evapotranspiration (PET) during the non-growing-season portion of the year. 
+<p>
+<p>
+PET for each month is calculated as:
+</p>
+<center><i>PET<sub>i</sub> = 0.013 * (T<sub>i</sub>/(T<sub>i</sub>+15) * (R<sub>s</sub>+50)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>PET<sub>i</sub></i> is monthly potential evapotranspiration in mm</li>
+<li><i>T<sub>i</sub></i> is monthly temperature in degrees C</li>
+<li><i>R<sub>s</sub></i> is the <b>[month i] Radiation (cal/cm2)</b> parameter</li>
+</ul>
+<p>
+If <i>T<sub>i</sub></i> &le; 0, then <i>PET<sub>i</sub></i> = 0.
+</p>
+<p>
+Any month where PET >= precipitation is considered part of the growing season.
+</p>
+<center><i>Seasonal precipitation = AWS + &Sigma;PPT<sub>g</sub> + &Sigma;PET<sub>ng</sub> </i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>PPT<sub>g</sub></i> is the precipitation, in mm, for months in the growing season </li>
+<li><i>PET<sub>ng</sub></i> is potential evapotranspiration, in mm, for the months not in the growing season</li>
+<li><i>AWS</i> is the <b>Available Water Storage in Top 100 cm Soil</b> parameter</li>
+</ul>
+
+<h3>How to apply it</h3>
+<p>
+Add this behavior to the run.  You do not need to assign this behavior to trees.  
+</p>
+
+</body>
+</html>

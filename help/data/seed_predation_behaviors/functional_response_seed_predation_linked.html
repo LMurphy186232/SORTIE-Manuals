@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Functional response seed predation (linked)</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Functional response seed predation (linked)</h1>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Func Resp - Demographic Efficiency, Season 1</td><td> The seed predator population demographic efficiency for season 1. </td></tr>
+
+<tr><td class="parname">Func Resp - Demographic Efficiency, Season 2</td><td> The seed predator population demographic efficiency for season 2. </td></tr>
+
+<tr><td class="parname">Func Resp - Density Dependent Coeff, Season 1</td><td> The coefficient describing the effect that density-dependent factors have on the predator population instantaneous rate of change, in season 1. </td></tr>
+
+<tr><td class="parname">Func Resp - Density Dependent Coeff, Season 2</td><td> The coefficient describing the effect that density-dependent factors have on the predator population instantaneous rate of change, in season 2. </td></tr>
+
+<tr><td class="parname">Func Resp - Foraging Efficiency</td><td> The predator population foraging efficiency for each seed species. </td></tr>
+
+<tr><td class="parname">Func Resp - Keep Predator Densities Between Timesteps</td><td> If true, this means that the final predator density at the end of the behavior mini-model run is the initial density for the next mini-model run. If false, every time the behavior mini-model runs, it is re-initialized with the value of the "Predator initial density - num/sq m" parameter. </td></tr>
+
+<tr><td class="parname">Func Resp - Max Decline Rate, Season 1, predators/week</td><td> The maximum rate of decline in the predator population in the absence of any food, in predators per week, for season 1. </td></tr>
+
+<tr><td class="parname">Func Resp - Max Decline Rate, Season 2, predators/week</td><td> The maximum rate of decline in the predator population in the absence of any food, in predators per week, for season 2. </td></tr>
+
+<tr><td class="parname">Func Resp - Max Intake Rate - seeds per predator per day</td><td> The maximum number of seeds of each species that can be eaten by one predator in one day. </td></tr>
+
+<tr><td class="parname">Func Resp - Number of Weeks in Which Seedfall Occurs</td><td> The number of weeks at the beginning of the behavior mini-model run that seedfall occurs. </td></tr>
+
+<tr><td class="parname">Func Resp - Predator Initial Density - num/sq m</td><td> The initial density of the predator population, in numbers per m<sup>2</sup>. This will be used the first time this behavior is run.  Whether this density is used for subsequent behavior mini-model runs depends on the value of the "Keep Predator Densities Between Timesteps" parameter. </td></tr>
+
+<tr><td class="parname">Func Resp - Proportion of Seeds Germinating Each Week</td><td> During the period that germination occurs, this is the fraction of the seed pool that is removed due to seed germination. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Func Resp - Seed Predation Output Filename, If Desired</td><td> The filename where the mini-model will store its intermediate results for later analysis, if desired.  This value is not required. </td></tr>
+
+<tr><td class="parname">Func Resp - Week Germination Begins</td><td> The week during the behavior mini-model run that germination begins to occur.  If you do not want germination to occur, set this value greater than or equal to the "Weeks to run seed predation model (1 - 52)" parameter.  This value must be between 0 and 52. </td></tr>
+
+<tr><td class="parname">Func Resp - Week Season 2 Begins</td><td>The week that the second season begins, if desired. </td></tr>
+
+<tr><td class="parname">Func Resp - Weeks to Run Seed Predation Model (1 - 52)</td><td> The number of weeks (timesteps) to run the behavior's mini-model.  This number must be between 1 and 52. </td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior is used together with the <a href="neighborhood_seed_predation_linked.html">Neighborhood seed predation behavior (linked)</a> behavior. The two behaviors work together to model seed predation. 
+</p>
+<p>
+This behavior performs the functional response model in almost exactly the same way as the <a href="functional_response_seed_predation.html">Functional response seed predation</a> behavior. However, instead of removing the eaten seeds, it calculates a whole-plot offtake rate for the group of species to which it has been applied. This rate is always for the plot as a whole, not for individual cells of the seed grid. This offtake rate is then available for use by the <a href="neighborhood_seed_predation_linked.html">Neighborhood seed predation behavior (linked)</a> behavior, and no further action is taken.
+</p>
+<p>
+This behavior can be used in the same run with the non-linked version of this behavior. The two sets of species are kept completely separate, and there are two separate sets of parameters.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seeds of any species.  Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied as well. Presumably, the <a href="neighborhood_seed_predation_linked.html">Neighborhood seed predation behavior (linked)</a> behavior will be applied to the same set of species, and should be placed after this behavior in the ordered list of model behaviors.
+</p>
+</body>
+</html>

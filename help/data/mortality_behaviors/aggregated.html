@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Aggregated Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Aggregated Mortality</h1>
+<p>
+Aggregated Mortality is similar to the <a href="stochastic.html">Stochastic Mortality</a> behavior in that it kills trees randomly to match a predetermined mortality rate.  However, Aggregated Mortality clumps together the deaths in both time and space.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Aggregated Mortality Annual Kill Amount (0-1)</td><td>  The annual mortality rate for a mortality episode, as a proportion between 0 and 1. </td></tr>
+
+<tr><td class="parname">Aggregated Mortality Clump Size</td><td>  Whether the size of a clump of trees to kill is deterministic or chosen from a negative binomial probability distribution. </td></tr>
+
+<tr><td class="parname">Aggregated Mortality Clumping Parameter</td><td>  If the size of tree clumps to kill is drawn from a negative binomial probability distribution, this is the clumping parameter for the distribution.  This is not required if a deterministic clump size is used. </td></tr>
+
+<tr><td class="parname">Aggregated Mortality Number of Trees To Aggregate</td><td>  Determines the size of the clumps of trees killed.  If the clump size is deterministic, all clumps will be this size.  If the size is to be drawn from a negative binomial probability distribution, then this is the mean clump size. </td></tr>
+
+<tr><td class="parname">Aggregated Mortality Return Interval (years)</td><td>  The return interval for mortality episodes. </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+Mortality occurs in discrete episodes, which have an average return interval.  For any timestep, the probability that a mortality episode will occur is <i>T/RI</i>, where <i>T</i> is the number of years per timestep and <i>RI</i> is the <b>Aggregated Mortality Return Interval (years)</b> parameter.  Each timestep, this behavior uses a random number to decide if a mortality episode occurs.  Between mortality episodes, this behavior does not kill any trees.
+</p>
+<p>
+If a mortality episode occurs, this behavior kills some of the total pool of trees to which it has been applied.  The base annual mortality rate proportion is given in the <b>Aggregated Mortality Annual Kill Amount (0-1)</b> parameter.  Since the parameter gives an annual rate, the actual mortality rate is <i>1-(1-AD)<sup>T</sup></i>, where <i>AD</i> is the annual amount to kill and <i>T</i> is the number of years per timestep. 
+</p>
+<p>
+During a mortality episode, this behavior kills the trees in discrete clumps.  The behavior uses a random number with each tree in its pool of eligible trees to decide if that tree dies.  If it dies, the behavior also kills the trees closest to it.  Only trees to which this behavior has been applied are killed; other neighbors are left alone.  The size of these clumps of dead trees can either be deterministic or drawn from a negative binomial probability distribution.  This option is set in the <b>Aggregated Mortality Clump Size</b> parameter.  If the size is deterministic, the size of all clumps is given in the <b>Aggregated Mortality Number of Trees To Aggregate</b> parameter.  If the size is from a negative binomial distribution, that parameter gives the mean, <i>u</i>, for the function
+</p> 
+<center><img src="../data_files/negative_binomial_pdf.gif" alt="Negative binomial function"></center>
+<p>
+where <i>k</i>, the clumping parameter, is the <b>Aggregated Mortality Clumping Parameter</b> parameter.  
+</p>
+<p>
+If the <b>Aggregated Mortality Return Interval (years)</b> and <b>Aggregated Mortality Number of Trees To Aggregate</b> parameters are both set to 1, then this behavior functions exactly like the <a href="stochastic.html">Stochastic Mortality</a> behavior.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Only those trees to which this behavior has been applied will be killed.  This behavior can be combined with other mortality behaviors, but for best results, it should be the first one to occur.
+</p>
+</body>
+</html>

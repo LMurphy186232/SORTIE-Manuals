@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Density Dependent Seed Survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Density Dependent Seed Survival</h1>
+<p>
+This behavior assesses seed survival as a function of the local density of conspecific seeds.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Slope of Density Dependence</td><td> The slope of the density dependence function for determining how many seedlings establish per square meter (c in the equations below).  </td></tr>
+
+<tr><td class="parname">Steepness of Density Dependence</td><td>  The steepness of the density dependence function for determining how many seedlings establish per square meter (&#948; in the equations below).  </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior takes the seeds that have been dispersed to each grid cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a> and calculates how many will survive.  The number of seeds that survives is calculated as
+</p>
+<br><center><i>R<sub>sp</sub> = S<sub>sp</sub> * exp(-c * Den<sub>sp</sub><sup>&#948;</sup>)</i></center><br>
+<p>
+where:
+</p>
+<ul>
+<li><i>R<sub>sp</sub></i> is the number of surviving seeds of a given species in the seed grid cell</li>
+<li><i>S<sub>sp</sub></i> is the original number of seeds of that species in that grid cell</li>
+<li><i>Den<sub>sp</sub></i> is the density of seeds (number per square meter) of that species in that grid cell</li>
+<li><i>c</i> is the <b>Slope of Density Dependence</b> parameter</li>
+<li><i>&#948;</i> is the <b>Steepness of Density Dependence</b> parameter</li>
+</ul>
+<p>
+Once the number of surviving seeds has been determined, the behavior assigns that number back to the Dispersed Seeds grid cell.  If there is only one seed in a grid cell, it always survives.
+</p>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to seeds of your desired species. Any species to which it is applied must also have any <a href="../disperse_behaviors/index.html">disperse behavior</a> applied.</p>
+</body>
+</html>

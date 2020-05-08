@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Developer Manual</title>
+</head>
+<body>
+<h1>Parameter files</h1>
+<h3>(and how to hack them)</h3>
+
+<p>
+Before reading this, you should know the basics of what a parameter file is, as well as how to read XML.  You can look at more information about parameter files in the <a href="../../help/files/parameter_files.html">user parameter file</a> topic, the <a href="io.html">Model I/O</a> topic, or look at an XML tutorial at <a href="http://www.w3schools.com/xml/default.asp">http://www.w3schools.com/xml/default.asp</a>.
+</p>
+
+<p>In this document:</p>
+<a href="#editing">Editing parameter files</a><br>
+<a href="#why_edit">Why edit parameter files?</a><br>
+<a href="#validate">Validating parameter files</a><br>
+<a href="#figuring">Figuring out parameters</a><br>
+<a href="#sample">Sample parameter file</a><br>
+<a href="#par_file_tag">Parameter file tag</a><br>
+<a href="#plot_parameters">Plot parameters</a><br>
+<a href="#tree_parameters">Tree parameters</a><br>
+<a href="#behavior_list">Behavior list</a><br>
+<a href="#behavior_parameters">Behavior parameters</a><br>
+
+<a name="editing"><h3>Editing parameter files</h3></a>
+<p>
+A parameter file is not formatted for easy reading by humans.  The text is written in one continuous stream, without tabs, spaces, or new line characters.  There's a good reason for this.  Formatting characters make it harder to correctly parse the file to get the data out of it.
+</p>
+<p>If you want to look at a parameter file, I recommend a browser such as Internet Explorer.  A browser will format the XML for you in a way that makes it easy to read. 
+</p>
+<p>
+To directly edit a parameter file, all you need is some kind of a text editor.  If you have an XML or HTML editor that will color-code the text for you, that's helpful for avoiding mistakes.  You can put newlines and tabs into the text by hand if it helps you edit it.  You can even leave them in when you use the file.  If the parser has trouble, you can try taking them out then.  
+</p>
+
+<a name="why_edit"><h3>Why edit parameter files?</h3></a>
+<p>
+The biggest reason to understand parameter files intimately is for testing.  If you write an automated test, you might start by writing code that generates a parameter file and feeds it to the model.  You have to know how to write this file correctly.
+</p>
+<p>
+Additionally, there are a few reasons when you might need to edit parameter files by hand.  For instance, perhaps you have put a new behavior into the core model that isn't yet in the GUI.  To test it, you would need to add its parameters by hand to a parameter file.  There are a few test behaviors that you can't add through the GUI, and must add by hand instead.  Also, there are some parameter file formats that make perfectly legitimate runs that the GUI won't allow you to do; for instance, putting seed dispersal behaviors at the beginning of a timestep.
+</p>
+
+<a name="validate"><h3>Well-formed parameter files</h3></a>
+<p>
+When an XML file is well-formed, it means that the XML syntax is correct:  opening elements and closing elements are correctly paired, attributes have quotation marks in the right place, etc.  An XML file MUST be well-formed to be used.
+</p>
+<p>
+Once you've edited your parameter file, you have to make sure it's well-formed.  There are online well-formedness checkers, or you can open it in a browser.  If you can see the whole file all the way to the bottom, it's well-formed.  If it's not well-formed, the browser will stop displaying text at some point and display an error.
+</p>
+<p>
+On a large scale, the order that the elements go in is important to the GUI (less so to the core model). The order of individual elements don't matter but the large scale groupings should be the same. Follow the order set in a file created by the GUI.
+</p>
+
+
+<a name="figuring"><h3>Figuring out parameters</h3></a>
+<p>
+You may look at a parameter file and need some help knowing what an XML tag represents. The help file for a behavior should help you begin to puzzle it out. Looking at the actual Java code should resolve all doubt.
+</p>
+<p>
+There are two formats that almost all parameters follow.  The first is the single piece of data, like this:<br><br>
+<code>&lt;li_julianDayGrowthStarts&gt;120&lt;/li_julianDayGrowthStarts&gt; </code><br><br>
+This particular parameter is the first day of the growing season, for light behaviors.
+</p>
+<p>
+The second format is for species-specific parameters, like this:<br><br>
+<code>
+&lt;tr_canopyRadiusExponent&gt;<br>
+  &lt;tr_creVal species="ACRU"&gt;1.0&lt;/tr_creVal&gt;<br> 
+  &lt;tr_creVal species="ACSA"&gt;1.0&lt;/tr_creVal&gt; <br>
+  &lt;tr_creVal species="BEAL"&gt;1.0&lt;/tr_creVal&gt; <br>
+  &lt;/tr_canopyRadiusExponent&gt;<br><br>
+</code>
+This parameter is an equation exponent for tree allometry for each species.
+</p>
+<p>
+Parameter names sometimes change as behaviors change.  Often, an XML tag will be left with the old name so old files will still work.
+</p>
+
+<a name="sample"><h3>Sample parameter file</h3></a>
+<p>
+Here is a sample parameter file that we will look at piece by piece. (This file doesn't make a very good simulation; I edited it to make it shorter.) 
+</p>
+<code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
+&lt;paramFile fileCode="07020101"&gt;<br/>
+&lt;plot&gt;<br/>
+&lt;timesteps&gt;10&lt;/timesteps&gt;<br/>
+&lt;randomSeed&gt;0&lt;/randomSeed&gt;<br/>
+&lt;yearsPerTimestep&gt;5.0&lt;/yearsPerTimestep&gt;<br/>
+&lt;plot_lenX&gt;300.0&lt;/plot_lenX&gt;<br/>
+&lt;plot_lenY&gt;300.0&lt;/plot_lenY&gt;<br/>
+&lt;plot_latitude&gt;41.92&lt;/plot_latitude&gt;<br/>  
+&lt;plot_title&gt;Default parameter file-use for testing only&lt;/plot_title&gt;<br/>
+&lt;/plot&gt;<br/>
+&lt;trees&gt;<br/>
+&lt;tr_speciesList&gt;<br/>
+&lt;tr_species speciesName="ACRU"/&gt;<br/>
+&lt;tr_species speciesName="ACSA"/&gt;<br/>
+&lt;/tr_speciesList&gt;<br/>
+&lt;tr_seedDiam10Cm&gt;0.2&lt;/tr_seedDiam10Cm&gt;<br/>
+&lt;tr_minAdultDBH&gt;<br/>
+&lt;tr_madVal species="ACRU"&gt;10.0&lt;/tr_madVal&gt;<br/>
+&lt;tr_madVal species="ACSA"&gt;10.0&lt;/tr_madVal&gt;<br/>
+&lt;/tr_minAdultDBH&gt;<br/>
+&lt;tr_maxSeedlingHeight&gt;<br/>
+&lt;tr_mshVal species="ACRU"&gt;1.35&lt;/tr_mshVal&gt;<br/>
+&lt;tr_mshVal species="ACSA"&gt;1.35&lt;/tr_mshVal&gt;<br/>
+&lt;/tr_maxSeedlingHeight&gt;<br/>
+&lt;/trees&gt;<br/>
+&lt;behaviorList&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;QuadratLight&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.0&lt;/version&gt;<br/>
+&lt;listPosition&gt;1&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;RelUnlimGrowth&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.2&lt;/version&gt;<br/>
+&lt;listPosition&gt;2&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACRU" type="Sapling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Sapling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;GMFMortality&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.0&lt;/version&gt;<br/>
+&lt;listPosition&gt;3&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;/behaviorList&gt;<br/>
+&lt;allometry&gt;<br/>
+&lt;tr_whatAdultHeightDiam&gt;<br/>
+&lt;tr_wahdVal species="ACRU"&gt;0&lt;/tr_wahdVal&gt;<br/>
+&lt;tr_wahdVal species="ACSA"&gt;0&lt;/tr_wahdVal&gt;<br/>
+&lt;/tr_whatAdultHeightDiam&gt;<br/>
+&lt;tr_whatSaplingHeightDiam&gt;<br/>
+&lt;tr_wsahdVal species="ACRU"&gt;0&lt;/tr_wsahdVal&gt;<br/>
+&lt;tr_wsahdVal species="ACSA"&gt;0&lt;/tr_wsahdVal&gt;<br/>
+&lt;/tr_whatSaplingHeightDiam&gt;<br/>
+&lt;tr_whatSeedlingHeightDiam&gt;<br/>
+&lt;tr_wsehdVal species="ACRU"&gt;0&lt;/tr_wsehdVal&gt;<br/>
+&lt;tr_wsehdVal species="ACSA"&gt;0&lt;/tr_wsehdVal&gt;<br/>
+&lt;/tr_whatSeedlingHeightDiam&gt;<br/>
+&lt;tr_whatAdultCrownRadDiam&gt;<br/>
+&lt;tr_wacrdVal species="ACRU"&gt;0&lt;/tr_wacrdVal&gt;<br/>
+&lt;tr_wacrdVal species="ACSA"&gt;0&lt;/tr_wacrdVal&gt;<br/>
+&lt;/tr_whatAdultCrownRadDiam&gt;<br/>
+&lt;tr_whatSaplingCrownRadDiam&gt;<br/>
+&lt;tr_wscrdVal species="ACRU"&gt;0&lt;/tr_wscrdVal&gt;<br/>
+&lt;tr_wscrdVal species="ACSA"&gt;0&lt;/tr_wscrdVal&gt;<br/>
+&lt;/tr_whatSaplingCrownRadDiam&gt;<br/>
+&lt;tr_whatAdultCrownHeightHeight&gt;<br/>
+&lt;tr_wachhVal species="ACRU"&gt;0&lt;/tr_wachhVal&gt;<br/>
+&lt;tr_wachhVal species="ACSA"&gt;0&lt;/tr_wachhVal&gt;<br/>
+&lt;/tr_whatAdultCrownHeightHeight&gt;<br/>
+&lt;tr_whatSaplingCrownHeightHeight&gt;<br/>
+&lt;tr_wschhVal species="ACRU"&gt;0&lt;/tr_wschhVal&gt;<br/>
+&lt;tr_wschhVal species="ACSA"&gt;0&lt;/tr_wschhVal&gt;<br/>
+&lt;/tr_whatSaplingCrownHeightHeight&gt;<br/>
+&lt;tr_canopyHeight&gt;<br/>
+&lt;tr_chVal species="ACRU"&gt;25.7&lt;/tr_chVal&gt;<br/>
+&lt;tr_chVal species="ACSA"&gt;24.8&lt;/tr_chVal&gt;<br/>
+&lt;/tr_canopyHeight&gt;<br/>
+&lt;tr_stdAsympCrownRad&gt;<br/>
+&lt;tr_sacrVal species="ACRU"&gt;0.108&lt;/tr_sacrVal&gt;<br/>
+&lt;tr_sacrVal species="ACSA"&gt;0.107&lt;/tr_sacrVal&gt;<br/>
+&lt;/tr_stdAsympCrownRad&gt;<br/>
+&lt;tr_stdCrownRadExp&gt;<br/>
+&lt;tr_screVal species="ACRU"&gt;1.0&lt;/tr_screVal&gt;<br/>
+&lt;tr_screVal species="ACSA"&gt;1.0&lt;/tr_screVal&gt;<br/>
+&lt;/tr_stdCrownRadExp&gt;<br/>
+&lt;tr_stdAsympCrownHt&gt;<br/>
+&lt;tr_sachVal species="ACRU"&gt;0.49&lt;/tr_sachVal&gt;<br/>
+&lt;tr_sachVal species="ACSA"&gt;0.58&lt;/tr_sachVal&gt;<br/>
+&lt;/tr_stdAsympCrownHt&gt;<br/>
+&lt;tr_stdCrownHtExp&gt;<br/>
+&lt;tr_scheVal species="ACRU"&gt;1.0&lt;/tr_scheVal&gt;<br/>
+&lt;tr_scheVal species="ACSA"&gt;1.0&lt;/tr_scheVal&gt;<br/>
+&lt;/tr_stdCrownHtExp&gt;<br/>
+&lt;tr_conversionDiam10ToDBH&gt;<br/>
+&lt;tr_cdtdVal species="ACRU"&gt;0.75&lt;/tr_cdtdVal&gt;<br/>
+&lt;tr_cdtdVal species="ACSA"&gt;0.75&lt;/tr_cdtdVal&gt;<br/>
+&lt;/tr_conversionDiam10ToDBH&gt;<br/>
+&lt;tr_interceptDiam10ToDBH&gt;<br/>
+&lt;tr_idtdVal species="ACRU"&gt;0.0&lt;/tr_idtdVal&gt;<br/>
+&lt;tr_idtdVal species="ACSA"&gt;0.0&lt;/tr_idtdVal&gt;<br/>
+&lt;/tr_interceptDiam10ToDBH&gt;<br/>
+&lt;tr_slopeOfAsymHeight&gt;<br/>
+&lt;tr_soahVal species="ACRU"&gt;0.063&lt;/tr_soahVal&gt;<br/>
+&lt;tr_soahVal species="ACSA"&gt;0.0623&lt;/tr_soahVal&gt;<br/>
+&lt;/tr_slopeOfAsymHeight&gt;<br/>
+&lt;tr_slopeOfHeight-Diam10&gt;<br/>
+&lt;tr_sohdVal species="ACRU"&gt;0.03&lt;/tr_sohdVal&gt;<br/>
+&lt;tr_sohdVal species="ACSA"&gt;0.03&lt;/tr_sohdVal&gt;<br/>
+&lt;/tr_slopeOfHeight-Diam10&gt;<br/>
+&lt;/allometry&gt;<br/>
+&lt;GeneralLight&gt;<br/>
+&lt;li_lightExtinctionCoefficient&gt;<br/>
+&lt;li_lecVal species="ACRU"&gt;0.399&lt;/li_lecVal&gt;<br/>
+&lt;li_lecVal species="ACSA"&gt;0.399&lt;/li_lecVal&gt;<br/>
+&lt;/li_lightExtinctionCoefficient&gt;<br/>
+&lt;li_beamFractGlobalRad&gt;0.5&lt;/li_beamFractGlobalRad&gt;<br/>
+&lt;li_clearSkyTransCoeff&gt;0.65&lt;/li_clearSkyTransCoeff&gt;<br/>
+&lt;li_julianDayGrowthStarts&gt;120&lt;/li_julianDayGrowthStarts&gt;<br/>
+&lt;li_julianDayGrowthEnds&gt;270&lt;/li_julianDayGrowthEnds&gt;<br/>
+&lt;/GeneralLight&gt;<br/>
+&lt;QuadratLight1&gt;&lt;li_numAziGrids&gt;18&lt;/li_numAziGrids&gt;<br/>
+&lt;li_numAltGrids&gt;12&lt;/li_numAltGrids&gt;<br/>
+&lt;li_minSunAngle&gt;0.779&lt;/li_minSunAngle&gt;<br/>
+&lt;li_quadratLightHeight&gt;0.675&lt;/li_quadratLightHeight&gt;<br/>
+&lt;li_quadratAllGLIs&gt;0&lt;/li_quadratAllGLIs&gt;<br/>
+&lt;/QuadratLight1&gt;<br/>
+&lt;RelUnlimGrowth2&gt;<br/>
+&lt;gr_asympDiameterGrowth&gt;<br/>
+&lt;gr_adgVal species="ACRU"&gt;0.167&lt;/gr_adgVal&gt;<br/>
+&lt;gr_adgVal species="ACSA"&gt;0.125&lt;/gr_adgVal&gt;<br/>
+&lt;/gr_asympDiameterGrowth&gt;<br/>
+&lt;gr_slopeGrowthResponse&gt;<br/>
+&lt;gr_sgrVal species="ACRU"&gt;0.027&lt;/gr_sgrVal&gt;<br/>
+&lt;gr_sgrVal species="ACSA"&gt;0.159&lt;/gr_sgrVal&gt;<br/>
+&lt;/gr_slopeGrowthResponse&gt;<br/>
+&lt;gr_relGrowthDiamExp&gt;<br/>
+&lt;gr_rgdeVal species="ACRU"&gt;1.0&lt;/gr_rgdeVal&gt;<br/>
+&lt;gr_rgdeVal species="ACSA"&gt;1.0&lt;/gr_rgdeVal&gt;<br/>
+&lt;/gr_relGrowthDiamExp&gt;<br/>
+&lt;/RelUnlimGrowth2&gt;<br/>
+&lt;GMFMortality3&gt;<br/>
+&lt;mo_mortAtZeroGrowth&gt;<br/>
+&lt;mo_mazgVal species="ACRU"&gt;0.99&lt;/mo_mazgVal&gt;<br/>
+&lt;mo_mazgVal species="ACSA"&gt;0.998&lt;/mo_mazgVal&gt;<br/>
+&lt;/mo_mortAtZeroGrowth&gt;<br/>
+&lt;mo_lightDependentMortality&gt;<br/>
+&lt;mo_ldmVal species="ACRU"&gt;6.64&lt;/mo_ldmVal&gt;<br/>
+&lt;mo_ldmVal species="ACSA"&gt;4.79&lt;/mo_ldmVal&gt;<br/>
+&lt;/mo_lightDependentMortality&gt;<br/>
+&lt;/GMFMortality3&gt;<br/>
+&lt;/paramFile&gt;<br/>
+
+</code>
+
+<a name="par_file_tag"><h3>Parameter file tag</h3></a>
+<code>
+&lt;paramFile fileCode="07020101"&gt;<br/>
+</code>
+<p>
+The root tag of the parameter file contains a file code which identifies it as a parameter file for a certain version of SORTIE-ND.  For an explanation of the different elements of the file code, see the <a href="io.html">Model I/O</a> topic.
+</p>
+
+<a name="plot_parameters"><h3>Plot parameters</h3></a>
+<code>
+&lt;plot&gt;<br/>
+&lt;timesteps&gt;10&lt;/timesteps&gt;<br/>
+&lt;randomSeed&gt;0&lt;/randomSeed&gt;<br/>
+&lt;yearsPerTimestep&gt;5.0&lt;/yearsPerTimestep&gt;<br/>
+&lt;plot_lenX&gt;300.0&lt;/plot_lenX&gt;<br/>
+&lt;plot_lenY&gt;300.0&lt;/plot_lenY&gt;<br/>
+&lt;plot_latitude&gt;41.92&lt;/plot_latitude&gt;<br/>  
+&lt;plot_title&gt;Default parameter file-use for testing only&lt;/plot_title&gt;<br/>
+&lt;/plot&gt;<br/>
+</code>
+<p>
+Plot parameters are required and are always present. They must always come first. There are optional additional parameters in plot depending on the needs of the behaviors. 
+</p>
+
+<a name="tree_parameters"><h3>Tree parameters</h3></a>
+<code>
+&lt;trees&gt;<br/>
+&lt;tr_speciesList&gt;<br/>
+&lt;tr_species speciesName="ACRU"/&gt;<br/>
+&lt;tr_species speciesName="ACSA"/&gt;<br/>
+&lt;/tr_speciesList&gt;<br/>
+&lt;tr_seedDiam10Cm&gt;0.2&lt;/tr_seedDiam10Cm&gt;<br/>
+&lt;tr_minAdultDBH&gt;<br/>
+&lt;tr_madVal species="ACRU"&gt;10.0&lt;/tr_madVal&gt;<br/>
+&lt;tr_madVal species="ACSA"&gt;10.0&lt;/tr_madVal&gt;<br/>
+&lt;/tr_minAdultDBH&gt;<br/>
+&lt;tr_maxSeedlingHeight&gt;<br/>
+&lt;tr_mshVal species="ACRU"&gt;1.35&lt;/tr_mshVal&gt;<br/>
+&lt;tr_mshVal species="ACSA"&gt;1.35&lt;/tr_mshVal&gt;<br/>
+&lt;/tr_maxSeedlingHeight&gt;<br/>
+&lt;/trees&gt;<br/>
+</code>
+<p>
+The tree parameters are always present. They must always come before the behavior list.  In addition to the parameters shown above, the <code>&lt;tree&gt;</code> tag may also contain a tree map.  If you want to remove a tree map from a parameter file, it is sometimes easier to do it by hand if the map is large.   
+</p>
+
+<a name="behavior_list"><h3>Behavior list</h3></a>
+<code>
+&lt;behaviorList&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;QuadratLight&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.0&lt;/version&gt;<br/>
+&lt;listPosition&gt;1&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;RelUnlimGrowth&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.2&lt;/version&gt;<br/>
+&lt;listPosition&gt;2&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACRU" type="Sapling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Sapling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;behavior&gt;<br/>
+&lt;behaviorName&gt;GMFMortality&lt;/behaviorName&gt;<br/>
+&lt;version&gt;1.0&lt;/version&gt;<br/>
+&lt;listPosition&gt;3&lt;/listPosition&gt;<br/>
+&lt;applyTo species="ACRU" type="Seedling"/&gt;<br/>
+&lt;applyTo species="ACSA" type="Seedling"/&gt;<br/>
+&lt;/behavior&gt;<br/>
+&lt;/behaviorList&gt;<br/>
+</code>
+<p>
+The behavior list specifies the behaviors for this simulation in the order in which they will be called each timestep. Each behavior gets a version number and the trees to which it is applied.
+</p>
+<p>
+You can change around the order of behaviors, but be sure you know what you are doing. In the list above, switching the first two behaviors would cause a fatal error. You can always switch behaviors of the same type, such as growth behaviors or mortality behaviors (but this is something you can do easily in the GUI as well). The list positions must match later parameter groupings.
+</p>
+<p>
+In the C++ code documentation, each behavior class should tell you in the class documentation what string you use to call it from the parameter file.  It should also tell you its version number (if it doesn't, it's probably version 1.0). 
+</p>
+<p>
+Not all behaviors are applied to trees.  If they are, they may interpret the list in different ways.  Again, class documentation should tell you if the behavior will do something unusual with the list of trees to which it is applied.
+</p>
+
+<a name="behavior_parameters"><h3>Allometry parameters</h3></a>
+<code>
+&lt;allometry&gt;<br/>
+&lt;tr_whatAdultHeightDiam&gt;<br/>
+&lt;tr_wahdVal species="ACRU"&gt;0&lt;/tr_wahdVal&gt;<br/>
+&lt;tr_wahdVal species="ACSA"&gt;0&lt;/tr_wahdVal&gt;<br/>
+&lt;/tr_whatAdultHeightDiam&gt;<br/>
+&lt;tr_whatSaplingHeightDiam&gt;<br/>
+&lt;tr_wsahdVal species="ACRU"&gt;0&lt;/tr_wsahdVal&gt;<br/>
+&lt;tr_wsahdVal species="ACSA"&gt;0&lt;/tr_wsahdVal&gt;<br/>
+&lt;/tr_whatSaplingHeightDiam&gt;<br/>
+&lt;tr_whatSeedlingHeightDiam&gt;<br/>
+&lt;tr_wsehdVal species="ACRU"&gt;0&lt;/tr_wsehdVal&gt;<br/>
+&lt;tr_wsehdVal species="ACSA"&gt;0&lt;/tr_wsehdVal&gt;<br/>
+&lt;/tr_whatSeedlingHeightDiam&gt;<br/>
+&lt;tr_whatAdultCrownRadDiam&gt;<br/>
+&lt;tr_wacrdVal species="ACRU"&gt;0&lt;/tr_wacrdVal&gt;<br/>
+&lt;tr_wacrdVal species="ACSA"&gt;0&lt;/tr_wacrdVal&gt;<br/>
+&lt;/tr_whatAdultCrownRadDiam&gt;<br/>
+&lt;tr_whatSaplingCrownRadDiam&gt;<br/>
+&lt;tr_wscrdVal species="ACRU"&gt;0&lt;/tr_wscrdVal&gt;<br/>
+&lt;tr_wscrdVal species="ACSA"&gt;0&lt;/tr_wscrdVal&gt;<br/>
+&lt;/tr_whatSaplingCrownRadDiam&gt;<br/>
+&lt;tr_whatAdultCrownHeightHeight&gt;<br/>
+&lt;tr_wachhVal species="ACRU"&gt;0&lt;/tr_wachhVal&gt;<br/>
+&lt;tr_wachhVal species="ACSA"&gt;0&lt;/tr_wachhVal&gt;<br/>
+&lt;/tr_whatAdultCrownHeightHeight&gt;<br/>
+&lt;tr_whatSaplingCrownHeightHeight&gt;<br/>
+&lt;tr_wschhVal species="ACRU"&gt;0&lt;/tr_wschhVal&gt;<br/>
+&lt;tr_wschhVal species="ACSA"&gt;0&lt;/tr_wschhVal&gt;<br/>
+&lt;/tr_whatSaplingCrownHeightHeight&gt;<br/>
+&lt;tr_canopyHeight&gt;<br/>
+&lt;tr_chVal species="ACRU"&gt;25.7&lt;/tr_chVal&gt;<br/>
+&lt;tr_chVal species="ACSA"&gt;24.8&lt;/tr_chVal&gt;<br/>
+&lt;/tr_canopyHeight&gt;<br/>
+&lt;tr_stdAsympCrownRad&gt;<br/>
+&lt;tr_sacrVal species="ACRU"&gt;0.108&lt;/tr_sacrVal&gt;<br/>
+&lt;tr_sacrVal species="ACSA"&gt;0.107&lt;/tr_sacrVal&gt;<br/>
+&lt;/tr_stdAsympCrownRad&gt;<br/>
+&lt;tr_stdCrownRadExp&gt;<br/>
+&lt;tr_screVal species="ACRU"&gt;1.0&lt;/tr_screVal&gt;<br/>
+&lt;tr_screVal species="ACSA"&gt;1.0&lt;/tr_screVal&gt;<br/>
+&lt;/tr_stdCrownRadExp&gt;<br/>
+&lt;tr_stdAsympCrownHt&gt;<br/>
+&lt;tr_sachVal species="ACRU"&gt;0.49&lt;/tr_sachVal&gt;<br/>
+&lt;tr_sachVal species="ACSA"&gt;0.58&lt;/tr_sachVal&gt;<br/>
+&lt;/tr_stdAsympCrownHt&gt;<br/>
+&lt;tr_stdCrownHtExp&gt;<br/>
+&lt;tr_scheVal species="ACRU"&gt;1.0&lt;/tr_scheVal&gt;<br/>
+&lt;tr_scheVal species="ACSA"&gt;1.0&lt;/tr_scheVal&gt;<br/>
+&lt;/tr_stdCrownHtExp&gt;<br/>
+&lt;tr_conversionDiam10ToDBH&gt;<br/>
+&lt;tr_cdtdVal species="ACRU"&gt;0.75&lt;/tr_cdtdVal&gt;<br/>
+&lt;tr_cdtdVal species="ACSA"&gt;0.75&lt;/tr_cdtdVal&gt;<br/>
+&lt;/tr_conversionDiam10ToDBH&gt;<br/>
+&lt;tr_interceptDiam10ToDBH&gt;<br/>
+&lt;tr_idtdVal species="ACRU"&gt;0.0&lt;/tr_idtdVal&gt;<br/>
+&lt;tr_idtdVal species="ACSA"&gt;0.0&lt;/tr_idtdVal&gt;<br/>
+&lt;/tr_interceptDiam10ToDBH&gt;<br/>
+&lt;tr_slopeOfAsymHeight&gt;<br/>
+&lt;tr_soahVal species="ACRU"&gt;0.063&lt;/tr_soahVal&gt;<br/>
+&lt;tr_soahVal species="ACSA"&gt;0.0623&lt;/tr_soahVal&gt;<br/>
+&lt;/tr_slopeOfAsymHeight&gt;<br/>
+&lt;tr_slopeOfHeight-Diam10&gt;<br/>
+&lt;tr_sohdVal species="ACRU"&gt;0.03&lt;/tr_sohdVal&gt;<br/>
+&lt;tr_sohdVal species="ACSA"&gt;0.03&lt;/tr_sohdVal&gt;<br/>
+&lt;/tr_slopeOfHeight-Diam10&gt;<br/>
+&lt;/allometry&gt;<br/>
+</code>
+<p>
+Tree allometry parameters are required and always present. They always come after the behavior list.
+</p>
+
+<a name="behavior_parameters"><h3>Behavior parameters</h3></a>
+
+<code>
+&lt;GeneralLight&gt;<br/>
+&lt;li_lightExtinctionCoefficient&gt;<br/>
+&lt;li_lecVal species="ACRU"&gt;0.399&lt;/li_lecVal&gt;<br/>
+&lt;li_lecVal species="ACSA"&gt;0.399&lt;/li_lecVal&gt;<br/>
+&lt;/li_lightExtinctionCoefficient&gt;<br/>
+&lt;li_beamFractGlobalRad&gt;0.5&lt;/li_beamFractGlobalRad&gt;<br/>
+&lt;li_clearSkyTransCoeff&gt;0.65&lt;/li_clearSkyTransCoeff&gt;<br/>
+&lt;li_julianDayGrowthStarts&gt;120&lt;/li_julianDayGrowthStarts&gt;<br/>
+&lt;li_julianDayGrowthEnds&gt;270&lt;/li_julianDayGrowthEnds&gt;<br/>
+&lt;/GeneralLight&gt;<br/>
+&lt;QuadratLight1&gt;&lt;li_numAziGrids&gt;18&lt;/li_numAziGrids&gt;<br/>
+&lt;li_numAltGrids&gt;12&lt;/li_numAltGrids&gt;<br/>
+&lt;li_minSunAngle&gt;0.779&lt;/li_minSunAngle&gt;<br/>
+&lt;li_quadratLightHeight&gt;0.675&lt;/li_quadratLightHeight&gt;<br/>
+&lt;li_quadratAllGLIs&gt;0&lt;/li_quadratAllGLIs&gt;<br/>
+&lt;/QuadratLight1&gt;<br/>
+&lt;RelUnlimGrowth2&gt;<br/>
+&lt;gr_asympDiameterGrowth&gt;<br/>
+&lt;gr_adgVal species="ACRU"&gt;0.167&lt;/gr_adgVal&gt;<br/>
+&lt;gr_adgVal species="ACSA"&gt;0.125&lt;/gr_adgVal&gt;<br/>
+&lt;/gr_asympDiameterGrowth&gt;<br/>
+&lt;gr_slopeGrowthResponse&gt;<br/>
+&lt;gr_sgrVal species="ACRU"&gt;0.027&lt;/gr_sgrVal&gt;<br/>
+&lt;gr_sgrVal species="ACSA"&gt;0.159&lt;/gr_sgrVal&gt;<br/>
+&lt;/gr_slopeGrowthResponse&gt;<br/>
+&lt;gr_relGrowthDiamExp&gt;<br/>
+&lt;gr_rgdeVal species="ACRU"&gt;1.0&lt;/gr_rgdeVal&gt;<br/>
+&lt;gr_rgdeVal species="ACSA"&gt;1.0&lt;/gr_rgdeVal&gt;<br/>
+&lt;/gr_relGrowthDiamExp&gt;<br/>
+&lt;/RelUnlimGrowth2&gt;<br/>
+&lt;GMFMortality3&gt;<br/>
+&lt;mo_mortAtZeroGrowth&gt;<br/>
+&lt;mo_mazgVal species="ACRU"&gt;0.99&lt;/mo_mazgVal&gt;<br/>
+&lt;mo_mazgVal species="ACSA"&gt;0.998&lt;/mo_mazgVal&gt;<br/>
+&lt;/mo_mortAtZeroGrowth&gt;<br/>
+&lt;mo_lightDependentMortality&gt;<br/>
+&lt;mo_ldmVal species="ACRU"&gt;6.64&lt;/mo_ldmVal&gt;<br/>
+&lt;mo_ldmVal species="ACSA"&gt;4.79&lt;/mo_ldmVal&gt;<br/>
+&lt;/mo_lightDependentMortality&gt;<br/>
+&lt;/GMFMortality3&gt;<br/>
+&lt;/paramFile&gt;<br>
+</code>
+
+<p>
+The parameters for one behavior are grouped together. There may be multiple copies of a single behavior. They can be distinguished by the number at the end of the behavior name tag, which matches their list position.
+</p>
+<p>
+Only the parameters actually required by the behaviors in the behavior list must be present.  If a behavior has optional parameters, the GUI usually writes them out even if they aren't needed.
+</p>
+<p>
+The parameter groups usually go in the same order as the behaviors themselves in the behavior list, but they don't have to.  If you changed the parameter groups around the file would still work fine.
+</p>
+</body>
+</html>

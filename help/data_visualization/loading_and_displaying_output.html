@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Loading and displaying data from an output file</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Loading and displaying data from an output file</h1>
+<p>
+SORTIE can display data from both kinds of output files, <a href="../files/short_output_files.html">summary files</a> and <a href="../files/detailed_output_files.html">detailed output files</a>.  SORTIE analyzes the contents of files that it is given and lets you know what it is capable of displaying from that data.
+</p>
+
+<p>
+Load an output file by choosing the menu option "File->Open output file".  Choose the file you want to view, either a summary output file with a ".out" extension, or a detailed output file with a ".gz.tar" extension.  The file name will appear at the top of the main SORTIE window in the list that says "Open output files".  You can have as many files open as you wish. 
+</p>
+
+<p>
+To display a chart, choose a file in the list marked "Open output files" at the top of the main SORTIE window.  SORTIE will analyze the contents of the file and show you what it can display in the list marked "Chart choices for this file".  The chart choices are broken apart by type.  There may not be a choice for every type of chart.  Choose the chart you want to display and click the "Draw Chart" button.  The chart will appear in the main SORTIE window.  You can open as many charts as you wish.  A legend also opens for each file that applies to all its chart windows.
+</p>
+<p>
+The main SORTIE window acts as a desktop for the chart windows displayed. They can be minimized, maximized, moved, and resized within the window. You can close them using the X button in the top right. You will notice that the legends have check boxes next to each species name, along with a color box. Unchecking the box next to a species removes it from all of that file's charts. Clicking on the color next to the species name lets you choose a new color for that species.
+</p>
+<p>
+The charts themselves can also be modified by right-clicking on them. You can reset axis ranges and zoom in and out. You can save the graph as a separate image file in PNG format by choosing "Save As", and you can also send the graph to a printer.
+
+</p>
+<p>
+The legends for detailed output files have an extra set of controls marked "Timestep" at the bottom.  Use the arrows to step back and forth through the timesteps.  As you step through and watch a chart, pay attention to axis ranges.  The data visualizer is meant to analyze each dataset it charts and optimize the chart accordingly.  It does not attempt to keep the view consistent. 
+</p>
+
+<p>
+The data visualizer can only show you what you have saved from the run.  If you do not save any data for a particular species in a detailed output file, for instance, that species won't show up in any charts you open, even if there were many individuals of that species in the run.  If your data does not look the way you expect it to, start by carefully examining your output settings to make sure you actually saved everything you meant to.  
+</p>
+<p>
+Have patience when working with detailed output files.  When you move through timesteps, change charts, and open new charts, the data visualizer often must go back and sift through the detailed output file for the data it needs.  With large files and long runs this can be very time consuming.  If you have an idea of the charts you want to work with, it will be faster if you only save the data needed to create those charts. 
+</p>
+
+</body>
+</html>

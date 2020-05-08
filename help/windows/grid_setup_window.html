@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Grid setup window</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Grid Setup Window</h1>
+
+<p>
+This window is reached using the main SORTIE window menu option "Edit->Grid layer setup".  It allows you to work with <a href="../using/what_is_a_grid.html">grids</a> for your run. <a href="../using/grids_initial_conditions.html">More on setting up grid initial conditions.</a>
+</p>
+
+<h2>Choosing a grid to work with</h2>
+<p>
+The first step is to choose the grid you would like to work with.  The active grids appear in the drop-down list that shows the option "---Please select grid---" when the window is first displayed.  The grids that appear in that list depends on the list of <a href="../using/what_is_a_behavior.html">behaviors</a> for this run (editable using the <a href="model_flow_window.html">Edit simulation flow</a> window).  If none of the behaviors with which a grid is associated are enabled, then the grid won't show up in the list.  When you are finished with a grid, you can choose another from this list.
+</p>
+
+<h2>Cell length in X (E-W) direction, in m</h2>
+<p>
+Displays and sets the size of the grid in the X (E-W) direction, in meters.  Some grids do not allow you to change their cell size (consult the documentation for <a href="../data/grids/index.html">individual grids</a> for any limitations or recommendations).  You can enter any number that you wish, between 0 and the length of the <a href="../data/plot.html">plot</a> in the X direction.  The number does not have to be an integer.  Once you have entered your desired value, you must click "Update this grid" to save your changes. 
+</p>
+
+<h2>Cell length in Y (N-S) direction, in m</h2>
+<p>
+Displays and sets the size of the grid in the Y (N-S) direction, in meters.  Some grids do not allow you to change their cell size (consult the documentation for <a href="../data/grids/index.html">individual grids</a> for any limitations or recommendations).  You can enter any number that you wish, between 0 and the length of the <a href="../data/plot.html">plot</a> in the Y direction.  The number does not have to be an integer.  Once you have entered your desired value, you must click "Update this grid" to save your changes. 
+</p>
+
+<h2>Apply cell size changes</h2>
+<p>
+Use this button to update the current grid with any changes you have made to the cell size.  If you do not click this button, your changes will be lost.  You must click this button for each grid you wish to update.
+</p>
+
+<h2>View/edit/save grid values...</h2>
+<p>
+Use this button to open the <a href="grid_edit_window.html">Grid Value Edit</a> window.  This window allows you to view and change values for grid maps and write them out to tab-delimited text files.
+</p>
+
+<h2>Clear grid map</h2>
+<p>
+If there is a map loaded for this grid , then the button marked "Clear grid map" is enabled.  If you want to remove a currently loaded map, click this button.  This erases all map values for the current grid.  This action cannot be undone, even if you click "Cancel" for the window. 
+</p>
+
+
+<br>
+</body>
+</html>

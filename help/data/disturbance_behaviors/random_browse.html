@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Random browse</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Random browse</h1>
+<p>
+This behavior simulates random browsing from herbivores.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Random Browse - Annual Browse Probability (0-1)</td><td> The annual probability, from 0 to 1, of being browsed. This is the mean probability if the probability is being varied each timestep.</td></tr>
+
+<tr><td class="parname">Random Browse - Probability PDF</td><td> The PDF used to vary the browse probability. "None" means the same probability is always used. "Normal" means that each timestep, for each species, a new probability is drawn from a normal distribution.</td></tr>
+
+<tr><td class="parname">Random Browse - Browse Probability Standard Deviation</td><td> If the probability is being varied each timestep according to a normal distribution, this is the standard deviation of that distribution. This value is ignored if the probability is not being varied.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The trees eligible for browsing are those trees to which this behavior is applied. Each species has a probability of browse that is the same for all members of that species. Each timestep, for each eligible tree, a random number is used against its species probability to decide whether the tree is browsed.
+</p>
+<p>
+The probability of browse for a species can be constant, or it can vary each timestep. If it is constant, the probability of browse is always the value in the <b>Random Browse - Annual Browse Probability (0-1)</b> parameter. If the probability is to vary, a new value is drawn from a random distribution, using the value in <b>Random Browse - Annual Browse Probability (0-1)</b> parameter as the mean and the value in <b>Random Browse - Browse Probability Standard Deviation</b> as the standard deviation. This draw happens once per species per timestep; all individuals of a species always face the same probability of browse in a given timestep.
+</p>
+<p>
+If the timestep length is more than one year, the annual probability of browse is turned into a timestep probability using <i>TP = 1 - (1 - AP)<sup>N</sup></i>, where <i>TP</i> is the timestep probability of browse, <i>AP</i> is the annual probability, and <i>N</i> is the length of a timestep, in years. 
+</p>
+<p>
+Trees that are chosen as browsed are marked as browsed. This behavior does nothing else to them. Other behaviors, such as growth and mortality, may use this information.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to any species and type of tree.
+</p>
+</body>
+</html>

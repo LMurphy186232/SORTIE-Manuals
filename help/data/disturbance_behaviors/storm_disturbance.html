@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Storm disturbance</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Storm disturbance</h1>
+<p>
+This behavior simulates the effects of wind damage from storms.  Its function is to assess whether or not storms have occurred in the current timestep, and if they have, how much damage they have caused.  This behavior does not actually cause any trees to be damaged; that is the function of the <a href="storm_damage_applier.html">Storm damage applier</a> behavior.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Plot Storm Susceptibility Pattern</td><td> How storm damage susceptibility varies across the plot.  If "Uniform", then all locations in the plot have an equal susceptibility.  If "Mapped", then a map is used to show the way locations in the plot vary in susceptibility. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0 - 0.1</td><td> The return interval, in years, of storms of severity 0 - 0.1.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.1 - 0.2</td><td> The return interval, in years, of storms of severity 0.1 - 0.2.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.2 - 0.3</td><td> The return interval, in years, of storms of severity 0.2 - 0.3.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.3 - 0.4</td><td> The return interval, in years, of storms of severity 0.3 - 0.4.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.4 - 0.5</td><td> The return interval, in years, of storms of severity 0.4 - 0.5.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.5 - 0.6</td><td> The return interval, in years, of storms of severity 0.5 - 0.6.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.6 - 0.7</td><td> The return interval, in years, of storms of severity 0.6 - 0.7.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.7 - 0.8</td><td> The return interval, in years, of storms of severity 0.7 - 0.8.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.8 - 0.9</td><td> The return interval, in years, of storms of severity 0.8 - 0.9.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Return Interval for Severity Storm Class 0.9 - 1.0</td><td> The return interval, in years, of storms of severity 0.9 - 1.0.  Set this to 0 to turn off storms of this severity. </td></tr>
+
+<tr><td class="parname">Standard Deviation (lognormal or normal)</td><td> If the <b>Storm Damage Application</b> parameter is set to "Stochastic" and the <b>Stochastic Pattern Damage Distribution</b> is set to either "Normal" or "Lognormal", this is the standard deviation used when randomizing storm severity across the plot.  This parameter is ignored if the <b>Storm Damage Application</b> parameter is not set to "Stochastic" and the <b>Stochastic Pattern Damage Distribution</b> is not set to either "Normal" or "Lognormal". </td></tr>
+
+<tr><td class="parname">Stochastic Pattern Damage Distribution</td><td>  If the <b>Storm Damage Application</b> parameter is set to "Stochastic", this is the probability distribution function to use for randomizing storm severity across the plot.  This parameter is ignored if the <b>Storm Damage Application</b> parameter is not set to "Stochastic". </td></tr>
+
+<tr><td class="parname">Storm Damage Application</td><td> How storm damage is applied to different locations across the plot.  If "Deterministic", the storm's severity is applied equally to all locations.  If "Stochastic", the storm's severity is randomized across the plot according to your chosen probability distribution function. </td></tr>
+
+<tr><td class="parname">Storm - Storm Cyclicity Sine Curve d</td><td>  Parameter that controls the cyclicity of storm frequency.  For no cyclicity, set this value to 0.  This value is part of the sine curve term and controls the sine amplitude. </td></tr>
+
+<tr><td class="parname">Storm - Storm Cyclicity Sine Curve f</td><td>  Parameter that controls the cyclicity of storm frequency.  This value is part of the sine curve term and controls the sine frequency. </td></tr>
+
+<tr><td class="parname">Storm - Storm Cyclicity Sine Curve g</td><td>  Parameter that controls the cyclicity of storm frequency.  This value is part of the sine curve term and controls where on the sine curve storms start occurring. </td></tr>
+
+<tr><td class="parname">Storm - Storm Cyclicity Trend Function Intercept (i)</td><td>  Parameter that controls the trend of cyclicity of storm frequency.  This value is part of the trend term and is the intercept of the function controlling the increase or decrease of overall frequency cycling.  For no cyclicity at all, set this term to 1.  For no trend in cyclicity, set this term to 0. </td></tr>
+
+<tr><td class="parname">Storm - Storm Cyclicity Trend Function Slope (m)</td><td>  Parameter that controls the trend of cyclicity of storm frequency.  This value is part of the trend term and is the slope at which frequency cycling increases or decreases.  For no cyclicity, or no trend in cyclicity, set this term to 0. </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+There are two ways storms can occur: randomly according to a storm regime of your choosing, or scheduled at certain timesteps. Both methods can be used together.
+</p>
+<p>
+<b>Random storms according to a storm regime</b><br/>
+Storm severity is assessed on a scale from 0 (no damage) to 1 (total damage).  This interval of storm severity values is subdivided into ten storm severity classes.  You assign each storm severity class a return interval.  The reciprocal of the return interval gives the annual probability of each type of storm.
+</p>
+<p>
+The overall frequency of storms can remain constant, or it can change through time.  It has been reported in <a href="../../more_info/further_reading.html">Goldenburg et al 2001</a> that storm activity in the North Atlantic cycles along with sea surface temperature.  This behavior can thus change the storm frequency over time, using either a sinusoidal pattern, a constant linear change, or both together.  In the figure below, curve 1 is a basic sine wave.  Curve 2 has a sinusoidal pattern plus an upwards trend.
+</p>
+<center><img src="../data_files/windstorm_cyclicity.gif" alt="Windstorm cyclicity curves"></center>
+<p>
+The actual probability of an individual storm that takes place in a storm regime with a cyclical frequency is:
+</p>
+<center><i>P'(F<sub>i</sub>) = P(F<sub>i</sub>) * ([d * sin( &#960; * (x-g) / (2f) )] + [mx + i])</i></center><br/>
+<p>
+Note that the new probability is a baseline probability, <i>P(F<sub>i</sub>)</i>, multiplied by a value that adjusts the probability according to where the model is at the given time in the frequency cycle.  The frequency cycle multiplier is itself made up of two terms added together.  The first term is the sine curve cycling, and the second term is the overall trend upwards or downwards.
+</p>
+<p>
+Terms in the equation:
+</p>
+<ul>
+<li><i>P'(F<sub>i</sub>)</i> is this timestep's annual probability of a storm of the ith return interval, adjusted according to the frequency cyclicity</li>
+<li><i>P(F<sub>i</sub>)</i> is the baseline probability of a storm of the ith return interval; that is, the reciprocal of the values specified in the <b>Return Interval for Severity Storm Class X</b> parameters</li>
+<li><i>x = 4 * t / Sr</i>, where <i>t</i> is the number of years since the run started and <i>Sr</i> is the <b>Storm - Sea Surface Temperature Cyclicity Period (Years)</b> parameter</li>
+<li><i>d</i> is the <b>Storm - Storm Cyclicity Sine Curve d</b> parameter, which controls the sine curve's amplitude</li>
+<li><i>f</i> is the <b>Storm - Storm Cyclicity Sine Curve f</b> parameter, which controls the sine curve's frequency</li>
+<li><i>g</i> is the <b>Storm - Storm Cyclicity Sine Curve g</b> parameter, which controls where on the sine curve storms start occurring</li>
+<li><i>m</i> is the <b>Storm - Storm Cyclicity Trend Function Slope (m)</b> parameter</li>
+<li><i>i</i> is the <b>Storm - Storm Cyclicity Trend Function Intercept (i)</b> parameter</li>
+</ul>
+<p>
+To turn off all cyclicity and use constant storm probabilities, set <b>Storm - Storm Cyclicity Sine Curve d</b> to 0, <b>Storm - Storm Cyclicity Trend Function Slope (m)</b> to 0, and <b>Storm - Storm Cyclicity Trend Function Intercept (i)</b> to 1.  (The other values are unimportant.)  To use only the sine portion with no trend line, set both <b>Storm - Storm Cyclicity Trend Function Slope (m)</b> and <b>Storm - Storm Cyclicity Trend Function Intercept (i)</b> to 0.  To use only the trend portion, set <b>Storm - Storm Cyclicity Sine Curve d</b> to 0.
+</p>
+<p>
+To decide whether storms occur, the behavior compares a random number to the annual probability of each storm severity class.  For timesteps that are longer than one year, the behavior repeats the random number test for each year in the timestep.  This process is repeated for each storm severity class separately.  This means that multiple storms can occur in a single timestep, and if the timestep is longer than one year, there can be multiple storms in the same severity class.
+</p>
+<p>
+<b>Scheduled storms</b><br/>
+You can also schedule storms to occur at certain timesteps. Use the <a href="../../windows/edit_scheduled_storms_window.html">Edit Scheduled Storms</a> window to do this. You specify the year (NOT the timestep) you want the storm to occur, and a minimum and maximum severity for each. The actual storm severity will be a random number between the maximum and minimum. You can schedule as many as you want, including multiple storms per timestep. If there is also a storm regime present (non-zero values for the return intervals), those storms can also occur. The storm regime storms can also happen between scheduled storms.
+</p>
+<p>
+If a storm occurs, the behavior calculates the amount of damage that occurs.  A storm's damage index (severity) is randomly chosen within the boundaries of its severity class.  The damage is stored in a grid called <a href="../grids/storm_damage_grid.html">Storm Damage</a>.  The final output of the behavior is a map of storm damage (severity) across the plot, as an index between 0 and 1.  If multiple storms occur, each storm's severity is recorded separately.
+</p>
+<p>
+The way storm damage is calculated depends on two things:  the pattern of storm susceptibility across the plot (entered in the <b>Plot Storm Susceptibility Pattern</b> parameter), and the method of storm damage application (entered in the <b>Storm Damage Application</b> parameter).  Storm susceptibility is measured on a scale from 0 (not susceptible to damage) to > 1 (highly susceptible to damage).  The pattern of storm susceptibility can be either "Uniform", meaning all locations within the plot have a susceptibility of 1, or "Mapped", meaning that you will provide a map with a susceptibility for each location in a grid called <a href="../grids/storm_susceptibility_grid.html">Storm Susceptibility</a>.  The method of storm damage application can be either "Deterministic", meaning that each location receives the storm's severity index, or "Stochastic", meaning that the storm's severity index provides a mean around which individual location severities are randomized.  
+</p>
+<p>
+There are two possible probability distribution functions for stochastic damage application:  normal and lognormal.
+</p>
+<p>
+The normal distribution is:
+</p>
+<center><img src="../data_files/normal_pdf.gif" alt="Normal function"></center>
+<p>
+where &#963; is the function standard deviation. Mean is zero in this equation; the final value is reached by adding the function result to the mean.
+</p>
+ 
+<p>
+The lognormal distribution is:
+</p>
+<center><img src="../data_files/lognormal_pdf.gif" alt="Lognormal function"></center>
+<p>
+where &#950; is the function mean and &#963; is the standard deviation. <br>
+</p>
+<p>
+Combining these two parameters provides four possibilities for the way a storm's damage is applied:
+</p>
+<ol>
+<li><i>Mapped Deterministic.</i>  The damage index for a location equals the susceptibility of that location multiplied by the storm's severity index.</li>
+<li><i>Mapped Stochastic.</i>  The storm severity for each location is determined by performing a random draw on a probability distribution function, with the overall storm severity providing the function mean.  Each location's severity is multiplied by its susceptibility to arrive at the final storm damage index for that location.</li>
+<li><i>Uniform Deterministic.</i>  All plot locations are directly assigned the storm's severity index.</li>
+<li><i>Uniform Stochastic.</i>  The storm damage index for each location is determined by performing a random draw on a probability distribution function, with the overall storm severity providing the function mean.</li>
+</ol>
+
+<h3>How to apply it</h3>
+<p>
+Add the behavior to the behavior list for your run.  A few rules:
+</p>
+<ul>
+<li>If you set the <b>Plot Storm Susceptibility Pattern</b> parameter equal to "Mapped", you must provide a map of plot susceptibility values.  You do this by using the <a href="../../windows/grid_edit_window.html">Grid Value Edit Window</a> to enter values 0 or greater for each cell of the grid called <a href="../grids/storm_susceptibility_grid.html">Storm Susceptibility</a>.</li>
+<li>If you set the <b>Storm Damage Application</b> parameter equal to "Stochastic", you must choose a probability function in the <b>Stochastic Pattern Damage Distribution</b>.  If you choose "Lognormal" or "Normal", you must provide a function standard deviation in the <b>Standard Deviation (lognormal or normal)</b> parameter. </li>
+<li>If you do not also enable the <a href="storm_damage_applier.html">Storm damage applier</a> behavior, storms may occur but nothing else will happen; trees won't suffer any damage as a result.  You can also set all storm return intervals to 0 to turn off storms.</li>
+</ul>
+</body>
+</html>

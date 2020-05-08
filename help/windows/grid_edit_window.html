@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Grid Value Edit Window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Grid Value Edit Window</h1>
+<p>
+This window allows you to directly work with the data in the grid maps for a single <a href="../using/what_is_a_grid.html">grid</a>.  You can look at the values for maps loaded from a parameter or detailed output file, make changes to existing maps, or enter new values to use as initial conditions.  You reach this window from the <a href="grid_setup_window.html">Grid Setup</a> window.
+</p>
+<p>
+When you open this window, you will notice that it is composed of one or more tables.  There is one table for each grid data member (see the <a href="../data/grids/index.html">individual grid documentation</a> for what each grid data member represents).  If a table is completely blank, that means that there is currently no map loaded for this grid, or at least for that data member.  If there is a map loaded, you will see values in the tables.  (For more on entering the maps from a detailed output file, see the <a href="../using/output_as_input.html">Using output as input to a new run</a> topic.)
+</p>
+
+<h2>Editing map values</h2>
+<p>
+To edit a value, double-click its cell. You can copy and paste back and forth from Excel, and within the window itself. You can use the menu commands on the parameter window "Edit->Copy" and "Edit->Paste", or the keyboard shortcuts Ctrl-C for copy and Ctrl-V for paste. 
+</p>
+
+<h2>Saving grid map as text</h2>
+<p>
+The window can be saved as tab-delimited text for your own review in a spreadsheet or text editor program.  Choose "File->Save window as file". Each value for each data member in the map is saved separately, and there will be a heading for it, even if there were no values in the map.  For an explanation of the values that were saved, consult the documentation for <a href="../data/grids/index.html">individual grids</a>.
+</p>
+<p>
+Saving the window view to a file is not the same as saving the values in SORTIE.  You still need to click "OK" to save any changes you've made.  The tab-delimited text file is just for your review.  It cannot be used as input to SORTIE directly, although you could copy and paste values from it.
+</p>
+<br>
+</body>
+</html>

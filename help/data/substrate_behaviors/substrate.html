@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Substrate</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Substrate</h1>
+<p>
+This behavior keeps track of six kinds of substrate:  forest floor litter, forest floor moss, scarified soil, tip-up mounds, decayed logs, and fresh logs. Forest floor litter and forest floor moss form a common pool in fixed relative proportion to each other.  These six substrates form a cycle.  Fresh logs decay into decayed logs.  Decayed logs, scarified soil, and tip-up mounds decay into forest floor litter and moss.  (If no new substrate were created, eventually the whole forest would be uniformly covered in forest floor substrate.)  The creation of new substrate decreases the amount of forest floor litter and moss and starts the process over again.
+</p> 
+<p>
+There are two ways in which new substrate is added:  harvest treatments and tree fall.  Each kind of harvest treatment (partial cut, gap cut, and clear cut) has its own substrate signature, which you set in the parameters.  The existing substrate proportions after a harvest are erased and replaced with this signature.  
+</p>  
+<p>
+The other type of substrate change event, tree fall, allows SORTIE to account for small-scale dynamics by allowing some dead trees to fall and create tip-up mounds.  When a live tree dies, there is a certain probability that the tree will fall at death to create new fresh log substrate.  Snags marked as "dead" always contribute new fresh log substrate.  For both dead snags and live trees, there is a certain probability that the tree will expose an area of tip-up mounds substrate.  Any new substrate created this way is added in to the existing substrate, but does not completely replace it like harvest does.
+</p>
+<h3>Substrate relationships</h3>
+<br><center><img src="../data_files/substrate_diagram.gif" alt="Substrate decay diagram"></center>
+Relationships 1, 2, 4, and 6 represent the decay of the different substrates as a function of substrate age according to the equation
+<br><center><img src="../data_files/substrate_exp_func.gif"></center>
+<br>
+where t is time in years.  Graphed, this equation looks like this:
+<br><center><img src="../data_files/substrate_loss.gif" alt="Substrate loss diagram"></center>
+<p>
+In this diagram, there are two kinds of substrate, A and B.  A decays into B according to the equation above.  The amount of A and B together sum to 1 for this diagram.  The curve for "% Remaining" is the amount of A.  The curve for "% Lost/yr" is the amount of B.  When <i>&#946;</i> &gt; 1, the rate of loss/time step increases over time (giving an initial lag period when there is little loss of the substrate).  When <i>&#946;</i> &lt; 1 the substrate disappears most rapidly immediately after substrate creation (less likely).  <i>&#946;</i> = 1 gives a constant % loss per time step (i.e. exponential decline).  (In this example, <i>&#945;</i> = 0.0002 and <i>&#946;</i> = 4.)
+</p>
+<p>
+Relationship 3 governs the amount of fresh logs created each time step as a result of tree mortality.  For the purposes of adding new substrate, fallen logs are assumed to be cone-shaped.  Since they land on their sides, the area of the cone is approximated to a triangle.  Thus, each new fresh log contributes the following amount of new fresh log area: 
+</p>
+<br><center><i>FL = (DBH * h)/2</i></center>
+<br>where:
+<ul>
+<li><i>FL</i> is new fresh log area, in square meters
+<li><i>DBH</i> is the DBH of the fallen tree, in m
+<li><i>h</i> is the height of the fallen tree, in m
+</ul>
+<p>
+A dead adult or sapling as a certain probability of contributing fresh log substrate; this probability is specified in the <b>Proportion of Dead that Fall</b> parameter.  Snags always add fresh log substrate upon their "death".
+</p>
+<p>
+How new fresh log area is distributed depends on the value in the <b>Use Directional Tree Fall</b> parameter.  If false, a dead tree contributes all of its fresh log area into the grid cell where it was rooted. In other words, it doesn't fall over so much as vertically collapse.  If true, a trees is allowed to fall in a random direction.  The amount of new fresh log area is distributed over the grid cells that the log overlays.
+</p>
+<p>
+Relationship 5 governs the amount of newly exposed tip-up mounds created by fallen dead trees.  For each fallen tree, the amount of new tip-up mounds area is calculated as
+</p>
+<br><center><i>OA = &#960 * (r*F)<sup>2</sup></i></center>
+<br>where
+<ul>
+<li><i>OA</i> is the new tip-up mounds area in square meters
+<li><i>r</i> is the tree trunk radius in meters
+<li><i>F</i> is the <b>Uprooted Tree Radius Increase Factor for Root Rip-Out</b> parameter, which accounts for the effects of root disturbance
+</ul>
+<p>
+A tree contributes all of its new tip-up mounds area to the grid cell where it was rooted. Saplings never create tip-up mounds.  Fallen adults create new tip-ups with the probability specified in the <b>Proportion of Fallen that Uproot</b> parameter; snags contribute at the probability in <b>Proportion of Fallen that Uproot</b>.  
+</p>
+<p> 
+Relationship 7 results from harvests only. Scarified soil creation results from the use of machinery and skidding during a harvest.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Decayed Logs</td><td> The proportion of substrate that is decayed logs in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Fresh Logs</td><td> The proportion of substrate that is fresh logs in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Decayed Log Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to decayed logs.  Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Decayed Log Annual Decay Beta</td><td>  The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to decayed logs.  Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Fresh Log Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to fresh logs. Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Fresh Log Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to fresh logs. Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Decayed Logs</td><td> The proportion of substrate that is decayed logs in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Fresh Logs</td><td> The proportion of substrate that is fresh logs in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Tip-Up Mounds</td><td>  The proportion of substrate that is tip-up mounds substrate in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Clear Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a clear cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Decayed Log Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to decayed logs.  Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Decayed Log Annual Decay Beta</td><td>  The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to decayed logs.  Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Fresh Log Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to fresh logs. Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Fresh Log Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to fresh logs. Note that this is <b>annual</b> decay.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Decayed Logs</td><td> The proportion of substrate that is decayed logs in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Fresh Logs</td><td> The proportion of substrate that is fresh logs in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Gap Cut Proportion of Tip-Up Mounds</td><td>  The proportion of substrate that is tip-up mounds substrate in areas that had a gap cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Decayed Logs</td><td> The proportion of plot substrate that is decayed logs when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored.</td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Fresh Logs</td><td> The proportion of plot substrate that is fresh logs when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored.</td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Scarified Soil</td><td> The proportion of plot substrate that is scarified soil when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored. </td></tr>
+
+<tr><td class="parname">Initial Conditions Proportion of Tip-Up Mounds</td><td> The proportion of plot substrate that is tip-up mounds substrate when the run starts, as a value between 0 and 1.  If a map of substrate values is included in the parameter file (see <a href="../../using/grids_initial_conditions.html">Grid initial conditions</a> for information on how to do this), then the map values will be used for the initial conditions and this number will be ignored. </td></tr>
+
+<tr><td class="parname">Maximum Number of Years that Decay Occurs</td><td> The number of years that a substrate disturbance event has effect before it is deleted - the lifetime of a substrate cohort. </td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Decayed Logs</td><td> The proportion of substrate that is decayed logs in areas that had a partial cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Fresh Logs</td><td> The proportion of substrate that is fresh logs in areas that had a partial cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used.</td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a partial cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a partial cut harvest event, as a value between 0 and 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Scarified Soil</td><td> The proportion of substrate that is scarified soil in areas that had a partial cut harvest event, as a value between 0 and 1.  This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Partial Cut Proportion of Tip-Up Mounds</td><td> The proportion of substrate that is tip-up mounds substrate in areas that had a partial cut harvest event, as a value between 0 and 1. This is not required if the <a href="../disturbance_behaviors/index.html">Harvest behavior</a> is not used. </td></tr>
+
+<tr><td class="parname">Proportion of Dead that Fall</td><td>  The proportion of the total number of newly dead trees that fall each year, as a value between 0 and 1.  This does not apply to snags.</td></tr>
+
+<tr><td class="parname">Proportion of Fallen that Uproot</td><td> The proportion of fallen trees that uproot to create new tip-up mound substrate, as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Proportion of Forest Floor Litter/Moss Pool that is Moss</td><td> The fixed proportion of the forest floor litter/moss pool that is moss.  Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Proportion of Snags that Uproot</td><td> The proportion of "dead" snags that uproot to create new tip-up mound substrate, as a value between 0 and 1.  Not required if snags are not used in the run. </td></tr>
+
+<tr><td class="parname">Proportion of Fallen that Uproot</td><td> The proportion of fallen trees that uproot to create new tip-up mound substrate, as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Proportion of Forest Floor Litter/Moss Pool that is Moss</td><td> The fixed proportion of the forest floor litter/moss pool that is moss.  Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Proportion of Snags that Uproot</td><td> The proportion of "dead" snags that uproot to create new tip-up mound substrate, as a value between 0 and 1.  Not required if snags are not used in the run. </td></tr>
+
+<tr><td class="parname">Scarified Soil Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to scarified soil.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Scarified Soil Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to scarified soil.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Tip-Up Mounds Annual Decay Alpha</td><td> The &#945 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to tip-up mounds substrate.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Tip-Up Mounds Annual Decay Beta</td><td> The &#946 exponent in the decay equation <img src="../data_files/substrate_exp_func.gif">, as applied to tip-up mounds substrate.  Note that this is <b>annual</b> decay. </td></tr>
+
+<tr><td class="parname">Uprooted Tree Radius Increase Factor for Root Rip-Out</td><td> The amount by which to multiply the tree's radius when calculating the size of the new tip-up mounds soil exposed by fallen trees (see equation below).  This is meant to allow for the effects of roots. </td></tr>
+
+<tr><td class="parname">Use Directional Tree Fall</td><td> If true, dead trees fall in a random direction and possibly contribute new fresh log across several Substrate grid cells.  If false, dead trees collapse vertically and contribute all their fresh log area to the cell in which they are rooted. </td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The relative proportions of each kind of substrate are tracked in the <a href="../grids/substrate_grid.html">Substrate grid</a>.  You can change this grid's cell resolution.  Within each cell, the grid keeps track of each substrate's area as a proportion of the total area.   
+</p>
+<p>
+Each timestep, Substrate looks for harvest events and tree death.  It finds harvest events by looking in the <a href="../grids/harvest_grid.html">Harvest grid</a>; it finds dead trees by looking for the flag set by the <a href="../mortality_behaviors/index.html">Mortality behaviors</a>.  Harvest events completely replace existing substrate with their substrate signatures.  Each dead tree "rolls the dice" with a random number to determine if it falls, and, if it falls, if it exposes tip-up mounds substrate.  All the new substrate created by harvest and tree fall is then totaled up.
+</p>
+<p>
+When there is new substrate in a grid cell, Substrate reduces the other substrate amounts in the cell to make way for the amount of new substrate.  Then Substrate creates a record of the substrate change, called a "cohort."  The substrates in a cohort decay as the cohort ages.  Cohorts have a set lifetime of a certain number of years, which you set in the parameters.  After this they are deleted.  This means that the effects of a substrate change event linger, with decreasing intensity, for a number of years after the event occurs.
+</p>
+<p>
+The final proportions of scarified soil, tip-up mounds, and fresh logs are found by adding up the decayed values in the cohorts.  The final proportion of decayed logs is found by adding up the amount by which fresh logs have decayed in each cohort.  The final proportion of the moss/litter pool is whatever grid cell area is left over.  The pool is further split into moss and litter by using the fixed proportion of each in the pool.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply Substrate to all trees which can create substrate by becoming fallen logs.  This generally means that it should be applied to saplings and adults of all species.  Substrate cannot be applied to seedlings.  Any tree species/type combination to which it is applied must also have a <a href="../mortality_behaviors/index.html">mortality behavior</a> applied.
+</p>
+</body>
+</html>

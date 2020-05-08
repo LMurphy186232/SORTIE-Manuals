@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Neighborhood seed predation (linked)</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Neighborhood seed predation (linked)</h1>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Neighborhood Predation - "p0"</td><td> The "p0" term in the seed offtake equation when in linked mode. </td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Species i "pn"</td><td> The "p<sub>n</sub>" term for species i in the seed offtake equation when in linked mode. </td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Minimum Neighbor DBH (cm)</td><td> The minimum DBH of trees to be included when calculating the basal area composition of the neighborhood, when in linked mode. </td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Neighbor Search Radius (m)</td><td> The radius to search for trees when calculating the basal area composition of the neighborhood, when in linked mode. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior is used together with the <a href="functional_response_seed_predation_linked.html">Functional response seed predation behavior (linked)</a> behavior. The two behaviors work together to model seed predation. 
+</p>
+<p>
+The actual amount of seed eaten is calculated by the <a href="functional_response_seed_predation_linked.html">Functional response seed predation behavior (linked)</a> behavior. This behavior then distributes the offtake according to neighborhood composition.
+</p>
+<p>
+The behavior begins by calculating the Y values for each grid cell as in the non-linked version (masting is ignored - there is only one set of parameters). Then the Y values are adjusted so that their mean is equal to the amount of whole-plot offtake Z as calculated by the <a href="functional_response_seed_predation_linked.html">Functional response seed predation behavior (linked)</a>. The adjustments are made as follows: 
+</p>
+<ol>
+<li>Calculate logit(Z)</li>
+<li>Calculate the logit(Ys) and subtract the minimum value from each (as well as the logit(Z)) so they will all be positive</li>
+<li>Average the logit(Y)s</li>
+<li>Divide logit(Z) by average logit(Y) to get a correction factor</li>
+<li>Multiply each logit(Y) by the correction factor</li>
+<li>Add back the same minimum value formerly subtracted</li>
+<li>Back transform logit(Y) to Y and use when removing seeds</li>
+</ol> 
+<p>
+Then the seeds are removed according to the adjusted Y values.
+</p>
+<p>
+This behavior can be used in the same run with the non-linked version of this behavior. The two sets of species are kept completely separate, and there are two separate sets of parameters.
+</p>
+<p>
+This behavior may be applied to seeds of any species.  Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied, as well as the <a href="functional_response_seed_predation_linked.html">Functional response seed predation behavior (linked)</a>. This behavior should be placed after that behavior in the ordered list of model behaviors.
+</p>
+<p>
+In order to make results more verifiable, Neighborhood Seed Predation produces a grid called <a href="../grids/neigh_seed_pred_grid.html">Neighborhood Seed Predation</a>. This grid stores the pre predation seed rain and amount of seeds eaten for each cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid.  This grid has no effect on calculations but can be saved in the output file for review.  
+</p>
+</body>
+</html>

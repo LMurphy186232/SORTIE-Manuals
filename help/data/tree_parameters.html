@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Setting up trees: parameters</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Setting up trees: parameters</h1>
+
+<p>
+Here is the complete list of parameters for the tree population and <a href="allometry/index.html">allometry</a>. Not all of them are required.
+</p>
+
+<h2>Tree parameters</h2>
+<p>
+Parameters dealing with <a href="../using/tree_initial_conditions.html">tree initial conditions</a> - none of these are required:
+</p>
+<ul>
+<li><b>Initial Densities</b> The density of trees, in number per hectare, for that size class.</li>
+<li><b>Initial Density (#/ha) - Seedling Height Class 1</b> Number of seedlings per hectare to create in the first seedling height class. The lower bound of this class is 0 cm and the upper bound is the value in the <b>Seedling Height Class 1 Upper Bound, in cm</b> parameter.</li>
+<li><b>Initial Density (#/ha) - Seedling Height Class 2</b> Number of seedlings per hectare to create in the second seedling height class. The lower bound of this class is the value in the <b>Seedling Height Class 1 Upper Bound, in cm</b> parameter and the upper bound is the value in the <b>Seedling Height Class 2 Upper Bound, in cm</b> parameter.</li>
+<li><b>Initial Density (#/ha) - Seedling Height Class 3</b> Number of seedlings per hectare to create in the third seedling height class. The lower bound of this class is the value in the <b>Seedling Height Class 2 Upper Bound, in cm</b> parameter and the upper bound is 135 cm (the tallest possible seedling height).</li>
+<li><b>Seedling Height Class 1 Upper Bound, in cm</b> The upper bound of the first seedling height class, in cm, for specifying seedling initial densities.  The lower bound of the size class is 0.</li>
+<li><b>Seedling Height Class 2 Upper Bound, in cm</b> The upper bound of the second seedling height class, in cm, for specifying seedling initial densities.  The lower bound of the size class is the <b>Seedling Height Class 2 Upper Bound, in cm</b> parameter.  There is a third size class, whose lower bound is this parameter's value and whose upper bound is 135 cm.</li>
+<li><b>Tree Map To Add As Text</b> External tree map file to add.</li>
+</ul>
+
+<p>
+Basic tree population parameters - required:
+</p>
+<ul>
+<li><b>Minimum Adult DBH</b> The minimum DBH at which trees are considered adults. (See more about tree life history stages <a href="../using/tree_life_history_stages.html">here</a>.)</li>
+<li><b>Max Seedling Height (meters)</b> The maximum seedling height, in meters.  Trees taller than this height are saplings. (See more about tree life history stages <a href="../using/tree_life_history_stages.html">here</a>.)</li>
+<li><b>New Seedling Diameter at 10 cm</b> The average diameter at 10 cm height value for newly created seedlings, when another size is not specified. Actual values are randomized slightly around this value.</li>
+</ul>
+
+<p>In addition to the values listed in the parameter window, the tree population also keeps the list of species and size classes. These can be edited in the <a href="../windows/edit_species_list_window.html">Tree population - edit species list window</a> and <a href="../windows/edit_size_classes.html">Tree population - edit initial density size classes window</a>.</p>
+</body>
+</html>

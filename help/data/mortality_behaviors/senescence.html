@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Senescence</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Senescence</h1>
+<p>
+Senescence mortality provides for an uptick in mortality rates. It is meant to slightly increase the death rate among large adult trees.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Senescence Mortality Alpha</td><td> Controls the senescence mortality rate.</td></tr>
+
+<tr><td class="parname">Senescence Mortality Beta</td><td> Controls the senescence mortality rate.</td></tr>
+
+<tr><td class="parname">DBH at Onset of Senescence, in cm</td><td> DBH at which senescence takes effect.</td></tr>
+
+<tr><td class="parname">DBH of Maximum Senescence Mortality Rate, as an integer in cm</td><td> The DBH at which maximum mortality occurs. Trees with a DBH greater than this value experience no further increase in the mortality rate.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+All trees to which senescence is applied are evaluated for senescence mortality. In practice, trees below the onset of senescence DBH very rarely die. The probability of death rises with DBH until the DBH of maximum senescence rate is reached, at which point it levels off.
+</p>
+<p>
+To assess whether a tree will die due to senescence, the following function is evaluated:
+</p>
+<center><img src="../data_files/senescence_equation.gif"></center>
+<br>
+where: 
+<ul>
+<li><i>m<sub>s</sub></i> is the probability of mortality</li>
+<li><i>&#945</i> (<b>Senescence Mortality Alpha</b> parameter) and <i>&#946</i> (<b>Senescence Mortality Beta</b> parameter) control the magnitude of the uptick</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+<li><i>DBH<sub>s</sub></i> is the <b>DBH at Onset of Senescence, in cm</b> parameter</li>
+</ul>
+<p>
+The probability is compared to a random number to determine whether the individual tree will die.
+</p> 
+<h3>How to apply it</h3>
+<p>Senescence may be applied to saplings and adults of any species. It cannot be applied to seedlings.</p>
+</body>
+</html>

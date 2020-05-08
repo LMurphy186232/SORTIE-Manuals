@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Masting non-spatial disperse behavior</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Masting non-spatial disperse behavior</h1>
+
+
+<p>This behavior adds stochasticity to basic seed rain by simulating masting and basic inter - year variation in seed production.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Mast NS Disperse - Binomial P (Mast Chance)</td><td> "p" value for the binomial distribution used to randomly decide whether to mast each timestep. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Masting Group</td><td> Species in the same group always mast together. If all the group numbers are different, then each species masts separately. The actual numbers do not matter, just whether species have identical numbers. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Mast Inv. Gauss. Mu</td><td> Mu parameter for the inverse Gaussian distribution for choosing seeds in masting conditions. Values are only required for those species using this distribution when masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Mast Inv. Gauss. Lambda</td><td> Lambda parameter for the inverse Gaussian distribution for choosing seeds in masting conditions. Values are only required for those species using this distribution when masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Non-Mast Inv. Gauss. Mu</td><td> Mu parameter for the inverse Gaussian distribution for choosing seeds in non-masting conditions. Values are only required for those species using this distribution when not masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Non-Mast Inv. Gauss. Lambda</td><td> Lambda parameter for the inverse Gaussian distribution for choosing seeds in non-masting conditions. Values are only required for those species using this distribution when not masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Mast Normal Mean</td><td> Mean parameter for the normal distribution for choosing seeds in masting conditions. Values are only required for those species using this distribution when masting.  </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Mast Normal Standard Deviation</td><td> Standard deviation parameter for the normal distribution for choosing seeds in masting conditions. Values are only required for those species using this distribution when masting.  </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Non-Mast Normal Mean</td><td> Mean parameter for the normal distribution for choosing seeds in non-masting conditions. Values are only required for those species using this distribution when not masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - Non-Mast Normal Standard Deviation</td><td> Standard deviation parameter for the normal distribution for choosing seeds in non-masting conditions. Values are only required for those species using this distribution when not masting. </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - PDF Masting Conditions</td><td> Which probability distribution to use to choose number of seeds during masting events.  </td></tr>
+
+<tr><td class="parname">Mast NS Disperse - PDF Non-Masting Conditions</td><td> Which probability distribution to use to choose number of seeds when not masting.  </td></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p><b>Deciding when to mast.</b>  Each timestep, each species may mast or not.  Mast is determined by making a random draw from a binomial distribution, with the "p" value for the distribution set using the <b>Mast NS Disperse - Binomial P (Mast Chance)</b> parameter.  Masting decisions are made completely independently for each species (except in the case of masting groups; more on those later).</p>
+
+<p>The number of seeds, in seeds per square meter, is then drawn from a second probability distribution.  The distribution choices are normal and inverse Gaussian.  A species can use different distributions for mast and non-mast timesteps.  You choose the distributions using the <b>Mast NS Disperse - PDF Masting Conditions</b> and <b>Mast NS Disperse - PDF Non-Masting Conditions</b> parameters.  You then set up the values for the different distributions using the appropriate parameters.  You do not need to set values for distributions that a species does not use.</p>
+
+<p>Once the number of seeds per square meter has been established for a species, that quantity of seed is distributed evenly across the plot.  The presence or absence of parent trees of that species makes no difference to the number of seeds.</p>
+
+<p>To simulate synchrony in masting, species can be collected into masting groups.  The decision to mast or not to mast using the binomial distribution is performed once for each group, using the first species in the group's "p" value.  The number of seeds per square meter is established as for a single species; but those seeds are divided amongst the group's species according to the relative basal area of adults of each species in the plot.  If there are no trees of any of the group's species, the seeds are divided equally amongst the species.</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to adults of the species you wish to use.
+</p>
+
+</body>
+</html>

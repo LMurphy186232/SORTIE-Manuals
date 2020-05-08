@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Starting and managing a run</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Starting and managing a run</h1>
+
+<p>
+A run is a single model simulation.  It starts at time zero and continues until its defined endpoint is reached.  A run is defined by its <a href="../files/parameter_files.html">parameter file</a>.  This tells the model how long to run, and what to do during the run.  
+</p>
+<h2> Starting a run</h2>
+<p>
+You begin by <a href="../using/creating_parameter_file.html">creating</a> or opening a parameter file using the "File->Open file" menu option. Then you choose "Model->Run" from the menu, or click the "Run" button. A file must be complete and all data in it valid if the run is to succeed, so the file will be validated before the run occurs. You will get an error message if there is something wrong with the parameter file. If you have made changes to the parameter file, you'll be prompted to save the file. If you choose not to save the file, a temporary file will be written so the run can proceed.
+</p>
+<h2> Checking the progress of a run</h2>
+<p>
+At the bottom of the SORTIE window, there is a message bar that will keep you updated on the number of timesteps completed. If you would like to know what is happening in the run, you can <a href="../data_visualization/viewing_output_during_run.html"> open output files while the run is still in progress.</a>
+</p>
+<h2>Interrupting and restarting a run</h2>
+<p>
+You can pause or stop a run that is in progress. Either use the buttons or the menu options in the "Run" menu. When either option is chosen, SORTIE will finish the current timestep before stopping or pausing. This ensures that output files will be complete and valid. Closing the SORTIE window will force a quit, but the output may be unrecoverable in that case.
+</p>
+<p>
+The difference between pausing and stopping is that a paused run can be restarted using the run command, but a stopped run cannot. 
+</p>
+</body>
+</html>

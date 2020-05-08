@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE Developer's Manual - Java Exception Handling</title>
+</head>
+
+<body>
+<h1>Java Exception Handling</h1>
+<p>
+Java exception handling is based on the class <a href="../java_doc/classsortie_1_1data_1_1simpletypes_1_1ModelException.html">ModelException</a>.  This class is basically a clone of the C++ exception structure <a href="../c_doc/structmodelErr.html">modelErr</a>.  Caught errors are displayed to the user using the 
+<a href="../java_doc/classsortie_1_1gui_1_1ErrorGUI.html">ErrorGUI</a> class.
+</p>
+<p>
+The <a href="../java_doc/classsortie_1_1gui_1_1ErrorGUI.html">ErrorGUI</a> class looks at the type of error being passed and tries to display a helpful context along with the actual error message.  However, if the calling function is set to "JAVA", the class will display the error message with no other adornments.  This makes it a handy way to display errors from the Java code.
+</p>
+</body>
+</html>

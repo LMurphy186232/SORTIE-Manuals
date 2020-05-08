@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Neighborhood seed predation</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Neighborhood seed predation</h1>
+<p>
+This simulates seed predation as a function of tree neighborhood and masting events. The same equations are used to calculate the amount of seed eaten, but there are different parameters for masting and non-masting timesteps. Masting events can be determined in one of two ways: by seed levels rising above a threshold that you set, or by masting having occurred as defined by one of the masting disperse behaviors.  
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Neighborhood Predation - Counts For Masting?</td><td> Determines which species are included when totaling up seed numbers to determine whether or not masting has occurred.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Mast Event Decision Method</td><td> Determines how masting is decided. If this is set to "Seed threshold", then masting events occur when seed levels are above a set threshold.  If this is set to "Ask disperse", then masting has occurred if any of the applicable species masted as determined by the masting disperse behaviors. </td><tr> 
+
+<tr><td class="parname">Neighborhood Predation - Masting "p0"</td><td> The "p<sub>0</sub>" term in the seed offtake equation under masting conditions.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Species i Masting "pn"</td><td> The "p<sub>n</sub>" term for species i in the seed offtake equation under masting conditions.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Masting Seed Density, #/m2/yr</td><td> The density of edible seed that indicates masting has occurred.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Minimum Neighbor DBH (cm)</td><td> The minimum DBH of trees to be included when calculating the basal area composition of the neighborhood.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Neighbor Search Radius (m)</td><td> The radius to search for trees when calculating the basal area composition of the neighborhood.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Non-Masting "p0"</td><td> The "p<sub>0</sub>" term in the seed offtake equation under non-masting conditions.</td></tr>
+
+<tr><td class="parname">Neighborhood Predation - Species i Non-Masting "pn"</td><td> The "p<sub>n</sub>" term for species i in the seed offtake equation under non-masting conditions.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Masting timesteps are those with a heavy density of edible seeds. The first step in a given time step is deciding whether or not masting is occurring. There are two methods available for making the masting decision. You set your chosen method using the <b>Neighborhood Predation - Mast Event Decision Method</b> parameter.  
+</p>
+<p>If the event decision method is set to "Seed threshold", masting events occur whenever seed density rises above a certain threshold. You set the threshold for this density in the <b>Neighborhood Predation - Masting Seed Density, #/m2/yr</b> parameter. You then set which species are included in the mast count with the <b>Neighborhood Predation - Counts For Masting?</b> parameter. (Species which do not count towards masting may still be predated.) The seed density is set as an annual average so the density will be calculated the same way for different-length timesteps. If the total plotwide average annual seed density is greater than this value, the timestep is treated as a masting timestep. Only those seeds of species to which this behavior applies are considered in the density. 
+</p>
+<p>
+If the event decision method is set to "Ask disperse", masting events occur whenever any of the species to which this behavior applies masts according to either the <a href="../disperse_behaviors/masting_non_spatial_disperse.html">Masting non-spatial disperse behavior</a> or the <a href="../disperse_behaviors/masting_spatial_disperse.html">Masting spatial disperse behavior</a>. You can use either of these behaviors, both of them, or neither (in which case masting never occurs).  If any species to which this behavior is applied has masted with either behavior, then this is a masting time step.  
+</p>
+<p>
+If there are no adult trees in the plot, then masting does not occur according to either method.  
+</p>
+<p>
+The seeds in each grid cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid are treated separately for predation, according to their local neighborhood composition. The relative basal area of each species is calculated, from the total basal area of individuals within <b>Neighborhood Predation - Neighbor Search Radius (m)</b> meters of the grid cell center that have a DBH greater than <b>Neighborhood Predation - Minimum Neighbor DBH (cm)</b>. 
+The amount of seed eaten for each species is calculated as:
+</p>
+<center><img src="../data_files/neigh_pred_eq.gif"></center>
+<p>
+where <i>Y</i> is the proportion of that species' seed that is eaten, and <i>p0</i> is either the <b>Neighborhood Predation - Masting "p0"</b> or the <b>Neighborhood Predation - Non-Masting "p0"</b> parameter for that species. X is calculated as follows:
+</p>
+<center><img src="../data_files/seed_pred_pca_eq.gif"></center>
+<p>
+where <i>p<sub>n</sub></i> is either the <b>Neighborhood Predation - Species i Masting "pn"</b> or the <b>Neighborhood Predation - Species i Non-Masting "pn"</b> of species <i>n</i>, and <i>RBA<sub>n</sub></i> is the relative basal are of species <i>n</i>.
+</p>
+
+<p>
+The eaten seeds are removed from the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid.
+</p>
+
+<p>
+In order to make results more verifiable, Neighborhood Seed Predation produces a grid called <a href="../grids/neigh_seed_pred_grid.html">Neighborhood Seed Predation</a>. This grid stores the pre predation seed rain and amount of seeds eaten for each cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid.  This grid has no effect on calculations but can be saved in the output file for review.  
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seeds of any species.  Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied as well.
+</p>
+</body>
+</html>

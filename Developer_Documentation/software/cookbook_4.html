@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Creating a new behavior part 4 - GUI and user documentation</title>
+</head>
+<body>
+<h1>Part 4:  GUI and user documentation</h1>
+<p>
+In this part, you make your new behavior accessible to the user.
+</p>
+<p>
+Note:  The Java GUI is complicated.  If your needs cannot be covered with the procedure below, please seek Lora Murphy's help.
+</p>
+
+<h3>Step 1:  Identify where to add the new behavior in the Java GUI</h3>
+<p>
+Individual behaviors are descended from class <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1Behavior.html">Behavior</a>. These classes are packaged together by type and managed by classes descended from <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1BehaviorTypeBase.html">BehaviorTypeBase</a>.  For instance, there are the classes <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1GrowthBehaviors.html">GrowthBehaviors</a>, <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1MortalityBehaviors.html">MortalityBehaviors</a>, etc.
+</p>
+<p>
+These classes descended from <code>BehaviorTypeBase</code> are responsible for triggering all the sorts of things that individual behaviors do: getting values from the parameter file, validating parameter values, etc.  When you are adding a new behavior, you determine into which of these classes it fits.
+</p>
+<p>
+In the case of our example biomass calculation behavior, we would create a new class descended from <code>Behavior</code> and add it to the class <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1AnalysisBehaviors.html">Analysis Behaviors</a>.
+</p>
+
+<h3>Step 2: Create the new class for the behavior</h3>
+<p>
+We start by creating a descendant of class <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1Behavior.html">Behavior</a>. Let's call it <code>BiomassCalculator</code>. 
+</p>
+
+<h3>Step 3:  Add any new parameters</h3>
+<p>
+Our new class should contain all of the parameters needed. Each parameter is defined by a class descended from the <a href="../java_doc/classsortie_1_1data_1_1simpletypes_1_1ModelData.html">ModelData</a> class.  Each child class is tailored for a different type of data:  a species-specific array (<a href="../java_doc/classsortie_1_1data_1_1simpletypes_1_1ModelVector.html">ModelVector</a>), a single float (<a href="../java_doc/classsortie_1_1data_1_1simpletypes_1_1ModelFloat.html">ModelFloat</a>), etc.  These classes contain everything you need to know about a parameter:  what kind of data it is, a descriptive name to display to the user, its XML tags, etc.
+</p>
+<p>
+The parameters become new members of the <code>Behavior</code> child class containing your new behavior. Look carefully at all your constructor options for the parameter's class to make sure you set it up correctly.  There are often several flags you can set which precisely describe the parameter.    
+</p>
+<p>
+Our example biomass calculation behavior had two parameters:  "slope of biomass equation (a)" and "exponent of biomass equation (d)". They are both species-specific, so we would add two new <code>ModelVector</code> objects to the <code>BiomassCalculator</code> class.  Here's the code we could write:
+</p>
+<code>
+<i>/**Biomass behavior - slope of biomass equation (a) (look, I'm a Doxygen comment!)*/</i><br/>
+  <b>protected ModelVector mp_fSlopeOfBiomassEq = new ModelVector(</b><br/>
+      <b>"Biomass Calculator - Slope of Biomass Equation (a)",</b> <i>//descriptive name to display to user</i><br/> 
+      <b>"an_slopeBiomassEq",</b> <i>//XML tag for the parameter</i><br/>
+      <b>"an_sbeVal",</b> <i>//XML tag for individual species values</i><br/>
+			<b>0,</b> <i>//initial size of the java.util.Vector within this class - 0 is always a good choice</i><br/>
+      <b>ModelVector.FLOAT, </b> <i>//type of data within the array</i><br/>
+			<b>false);</b> <i>//optional flag indicating that the parameter is not forced to apply to all species</i><br/>
+<br/>
+<i>/**Biomass behavior - exponent of biomass equation (d)*/</i><br/>
+  <b>protected ModelVector mp_fExpOfBiomassEq = new ModelVector(</b><br/>
+      <b>"Biomass Calculator - Exponent of Biomass Equation (d)",</b><br/> 
+      <b>"an_exponentBiomassEq",</b><br/>
+      <b>"an_ebeVal",</b><br/>
+			<b>0,</b><br/>
+      <b>ModelVector.FLOAT);</b><br/>
+</code>
+
+<p>
+We also need to add our parameters to the required list for the behavior in the constructor:
+</p>
+<code>
+<b>addRequiredData(mp_fSlopeOfBiomassEq);</b><br/>
+<b>addRequiredData(mp_fExpOfBiomassEq);</b><br/>
+</code>
+
+<p>
+Tips for your descriptive parameter name, which will be displayed to the user:
+</p>
+<ul>
+<li>The name must be capitalized.</li>
+<li>The name should clearly indicate to which behavior the parameter belongs (if it belongs to only one).</li>
+<li>The name can contain variable names that match the equation you put in the user documentation.</li>
+<li>The name cannot be too long or it won't be correctly displayed.  Look at how the GUI displays your parameter name, and then go back and change it if necessary.</li>
+</ul>
+
+<h3>Step 4: Add any other function code</h3>
+<p>
+Behaviors have many functions that they can override in order to do what they need to.
+</p>
+<p>
+Our behavior creates a grid object, so we need to create it and add it as available to our behavior. This way it will show up in the list of grids for the user. We would add the following code to the constructor: 
+</p>
+<code>
+<i>//Add the "Biomass Map" grid</i><br/>
+<br/>
+<i>//Create the data member array for our two data members</i><br/>
+<b>DataMember[] p_oDataMembers = new DataMember[2];</b><br/>
+<br/>
+<i>//"count" int data member"</i><br/>
+<b>p_oDataMembers[0] = new DataMember("Adult Count",</b> <i>//data member name to display to user</i> <br/>
+<b>"count",</b> <i>//data member name in the C++ code</i> <br/>
+<b>DataMember.INTEGER);</b> <i>//data member type</i><br/>
+<br/>
+<i>//"avg" float data member"</i><br/>
+<b>p_oDataMembers[1] = new DataMember("Average Biomass",</b><br/>
+<b>"avg",</b> <br/>
+<b>DataMember.FLOAT);</b><br/>
+<br/>
+<i>//Create the new grid</i><br/>
+<b>Grid oNewGrid = new Grid("Biomass Map",</b> <i>//name of the grid</i> <br/>
+<b>p_oDataMembers,</b> <i>//list of grid's data members</i><br/>
+<b>null,</b> <i>//list of package data members - none in our case</i><br/>
+<b>8, 8);</b> <i>//default grid cell resolution - 8 X 8 is always safe</i><br/>
+<br/>
+<i>//Assign this grid to our new behavior</i><br/>
+<b>addGrid(oNewGrid);</b><br/>
+</code>
+
+<p>
+We can also add parameter validation. As in the C++ code, you want to make sure that you reject invalid parameter values.  To do this, add code to the <code>validateData</code> method of your <code>BiomassCalculator</code> class.  This code runs when parameters are being entered in the parameter window, so users are not allowed to enter bad values, and before a run begins.
+</p>
+<p>
+For our example biomass calculation behavior, negative values of our parameter <i>a</i> are illegal.  We would add the following code to <code>validateData</code>:
+</p>
+<code>
+<i>//Get a list of species to which this behavior is applied so we only validate values for those species</i><br/>
+<b>boolean[] p_bAppliesTo = getWhichSpeciesUsed(oPop);</b> <br/>
+<i>//There's a method available for making sure values are positive - use it</i><br/>
+<b>ValidationHelpers.makeSureAllPositive(mp_fSlopeOfBiomassEq, p_bAppliesTo);</b> <br/>
+</code>
+
+
+<h3>Step 5:  Add the new behavior to be managed</h3>
+<p>
+The class that manages objects of our new class is a descendant of <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1BehaviorTypeBase.html">BehaviorTypeBase</a> called <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1AnalysisBehaviors.html">Analysis Behaviors</a>. A class called <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1BehaviorInstantiator.html">BehaviorInstantiator</a> is given the details of our new class, and will instantiate objects of that class at the required times. Here's the code for our new example biomass behavior, which we would put in the constructor of the <code>AnalysisBehaviors</code> class:
+</p>
+<code>
+<i>//Create the new behavior</i><br/>
+<b>sXMLRootString = "BiomassCalculator";</b> <i>//String that will form the XML tag surrounding this behavior's parameters in the parameter file</i> 
+<b>sParFileTag = "BiomassCalculator";</b> <i>//How this behavior will be referred to in the parameter file's list of behaviors for the run</i>
+<b>sDescriptor = "Biomass Calculator";</b> <i>//The name of the behavior that the user is shown</i>
+<b>mp_oAvailableBehaviors.add(new BehaviorInstantiator(BiomassCalculator.class, sDescriptor, sParFileTag, sXMLRootString));</b>
+</code>
+
+<h3>Step 6:  Update any tests</h3>
+<p>
+There are JUnit tests for many classes in the GUI.  Run the JUnit test for the class to which you added.  Fix anything that you broke.  Add new test conditions for any tests of methods you added to, like <code>validateData</code>.
+</p>
+
+<h3>Step 7: User documentation</h3>
+<p>
+The very last step is to update the documentation so people know how to use your behavior.  Add your new parameters and behavior to the page devoted to the type of behavior you've made. Tips:
+</p>
+<ul>
+<li>The documentation is written in simple HTML.  You can probably pick up what you need to know from example.  The resulting HTML page should be nice-looking.</li>
+<li>When referring to your behavior or parameters, the name must EXACTLY match the name you gave to them in the GUI.</li>
+<li>When you mention a parameter, put the name of it in <b>bold</b>.  (You remembered to capitalize it when you named it in the GUI code, right?)</li>
+<li>It is better to say too much than too little.  Write as much detail as necessary so the user knows exactly what a behavior does and how it does it.</li>
+<li>Grids and tree data members have their own pages.  If you have created new ones, be sure to update those pages.</li>
+</ul>
+</body>
+</html>

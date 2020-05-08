@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The reverse linear diameter-height relationship</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The reverse linear diameter-height relationship</h1>
+<p>
+The reverse linear diameter-height relationship is the same for all life history stages, but each stage can use a different set of parameter values.  The name comes from the fact that it is almost the same as the linear function, but with height and diameter switched.  In other words, in the linear function, height is a linear function of diameter.  In the reverse linear function, diameter is a linear function of height.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Maximum Tree Height, in meters</td><td> The maximum tree height for a species, in meters. No tree, no matter what allometric function it uses, is allowed to get taller than this. Used by all species.</td></tr>
+
+<tr><td class="parname">Adult Reverse Linear Function Intercept</td><td> The intercept of the adult reverse linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Adult Reverse Linear Function Slope</td><td> The slope of the adult reverse linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Sapling Reverse Linear Function Intercept</td><td> The intercept of the sapling reverse linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Sapling Reverse Linear Function Slope</td><td> The slope of the sapling reverse linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Seedling Reverse Linear Function Intercept</td><td> The intercept of the seedling reverse linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Seedling Reverse Linear Function Slope</td><td> The slope of the seedling reverse linear function for DBH and height.</td></tr>
+
+</table>
+<p>
+The reverse linear diam - height function is:
+</p>
+<center><i>height = (diam - a) / b</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>height</i> is tree height, in m</li>
+<li><i>a</i> is the appropriate reverse linear intercept parameter (either <b>Adult Reverse Linear Function Intercept</b>, <b>Sapling Reverse Linear Function Intercept</b>, or <b>Seedling Reverse Linear Function Intercept</b>)</li>
+<li><i>b</i> is the appropriate reverse linear slope parameter (either <b>Adult Reverse Linear Function Slope</b>, <b>Sapling Reverse Linear Function Slope</b>, or <b>Seedling Reverse Linear Function Slope</b>)</li>
+<li><i>diam</i> is DBH (in cm) for saplings and adults, or diam<sub>10</sub> (in cm) for seedlings</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Proportional Seed Survival</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Proportional Seed Survival</h1>
+<p>
+This behavior reduces the number of seeds by a set amount.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Proportion Germinating Between 0 and 1</td><td> The proportion of seeds of a species that survive germination, as a value between 0 and 1. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>In each cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a>, this multiples the number of seeds present by the <b>Proportion Germinating Between 0 and 1</b> parameter, reducing the total number available.  The new number of seeds is placed back in the Dispersed Seeds grid.
+</p>
+<h3>How to apply it</h3>
+<p>Apply this behavior to seeds of any species. Any species to which this is applied must have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied as
+well.</p>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Precipitation Climate Change</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Precipitation Climate Change</h1>
+<p>
+This behavior changes the value of the <a href="../plot.html#parameters">Annual Precipitation</a> parameter of the SORTIE plot. This can be used to simulate the effects of climate change. If the run does not have a behavior that  uses precipitation, this will have no effect.  
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Precipitation Change - B</td><td> "B" in the function for varying precipitation through time.</td><tr>
+<tr><td class="parname">Precipitation Change - C</td><td> "C" in the function for varying precipitation through time.</td><tr>
+<tr><td class="parname">Precipitation Change - Precip Lower Bound</td><td> The lower bound for allowed precipitation values. </td><tr> 
+<tr><td class="parname">Precipitation Change - Precip Upper Bound</td><td> The upper bound for allowed precipitation values. </td><tr>
+<tr><td class="parname">Update Seasonal Precipitation Proportionally?</td><td> Whether or not to update seasonal precipitation in the same proportion as annual precipitation. </td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The value for plot precipitation is a function of time elapsed since the start of the run, as follows: 
+</p>
+<center><i>P = P<sub>1</sub> + B * t<sup>C</sup></i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>P</i> is the annual precipitation, in mm, at time t</li>
+<li><i>P<sub>1</sub></i> is the annual precipitation value at the start of the run, as assigned in the <a href="../plot.html#parameters">Plot parameters </a> </li>
+<li><i>B</i> is the <b>Precipitation Change - B</b> parameter </li>
+<li><i>C</i> is the <b>Precipitation Change - C</b> parameter </li>
+<li><i>t</i> is the time elapsed, in years, since the start of the run </li>
+</ul>
+<p>
+This value is then given to the <a href="../plot.html">Plot</a> object which makes it available to other behaviors in the run.  </p>
+<p>
+You can set bounds on the possible precipitation values using the <b>Precipitation Change - Precip Lower Bound</b> and <b>Precipitation Change - Precip Upper Bound</b> parameters.  Values are not allowed to go outside these limits. 
+</p>
+<p>
+If you wish, the other <a href="../plot.html">seasonal precipitation</a> can be updated along with annual precipitation. They are changed in the same proportion that annual precipitation changes. If you want this behavior, set the <b>Update Seasonal Precipitation Proportionally?</b> parameter to true.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Add this behavior to the run.  You can use it alone or in addition to the <a href="temperature_change.html">Temperature Climate Change</a> behavior.  You do not need to assign this behavior to trees.  
+</p>
+
+</body>
+</html>

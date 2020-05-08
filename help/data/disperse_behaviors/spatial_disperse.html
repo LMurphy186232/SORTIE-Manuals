@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Spatial disperse behaviors</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Spatial disperse behaviors</h1>
+
+
+<p>
+Spatial disperse behaviors rely on the location and size of parent trees to determine the number and placement of seeds. The placement of the seeds is controlled by a probability distribution function. You can choose between the Weibull and lognormal functions.</p>
+<p>The Weibull function is as follows:<br/>
+</p>
+<center><img src="../data_files/weibull_disperse.gif" alt="Weibull function"></center>
+<br/>
+where, <br/>
+<center><img src="../data_files/weibull_normalizer.gif" alt="Weibull normalizer"></center>
+<br/>
+and where: 
+<ul>
+<li><i>R<sub>i</sub></i> is the density (#/m2) of seedlings at a given
+point <i>i</i></li>
+<li><i>STR</i>, the "standardized total recruits", is the number of seedling recruits produced by a 30 cm DBH parent tree (the <b>Weibull Canopy Annual STR</b> or <b>Weibull Gap Annual STR</b> parameters)</li>
+<li><i>DBH<sub>k</sub></i> is the DBH in cm of the <i>k = 1&#8230;T</i> parent trees within a specified radius of location <i>i</i></li>
+<li><i>D</i> is a species-specific dispersal parameter (the <b>Weibull Canopy Dispersal</b> or <b>Weibull Gap Dispersal</b> parameters)</li>
+<li><i>m<sub>ik</sub></i> is the distance (in meters) from point i to the kth parent tree</li>
+<li><i>&#952;</i> and <i>&#946;</i> are disperse parameters (the <b>Weibull Canopy Theta</b> or <b>Weibull Gap Theta</b> and <b>Weibull Gap Beta</b> or <b>Weibull Canopy Beta</b> parameters)</li>
+</ul>
+<br/>
+<br/>
+ 
+<p>The lognormal function is as follows:<br/>
+</p>
+<center><img src="../data_files/lognormal_disperse.gif" alt="Weibull function"></center>
+<br/>
+where, <br/>
+<center><img src="../data_files/lognormal_normalizer.gif" alt="Lognormal normalizer"></center>
+<br/>
+and where: 
+<ul>
+<li><i>R<sub>i</sub></i> is the density (#/m2) of seedlings at a given
+point i</li>
+<li><i>STR</i>, the "standardized total recruits", is the number of seedling recruits produced by a 30 cm DBH parent tree (the <b>Lognormal Canopy Annual STR</b> or <b>Lognormal Gap Annual STR</b> parameters)</li>
+<li><i>DBH<sub>k</sub></i> is the DBH in cm of the <i>k = 1&#8230;T</i> parent trees within a specified radius of location i</li>
+<li><i>m<sub>ik</sub></i> is the distance (in meters) from point i to the kth parent tree</li>
+<li><i>X<sub>0</sub></i> is the mean of the function (the <b>Lognormal Canopy X<sub>0</sub></b> or <b>Lognormal Gap X<sub>0</sub></b> parameters)</li>
+<li><i>X<sub>b</sub></i> is the standard deviation of the function (the <b>Lognormal Canopy X<sub>b</sub></b> or <b>Lognormal Gap X<sub>b</sub></b> parameters)</li>
+<li><i>&#946;</i> is a disperse parameter (the <b>Lognormal Canopy Beta</b> or <b>Lognormal Gap Beta</b> parameters)</li>
+</ul>
+<br/>
+<br/>
+
+<p>
+The maximum distance that seeds are allowed to disperse is the length of the grid in the longest direction, up to a maximum of 1000 meters. Because of the torus shape of the plot, a seed deposited at the very limit of the distance could end up back underneath the parent tree. For this reason, if you are using a very flat dispersal kernel, you may wish to consider a non-spatial disperse method. 
+</p>
+ 
+<p>
+The normalizer (Equation 3 of <a href="../../more_info/further_reading.html">Ribbens et al 1994</a>) serves two functions. It reduces parameter correlation between <i>STR</i> and the dispersion parameter (<i>D</i>); and scales the distance-dependent dispersion term so that <i>STR</i> is in meaningful units - i.e. the total # of seedlings produced in the entire seedling shadow of a 30 cm DBH parent tree.
+</p>
+
+</body>
+</html>

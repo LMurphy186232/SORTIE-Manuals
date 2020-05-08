@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Design Philosophy</title>
+</head>
+
+<body>
+<h1>SORTIE-ND Design Philosophy</h1>
+
+<h3>Easy code maintainability</h3>
+<p>
+Increased code maintainability means that it is easy to change and extend a portion of the model without unintended side effects.  To do that, we have used object-oriented programming principles to break up the code into more self-contained objects that rely much less on other objects. 
+</p>
+
+<h3>Easy-to-understand code</h3>
+<p>
+We have packaged the code into objects and designed the objects to make the most functional sense.  This makes it much easier to determine what each object's purpose is and to see how they interact.  This greatly shortens the code needed to run the core model and makes program flow much easier to understand.
+</p>
+<p>
+We have described a set of core object types - Grids, Populations, and Behaviors - which are extended to cover all core model functionality.  This gives programmers a mental map to use when looking at a new object or designing one - they know what behaviors are for, how they are used, and how they interact with other objects.
+</p>
+
+<h3>Platform independence</h3>
+<p>
+The core model code is separate from interface code.  This allows us to write in ANSI C++ and Pure Java and keep ourselves free from proprietary tools.  This also means that other developers are free to extend the core model and to provide new tools for dealing with input and output without being locked into a structure we set up.  We will be able to take advantage of the creativity of other programmers and users, no matter what their preferred OS, language, or development kit. 
+</p>
+
+<h3>Easy-to-use application</h3>
+<p>
+Since our architecture makes object interactions simpler and testing and debugging easier, we should be able to build a stable piece of code.  We will also have an improved error catching and reporting system which makes the model more resilient and lets the user troubleshoot more easily when something does go wrong.
+</p>
+<p>
+We will also be able to easily port the code to different platforms, opening it up to a broader user base.  And users can create and extend tools and share their results with the SORTIE community.
+</p>
+
+<h3>Good versioning</h3>
+<p>
+It is very important that someone be able to describe exactly what version of the model they are using.  The model major and minor versions go a long way towards this, but aren't quite precise enough.  To accomplish complete precision, each object has its own version number.  In order to completely describe the model, the model can write out all objects loaded and their version numbers.  This, in combination with a parameter file, is a complete description of a run.
+</p>
+<p>
+In order for version numbers to be meaningful, we must have a strict control procedure for updating objects.  Every time an object is updated, no matter how small, it must be assigned a new version number.  Other people may write and update objects, but in order for them to be "official", they must be sent back to the Cary team for versioning and re-distribution.
+</p>
+</body>
+</html>

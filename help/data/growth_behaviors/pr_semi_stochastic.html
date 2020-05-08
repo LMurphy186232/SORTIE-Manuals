@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Puerto Rico semi-stochastic - diam only</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Puerto Rico semi-stochastic - diam only</h1>
+<p>
+This behavior combines a deterministic growth function for small trees with completely stochastic growth for larger trees.  It's meant to be used when a species uses a height growth behavior as the primary growth method.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">PR - "a" Parameter for Deterministic Growth</td><td> "a" parameter used to calculate deterministic growth when a tree is below the stochastic height threshold. </td></tr>
+
+<tr><td class="parname">PR - "b" Parameter for Deterministic Growth</td><td> "b" parameter used to calculate deterministic growth when a tree is below the stochastic height threshold.</td></tr>
+
+<tr><td class="parname">PR - Height Threshold for Stochastic Growth (m)</td><td> The tree height threshold, in meters, between deterministic and stochastic growth. </td></tr>
+
+<tr><td class="parname">PR - Mean DBH (cm) for Stochastic Growth</td><td> The mean for DBH values, in cm, when a tree uses stochastic growth.  This is the mean of the DBH value, NOT the amount of growth.</td></tr>
+
+<tr><td class="parname">PR - DBH Standard Deviation for Stochastic Growth</td><td> Standard deviation for DBH values when a tree uses stochastic growth.  This is the standard deviation of the DBH value, NOT the amount of growth. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The divide between the two growth functions is defined in the <b>PR - Height Threshold for Stochastic Growth (m)</b> parameter.  Trees shorter than this use the following function:
+</p>
+<center><i>Y = (A * exp(-B * Height)) - Diam</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Y</i> = diameter growth for the timestep, in cm</li>
+<li><i>a</i> = <b>PR - "a" Parameter for Deterministic Growth</b> parameter</li>
+<li><i>b</i> = <b>PR - "b" Parameter for Deterministic Growth</b> parameter</li>
+<li><i>Height</i> = tree height in cm AFTER height growth in the current timestep</li>
+<li><i>diam</i> = diameter of the tree at which to apply growth (before growth), in cm</li>
+</ul>
+<p>
+Above the height cutoff, trees are assigned random diameters drawn from a normal distribution.  The normal distribution is defined by the <b>PR - Mean DBH (cm) for Stochastic Growth</b> and <b>PR - DBH Standard Deviation for Stochastic Growth</b> parameters, and represents the distribution of DBH values, NOT growth values.  The amount of growth for a tree is Y = D' - D, where Y is the amount of growth, D' is the new diameter chosen from the normal distribution, and D is the previous diameter.  This means that growth can be negative.  The effect is to create a tree population with normally-distributed diameters, where any individual tree may jump from place to place within the distribution.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This function can be applied to seedlings, saplings, or adults of any species.  Any tree using this behavior must also use a height-only growth behavior.
+</p>
+</body>
+</html>

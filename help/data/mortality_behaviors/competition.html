@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Competition Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Competition Mortality</h1>
+<p>
+Competition mortality is a growth-based mortality behavior.  It uses the results of the <a href="../growth_behaviors/nci.html">NCI growth</a> behavior.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Competition Mortality Shape Parameter (Z)</td><td> Determines the shape of the mortality function. </td></tr>
+
+<tr><td class="parname">Competition Mortality Maximum Parameter (max)</td><td> The maximum relative increment of growth subject to mortality. </td></tr> 
+</table>
+
+<h3>How it works</h3>
+<p>
+NCI growth in SORTIE is calculated in the following way:
+</p>
+<center><i>Growth = Max Growth * Size Effect * Shading Effect * Crowding Effect * Damage Effect</i></center><br>
+<p>
+Max Growth is the maximum diameter growth the tree can attain, in cm/yr, entered in the <b>NCI Maximum Potential Growth, cm/yr</b> parameter.  <i>Size Effect</i>, <i>Shading Effect</i>, <i>Crowding Effect</i>, and <i>Damage Effect</i> are all factors which act to reduce the maximum growth rate and will vary depending on the conditions a tree is in.  Each of these effects is a value between 0 and 1.
+</p>
+<p>
+In the Competition mortality behavior, the following measure is used as predictor variable for probability of mortality: 
+</p>
+<center><i>Relative increment = Growth / PG</i></center><br>
+<p>
+The <i>relative increment</i> is the ratio between the growth for an individual tree and the maximum growth possible for that tree.  The <i>Growth</i> is the tree's growth for the previous timestep.  <i>PG</i> is calculated as follows: 
+</p>
+<center><i>PG = Max Growth * SE</i></center>
+<p>
+where Max Growth is the NCI growth parameter <b>NCI Maximum Potential Growth, cm/yr</b>, and <i>SE</i> is the Size Effect.  Size Effect is calculated as follows:
+</p>
+<center><img alt="NCI size effect equation" src="../data_files/nci_size_effect.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>DBH </i>is of the target tree, in cm</li>
+<li><i>X<sub>0</sub></i> is the <b>NCI Size Effect Mode, in cm (X0)</b> NCI growth parameter</li>
+<li><i>X<sub>b</sub></i> is the <b>NCI Size Effect Variance, in cm (Xb)</b> NCI growth parameter</li>
+</ul>
+
+<p>
+Once the <i>relative increment</i> for an individual tree has been calculated, the probability of mortality for that individual is calculated in the following way:
+</p>
+<br><center><i>Prob = Z<sup> relative increment / max</sup></i></center><br>
+<p>
+where:
+</p>
+<ul>
+<li><i>Prob</i> is the probability of mortality</li>
+<li><i>Z</i> is the <b>Competition Mortality Shape Parameter (Z)</b> parameter</li>
+<li><i>max</i> is the <b>Competition Mortality Maximum Parameter (max)</b> parameter, which indicates the maximum <i>relative increment</i> subject to mortality<li>
+</ul>
+<p>
+All trees with a <i>relative increment</i> greater than or equal to <i>max</i> will live.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species. It cannot be applied to seedlings.  Any tree species/type combination to which it is applied must also have NCI growth.  <b>This behavior can only be applied with a one year timestep.</b>
+</p>
+</body>
+</html>

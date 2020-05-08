@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Michaelis Menton with negative growth - height only</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Michaelis Menton with negative growth - height only</h1>
+<p>
+This behavior uses a modified Michaelis-Menton function to do height growth.  You can optionally add autocorrelation and a degree of stochasticity to the growth.
+</p> 
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Michaelis-Menton Neg Growth - Alpha</td><td>  Alpha parameter. </td></tr>
+   
+<tr><td class="parname">Michaelis-Menton Neg Growth - Beta</td><td>  Beta parameter. Cannot be equal to zero.</td></tr>
+
+<tr><td class="parname">Michaelis-Menton Neg Growth - Gamma</td><td>  Gamma parameter. </td></tr>
+ 
+<tr><td class="parname">Michaelis-Menton Neg Growth - Phi</td><td>  Phi parameter.</td></tr>
+
+<tr><td class="parname">Michaelis-Menton Neg Growth - Growth Standard Deviation</td><td> Standard deviation of growth stochasticity, cm / yr. Use zero if growth should have no stochasticity. </td></tr>
+
+<tr><td class="parname">Michaelis-Menton Neg Growth - Autocorrelation Prob (0-1)</td><td> Probability of autocorrelation from year to year, as a value from 0 to 1. Use 0 if there should be no autocorrelation.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The amount of height growth is calculated as:
+</p> 
+<center><img src="../data_files/mm_neg_eq.gif" alt="Michaelis Menton with negative growth equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Y</i> is the amount of height growth for one year, in cm</li>
+<li><i>GLI</i> is the light level</li>
+<li><i>&#945;</i> is the <b>Michaelis-Menton Neg Growth - Alpha</b> parameter</li>
+<li><i>&#946;</i> is the <b>Michaelis-Menton Neg Growth - Beta</b> parameter</li>
+<li><i>&#947;</i> is the <b>Michaelis-Menton Neg Growth - Gamma</b> parameter</li>
+<li><i>&#966;</i> is the <b>Michaelis-Menton Neg Growth - Phi</b> parameter</li>
+<li><i>H</i> is the tree's height in cm</li>
+</ul>
+<p>
+Optionally, the value of <i>Y</i> can be randomized by adding to it a stochastic factor <i>SF</i>, which is a random draw on a normal distribution with mean zero and standard deviation set using the <b>Michaelis-Menton Neg Growth - Growth Standard Deviation</b> parameter. <i>SF</i> can be positive or negative and is in units of centimeters of height growth. If you do not want to add <i>SF</i>, set the value of this parameter to zero.  
+</p>
+<p>
+If you are using the stochastic factor <i>SF</i>, you can also introduce autocorrelation in the growth stochasticity.  Each year, for each tree, a random number is compared to the value in the <b>Michaelis-Menton Neg Growth - Autocorrelation Prob (0-1)</b> parameter for that tree's species to determine if the stochastic factor will be autocorrelated for that year.  If it is autocorrelated, the previous year's stochastic factor <i>SF</i> is added to <i>Y</i> to determine height growth.  If it is not autocorrelated, a new value for <i>SF</i> is drawn.  If you do not wish to use autocorrelation, set the value of the autocorrelation parameter to zero.  Autocorrelation is ignored if there is no growth stochasticity.
+</p>
+<p>
+If the timestep is more than one year long, growth is recalculated for each year of the timestep, increasing the height each time.  Stochasticity and autocorrelation are also evaluated on a yearly basis.
+</p>
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> and a diameter growth behavior applied.</p>
+</body>
+</html>

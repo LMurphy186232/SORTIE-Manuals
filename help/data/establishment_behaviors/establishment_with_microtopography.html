@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Establishment with Microtopography</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Establishment with Microtopography</h1>
+<p>
+This behavior germinates seeds into seedlings.  It simulates microtopography in the plot and assigns new seedlings a rooting height as a function of the type of
+substrate on which they land (from the <a href="../substrate_behaviors/substrate.html">Substrate behavior</a>).  This behavior is designed to work with both the Substrate and the <a href="../light_behaviors/beers_law_light_filter.html">Beer's law light filter</a> behaviors to simulate shading by ferns. The rooting height that seedlings get influences the amount of light they receive. Seeds that land on fresh logs, in addition, are eligible for a respite from the Beer's law light filter behavior.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Mean Height of Fresh Log Substrate, in m</td><td> The mean height of fresh log substrate, in meters.</td></tr>
+
+<tr><td class="parname">Mean Height of Mounds, in m</td><td> The mean height of mounded areas, in meters.</td></tr>
+
+<tr><td class="parname"># Years Respite from Fern Shading for Seeds on Fresh Logs</td><td> The maximum number of years that seeds can get respite from fern shading, as implemented by the <a href="../light_behaviors/index.html">Beer's law light filter behavior</a>. </td></tr>
+
+<tr><td class="parname">Proportion of Plot Area that is Mound</td><td>Proportion of the plot area that is mound area, between 0 and 1.</td></tr>
+
+<tr><td class="parname">Standard Deviation of Fresh Log Substrate Height, in m</td><td> The standard deviation of height of fresh log substrate, in meters. </td></tr>
+
+<tr><td class="parname">Standard Deviation of Mound Height, in m</td><td>  The standard deviation of the height of mounded areas, in meters.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Each timestep, the behavior starts by getting the substrate proportions for each cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a>. The
+six substrate types are further divided into mound and non-mound types of each according to the <b>Proportion of Ground Area that is Mound</b> parameter. The relative proportions of the different kinds of substrate are thus the same on mound and non-mound areas.
+</p>
+<p>
+The seeds in the Dispersed Seeds grid cell are then divided up among the substrate types in that cell according to their proportions relative to each other (so if 60% of the cell area is mound forest floor moss, that's the substrate type that 60% of the seeds land on). A seedling is created from each seed. Seedlings are randomly placed within their seed grid cell area and have a slightly randomized value of <a href="../tree_parameters.html">New seedling diameter at 10 cm</a>.
+</p>
+<p>
+Each seedling then gets a rooting height according to the substrate type upon which it has germinated. If it has germinated on fresh logs, its rooting height is a random number drawn from a normal distribution controlled by the <b>Mean Height of Fresh Log Substrate, in m</b> and <b>Standard Deviation of Fresh Log Substrate Height, in m</b> parameters (no distinction is made between mound and non-mound fresh logs). If it's on a mound substrate, its rooting height is a random number drawn from a normal distribution controlled by the <b>Mean Height of Mounds, in m</b> and <b>Standard Deviation of Mound Height, in m</b> parameters. If it's on a non-mound substrate, its rooting height is zero.
+</p>
+<p>
+If a seedling germinates on fresh log, it has the chance of getting a respite from the effects of the <a href="../light_behaviors/beers_law_light_filter.html">Beer's law light filter</a> behavior, which it expects to simulate fern shading. Fallen logs crash through the fern layer, and it takes a while for the ferns to grow back over the top of the log. This length of time is the maximum possible respite length, and is set in the <b># Years Respite from Fern Shading for Seeds on Fresh Logs</b> parameter. <a href="../substrate_behaviors/substrate.html">Substrate</a> keeps track of the age of its fresh log cohorts, so that it is possible to randomly assign the seedling to a fresh log of a specific age, given the relative proportions of various-aged fresh log cohorts. The age of the log is subtracted from the maximum respite length, and this value is assigned to the seedling. Thus a log that fell this timestep would give a seedling the maximum respite, whereas a much older log may not give any respite at all.
+</p>
+<h3>How to apply it</h3>
+<p>Apply this behavior to seeds of your desired species. Any species to which it is applied must also satisfy the following requirements:
+</p>
+<ul>
+<li>A disperse behavior must be applied</li>
+<li>The <a href="../substrate_behaviors/substrate.html">Substrate</a> behavior must be applied</li>
+<li>The <a href="../light_behaviors/index.html">Beer's Law light filter</a> behavior must be applied</li>
+</ul>
+</body>
+</html>

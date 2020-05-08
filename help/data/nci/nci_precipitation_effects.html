@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI precipitation effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI precipitation effects</h1>
+<p>
+Precipitation effects adjust tree growth based on plot precipitation.
+</p>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+
+
+<hr/>
+<h2>Weibull precipitation effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname"> Weibull Precip Effect "A"</td><td> The A parameter for the precipitation effect. Units of precipitation are millimeters per year. </td></tr>
+
+<tr><td class="parname"> Weibull Precip Effect "B"</td><td> The B parameter for the precipitation effect. Units of precipitation are millimeters per year.</td></tr>
+
+<tr><td class="parname"> Weibull Precip Effect "C"</td><td> The C parameter for the precipitation effect. Units of precipitation are millimeters per year. </td></tr>
+
+<tr><td class="parname"> Precipitation Type to Use</td><td> Which precipitation variable should be used. </td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Precipitation Effect</i> is calculated as:
+</p>
+<center><i>PE = </i><img alt="Weibull climate growth precipitation effect equation" src="../data_files/weib_precip.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>A</i> is the <b>Weibull Precip Effect "A"</b> parameter</li>
+<li><i>B</i> is the <b>Weibull Precip Effect "B"</b> parameter</li>
+<li><i>C</i> is the <b>Weibull Precip Effect "C"</b> parameter</li>
+<li><i>P</i> is one of the <a href="../plot.html">Plot</a>'s precipitation variables.</li>
+</ul>
+
+<p>
+The desired precipitation variable is set in the <b>Precipitation Type to Use</b> variable.
+</p>
+
+
+
+
+<hr/>
+<h2>Double logistic precipitation effect</h2>
+<h3>Parameters</h3>
+<table class="parlist">
+
+<tr><td class="parname">Double Logistic Precip Effect "al"</td><td>The a<sub>l</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname">Double Logistic Precip Effect "bl"</td><td>The b<sub>l</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname">Double Logistic Precip Effect "cl"</td><td>The c<sub>l</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname">Double Logistic Precip Effect "ah"</td><td>The a<sub>h</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname">Double Logistic Precip Effect "bh"</td><td>The b<sub>h</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname">Double Logistic Precip Effect "ch"</td><td>The c<sub>h</sub> parameter for the precipitation effect.</td></tr>
+
+<tr><td class="parname"> Precipitation Type to Use</td><td> Which precipitation variable should be used. </td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+<i>Precipitation Effect</i> is calculated as:
+</p>
+<center><i></i><img alt="Double logistic climate growth temperature effect equation" src="../data_files/precip_double_logistic.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>a<sub>l</sub></i> is the <b>Double Logistic Precip Effect "al"</b> parameter</li>
+<li><i>b<sub>l</sub></i> is the <b>Double Logistic Precip Effect "bl"</b> parameter</li>
+<li><i>c<sub>l</sub></i> is the <b>Double Logistic Precip Effect "cl"</b> parameter</li>
+<li><i>a<sub>h</sub></i> is the <b>Double Logistic Precip Effect "ah"</b> parameter</li>
+<li><i>b<sub>h</sub></i> is the <b>Double Logistic Precip Effect "bh"</b> parameter</li>
+<li><i>c<sub>h</sub></i> is the <b>Double Logistic Precip Effect "ch"</b> parameter</li>
+<li><i>ppt</i> is one of the <a href="../plot.html">Plot</a>'s precipitation variables.</li> </ul>
+
+</body>
+</html>

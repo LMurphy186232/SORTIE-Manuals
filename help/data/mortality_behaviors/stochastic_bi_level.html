@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Stochastic Bi-Level Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Stochastic Bi-Level Mortality</h1>
+
+<p>
+This behavior applies a constant rate of mortality to trees, with different rates for high-light and low-light conditions. There are two versions, designed to work with different behaviors that calculate light levels (Stochastic Bi-Level Mortality - Storm Light and Stochastic bi-level mortality - GLI)
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Stochastic Bi-Level - High-Light Mortality Probability (0-1)</td><td> The annual probability of mortality under high-light conditions, as a proportion between 0 and 1.</td></tr>
+
+<tr><td class="parname">Stochastic Bi-Level - High-Light Mortality Threshold </td><td> The threshold between low-light and high-light mortality rates, as a value between 0 and 100. </td></tr>
+
+<tr><td class="parname">Stochastic Bi-Level - Low-Light Mortality Probability (0-1)</td><td> The annual probability of mortality under low-light conditions, as a proportion between 0 and 1. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+In the version of the behavior called Stochastic Bi-Level Mortality - Storm Light, light levels come from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid produced by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior. In the version called Stochastic Bi-Level Mortality - GLI, light levels come from any <a href="../light_behaviors/index.html">light behavior</a> that can be applied directly to trees. 
+</p>
+<p>
+The threshold between the use of high-light and low-light parameters is set in the <b>Stochastic Bi-Level - High-Light Mortality Threshold</b> parameter. The units depend on which index of light is being used. Check the documentation on your chosen light behavior carefully. 
+</p>
+<p>
+For each tree, a random number is compared to that species's probability of mortality to determine if it dies.  If light levels qualify as high light, the probability of mortality is the value in the <b>Stochastic Bi-Level - High-Light Mortality Probability (0-1)</b> parameter; if the light levels are low, the probability of mortality is the value in the <b>Stochastic Bi-Level - Low-Light Mortality Probability (0-1)</b> parameter.
+</p>
+<p>
+If the timestep length is not one year, the probability of mortality is adjusted from an annual mortality probability to a timestep probability. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  If you have chosen the version marked "Storm Light", you must also use the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior. If you have chosen the version marked "GLI", you must assign a <a href="../light_behaviors/index.html">light behavior</a> to all trees to which you assign this mortality. 
+</p>
+</body>
+</html>

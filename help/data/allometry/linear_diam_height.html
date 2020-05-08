@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>The linear diameter-height relationship</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>The linear diameter-height relationship</h1>
+<p>
+The linear diameter-height relationship is the same for all life history stages, but each stage can use a different set of parameter values.
+</p>
+<h3>Parameters</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Maximum Tree Height, in meters</td><td> The maximum tree height for a species, in meters. No tree, no matter what allometric function it uses, is allowed to get taller than this. Used by all species.</td></tr>
+
+<tr><td class="parname">Adult Linear Function Intercept</td><td>  The intercept of the adult linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Adult Linear Function Slope</td><td>  The slope of the adult linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Sapling Linear Function Intercept</td><td> The intercept of the sapling linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Sapling Linear Function Slope</td><td>  The intercept of the sapling linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Seedling Linear Function Intercept</td><td>  The intercept of the seedling linear function for DBH and height.</td></tr>
+
+<tr><td class="parname">Seedling Linear Function Slope</td><td>  The slope of the seedling linear function for DBH and height.</td></tr>
+
+</table>
+<p>
+The linear diam - height function is:
+</p>
+<center><i>height = a + b * diam</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>height</i> is tree height, in m</li>
+<li><i>a</i> is the appropriate linear intercept parameter (either <b>Adult Linear Function Intercept</b>, <b>Sapling Linear Function Intercept</b>, or <b>Seedling Linear Function Intercept</b>)</li>
+<li><i>b</i> is the appropriate linear slope parameter (either <b>Adult Linear Function Slope</b>, <b>Sapling Linear Function Slope</b>, or <b>Seedling Linear Function Slope</b>)</li>
+<li><i>diam</i> is DBH (in cm) for saplings and adults, or diam<sub>10</sub> (in cm) for seedlings</li>
+</ul>
+
+</body>
+</html>

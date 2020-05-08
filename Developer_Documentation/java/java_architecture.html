@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - Java Architecture</title>
+</head>
+
+<body>
+<h1>The Java Architecture</h1>
+<p>
+The design of the Java GUI is not fundamental to the functioning of SORTIE-ND, like the design of the core model is. The GUI could use any design which allowed it to perform its designated jobs (creating the parameter file, calling the core model, and interpreting model output). This means that I welcome ideas for architecture improvement.
+</p>
+<p>
+While there are several packages, they do three main things: parameter file building, output file visualization, and miscellaneous tools and utilities. The parameter file building code is built in a similar fashion to the C++ model core, but it's meant to be "smarter" than the C++ code and more aware of the logic of simulation building, to keep the user from making logical mistakes that the core would allow. Output file code is all kept in the <code>datavisualizer</code> package. All tools are in the <code>tools</code> package.
+</p>
+<h2>Parameter file editing code</h2>
+<p>
+The class structure of the parameter file editing code, mostly found in the package root <code>sortie.data</code>, mirrors the C++ code.  There's a <a href="../java_doc/classsortie_1_1gui_1_1GUIManager.html">GUIManager</a>, which functions 
+much like the Simulation Manager.  There are <a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1Behavior.html">Behaviors</a> collected into 
+<a href="../java_doc/classsortie_1_1data_1_1funcgroups_1_1BehaviorTypeBase.html">BehaviorTypeBases</a>, which map to functional submodels.  If you understand the C++ architecture, it 
+will help a lot when it's time to look at the Java code.
+</p>
+<h2>datavisualizer package</h2>
+<p>
+The <code>datavisualizer</code> package is simpler than it looks.  Multiple files can be open at once in the interface for graphing; each open file is managed by an object descended
+from <a href="../java_doc/classsortie_1_1datavisualizer_1_1DataFileManager.html">DataFileManager</a>.  For detailed output files, each type of chart is managed by a separate object descended from <a href="../java_doc/classsortie_1_1datavisualizer_1_1DataRequest.html">DataRequest</a>, which knows how to collect and draw data for its particular chart type.  Detailed output files are parsed from the XML by <a href="../java_doc/classsortie_1_1datavisualizer_1_1DetailedOutputFileSetupParseHandler.html">DetailedOutputFileSetupParseHandler</a> and 
+<a href="../java_doc/classsortie_1_1datavisualizer_1_1DetailedOutputTimestepParseHandler.html">DetailedOutputTimestepParseHandler</a>.  Most of the actual graphics code resides in <a href="../java_doc/classsortie_1_1datavisualizer_1_1DataGrapher.html">DataGrapher</a>.  
+</p>
+</body>
+</html>

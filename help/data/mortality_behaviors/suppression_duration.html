@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Suppression Duration Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Suppression Duration Mortality</h1>
+
+<p>
+This behavior evaluates mortality as a function of tree age. This is particularly useful for simulating suppression in seedlings. 
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Suppression Duration Mortality - Max Mortality Rate (0-1)</td><td> The maximum mortality rate for suppressed trees.</td></tr>
+
+<tr><td class="parname">Suppression Duration Mortality - X0</td><td> X0 in the suppression mortality function. This is the age at which half of the maximum mortality rate is reached.</td></tr>
+
+<tr><td class="parname">Suppression Duration Mortality - Xb</td><td> Xb in the suppression mortality function.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+A tree's probability of mortality is: 
+</p>
+<center><img src="../data_files/supp_dur_mort.gif" alt="p eq max/(1+(age/X0)^Xb)"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>p</i> is the probability of mortality </li>
+<li><i>Max</i> is the <b>Suppression Duration Mortality - Max Mortality Rate (0-1)</b> parameter </li>
+<li><i>X<sub>0</sub></i> is the <b>Suppression Duration Mortality - X0</b> parameter </li>
+<li><i>X<sub>b</sub></i> is the <b>Suppression Duration Mortality - Xb</b> parameter </li>
+<li><i>Age</i> is the tree's age, in years </li>
+</ul>
+<p>
+The value for X<sub>0</sub> is the age at which half of the maximum mortality rate is reached. Tree age is tracked using the <a href="../analysis_behaviors/tree_age.html">Tree Age Calculator</a> behavior. Initial conditions trees get a mortality of zero because their age is unreliable.   
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to trees of any species. Trees must also have the <a href="../analysis_behaviors/tree_age.html">Tree Age Calculator</a> behavior applied.  
+</p>
+</body>
+</html>

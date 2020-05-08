@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE Developer's Manual - Run Structure</title>
+</head>
+
+<body>
+
+<h1>How a run progresses</h1>
+<p>
+A run is controlled entirely by the Simulation Manager object (class <a href="../c_doc/classclSimManager.html">clSimManager</a>). The Simulation Manager object is responsible for creating and destroying all other objects and for triggering each timestep's actions.  For more on the specific classes, see <a href="../cplusplus/cplusplus_architecture.html">Model Architecture</a>.
+</p>
+<p>
+Here is a diagram showing the basic steps which happens during a run:
+<br>
+<img src="../doc_files/run.gif">
+</p>
+<p>
+The Java interface does not deal directly with the Simulation Manager object; it just launches the C++ executable.
+</p>
+</body>
+</html>

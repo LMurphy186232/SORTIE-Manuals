@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Viewing output data while a run is still in progress</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Viewing output data while a run is still in progress</h1>
+<p>
+You can view the output from a run as it progresses.  SORTIE will keep a set of open charts updated with the results of the latest timestep.  Here's how to use this feature:  
+</p>
+<ol>
+<li>
+Load your parameter file. Make sure you have the output files set up the way you want. 
+</li>
+<li>
+Start the run so SORTIE has some output to display.  A simple way to do this is to click the "Run one timestep" button (the one on the main window with two right-facing triangles).  When SORTIE has completed the timestep, the message bar at the bottom of the window will display a message indicating that the run has paused.  You can also run the model using "Model->Run" from the main menu or the Run button (with the single right-facing arrow); you can pause the run at any point to start viewing data.  
+</li>
+<li>
+Once the run is paused, click the "View run output" button.  SORTIE will load the output files from the current run and analyze them to determine what charts you can view. (SORTIE will not force you to first pause the run, but it is highly recommended. This ensures that the model is not trying to write new output to the files at the same time as it is trying to open them to be read.) 
+</li>
+<li>
+Open the charts you wish to view (see <a href=#graphing>Displaying the data from a file</a>.  If a chart you want is not listed for any output file, it means that the data it requires is not being saved.  You must stop the run, change your output options, and start a new run. 
+</li>
+<li>
+Start the model running again.  As the model completes each timestep, it will update any open charts (while it does this, you may see a message that the model is paused at the bottom of the screen; this is normal).  You can open new charts or close existing ones at any point in the run (again, pausing is recommended before opening new charts).
+</li>
+</ol>
+<p>
+<b>Note</b>:  While displaying a current run's output is a useful feature, it is not the most efficient way to do a run.  If you do not actually need to keep tabs on a run's progress, or if you are satisfied with the way a current run is going, allow it to run without open charts.  The run will execute much faster.  If you currently have charts open for a run, you can use the menu command "File->Close run output file" to close each of the run's output files.  Once all output files are closed, the run will switch back to the more efficient mode. 
+</p>
+
+</body>
+</html>

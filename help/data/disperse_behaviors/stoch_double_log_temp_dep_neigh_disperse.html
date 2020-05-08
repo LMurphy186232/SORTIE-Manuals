@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Stochastic Double Logistic Temp Dependent Neighborhood Disperse behavior</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Stochastic Double Logistic Temp Dependent Neighborhood Disperse behavior</h1>
+
+<p>This behavior calculates seed density based on annual mean temperature and the basal area of neighborhood adults.  </p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+<tr><td class="parname">Colonization PA </td><td> PA in the function determing probability of colonization. </td></tr>
+<tr><td class="parname">Colonization PB </td><td> PB in the function determing probability of colonization. </td></tr>
+<tr><td class="parname">Colonization PM </td><td> PM in the function determing probability of colonization. </td></tr>
+<tr><td class="parname">Cumulative Colonization Probability Period (years)</td><td> The period over which the probability of colonization is cumulative.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Al</td><td> A<sub>l</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Bl</td><td> B<sub>l</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Cl</td><td> C<sub>l</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Ah</td><td> A<sub>h</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Bh</td><td> B<sub>h</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Fecundity Temperature Effect Ch</td><td> C<sub>h</sub> in the temperature effect portion of fecundity. Ignored if "Use Temperature-Dependent Fecundity?" is set to false.</td></tr>
+<tr><td class="parname">Max Search Distance for Conspecific Adults (m)</td><td> The maximum distance to search for conspecific adults when determining number of seeds. </td></tr>
+<tr><td class="parname">Original Analysis Plot Size (m2)</td><td> The size of the seedling plots in the original parameter analysis, in square meters. This is used to scale the per-grid-cell seed values. </td></tr
+<tr><td class="parname">Presence Threshold in Absence of Adults (0-1)</td><td> Threshold value, between 0 and 1, of the presence test function above which a species will be allowed to disperse in the absence of parents. 0 always includes a species, 1 always excludes it. </td></tr>
+<tr><td class="parname">Seeds RA</td><td> RA in the final seed calculation. </td></tr>
+<tr><td class="parname">Seeds RB</td><td> RB in the final seed calculation. </td></tr>
+<tr><td class="parname">Use Temperature-Dependent Fecundity?</td><td> Whether or not to use the temperature effect portion of fecundity. If this is false, fecundity = RB. </td></tr>
+
+
+</table>
+
+<h3>How it works </h3>
+<p>
+The mean number of seeds in each cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid is calculated as:
+</p>
+<center><i>Seeds = RA + fec * BAC</i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>Seeds</i> is the mean number of seeds in the cell </li>
+<li><i>RA</i> is the <b>Seeds RA</b> parameter</li>
+<li><i>BAC</i> is the total basal area of neighborhood conspecific adults in square meters within a radius of <b>Max Search Distance for Conspecific Adults (m)</b></li>
+<li><i>fec</i> is a fecundity term (more below)</li>
+</ul>
+<p>
+The mean seed value, above, is used as the mean on a Poisson random draw. The final seed number assigned to the grid is:
+</p>
+<center><i>Final seeds = seeds  * (CA/OA) * Y</i></center>
+<p>
+where:
+<ul>
+<li><i>seeds</i> is the result of the Poisson draw</li>
+<li><i>CA</i> is the area of the grid cell, in square meters</li>
+<li><i>OA</i> is the <b>Original Analysis Plot Size (m2)</b> parameter</li>
+<li><i>Y</i> is the number of years per timestep</li>
+</ul>
+<p>
+Note that this behavior works on a per-grid-cell basis, rather than calculating seed densities on a per-square-meter basis. This is because the Poisson function is influenced by seed grid cell size. You can use the <b>Original Analysis Plot Size (m2)</b> parameter to scale results to original analysis plot size, but for best results, the seed grid cell size should be set to the same or slightly larger than the original analysis seed plot size.
+</p>
+<p>
+"fec" is a per capita seedling production (fecundity) term.  It is a function of temperature and is calculated as:
+</p>
+<center><img src="../data_files/stoch_doub_log_fec.gif" alt="fecundity equation"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>RB</i> is the <b>Seeds RB</b> parameter</li>
+<li><i>T</i> is the annual mean temperature, in <b>degrees Kelvin</b>, calculated from the value in degrees C in the <a href="../plot.html">Plot</a></li>
+<li><i>a<sub>l</sub></i> is the <b>Fecundity Temperature Effect Al</b> parameter</li>
+<li><i>b<sub>l</sub></i> is the <b>Fecundity Temperature Effect Bl</b> parameter</li>
+<li><i>c<sub>l</sub></i> is the <b>Fecundity Temperature Effect Cl</b> parameter</li>
+<li><i>a<sub>h</sub></i> is the <b>Fecundity Temperature Effect Ah</b> parameter</li>
+<li><i>b<sub>h</sub></i> is the <b>Fecundity Temperature Effect Bh</b> parameter</li>
+<li><i>c<sub>h</sub></i> is the <b>Fecundity Temperature Effect Ch</b> parameter</li>
+</ul>
+<p>
+The temperature-dependent portion of fecundity is optional. If the parameter <b>Use Temperature-Dependent Fecundity?</b> is set to false, then <i>fec = RB</i>.
+</p>
+<h3>Colonization</h3>
+<p>
+Note that the RA parameter in the mean seeds equation is an intercept, potentially allowing bath rain of seeds for species for which there are no parents present. To manage this, the behavior uses a colonization test. The <b>cumulative</b> probability of colonization is: 
+</p>
+<center><img src="../data_files/stoch_doub_log_col.gif" alt="P eq pa * exp(-0.5*(((T-M)/B)^2))"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>PC<sub>c</sub></i> is the cumulative probability of colonization</li>
+<li><i>pa</i> is the <b>Colonization PA</b> parameter</li>
+<li><i>pb</i> is the <b>Colonization PB</b> parameter</li>
+<li><i>pm</i> is the <b>Colonization PM</b> parameter</li>
+<li><i>T</i> is the annual mean temperature, in degrees Celsius, as entered for the <a href="../plot.html">Plot</a></li>
+</ul>
+<p>
+PC<sub>c</sub> is the cumulative probability of colonization over an arbitrary time period T.  PC<sub>c</sub> is used to calculate the annualized probability of colonization as:
+</p>
+<center><i>PC<sub>a</sub> = 1 - [(1 - PC<sub>c</sub>)<sup>(1/t)</sup>]</i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>PC<sub>a</sub></i> is the annualized probability of colonization</li>
+<li><i>T</i> is the <b>Cumulative Colonization Probability Period (years)</b> parameter</li>
+</ul>
+<p>
+The behavior compares PC<sub>a</sub> to a random number to determine whether this species is allowed to colonize this timestep. If so, it disperses as described above.
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to adults of the species you wish to use.
+</p>-->
+
+</body>
+</html>

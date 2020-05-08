@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - Exception Handling</title>
+</head>
+
+<body>
+<h1>Exception Handling</h1>
+<p>
+The error reporting mechanism within the code is simple.  There is a standard error structure, modelErr, that should be filled with data at the time of an error and thrown.  When exceptions are caught, they are passed off to the Simulation Manager's HandleError() function.  This function calls the SORTIE standard interface hook ExternalErrorHandler(), which the user interface can implement in any way that it likes.
+</p>
+<p>
+All functions not in the Simulation Manager should trap for their own errors, errors of type modelErr that may be thrown by functions they call, and unexpected errors.  They then rethrow the exceptions, which will work their way up the stack until, if not handled earlier, they will eventually be caught by the Simulation Manager.  Even though exceptions will move up the stack until they find an error handler, all functions still need to error-trap so the error structure can correctly report the function in which the error was thrown.
+</p>
+<p>
+The error codes associated with thrown exceptions can be found in Messages.h.
+</p>
+<p>
+Destructors should not have error-trapping.  It is very bad for a destructor to throw an error.
+</p>
+<p>
+SORTIE-ND throws fatal errors when it does not strictly need to.  For instance, there are times when Behaviors find, during setup, that there is data missing which they don't strictly need but which the user probably intended to include. The code also does checking and validation when it probably doesn't need to. I have chosen to rigorously check and throw fatal errors frequently because this is often the only way we'll find out if there's a bug in the code, or incompatibility when new code is added.
+</p>
+</body>
+</html>

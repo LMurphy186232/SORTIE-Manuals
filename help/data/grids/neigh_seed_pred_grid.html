@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Neighborhood Seed Predation</TITLE>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Neighborhood Seed Predation Grid</h1>
+<p>This grid is created by the <a href="../seed_predation_behaviors/neighborhood_seed_predation.html">Neighborhood Seed Predation </a> and <a href="../seed_predation_behaviors/neighborhood_seed_predation_linked.html">Neighborhood Seed Predation (linked)</a> behaviors.  This grid stores the seed rain before predation and the amount of seeds eaten.  The grid resolution must match the <a href="dispersed_seeds_grid.html">Dispersed Seeds grid</a>.  All data is stored raw, no conversion to per hectare amounts.</p> 
+
+<h3>Data in the grid</h3>
+
+
+<table class="gridlist">
+<tr>
+<th>Data member name</th><th>Description</th>
+</tr>
+<tr>
+<td>Pre-predation seeds for species x</td><td>Number of seeds of species x in the grid cell before predation. Note that if a species is not subject to seed predation, its value may show up here as zero despite having seeds present.  Its seeds are not missing, just ignored. </td>
+</tr>
+<tr>
+<td>Proportion seeds eaten for species x</td><td>Proportion of the seeds of species x eaten this timestep, as a value between 0 and 1.</td>
+</tr>
+</table>
+
+</body>
+</html>

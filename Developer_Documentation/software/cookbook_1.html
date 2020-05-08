@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Creating a new behavior part 1 - design</title>
+</head>
+<body>
+<h1>Creating a new behavior</h1>
+<h2>Part 1:  Design</h2>
+<p>
+These are the steps you take before writing any code. I recommend completely writing out a full design. I catch a lot of problems before I start this way, and determine where I need more information. When you're done with your behavior, your design can be easily transformed into user documentation.
+</p>
+
+<h3>Step 1: Describe the behavior</h3>
+<p>
+Answer the question, "what does this behavior do each timestep when it is called?"  For our example, we've already done that: "It calculates basal area for adult trees and then averages the results locally to create a map of average basal area across the plot."  Our biomass equation will be <i>B = a * DBH <sup>d</sup></i>, where <i>B</i> = biomass in metric tons, and <i>a</i> and <i>d</i> are parameters.
+</p>
+
+<h3>Step 2:  Design the behavior's data structure</h3>
+<p>
+In this step, you list what kinds of data the behavior needs and what data structures it will interact with.  This includes both data that is privately owned by the behavior class, and other SORTIE-ND data objects such as trees and grids.  
+</p>
+<p><b>Private data.</b>  Private data is captured completely within our behavior class.  No other class needs access to it.  Our example behavior has two pieces of private data:  the two parameters, <i>a</i> and <i>d</i>.  Let's say these values are species-specific, and they would be best captured by <code>float</code> variables.  So we know that our behavior requires two float arrays for its private data.  We might decide to name these parameters "slope of biomass equation (a)" and "exponent of biomass equation (d)".  Specify legal values for the parameters.  In our example, a negative value for <i>a</i> makes no sense and is not allowed.
+</p>
+<p>
+<b>Other SORTIE-ND data objects.</b>  Behaviors may or may not need to interact with other SORTIE-ND data objects. Our behavior does. It needs to access adult trees in order to calculate biomass for each, and it needs a grid to store its map of average biomass.
+</p>
+
+<h3>Step 3:  Design the behavior's actions</h3>
+<p>
+This is answering the question, "how does the behavior do what it needs to do?"  Our behavior needs to do the following things each timestep:
+</p>
+<ol>
+<li>Clear the biomass map of the previous timestep's values.</li>
+<li>Access all adult trees.</li>
+<li>For each adult tree, calculate its biomass.</li>
+<li>Total up the biomass by grid cell in the biomass map.</li>
+<li>Calculate the average biomass in each cell to finish the map.</li>
+</ol>
+<p>
+When you do this step, consider the following questions: Does the behavior need to do different things under different conditions?  Are there times when the behavior could skip steps to save time?
+</p>
+
+<h3>Step 4: Write your tests and prepare test data.</h3>
+<p>
+Testing is extremely important. I will not accept any behavior into the code repository if I am not satisfied that it has been thoroughly tested. The best way to satisfy me on this point is to provide written unit tests and an automated testing class that performs the tests. If you have no experience writing tests, you might want to look at a book or website on the subject. I am happy to provide samples of my own tests and help with writing tests.
+</p>
+<p>
+Write your tests right after you write your design, while it is fresh in your mind. Remember to test boundary conditions and error conditions in addition to normal processing.
+</p>
+<p>
+The unit test script for our example behavior would include the following test conditions:
+</p>
+<table border="1" cellpadding="2">
+<tr><th>Test Condition</th><th>Expected Result</th></tr>
+<tr><td>There are no adult trees in the plot.</td><td>All values in the biomass map are zero.</td></tr>
+<tr><td>There are adult trees in the plot, and there is a cell in the biomass map with no adult trees.</td><td>The value in that cell of the biomass map is zero.</td></tr>
+<tr><td>There are adult trees in the plot, and there is a cell in the biomass map with one adult tree.</td><td>The value in that cell of the biomass map is correct.</td></tr>
+<tr><td>There are adult trees in the plot, and there is a cell in the biomass map with more than one adult tree.</td><td>The value in that cell of the biomass map is correct.</td></tr>
+<tr><td>There is an adult tree with a very small value of DBH (boundary condition).</td><td>The biomass value for that tree is correct.</td></tr>
+<tr><td>There is an adult tree with a very large value of DBH (boundary condition).</td><td>The biomass value for that tree is correct.</td></tr>
+<tr><td>A parameter file is entered with a negative value for <i>a</i> (error condition).</td><td>The model throws a fatal error and exits.</td></tr>
+</table>
+
+<p>
+Once you have written your tests, prepare test data.  For the example behavior, we would assemble a list of trees that fulfilled all of the test conditions that involved trees, calculate their biomass according to the equation, and calculate the resulting biomass map.  The automated test that we will write later will create that list of trees and compare the results to the expected results.
+</p>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Lognormal bi-level growth - height only</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Lognormal bi-level growth - height only</h1>
+<p>
+This behavior increments growth according to a lognormal equation, with the possibility of two sets of parameters for each species: one for high-light conditions and one for low-light conditions. This can also be used alone without the light levels.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - Max Growth in High Light (m)</td><td> The maximum height growth, in meters, under high-light conditions. </td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - Max Growth in Low Light (m)</td><td> The maximum height growth, in meters, under low-light conditions. </td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - X0 for High-Light Growth</td><td> The X<sub>0</sub> parameter to use under high-light growth conditions. </td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - X0 for Low-Light Growth</td><td> The X<sub>0</sub> parameter to use under low-light growth conditions.</td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - Xb for High-Light Growth</td><td> The X<sub>b</sub> parameter to use under high-light growth conditions.</td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - Xb for Low-Light Growth</td><td> The X<sub>b</sub> parameter to use under low-light growth conditions.</td></tr>
+
+<tr><td class="parname">Lognormal Bi-Level - Threshold for High-Light Growth (0 - 100)</td><td>The light threshold value between high-light and low-light conditions.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The equation used by this behavior to increment growth is:
+</p>
+<center><img src="../data_files/log_bi_lev_growth_eq.gif" alt="Lognormal bi-level equation"></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> - amount of height growth in m</li>
+<li><i>MG</i> - maximum growth, in meters; in high-light conditions, this is the <b>Lognormal Bi-Level - Max Growth in High Light (m)</b> parameter; in low-light conditions, this is the <b>Lognormal Bi-Level - Max Growth in Low Light (m)</b> parameter</li>
+<li><i>X<sub>0</sub></i> - in high-light conditions, this is the <b>Lognormal Bi-Level - X0 for High-Light Growth</b> parameter; in low-light conditions, this is the <b>Lognormal Bi-Level - X0 for Low-Light Growth</b> parameter</li>
+<li><i>X<sub>b</sub></i> - in high-light conditions, this is the <b>Lognormal Bi-Level - Xb for High-Light Growth</b> parameter; in low-light conditions, this is the <b>Lognormal Bi-Level - Xb for Low-Light Growth</b> parameter</li>
+<li><i>H</i> - tree height in meters</li>
+<li><i>T</i> - number of years per timestep</li>
+</ul>
+<p>
+Light levels come from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid produced by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.  The threshold between the use of high-light and low-light parameters is set in the <b>Lognormal Bi-Level - Threshold for High-Light Growth (0 - 100)</b> parameter.
+</p>
+<p>
+This behavior can also be used without Storm Light.  In this case, only the low-light growth parameters are used.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have a diam-only growth behavior applied.  If you wish to use the light-level parameter switch, also use the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.
+</p>
+</body>
+</html>

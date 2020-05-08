@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Post Harvest Skidding Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Post Harvest Skidding Mortality</h1>
+<p>
+This mortality behavior simulates an increase in mortality after harvesting attributable to skidding damage or other effects. The increase in mortality tapers off through time. DBH and neighborhood basal area can also affect mortality in this behavior.
+</p>
+<p>
+Model forms are based on those in Thorpe et al. 2010.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Crowding Effect Radius</td><td> Maximum distance, in m, for neighbors to have a competitive effect. </td></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Pre-Harvest Background Mort Rate</td><td> Annual mortality rate, 0-1, if no harvest has occurred this run. </td></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Snag Recruitment Background Prob</td><td> Annual postharvest risk of standing death after harvest effects have completely tapered off. </td><tr>  
+
+<tr><td class="parname">Post Harvest Skid Mort - Snag Recruitment Basic Prob</td><td> Basic probability of standing death after harvest.  </td><tr> 
+
+<tr><td class="parname">Post Harvest Skid Mort - Snag Recruitment Crowding Effect</td><td> The effect of neighborhood basal area on standing death probability. </td></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Snag Recruitment Rate Param</td><td> Determines how quickly the effects of harvesting on standing death probability taper off. </td></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Snag Recruitment Skidding Effect</td><td> Effect of harvest intensity on postharvest probability of standing death. </td><tr>    
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Background Prob</td><td> Annual postharvest risk of windthrow after harvest effects have completely tapered off.  </td><tr> 
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Crowding Effect</td><td> The effect of neighborhood basal area on windthrow probability.  </td><tr> 
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Harvest Basic Prob</td><td> Basic annual probability for windthrow after a harvest. </td><tr> 
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Harvest Rate Param</td><td> Determines how quickly the effects of harvesting on windthrow probability taper off.  </td></tr>
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Intensity Effect</td><td> Intensity effect parameter used for determining risk of windthrow. </td><tr> 
+
+<tr><td class="parname">Post Harvest Skid Mort - Windthrow Size Effect</td><td> Size effect term when determining risk of windthrow. </td><tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+If no harvest has occurred yet in this run, the probability of dying in a timestep is:
+</p>
+<center><i>Prob = 1 - (1 - &#946;)<sup>t</sup></i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Prob</i> is the probability of dying before the end of the timestep</li>
+<li><i>&#946; </i> is the <b>Post Harvest Skid Mort - Pre-Harvest Background Mort Rate</b> parameter</li>
+<li><i>t</i> is the number of years per timestep</li>
+</ul>
+<p>
+If a harvest has occurred in the tree's cell during the run, the probability of mortality is:
+</p>
+<center><img src="../data_files/post_harvest_skid_mort.gif"/></center>
+<p>
+multiplying over years i = 1...t (number of years per timestep);
+</p>
+<center><i>W<sub>i</sub>=(&#961; <sub>w</sub> + &#948;<sub>w</sub> * DBH + &#954;<sub>w</sub> * m - &#951;<sub>w</sub> * BA) * exp(-&#964;<sub>w</sub> * (H * t + i)) + &#969;</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>W<sub>i</sub></i> is the annual post-harvest risk of windthrow</li>
+<li><i>&#961;<sub>w</sub></i> is the <b>Post Harvest Skid Mort - Windthrow Harvest Basic Prob</b> parameter</li>
+<li><i>&#948;<sub>w</sub></i> is the <b>Post Harvest Skid Mort - Windthrow Size Effect</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH in cm</li>
+<li><i>&#954;<sub>w</sub></i> is the <b>Post Harvest Skid Mort - Windthrow Intensity Effect</b> parameter</li>
+<li><i>m</i> is the harvest intensity from the tree's "HarvInten" data member, from the HARP external harvesting program (available for download from the SORTIE web site) </li>
+<li><i>&#951; <sub>w</sub></i> is the <b>Post Harvest Skid Mort - Windthrow Crowding Effect</b> parameter </li>
+<li><i>BA</i> is the neighborhood basal area, in sq m per ha, within a radius set by the <b>Post Harvest Skid Mort - Crowding Effect Radius</b> parameter </li>
+<li><i>&#964; <sub>w</sub></i> is the <b>Post Harvest Skid Mort - Windthrow Harvest Rate Param</b> parameter </li>
+<li><i>H</i> is the number of timesteps since the last harvest in this tree's grid cell</li>
+<li><i>t</i> is the number of years per timestep </li>
+<li><i>&#969; </i> is the <b>Post Harvest Skid Mort - Windthrow Background Prob</b> parameter </li> 
+</ul>
+<p>and</p>
+
+<center><i>S<sub>i</sub> = (&#961;<sub>s</sub> + &#954; <sub>s</sub> * m + &#966; <sub>s</sub> * BA) * exp (-&#964; <sub>s</sub> * (H * t + i)) + &#962; </i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>S<sub>i</sub></i> is the annual postharvest risk of standing death </li>
+<li><i>&#961;<sub>s</sub></i> is the <b>Post Harvest Skid Mort - Snag Recruitment Basic Prob</b> parameter </li>
+<li><i>&#954;<sub>s</sub></i> is the <b>Post Harvest Skid Mort - Snag Recruitment Skidding Effect</b> parameter </li> 
+<li><i>m</i> is the harvest intensity from the tree's "HarvInten" data member, from the HARP external harvesting program (available for download from the SORTIE web site) </li>
+<li><i>&#966;<sub>s</sub></i> is the <b>Post Harvest Skid Mort - Snag Recruitment Crowding Effect</b> parameter </li>
+<li><i>BA</i> is the neighborhood basal area, in sq m per ha, within a radius set by the <b>Post Harvest Skid Mort - Crowding Effect Radius</b> parameter </li>
+<li><i>&#964;<sub>s</sub></i> is the <b>Post Harvest Skid Mort - Snag Recruitment Rate Param</b> parameter </li>
+<li><i>H</i> is the number of timesteps since the last harvest in this tree's grid cell</li>
+<li><i>t</i> is the number of years per timestep </li>
+<li><i>&#962; </i> is the <b>Post Harvest Skid Mort - Snag Recruitment Background Prob</b> parameter</li>
+</ul>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species. In order for the harvest intensity term to have an effect, the float data member "HarvInten" must be registered for all species/type combos to which this behavior is applied, by using the HARP external harvesting program along with the <a href="../disturbance_behaviors/harvest_interface.html">Harvest Interface</a>.
+</p>
+</body>
+</html>

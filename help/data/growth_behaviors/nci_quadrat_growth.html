@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI quadrat growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI quadrat growth</h1>
+<p>
+This behavior features a maximum growth rate that is adjusted using a set of factors of your choice. You can choose any combination you wish. In particular, this has several ways to implement the the effects of neighbor competitiveness to influence growth rates ("NCI" stands for neighborhood competition index). For processing efficiency, growth is calculated for each species on a per grid cell basis.
+</p>
+ 
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Maximum Potential Growth, cm/yr</td><td> Maximum potential diameter growth for a tree, in cm/yr.</td></tr>
+
+<tr><td class="parname">Growth Increment Adjustment PDF</td><td> PDF to use to stochastically adjust the growth increment (including "none" for no adjustment).</td></tr>
+
+<tr><td class="parname">Std Deviation for Normal or Lognormal Adjustment</td><td> Value for standard deviation if the parameter <b>Growth Increment Adjustment PDF</b> is set to "normal" or "lognormal".</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+
+<p>
+This behavior tracks growth using the <a href="../grids/nci_quadrat_growth_grid.html">NCI Quadrat Growth</a> grid.  Each tree gets the growth rate calculated for the grid cell in which it is found. You can set the grid cell size to set the balance between neighborhood composition resolution ( smaller grid cells) and processing time ( larger grid cells).   
+</p>
+<p>
+For a given species in a given grid cell, the amount of diameter growth per year is calculated as:
+</p>
+<br><center><i>Growth = Max Growth * [Crowding Effects] * [Precipitation Effects] * [Temperature Effects] * [Nitrogen Effects] * [Infection Effects]</i></center><br>
+<p>
+Max Growth is the maximum diameter growth the tree can attain, in cm/yr, entered in the <b>NCI Maximum Potential Growth, cm/yr</b> parameter. You can have an effect in each category (or none at all) which acts to reduce the maximum growth rate. Each of these effects is a value between 0 and 1.
+</p>
+
+<p>
+Effects choices:
+</p>
+<ul>
+<li><a href="../nci/nci_crowding_effects.html">Crowding effects</a></li>
+<li><a href="../nci/nci_precipitation_effects.html">Precipitation effects</a></li>
+<li><a href="../nci/nci_temperature_effects.html">Temperature effects</a></li>
+<li><a href="../nci/nci_nitrogen_effects.html">Nitrogen effects</a></li>
+<li><a href="../nci/nci_infection_effects.html">Infection effects</a></li>
+</ul>
+
+<p>
+The amount of growth is in cm/year.  For multi-year timesteps, the annual growth rate is multiplied by the number of years per timestep.  
+</p>
+<p>
+The growth increment can be applied as-is, or stochasticity can be added. To introduce stochasticity, set the value of the parameter <b>Growth Increment Adjustment PDF</b> to your choice of probability distribution function. The calculated growth increment will be used as the mean value in a random draw on that PDF, with the standard deviation set to the value in the <b>Std Deviation for Normal or Lognormal Adjustment</b>. If the value of the resulting draw is negative, the growth increment is set to zero to avoid negative growth.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  You can use either the diam with auto height or diam only version.
+</p>
+</body>
+</html>

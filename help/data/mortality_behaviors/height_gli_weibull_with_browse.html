@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Height-GLI Weibull Mortality with Browse</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Height-GLI Weibull Mortality with Browse</h1>
+<p>
+This behavior calculates the probability of mortality using a Weibull function of tree height and GLI (light level). It can also simulate the effects of herbivory by using different parameters for browsed and unbrowsed trees.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Height-GLI Weibull - a</td><td> The "a" parameter in the Weibull function for calculating annual mortality.  </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - b</td><td> The "b" parameter in the Weibull function for calculating annual mortality. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - c</td><td> The "c" parameter in the Weibull function for calculating annual mortality. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - d</td><td> The "d" parameter in the Weibull function for calculating annual mortality. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Max Mortality (0 - 1)</td><td> The maximum mortality probability for a species, expressed as a proportion between 0 and 1. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Browsed a</td><td> The "a" parameter in the Weibull function for calculating annual mortality for a browsed tree.  </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Browsed b</td><td> The "b" parameter in the Weibull function for calculating annual mortality for a browsed tree. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Browsed c</td><td> The "c" parameter in the Weibull function for calculating annual mortality for a browsed tree. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Browsed d</td><td> The "d" parameter in the Weibull function for calculating annual mortality for a browsed tree. </td></tr>
+
+<tr><td class="parname">Height-GLI Weibull - Browsed Max Mortality (0 - 1)</td><td> The maximum mortality probability for a browsed tree, expressed as a proportion between 0 and 1. </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The same function is used to calculate the probability of mortality for both browsed and unbrowsed trees, but the parameters are different. The function is:
+</p>
+<center><i>p = M<sub>max</sub> * exp(-a * H <sup>b</sup> - c * GLI <sup>d</sup>)</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>p</i> - annual probability of mortality</li>
+<li><i>M<sub>max</sub></i> - the <b>Height-GLI Weibull - Max Mortality (0 - 1)</b> or <b>Height-GLI Weibull - Browsed Max Mortality (0 - 1)</b> parameter</li>
+<li><i>a</i> - the <b>Height-GLI Weibull - a</b> or <b>Height-GLI Weibull - Browsed a</b> parameter</li>
+<li><i>b</i> - the <b>Height-GLI Weibull - b</b> or <b>Height-GLI Weibull - Browsed b</b> parameter</li>
+<li><i>c</i> - the <b>Height-GLI Weibull - c</b> or <b>Height-GLI Weibull - Browsed c</b> parameter</li>
+<li><i>d</i> - the <b>Height-GLI Weibull - d</b> or <b>Height-GLI Weibull - Browsed d</b> parameter</li>
+<li><i>H</i> - tree height in meters</li>
+<li><i>GLI</i> - light level, between 0 and 100% of full sun</li>
+</ul>
+<p>
+If the timestep length is not one year, the actual probability of mortality for the timestep is calculated as <i>p' = 1 - (1 - p)<sup> T</sup></i>, where <i>p</i> is the annual probability of mortality, <i>p'</i> is the timestep probability of mortality, and <i>T</i> is the number of years per timestep.  Once the mortality probability for the timestep is known for a tree, then a random number is compared to this probability to determine if the tree lives or dies.
+</p>
+<p>
+Light levels can come from any of the <a href="../light_behaviors/index.html">light behaviors</a> that directly assign a tree its light level.  It is expected that this is a GLI value, from 0 to 100% of full sun.
+</p>
+<p>
+Whether or not a tree is browsed is determined by the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior. If the Random browse behavior does not apply to a tree, or is not present in the run, the unbrowsed parameters are always used. The other parameters can be ignored.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  You must also use a <a href="../light_behaviors/index.html">light behavior</a>. If you wish to include the effects of herbivory, also include the <a href="../disturbance_behaviors/random_browse.html">Random browse</a> behavior in the run.
+</p>
+</body>
+</html>

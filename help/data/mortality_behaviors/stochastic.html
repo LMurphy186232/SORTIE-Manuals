@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Stochastic mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Stochastic mortality</h1>
+<p>
+This behavior produces a background mortality rate. Individuals within the pool of trees to which this behavior applies are randomly selected to die.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Background Mortality Rate</td><td> The proportion of trees that die each year, as a value between 0 and 1.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+For each tree, a random number is compared to that species's <b>Background Mortality Rate</b> parameter to determine if it falls in the pool of trees that die.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

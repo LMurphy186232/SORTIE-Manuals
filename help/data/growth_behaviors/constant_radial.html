@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Constant radial growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Constant radial growth</h1>
+
+<h3>Parameters for these behaviors</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Adult Constant Radial Growth in mm/yr</td><td> The constant value by which to increase a tree's radius at breast height.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The amount of diameter increase is calculated from the constant radial increment.  The increase is calculated as follows:
+</p>
+<center><i>Y = (g<sub>4</sub> / 10) * 2 * T</i></center>
+<p>
+where
+</p> 
+<ul>
+<li><i>Y</i> is the amount of diameter growth, in cm, to add to the tree</li>
+<li><i>g<sub>4</sub></i> is the <b>Adult Constant Radial Growth in mm/yr</b> parameter</li>
+<li><i>T</i> is the number of years per timestep</li>
+</ul>
+<p>
+Note that the increment parameter specifies <b>radial</b> growth; the behavior makes all necessary conversions to diameter growth.
+</p>
+
+<h3>How to apply it</h3>
+<p>This behavior can be applied to seedlings, saplings, and adults of any species. Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied.  You can use either the diam with auto height or diam only version.</p>
+</body>
+</html>

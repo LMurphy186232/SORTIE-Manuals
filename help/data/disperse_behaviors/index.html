@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Disperse behaviors</title>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Disperse behaviors</h1>
+
+<p>
+Disperse behaviors create and distribute tree seeds around the plot. Dispersal is the first step in seedling recruitment.
+</p>
+<p>
+Seed totals for different species are stored in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a>. Each of the disperse behaviors adds seeds to this grid. The <a href="../establishment_behaviors/index.html">Establishment behaviors</a> decide which seeds in the grid turn into new seedlings.
+</p>
+<p>For these behaviors, "parent trees" refers to trees over the minimum reproductive DBH for a species. These are the only trees which can contribute new seeds to the plot.</p>
+<p>While there is support in the model for seeds to act as individuals (see <a href="../../using/tree_life_history_stages.html">Tree life history stages</a>), these seeds are not individuals but merely numbers in a grid. You could not, for instance, create a list of individual seed positions.</p>
+
+<h2>Seed randomization</h2>
+<p>The numbers of seeds added by the disperse behaviors can be randomized. You choose how randomization will be applied. If the seed distribution is deterministic, no randomization is done. Otherwise, you can choose a probability distribution function and the number of seeds is treated as the mean of that function. You
+may need to supply additional parameters, depending on the probability distribution function you choose. This randomization applies to the seeds from all disperse behaviors that you have chosen.</p>
+<p>There are four choices for probability distribution functions: the normal, the lognormal, the Poisson, and the negative binomial. The forms for these functions can be found <a href="../../more_info/math.html">here</a>.</p>
+ 
+
+<table class="behaviorlist">
+<tr><th class="behname">Behavior</th><th>Description</th></tr>
+<tr><td class="behname"><a href="non_spatial_disperse.html">Non-spatial disperse behavior</a></td><td>Scatters seeds uniformly across the plot. Non-spatial disperse has two components: basal-area-dependent seed rain and non-density-dependent (bath) seed rain, the two of which are independent and can be used together or separately.</td></tr>
+<tr><td class="behname"><a href="masting_non_spatial_disperse.html">Masting non-spatial disperse behavior</a></td><td>Adds stochasticity to basic seed rain by simulating masting and basic inter - year variation in seed production.</td></tr>
+<tr><td class="behname"><a href="spatial_disperse.html">Spatial disperse behaviors</a></td><td>General information on the spatial disperse algorithm</td></tr>
+<tr><td class="behname"><a href="non_gap_spatial_disperse.html">Non-gap spatial disperse behavior</a></td><td>Disperses seeds in a spatial way, ignoring forest cover.</td></tr>
+<tr><td class="behname"><a href="gap_spatial_disperse.html">Gap spatial disperse behavior</a></td><td>Gap spatial disperse takes forest cover into account when determining the number and placement of seeds.</td></tr>
+<tr><td class="behname"><a href="masting_spatial_disperse.html">Masting spatial disperse behavior</a></td><td>Variant of the <a href="non_gap_spatial_disperse.html">Non-gap spatial disperse</a> behavior that adds masting and more stochasticity in seed production.</td></tr>
+<tr><td class="behname"><a href="stoch_double_log_temp_dep_neigh_disperse.html">Stochastic Double Logistic Temp Dependent Neighborhood Disperse behavior</a></td><td>Calculates seed density based on a double-logistic function of annual mean temperature and basal area of neighborhood adults.</td></tr>
+<tr><td class="behname"><a href="temperature_dependent_neighborhood_disperse.html">Temperature dependent neighborhood disperse behavior</a></td><td>Calculates seed density based on annual mean temperature and the basal area of neighborhood adults.</td></tr>
+</table>
+
+</body>
+</html>

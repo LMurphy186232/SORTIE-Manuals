@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Logistic bi-level mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Logistic bi-level mortality</h1>
+
+<p>
+This behavior calculates the probability of survival according to a logistic equation, with the possibility of two sets of parameters for each species:  one for high-light conditions and one for low-light conditions.  This can also be used alone without the light levels.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Logistic Bi-Level - Low-Light "a"</td><td> The "a" parameter used in low-light conditions.  </td></tr>
+
+<tr><td class="parname">Logistic Bi-Level - Low-Light "b"</td><td> The "b" parameter used in low-light conditions.  </td></tr>
+
+<tr><td class="parname">Logistic Bi-Level - High-Light "a"</td><td> The "a" parameter used in high-light conditions.  </td></tr>
+
+<tr><td class="parname">Logistic Bi-Level - High-Light "b"</td><td> The "b" parameter used in high-light conditions.  </td></tr>
+
+<tr><td class="parname">Logistic Bi-Level - High-Light Mortality Threshold (0-100)</td><td> The threshold between low-light and high-light parameters, as a value between 0 and 100. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The equation used by this behavior to calculate survival probability is:
+</p>
+<br><center><img src="../data_files/logit_eq.gif" alt="Logistic Bi-Level Mortality Equation"></center><br>
+<p>
+where
+</p>
+<ul>
+<li><i>p</i> - annual probability of survival</li>
+<li><i>a</i> - in high-light conditions, this is the <b>Logistic Bi-Level - High-Light "a"</b> parameter; in low-light conditions, this is the <b>Logistic Bi-Level - Low-Light "a"</b> parameter</li>
+<li><i>b</i> - in high-light conditions, this is the <b>Logistic Bi-Level - High-Light "b"</b> parameter; in low-light conditions, this is the <b>Logistic Bi-Level - Low-Light "b"</b> parameter</li>
+<li><i>D</i> - tree diam, in cm; diam<sub>10</sub> for seedlings, DBH for others</li>
+</ul>
+<p>
+If the timestep length is not one year, the actual probability of survival for the timestep is calculated as <i>p' = p<sup> T</sup></i>, where <i>p</i> is the annual probability of survival, <i>p'</i> is the timestep probability of survival, and <i>T</i> is the number of years per timestep.  Once the survival probability for the timestep is known for a tree, then a random number is compared to this probability to determine if the tree lives or dies.
+</p>
+<p>
+Light levels come from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid produced by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.  The threshold between the use of high-light and low-light parameters is set in the <b>Logistic Bi-Level - High-Light Mortality Threshold (0-100)</b> parameter.
+</p>
+<p>
+This behavior can also be used without Storm Light.  In this case, only the low-light mortality parameters are used.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  If you wish to use the light-level parameter switch, also use the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.
+</p>
+</body>
+</html>

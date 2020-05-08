@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - Porting</title>
+</head>
+
+<body>
+<h1>Porting to another OS</h1>
+<p>
+First the associated libraries used by the C++ code must be ported.  (All Java libraries should continue to work.)  Xerces must be recompiled and new TAR.exe and GZIP.exe's either compiled or downloaded.  Then the model C++ code must be ported.
+</p>
+<p>
+There is a little bit of platform-specific code in the C++ core.  It has been isolated into the file PlatformFuncs.cpp.  The platform-specific stuff deals with file structure management and shell calls to GZIP.exe and TAR.exe.  The first step in porting would be to translate these functions to your target OS.
+</p>
+<p>
+It is probably possible to eliminate the shell calls and the .exe files.  Since we have access to the source for both GZIP and TAR, it should be possible to reformulate them as libraries.  If someone wants to tackle this they can be my guest.
+</p>
+<p>
+Once the platform specific stuff has been taken care of, it should be possible to then re-compile the C++ source into a native executable for the platform in question.  I have not tested this; if anyone tries it, let me know how it goes.
+</p>
+<p>
+Once there is a native executable, Java should be able to launch it, provided the target machine has a Java Virtual Machine installed and the classpaths are properly managed.  There may need to be name/extension management on the executable.
+</p>
+<br>Last updated: <!-- datestamp:begin -->21-Jul-2005 11:36 AM<!-- datestamp:end -->
+</body>
+</html>

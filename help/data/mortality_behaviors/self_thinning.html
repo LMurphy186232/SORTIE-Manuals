@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Self thinning</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Self thinning</h1>
+<p>
+Self-thinning is a behavior that uses a pseudo-density dependent function designed to increase the death rate in dense uniform-age stands. You specify a maximum DBH at which to apply it - above this DBH a tree will not die.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Self-Thinning Intercept</td><td> Intercept of the self-thinning linear function. </td></tr>
+
+<tr><td class="parname">Self-Thinning Slope</td><td> Slope of the self-thinning linear function. </td></tr>
+
+<tr><td class="parname">Maximum DBH for Self-Thinning</td><td> Maximum DBH at which self-thinning applies. Above this value, no mortality occurs. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Self-thinning uses a simple linear function of probability of mortality as a function of DBH, assuming the tree is below the maximum DBH at which to apply self-thinning. After evaluating this function for a tree, it uses a random number to determine whether the tree dies.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.
+</p>
+</body>
+</html>

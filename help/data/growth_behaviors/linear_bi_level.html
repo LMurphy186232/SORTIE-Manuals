@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Linear bi-level growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Linear bi-level growth</h1>
+<p>
+This behavior increments growth according to a simple linear equation, with the possibility of two sets of parameters for each species:  one for high-light conditions and one for low-light conditions.  This can also be used alone without the light levels.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Linear Bi-Level - Intercept for High-Light Growth (a)</td><td>  The intercept of the linear growth function used in high-light conditions.</td></tr>
+
+<tr><td class="parname">Linear Bi-Level - Intercept for Low-Light Growth (a)</td><td>  The intercept of the linear growth function used in low-light conditions.</td></tr>
+
+<tr><td class="parname">Linear Bi-Level - Slope for High-Light Growth (b)</td><td>  The slope of the linear growth function used in high-light conditions.</td></tr>
+
+<tr><td class="parname">Linear Bi-Level - Slope for Low-Light Growth (b)</td><td>  The slope of the linear growth function used in low-light conditions.</td></tr>
+
+<tr><td class="parname">Linear Bi-Level - Threshold for High-Light Growth (0 - 100)</td><td>  The threshold between low-light and high-light parameters, as a value between 0 and 100.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The equation used by this behavior to increment growth is:
+</p>
+<center><i>Y = (a + b * diam) * T</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> = amount of diameter growth in cm</li>
+<li><i>a</i> = growth intercept; in high-light conditions, this is the <b>Linear Bi-Level - Intercept for High-Light Growth (a)</b> parameter; in low-light conditions, this is the <b>Linear Bi-Level - Intercept for Low-Light Growth (a)</b> parameter</li>
+<li><i>b</i> = growth slope; in high-light conditions, this is the <b>Linear Bi-Level - Slope for High-Light Growth (b)</b> parameter; in low-light conditions, this is the <b>Linear Bi-Level - Slope for Low-Light Growth (b)</b> parameter</li>
+<li><i>diam</i> = diameter (diameter at 10 cm for seedlings and saplings, DBH for adults)</li>
+<li><i>T</i> = number of years per timestep</li>
+</ul>
+<p>
+Light levels come from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid produced by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.  The threshold between the use of high-light and low-light parameters is set in the <b>Linear Bi-Level - Threshold for High-Light Growth (0 - 100)</b> parameter.
+</p>
+<p>
+This behavior can also be used without Storm Light.  In this case, only the low-light growth parameters are used.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  If you wish to use the light-level parameter switch, also use the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior. You can use either the diam with auto height or diam only version.
+</p>
+
+</body>
+</html>

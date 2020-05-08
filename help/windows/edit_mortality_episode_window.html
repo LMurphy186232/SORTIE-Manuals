@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Edit Mortality Episode Window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Edit Mortality Episode Window</h1>
+
+<p>
+This window is reached by clicking the setup button for<a href="../data/disturbance_behaviors/episodic_mortality.html">Episodic mortality</a> from the <a href="model_settings_window.html">Model setup window</a>.
+</p>
+<p>
+This window is where you design all your mortality episodes for a run. You can create new mortality episodes and edit existing ones. This base window displays the current set of mortality episodes.
+</p>
+<p>
+At the top of the window are two buttons for scrolling through episodes that have been defined. On the left is information about the currently displayed episode. On the right is a map of the plot. On this map is displayed the plot grid cells to which a episode is applied. In addition, if there has been a tree map defined, existing trees are also displayed.
+</p>
+
+<h2>Creating and editing mortality episodes</h2>
+<p>
+Click the "New" button to create an episode. To edit an existing episode, display it, then click "Edit". A window will be displayed where you can enter episode data. 
+</p>
+
+
+<h2>Entering data about the mortality episode</h2>
+<p>
+<b>Timestep.</b>  Enter the timestep in which you wish the planned mortality episode to occur.  You can create more than one planned mortality episode per timestep.
+</p>
+<p>
+<b>Species applied to.</b>  Put a checkbox next to each species to which this planned mortality episode is to apply.  If a species is not checked, no trees of that species will be killed.  You can kill trees of the same species more than once in a timestep, but if the areas of the two planned mortality episodes overlap, there is no attempt to consolidate them and you may not get the results you expect.
+</p>
+<p>
+<b>Amount of mortality type.</b>  Enter how you intend to specify the amount of trees to kill in each size class to which the planned mortality episode applies.  The same amount type applies to all size classes.</p>  
+<ul>
+<li><b>% of density.</b>  You intend to specify kill amounts as a percentage of total density, from 0 to 100.  The trees killed will be randomly distributed between the minimum and maximum diameters in the size class.  For small tree populations, the amount actually killed may not be exactly what was entered.</li>
+<li><b>Amt. density (#/ha).</b>  You intend to specify kill amounts as a number of trees per hectare.  SORTIE will calculate the actual number of trees to kill by multiplying this number by the area to which the planned mortality episode is applied.  The trees are removed in size order, starting with the tallest in the size class, until the target number has been reached or there are no more trees in that size class.</li>
+<li><b>% of basal area.</b>  You intend to specify kill amounts as a percentage of total basal area, from 0 to 100.  SORTIE will add up the basal area in the size class in the cut area and take the percentage in order to figure out how much to kill.  SORTIE will work its way down the trees in the disturbed area in size order, killing each one that brings the amount of basal area killed closer to the target amount without going over.  If the size class range and the disturbed area are both large, the amount of basal area killed is likely to be very close to the target. 
+<li><b>Amt. basal area (m<sup>2</sup>/ha).</b>  You intend to specify kill amounts as an amount of basal area, in square meters per hectare.  SORTIE will calculate the actual amount of basal area to kill by multiplying this number by the area to which the planned mortality episode is applied.  SORTIE will work its way down the trees in the disturbed area in size order, killing each one that brings the amount of basal area killed closer to the target amount without going over.  If the size class range and the disturbed area are both large, the amount of basal area killed is likely to be very close to the target. 
+</ul>
+<p>
+<b>Diameter Range(s) to kill.</b>  Enter the size class ranges you are killing.  You must enter at least one.  For each size class, enter the minimum and maximum DBH, and the amount to kill in that range.  The units of amount to kill will depend on what you have entered in "Amount of mortality type".  Kill ranges may not overlap.
+</p>
+<p>
+<b>Set seedling mortality.</b> Use this button to open a window to enter the mortality percentage, as a value between 0 and 100, for seedlings for this episode. 
+</p>
+
+<h2>Choosing the area to which to apply the planned mortality episode</h2>
+<p>
+To specify the plot area to which to apply the planned mortality episode, select the appropriate cells on the map. Cells default to 8 meters by 8 meters, but you can change this (see below). Selected cells will show up in color, and unselected cells will be white.  You can click and drag to mark out an area, or click on individual cells.  Clicking or dragging on selected (colored) cells causes them to become unselected (white).
+</p>
+<p>
+You can display existing harvests, mortality episodes, and planting events in the plot area to help you match designs.
+</p>
+
+<h2>Changing grid cell size</h2>
+<p>
+The grid cell size for all mortality episodes defaults to 8 m by 8 m. You can change the grid cell size using the "Change grid cell size" button. There is only one universal grid cell size for all episodes in a run. If you change the resolution, any episodes that have already been defined will be updated to the new resolution.
+</p>
+
+</body>
+</html>

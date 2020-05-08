@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Carbon Value</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Carbon Value</h1>
+
+<p>
+This behavior calculates the amount of carbon per species and its value.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Carbon Value - Carbon Amount of Biomass (0-100%)</td><td>  The percentage of biomass that is carbon, as a value between 0 and 100. </td></tr>
+
+<tr><td class="parname">Carbon Value - Price Per Metric Ton Carbon</td><td>  The price per metric ton of carbon.  The currency is unimportant. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior relies on the <a href="dimension_analysis.html">Dimension Analysis</a> behavior to calculate each tree's biomass in metric tons.  It then multiplies this value by the <b>Carbon Value - Carbon Amount of Biomass (0-100%)</b> parameter to find each tree's amount of carbon in metric tons.  This behavior finds the total amount of carbon in each species, and then multiplies it by the <b>Carbon Value - Price Per Metric Ton Carbon</b> to find each species' carbon value.
+</p>
+<p>
+Both the amount of carbon, in metric tons, for each species and the value of that carbon are saved in a grid called <a href="../grids/carbon_value_grid.html">Carbon Value</a>.  You can save these values in a detailed output file for analysis. 
+</p>
+
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species.  These trees must also use the <a href="dimension_analysis.html">Dimension Analysis</a> behavior. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_tree_setup.html">Detailed output setup window</a> for trees will have a tree data member called "Mg Carbon", which has each tree's amount of carbon in metric tons.  Also, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/carbon_value_grid.html">Carbon Value grid</a>. You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system. 
+</p>
+
+</body>
+</html>

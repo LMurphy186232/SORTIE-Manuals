@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Edit Harvest Interface Window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Edit Harvest Interface Window</h1>
+
+<p>
+This window allows you to set up the <a href="../data/disturbance_behaviors/harvest_interface.html">Harvest interface</a> behavior.
+</p>
+<p>
+<b>Path and filename of the executable:</b>  This is the full path and filename of the executable that SORTIE will call to perform harvests.  The filename and file extension must be something that the operating system can recognize and treat as an executable.  Be sure to provide the complete filename; SORTIE makes no assumptions about the file. 
+</p>
+<p>
+<b>Tree file that SORTIE will write:</b>  This is the full path and filename of the file that SORTIE writes each harvest timestep with the list of trees eligible to be harvested.  Input the filename and extension as the executable expects to find it.
+</p>
+<p>
+<b>Tree harvest file that the executable will write:</b>  This is the full path and filename of the file that the executable writes with the list of trees to be harvested.  Input the filename and extension as it will be written by the executable.
+</p>
+<p>
+<b>How often to harvest, in years:</b>  How often SORTIE will perform the harvest process.  This number must be a positive integer value.
+</p>
+<p>
+<b>Behavior currently assigned to:</b>  This is the tree types and species to which the harvest interface behavior are applied.  Only these trees will be written to the text file that is passed to the executable.  Use the "Edit" button to add or remove from the list.
+</p>
+<p>
+<b>File columns:</b>  The columns in the text files written by both SORTIE and the executable, in the order that they will appear.  The text in this list matches the text in the column headers.
+</p>
+<p>
+<b>Parameters file for batch run (optional):</b>  If you want SORTIE to manage input files for the executable when in SORTIE batch mode, this is the full path and filename of the file that contains the executable's input parameters for each run in the entire batch.
+</p>
+<p>
+<b>Single-run parameters file for batch run (optional):</b>  If you want SORTIE to manage input files for the executable when in SORTIE batch mode, this is the full path and filename of the file that SORTIE will write with the executable's input parameters for a single run in the batch.
+</p>
+<p>
+<b>Arguments to pass to the executable (optional):</b> SORTIE will pass this string value to the executable when launching it.  
+</p>
+<p>
+<b>Tree update file that the executable will write:</b>  If extra tree data members have been created for the executable to control, this is the full path and filename of the file the executable will write with updates to these data members.  If there is an update file, there must also be new tree data members in the <b>New tree data members to add</b> section.
+</p>
+<p>
+<b>New tree data members to add:</b>  Extra tree data members to be created for the executable to control, if desired.  The names can be up to 9 characters long, must not match the name of any existing data member, and must not contain parentheses.  If there are new tree data members, there must also be an update file.
+</p>
+</body>
+</html>

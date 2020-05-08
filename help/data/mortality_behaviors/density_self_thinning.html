@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Density Self-Thinning Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Density Self-Thinning Mortality</h1>
+<p>
+This behavior calculates the probability of mortality of an individual juvenile tree as a function of the density and mean diameter of the neighborhood trees. Only neighborhood seedlings and saplings are taken into account in this behavior.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Density Self-Thinning Asymptote (A)</td><td> The asymptote of the density self-thinning function.  </td></tr>
+
+<tr><td class="parname">Density Self-Thinning Density Effect (S)</td><td> The parameter controlling the density effect of the density self-thinning function.  </td></tr>
+
+<tr><td class="parname">Density Self-Thinning Diameter Effect (C)</td><td> The parameter controlling the effect of neighbor mean diameter of the density self-thinning function.  </td></tr>
+
+<tr><td class="parname">Density Self-Thinning Minimum Density for Mortality (#/ha)</td><td>  The minimum density of neighbors, in stems/ha, for density self-thinning mortality.  A tree with a lower density of neighbors than this value will not die.  </td></tr>
+
+<tr><td class="parname">Density Self-Thinning Neighborhood Radius, in m</td><td> The maximum radius, in m, within which to search for neighbors to calculate neighbor density for density self-thinning.  </td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The probability of mortality is calculated with a double Michaelis-Menton function:
+</p>
+<center><img src="../data_files/dens_self_thin_eq.gif" alt="Density self-thinning equation"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>Pm</i> is the probability of mortality for an individual tree</li>
+<li><i>density</i> is the density of neighboring seedlings and saplings, in stems/ha, within a radius defined in the <b>Density Self-Thinning Neighborhood Radius, in m</b> parameter</li>
+<li><i>diam<sub> m</sub></i> is the mean diameter of neighbors, measured 10 cm above root collar in cm</li>
+<li><i>A</i> is the <b>Density Self-Thinning Asymptote (A)</b> parameter</li>
+<li><i>C</i> is the <b>Density Self-Thinning Diameter Effect (C)</b> parameter</li>
+<li><i>S</i> is the <b>Density Self-Thinning Density Effect (S)</b> parameter</li>  
+</ul>
+
+<p>
+If the value of <i>density</i> is less than the value in the <b>Density Self-Thinning Minimum Density for Mortality (#/ha)</b> parameter, the tree does not die.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings and saplings of any species. It cannot be applied to adults. <b>This behavior can only be applied with a one year timestep.</b>
+</p>
+</body>
+</html>

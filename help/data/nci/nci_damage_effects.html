@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>NCI damage effects</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>NCI damage effects</h1>
+<p>
+<strong>Note:</strong> If these effects are used with <a href="../mortality_behaviors/nci.html">NCI Mortality</a>, the time period unit for parameters must match the value specified in the <b>NCI Parameter Period (years)</b> parameter.
+</p>
+
+<h2>Default damage effect</h2>
+<p>
+The damage effect adjusts growth rate based on recent <a href="../disturbance_behaviors/storm_damage_applier.html">storm damage</a>. 
+</p>
+<h3>Parameters</h3>
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">NCI Damage Effect - Complete Storm Damage (0-1)</td><td>  The fraction by which a tree's growth rate is reduced when it has sustained complete storm damage.  Set this to 1 if you are not including storms in your run.</td></tr>
+
+<tr><td class="parname">NCI Damage Effect - Medium Storm Damage (0-1)</td><td>  The fraction by which a tree's growth rate is reduced when it has sustained medium storm damage.  Set this to 1 if you are not including storms in your run.</td></tr>
+</table>
+
+<h3>How it works</h3>
+
+<p>
+The value of Damage Effect depends on the tree's damage category. If the tree is undamaged, Damage Effect equals 1. If the tree has medium storm damage, the value is the <b>NCI Damage Effect - Medium Storm Damage (0-1)</b> parameter. If the tree has complete storm damage, the value is the <b>NCI Damage Effect - Complete Storm Damage (0-1)</b> parameter. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+For all trees to which this behavior applies, you must also have the <a href="../disturbance_behaviors/storm_damage_applier.html">Storm damage applier</a> behavior applied. 
+</p>
+
+</body>
+</html>

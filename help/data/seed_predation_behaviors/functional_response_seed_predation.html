@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Functional response seed predation</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Functional response seed predation</h1>
+<p>
+This behavior simulates functional response seed predation, where the number of predators is a function of the amount of food that has been consumed.  Since seed predator life cycles are often very short, this behavior runs as a mini-model within the context of the larger simulation.  It simulates weekly timesteps of seed fall, seed consumption, and predator response for as much of the year as the user desires.  The mini-model simulates a single year, which starts at the beginning of seed fall.  It is possible to define two seasons during the year with different parameters for seed consumption. All species are assumed to drop seeds at the same time, at a constant rate.  You set the number of weeks that seedfall should occur.  Once seedfall is over, there are no new additions to the predator food pool.  There is then an optional period of germination in which the food pool of seeds is further reduced by some proportion of those remaining seeds germinating into seedlings (seedlings cannot be eaten).  Once the model has finished running, the leftover seeds that were not consumed by predators, or those seeds that escaped through germination, are available as input to the <a href="../establishment_behaviors/index.html">Establishment behaviors</a>.  
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">Func Resp - Demographic Efficiency, Season 1</td><td> The seed predator population demographic efficiency for season 1.</td></tr>
+
+<tr><td class="parname">Func Resp - Demographic Efficiency, Season 2</td><td> The seed predator population demographic efficiency for season 2.</td></tr>
+
+<tr><td class="parname">Func Resp - Density Dependent Coeff, Season 1</td><td> The coefficient describing the effect that density-dependent factors have on the predator population instantaneous rate of change, in season 1.</td></tr>
+
+<tr><td class="parname">Func Resp - Density Dependent Coeff, Season 2</td><td> The coefficient describing the effect that density-dependent factors have on the predator population instantaneous rate of change, in season 2.</td></tr>
+
+<tr><td class="parname">Func Resp - Foraging Efficiency</td><td> The predator population foraging efficiency for each seed species.</td></tr>
+
+<tr><td class="parname">Func Resp - Keep Predator Densities Between Timesteps</td><td> If true, this means that the final predator density at the end of the behavior mini-model run is the initial density for the next mini-model run. If false, every time the behavior mini-model runs, it is re-initialized with the value of the "Predator initial density - num/sq m" parameter.</td></tr>
+
+<tr><td class="parname">Func Resp - Max Decline Rate, Season 1, predators/week</td><td> The maximum rate of decline in the predator population in the absence of any food, in predators per week, for season 1.</td></tr>
+
+<tr><td class="parname">Func Resp - Max Decline Rate, Season 2, predators/week</td><td> The maximum rate of decline in the predator population in the absence of any food, in predators per week, for season 2.</td></tr>
+
+<tr><td class="parname">Func Resp - Max Intake Rate - seeds per predator per day</td><td> The maximum number of seeds of each species that can be eaten by one predator in one day.</td></tr>
+
+<tr><td class="parname">Func Resp - Number of Weeks in Which Seedfall Occurs</td><td> The number of weeks at the beginning of the behavior mini-model run that seedfall occurs.</td></tr>
+
+<tr><td class="parname">Func Resp - Predator Initial Density - num/sq m</td><td> The initial density of the predator population, in numbers per m<sup>2</sup>. This will be used the first time this behavior is run.  Whether this density is used for subsequent behavior mini-model runs depends on the value of the "Keep Predator Densities Between Timesteps" parameter.</td></tr>
+
+<tr><td class="parname">Func Resp - Proportion of Seeds Germinating Each Week</td><td> During the period that germination occurs, this is the fraction of the seed pool that is removed due to seed germination. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Func Resp - Seed Predation Output Filename, If Desired</td><td> The filename where the mini-model will store its intermediate results for later analysis, if desired.  This value is not required.</td></tr>
+
+<tr><td class="parname">Func Resp - Week Germination Begins</td><td> The week during the behavior mini-model run that germination begins to occur.  If you do not want germination to occur, set this value greater than or equal to the "Weeks to run seed predation model (1 - 52)" parameter.  This value must be between 0 and 52.</td></tr>
+
+<tr><td class="parname">Func Resp - Week Season 2 Begins</td><td>The week that the second season begins, if desired. </td></tr>
+
+<tr><td class="parname">Func Resp - Weeks to Run Seed Predation Model (1 - 52)</td><td> The number of weeks (timesteps) to run the behavior's mini-model.  This number must be between 1 and 52.</td><tr>
+
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The behavior's mini-model begins with the number of seeds of each species to which it is applied that are available in each cell of the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds</a> grid.  Each cell gets its own run of the mini-model.  The pool of seeds in one cell for all species to which this behavior applies is treated as a single food pool for one year's time (even if the model <a href="../../using/timesteps.html">timestep length</a> is greater than one year).  For all the species to which this behavior is applied, the seeds are assumed to be equally available; however, each species can have its own parameters for actual consumption rate.  The initial number of predators is calculated from the <b>Predator initial density - num/sq m</b> parameter or, if the mini-model has run before and the <b>Preserve predator densities between SORTIE timesteps</b> parameter is set to true, from the final density of the last mini-model run.
+</p>
+<p>
+The behavior mini-model run begins at the part of the year in which seedfall occurs.  The number of seeds in the seed rain is the total seed pool, which is evenly divided over the user-defined seed rain length.  The predator population has as a food source the number of seeds added during the current week's rain (if the rain is going on) plus any leftover seeds from previous weeks which have not been consumed.  Beginning at a certain week in the spring, the number of seeds available to the mice is further reduced by a certain percentage each week to simulate germination.  Once germination begins, it continues until the predator model finishes running.  In order to correctly calculate mouse consumption and ensure that the seeds which germinate are actually available later, the behavior keeps track of the seeds actually consumed; it is this number which is subtracted from total seeds at the end.
+</p>
+
+Seed offtake for each week is calculated as
+<br><center><i>O</i> = &#931; ( <i>IR<sub>s</sub></i> * <i>N</i> )</center>
+<br>where
+<ul>
+<li><i>0</i> is offtake (total number of seeds consumed)</li>
+<li><i>IR<sub>s</sub></i> is per capita seed offtake for each species</li>
+<li><i>N</i> is the number of predators</li>
+</ul>
+Per capita seed offtake for a single seed species is
+<br><center>IR<sub>s</sub> = <i>c<sub>s</sub></i>(1 - <i>e<sup>-(<i>S*D</i>))</sup> * p<sub>s</sub></i></center>
+<br>where
+<ul>
+<li><i>c<sub>s</sub></i> is the <b>Func Resp - Max Intake Rate - seeds per predator per day</b> parameter for that seed species</li>
+<li><i>S</i> is the number of seeds per predator per day</li>
+<li><i>D</i> is the <b>Func Resp - Foraging Efficiency</b> parameter</li>
+<li><i>p<sub>s</sub></i> is the proportion of the total seed pool made up by that species</li>
+</ul>
+<p>
+Predator response to food availability can be different for two seasons in the year. The dividing line between the seasons is given with the <b>Func Resp - Week Season 2 Begins</b> parameter. If you want a uniform response with no seasonal differences, you can set this value to 1 or 52, or set the predator response parameters to be the same for both seasons.
+</p>
+<p> 
+The number of predators in each cell's population is calculated as
+</p>
+<br><center><i>N<sub>t</sub></i> = <i>N<sub>t-1</sub></i> * <i>e<sup>r<sub>t-1</sub></sup></i></center>
+<br>where
+<ul>
+<li><i>N<sub>t</sub></i> is number of predators for the current timestep
+<li><i>N<sub>t-1</sub></i> is number of predators in the previous timestep
+<li><i>r<sub>t-1</sub></i> is instantaneous rate of change in predator abundance for the previous timestep
+</ul>
+
+The instantaneous rate of change per week, r, is calculated as
+<br><center><i>r</i> = (<i>a</i> + <i>d * &#931; ( IR<sub>s</sub></i> ) + <i>g*N</i>) / 12 </center>
+<br>where
+<ul>
+<li><i>a</i> is the <b>Func Resp - Max Decline Rate, Season 1 (or 2), predators/week</b> parameter
+<li><i>d</i> is the <b>Func Resp - Demographic Efficiency, Season 1 (or 2)</b> parameter
+<li><i>g</i> is the <b>Func Resp - Density Dependent Coeff, Season 1 (or 2)</b> parameter
+<li><i>N</i> is number of predators per hectare 
+</ul>
+
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seeds of any species.  Any species to which it is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied as well.
+</p>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Planting behaviors</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Planting behaviors</h1>
+
+<h2>Planting</h2>
+<p>
+Planting directly creates new seedlings.  When you create a new planting, you specify the timestep in which to plant, the species to plant and the relative amount of each, whether new seedling spacing is gridded or random, how many seedlings to plant and how far apart (if gridded), and the area of the plot to plant.  You can create as many plantings as you like.  
+</p>
+
+<h3>How it works</h3>
+<p>
+Planting keeps track of planting events to perform in a private <a href="../../using/what_is_a_grid.html">grid</a>.    Each timestep that there is a planting, the behavior begins by determining whether the planting is gridded or random.
+</p>
+<p>
+If the planting is random, the total number of seedlings to plant is calculated by multiplying the total seedling density by the area to plant.  Then that number of seedlings is scattered randomly around the plant area.  If the planting is gridded, each grid cell in the plant area is planted individually.  In each cell is placed the number of seedlings that can fit at the specified spacing.  Since each 8 meter by 8 meter grid cell is planted individually, large spacing distances may result in a very low number of seedlings being planted; at a 6 meter spacing, for instance, only one seedling per cell would be planted.  For best results, the distance between seedlings should divide evenly into 8 meters.
+</p>
+<p>
+Each seedling's species is determined by comparing a random number to the relative abundance of each species.  This means that the species distribution may not be exactly what was specified, but the larger the number of seedlings the more accurate the species distribution will be.
+</p>
+<p>
+The plant behavior outputs what it did each timestep into the <a href="../grids/planting_results_grid.html">Planting Results</a> grid.  If you wish to review the results of the grid, save it in a <a href="../../files/detailed_output_files.html">detailed output file</a>.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Add the behavior to the run through the <a href="../../windows/model_flow_window.html">Model Flow window</a>. You do not apply it to particular trees at that time. The behavior setup will allow you to design your plantings.
+</p>
+</body>
+</html>

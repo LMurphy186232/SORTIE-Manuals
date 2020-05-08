@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Linear growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Linear growth</h1>
+<p>This behavior does either diameter or height growth as a linear function of GLI.</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Simple Linear - Diam Intercept in mm/yr (a)</td><td>  Intercept of the linear growth function, or growth at no light, in mm/yr, for diameter growth.</td></tr>
+
+<tr><td class="parname">Simple Linear - Diam Slope (b)</td><td>  Slope of the linear growth function, for diameter growth.</td></tr>
+
+<tr><td class="parname">Simple Linear - Height Intercept in cm/yr (a)</td><td>  Intercept of the linear growth function, or growth at no light, in cm/yr, for height growth.</td></tr>
+
+<tr><td class="parname">Simple Linear - Height Slope (b)</td><td>  Slope of the linear growth function, for height growth.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+This behavior calculates an amount of diameter or height growth as:
+</p>
+<center><i>Y = (a + (b * GLI)) * T</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> = amount of radial increase, in mm, or amount of height increase, in cm</li>
+<li><i>a</i> = <b>Simple Linear - Diam Radial Intercept in mm/yr (a)</b> parameter (for diameter growth) or the <b>Simple Linear - Height Intercept in cm/yr (a)</b> parameter (for height growth)</li>
+<li><i>b</i> = <b>Simple Linear - Diam Radial Slope (b)</b> parameter (for diam growth) or the <b>Simple Linear - Height Slope (b)</b> parameter (for height growth)</li>
+<li><i>GLI</i> = global light index, as a percentage between 0 and 100, calculated by a <a href="../light_behaviors/index.html">light behavior</a></li>
+<li><i>T</i> = number of years per timestep</li>
+</ul>
+
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have a <a href="../light_behaviors/index.html">light behavior</a> applied. You can choose either a diam with auto height, diam only, or height only version. 
+</p>
+</body>
+</html>

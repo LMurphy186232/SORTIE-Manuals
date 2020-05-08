@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Light calculations</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Light calculations</h1>
+
+<p>
+In order to calculate the amount of light a tree gets, SORTIE simulates taking a fisheye photograph over each tree to determine which parts of the sky are blocked by taller trees nearby. SORTIE determines how much light comes from different parts of the sky and takes this into account, so shading neighbors in different
+directions will have different impacts on the total amount of light a tree gets.
+</p> 
+<p>
+The fisheye photo can be taken at one of two positions - either at the top of the crown or at mid-crown. The major difference between the two is that when the photograph is taken at mid-crown, trees near the same height as the target tree will be included in the shading effects. This can make a big difference in even-age stands.
+</p>
+
+
+<h2>Sky Simulation</h2>
+<p>
+At the beginning of a run, if light behaviors are being used, the amount of light coming from each part of the sky for the plot's location is calculated. The sun's position in the sky is tracked throughout the growing season. Diffuse radiation, assumed to be isotropic (coming equally from all directions), is then added to
+the direct beam radiation. Below the minimum solar angle, it is assumed that no light comes from those portions of the sky because of the density of the surrounding forest. (It is wise not to set this angle too low - otherwise SORTIE must look very far away for shading neighbors.)
+</p> 
+<p>
+To determine the amount of sun coming from each portion of the sky, the sky is first divided into a hemispheric grid. For GLI calculations, the grid cells are equal-area segments of a user-settable resolution. For Sail Light calculations, the sky is divided into one-degree-sized grid cells. For each day in the growing season, the times of sunrise and sunset are calculated, and then the sun's position in the sky grid is tracked at 5-minute intervals throughout the day. (The equations are below.) At each solar position, the amount of direct beam radiation received from the sun at that position is calculated, taking into account atmospheric effects. Each sky segment keeps track of the total amount of direct beam radiation coming from it for the duration of the growing season.
+</p>
+<p>
+The total amount of light in the sky is the amount of direct beam radiation plus the amount of diffuse radiation. Once the total amount of direct beam radiation is known, the amount of diffuse radiation is calculated accordingly and added equally to all portions of the sky. Each sky segment is then relativized to hold the percentage of total light coming from that segment.
+</p>
+
+
+<h2>Determining a tree's light index</h2>
+<p>
+For each timestep, SORTIE calculates the amount of light each tree receives by simulating a fisheye photograph. To "take" the photo, the model looks at the hemisphere of sky around and above a tree and determines which portions of it are blocked by neighboring trees. It then totals up how much light is left to
+reach the tree. 
+</p>
+<p>
+Only tree crowns block light in the model. Trunks do not shade. Because seedlings are modeled as sticks with no crowns, they don't shade either.
+</p>
+<p>
+The first step in creating the simulated fisheye photo is to determine how far from the tree to search for shading neighbors. For GLI, this is done by comparing the height of the fisheye photo to the maximum possible tree height and determining how far away a tree of this height could be and still have its crown appear in the sky above the minimum solar angle. All trees within this search radius that are taller than the height of the fisheye photo (and thus can be "seen" by it) are added into the "photo." For Sail Light, the search distance is specified by the user.
+</p>
+<p>
+To add a shading neighbor to the photo, the light behavior determines the amount and location of sky covered by its crown. In a GLI calculation, neighbor crowns are approximated as cylinders. In a Sail Light calculation, neighbor crowns are approximated as 2-D rectangles with a width equal to their crown diameter and a height equal to their crown height (or, as an added simplification, the behavior can assume the crowns of shading neighbors extend all the way to the ground).
+</p>
+<p>
+The amount of radiation received from the portion of the sky blocked by the shading neighbor is multiplied by the light transmission coefficient for the neighbor's species. The effects of multiple neighbors blocking the same patch of sky are multiplicative.
+</p>
+<p>
+Once all shading neighbors have been added to the fisheye photo, the amount of light that can still be seen from each region of the sky is totaled up into the appropriate index.
+</p>
+
+<h2>Sky Simulation Equations</h2>
+<p>
+All equations are from <a href="../../more_info/further_reading.html">Iqbal, 1983</a>.
+</p>
+<p>
+At a given (solar) time, the sun's zenith angle is calculated by:
+</p>
+<center><i>cos &#952; = sin &#948; sin&#966; + cos &#948; cos &#966; cos &#969;</i></center>
+<p>and its azimuth angle is calculated by:</p>
+<center><i>cos &#968; = (sin &#945; sin &#966; - sin &#948;)/cos &#945; cos &#966;</i></center>
+<p>where:</p>
+<ul>
+<li><i>&#952;</i> = angle from zenith, in degrees</li>
+<li><i>&#948;</i> = solar declination, in degrees</li>
+<li><i>&#966;</i> = <b>Plot Latitude, in decimal degrees</b> parameter (from <a href="../plot.html">Plot</a>)</li>
+<li><i>&#945;</i> = the solar altitude (angle from horizon), in degrees</li>
+<li><i>&#969;</i> = the hour angle (solar time).</li>
+</ul>
+<p>Azimuth here is south zero, east positive.</p>
+<p>Solar declination is calculated by</p>
+<center><i>&#948; = 0.006918 - 0.399912 cos &#915; + 0.070257 sin &#915; - 0.006758 cos 2&#915; + 0.000907 sin 2&#915; - 0.002697 cos 3&#915; + 0.00148 sin 3&#915;</i></center>
+<p>
+where <i>&#948;</i> = solar declination in radians and <i>&#915;</i> is the day angle, in radians.
+</p> 
+<p>
+The day angle is calculated by <i>&#915; = 2&#960;(d - 1)/365</i> where <i>&#915;</i> is the day angle in radians and <i>d</i> is the Julian day number
+(day of the year between 1 and 365).
+</p>
+<p>
+So, once we finally have the azimuth and altitude angles for the sun's position in the sky, we can calculate the amount of direct beam radiation coming from it and add it to the appropriate grid cell. The direct beam radiation equation is
+</p>
+<center><i>I = E<sub>0</sub>*&#964;<sup>m</sup>*cos(&#952;)</i></center>
+<p>where</p>
+<ul>
+<li><i>I</i> is the beam radiation</li>
+<li><i>E<sub>0</sub></i> is the earth's eccentricity</li>
+<li><i>&#964;</i> is the <b>Clear Sky Transmission Coefficient</b> parameter</li>
+<li><i>m</i> is the optical mass of the atmosphere</li>
+<li><i>&#952;</i> is the zenith angle of the sun.</li>
+</ul>
+<p>Eccentricity is calculated by</p>
+<center><i>E<sub>0</sub> = 1.000110 + 0.034221 cos &#915; + 0.001280
+sin &#915; + 0.000719 cos 2&#915; + 0.000077 sin 2&#915;</i></center>
+<p>where <i>&#915;</i> is the day angle (equation above).</p>
+<p>Optical mass of the atmosphere is calculated by</p>
+<center><i>m = sec(&#952;)</i></center>
+<p>
+where <i>&#952;</i> is the zenith angle of the sun. SORTIE uses a numerical approximation method instead of the <i>sec</i> to correct at low altitudes.
+</p>
+<p>
+This process is repeated for each day in the growing season.  The growing season starts with the <b>First Day of Growing Season</b> parameter and ends with the <b>Last Day of Growing Season</b> parameter.
+</p>
+
+<h2>Snags in light calculations</h2>
+<p>
+Snags are standing dead trees (more in the <a href="../../using/tree_life_history_stages.html">tree life history stages</a> topic).  They can block light like live trees do.  For SORTIE purposes, snag crowns are frozen in the shape they had when the tree died, but they transmit more and more light as they lose branches.  SORTIE tracks a snag's age in order to replicate this decay.  You define three snag age classes and a light transmission coefficient for each.  For as long as a snag stands, it will block the light of neighboring trees, but to a lesser degree through time.
+</p>
+<p>
+You don't have to include snags in light calculations.  If you do not have any behaviors in your run that either create snags or directly work with them, then your run is classified as "snag-unaware" and snags will not be created.  In this case, the snag parameters are not required.  However, if your run is "snag-aware" and snags may be created, you must supply the snag light transmission parameters.
+</p>
+
+</body>
+</html>

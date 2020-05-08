@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Masting spatial disperse behavior</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Masting spatial disperse behavior</h1>
+
+<p>
+This behavior is a variant of the <a href="non_gap_spatial_disperse.html">Non-gap spatial disperse</a> behavior that adds masting and more stochasticity in seed production. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Canopy Function Used</td><td> The probability distribution function to be used to distribute seeds in canopy conditions. For the behaviors Non-gap spatial disperse and Masting spatial disperse, these PDFs are always the ones used. </td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>0</sub></td><td> The mean of the lognormal function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>b</sub></td><td> The standard deviation of the lognormal function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is lognormal. </td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Beta</td><td> The &#946; value under masting conditions.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting CDF "a"</td><td> The "a" value in the cumulative density function that is used to decide when masting events occur.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting CDF "b"</td><td> The "b" value in the cumulative density function that is used to decide when masting events occur.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Group</td><td> Species in the same group always mast together. If all the group numbers are different, then each species masts separately. The actual numbers do not matter, just whether species have identical numbers.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Lognormal X<sub>0</sub></td><td> The mean of the lognormal function under masting conditions. This is only required for a species if the canopy probability distribution function for that species is lognormal.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Lognormal X<sub>b</sub></td><td> The standard deviation of the lognormal function under masting conditions. This is only required for a species if the canopy probability distribution function for that species is lognormal.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting STR Mean</td><td> The mean annual STR value under masting conditions. If the <b>Masting Disperse - STR Draw PDF</b> is Deterministic, then this is the STR value used.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting STR Standard Deviation</td><td> The standard deviation of the STR value under masting conditions. If the <b>Masting Disperse - STR Draw PDF</b> is Deterministic, then this value is not used.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Mast Proportion Participating (0-1)</td><td> The proportion of all adults for a species that participate in disperse during a masting timestep, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Non-Masting Beta</td><td> The &#946; value under non-masting conditions.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Non-Masting STR Mean</td><td> The mean annual STR value under non-masting conditions. If the <b>Masting Disperse - STR Draw PDF</b> is Deterministic, then this is the STR value used.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Non-Masting STR Standard Deviation</td><td>  The standard deviation of the STR value under non-masting conditions. If the <b>Masting Disperse - STR Draw PDF</b> is Deterministic, then this value is not used.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Non-Mast Proportion Participating (0-1)</td><td> The proportion of all adults for a species that participate in disperse during a non-masting timestep, as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Weibull Dispersal</td><td> The dispersal value for the weibull function under masting conditions. This is only required for a species if the canopy probability distribution function for that species is weibull.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Masting Weibull Theta</td><td> The &#952; for the weibull function under masting conditions. This is only required for a species if the canopy probability distribution function for that species is weibull.</td></tr>
+
+<tr><td class="parname">Masting Disperse - Stochastic STR Draw Frequency</td><td> If the STR value is stochastic, this determines whether a new value is generated once per species per timestep or once per tree per timestep. If the <b>Masting Disperse - STR Draw PDF</b> is Deterministic, then this value is not used.</td></tr>
+
+<tr><td class="parname">Masting Disperse - STR Draw PDF</td><td> Whether the STR value should be deterministic, or generated each timestep using a normal or lognormal distribution.</td></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Dispersal</td><td> The dispersal value for the Weibull function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+<tr><td class="parname">Weibull Canopy Theta</td><td> The &#952; for the Weibull function under canopy conditions, or under non-masting conditions in the case of Masting spatial disperse (see equation below). This is only required if the canopy probability distribution function is Weibull. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+<b>Deciding when to mast.</b> For each timestep, the probability of masting for each species is calculated from the following cumulative distribution function:
+</p>
+<center><img src="../data_files/mastcdf_equation.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>y</i> is the probability of masting</li>
+<li><i>X</i> is the number of years since last mast</li>
+<li><i>a</i> is the <b>Masting Disperse - Masting CDF "a"</b> parameter</li>
+<li><i>b</i> is the <b>Masting Disperse - Masting CDF "b"</b> parameter</li>
+</ul>
+<p>
+When the run starts, it is assumed a masting last event took place in timestep -1. A random number is used to determine whether a mast occurs in the current timestep. Disperse happens the same way in mast and non-mast timesteps, but the parameters used are different.
+</p>
+<p>
+Species may be organized into groups to create synchrony in masting. The <b>Masting Disperse - Masting Group</b> parameter allows you to assign group numbers to species. The actual value of the group number is not important. It only matters if more than one species has the same number. If one species in a group masts, all species in that group do. Each group's mast decision is made separately, so sometimes more than one group may mast at a time. If all species have a different group number, then they all mast independently of one another.
+</p>
+<p>
+<b>Which trees disperse.</b> Of the group of trees eligible to disperse (those with DBHs above the value in the <b>Minimum DBH for Reproduction, in cm</b> parameter), some can be randomly selected to participate in disperse. The proportion dispersing is set in <b>Masting Disperse - Mast Proportion Participating (0-1)</b> for mast timesteps, and <b>Masting Disperse - Non-Mast Proportion Participating (0-1)</b> for non-mast timesteps. The group of trees participating is chosen again each timestep. No adjustment is made to the number of seeds produced per tree. Fewer trees participating in disperse means fewer total seeds will be produced.
+</p>
+<p>
+<b>STR stochasticity.</b> The STR value may be randomized each timestep. Use the <b>Masting Disperse - STR Draw PDF</b> parameter to choose from a normal or lognormal probability distribution. You can then set the mean and standard deviations for each species, which are different in masting and non-masting timesteps. You can also leave the STR value deterministic, in which case the mean STR value is used directly.
+</p>
+<p>
+If you choose to use a stochastic STR, the STR value can be generated once per species per timestep, or once per tree per timestep. If the value is generated once per species, all individuals of that species use the same STR value that timestep.
+</p>
+<p>
+Once the behavior has decided whether masting occurs, and what the STR values are, then disperse proceeds exactly as described in the <a href="non_gap_spatial_disperse.html">Non-gap spatial disperse</a> behavior.
+</p>
+
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to all trees of at least the minimum reproductive age for your chosen species. If the minimum
+reproductive age is less than the <a href="../../using/tree_life_history_stages.html">Minimum adult DBH</a>, be sure to apply this behavior to saplings as well as adults.
+</p>
+
+
+</body>
+</html>

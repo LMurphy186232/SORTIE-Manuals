@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Tree initial conditions </title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Tree initial conditions</h1>
+
+<p>
+Tree initial conditions are the trees in the SORTIE forest when a simulation begins. The initial conditions are often of vital importance to how a run develops. 
+</p>
+<p>
+There are two ways to add trees at the beginning of the run, and they can be used together or separately. The first is to ask the model to create trees for you according to your chosen species composition and size structure. The second way is to directly list a particular set of trees in a tree map.
+</p>
+
+<h2>Defining initial conditions using species composition and size structure</h2>
+<p>
+For saplings and adults, you can set up DBH size classes and enter the desired density in each size class. To set up size classes, use the <a href="../windows/edit_size_classes.html">Edit size classes window</a>. You can define as many size classes as you want. The values that you enter are the upper bounds of each class. Once you have defined all of your size classes, you can enter the desired number of stems per hectare for each species for each class in the <a href="../data/tree_parameters.html"> tree parameters</a> which you edit using the <a href="../windows/model_settings_window.html">Model settings window</a>. 
+</p>
+<p>
+There are two different ways to enter seedling densities. Defining a DBH size class of zero gives you a line for entering stems per hectare of seedlings. These seedlings will be brand new, with sizes approximating the value in the <b>New Seedling Diameter at 10 cm </b> <a href="../data/tree_parameters.html"> tree parameters</a>. If you would like more control over seedling sizes, you can define three height classes densities for each in the tree parameters.
+</p>
+<p>
+The resulting trees are randomly distributed around the plot. Actual sizes are chosen randomly from a uniform distribution within each size class.
+</p>
+
+<h2> Tree maps</h2>
+<p>
+Tree maps are lists of individual trees. You can add one or more maps to your parameter file. The maps can come from detailed output files from other runs, or you can make your own <a href="../files/tab_delim_tree_map.html">tab-delimited tree maps</a>. The preferred method of incorporating a tree map to a run is to add it directly into a parameter file. However, if the number of trees is very large, it may make the XML file too big to read. In this case, a text tree file's filename can be added to the parameter file instead and SORTIE can read the trees directly from the file.
+</p>
+
+<h2> Choosing how to set up the initial conditions</h2>
+<p>
+In most cases, you would define your initial conditions using DBH size classes. They are simple to define and describe. There are cases where you would need a tree map. For example:
+</p>
+<ul>
+<li>You intend to model a particular real-life plot</li>
+<li>You want to use a mid-run timestep of another simulation as the starting point of a new simulation</li>
+<li>You want a particular spatial pattern of trees instead of a random distribution</li>
+<li>You want to do a set of simulations that all start out exactly the same way</li>
+</ul>
+<p>
+You can mix the two methods as well. If you have a tree map of adults you'd like to use, you can add seedlings and saplings using size classes.
+</p>
+<p>
+It is important to consider initial conditions for juveniles. It can take awhile for seed dispersal, establishment, and recruitment to create juveniles in a run. You may see strange behavior in your first timesteps if you're missing a whole life cycle stage in your tree population.
+</p>
+
+</body>
+</html>

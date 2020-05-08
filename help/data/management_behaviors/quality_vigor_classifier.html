@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD CLASS="PLAINTABLE" HTML 4.01//EN">
+<HEAD>
+<TITLE>Tree Quality Vigor Classifier</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Tree Quality Vigor Classifier</h1>
+<p>
+The Tree Quality Vigor Classifier assigns trees to a classification system based on vigor and stem quality. This classification can then be used as a criterion in other behaviors.
+</p>
+<p>
+There are four classes (1, 2, 3, 4) for deciduous species and two classes (5, 6) for conifers. The four classes used for deciduous species result from the combination of two possible vigor states and two stem quality levels. For conifers, only vigor is considered. The two vigor status are "vigorous" and "non-vigorous", where non-vigorous trees are considered at high risk of dying before the next harvest.  The quality levels are "with sawlog potential" and "without sawlog potential". 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Prob New Adults Sawlog</td><td> Probability that new adult trees will be classed as "sawlog" quality, expressed as a value between 0 and 1. Does not apply to coniferous trees. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Prob New Adults Vigorous</td><td> Probability that new adult trees will be classed as "vigorous", expressed as a value between 0 and 1. </td></tr>    
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 0</td><td> &#946;<sub>0</sub> in the quality probability equation. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 1 Class 1</td><td> &#946;<sub>1class</sub> in the quality probability equation for trees with a current tree class of 1. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 1 Class 2</td><td> &#946;<sub>1class</sub> in the quality probability equation for trees with a current tree class of 2. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 1 Class 3</td><td> &#946;<sub>1class</sub> in the quality probability equation for trees with a current tree class of 3. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 1 Class 4</td><td> &#946;<sub>1class</sub> in the quality probability equation for trees with a current tree class of 4. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 2</td><td> &#946;<sub>2</sub> in the quality probability equation. Ignored for conifers. </td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Quality Beta 3</td><td> &#946;<sub>3</sub> in the quality probability equation. Ignored for conifers. </td></tr>
+      
+<tr><td class="parname">Quality Vigor Classifier - Species Type</td><td> Whether a species is deciduous or coniferous.</td></tr>
+      
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 0</td><td> &#946;<sub>0</sub> in the vigor probability equation.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 1</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 1.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 2</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 2.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 3</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 3.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 4</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 4.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 5</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 5.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 1 Class 6</td><td> &#946;<sub>1class</sub> in the vigor probability equation for trees with a current tree class of 6.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 2</td><td> &#946;<sub>2</sub> in the vigor probability equation.</td></tr>
+
+<tr><td class="parname">Quality Vigor Classifier - Vigor Beta 3</td><td> &#946;<sub>3</sub> in the vigor probability equation.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Tree classification is as follows:
+</p>
+<table class="plaintable">
+<tr>
+<th class="plaintable">Species Type</th>  <th class="plaintable">Vigor</th><th class="plaintable">Quality</th><th class="plaintable">DBH Range</th><th class="plaintable">Class</th>
+</tr>
+<tr>
+<td class="plaintable">Deciduous</td> <td class="plaintable">Vigorous</td><td class="plaintable">Sawlog</td><td class="plaintable">&gt; 0</td><td class="plaintable">1</td>
+</tr>
+<tr>
+<td class="plaintable">Deciduous</td><td class="plaintable">Vigorous</td><td class="plaintable">Not sawlog</td><td class="plaintable">&gt; 0</td><td class="plaintable">2</td>
+</tr>
+<tr>
+<td class="plaintable">Deciduous</td> <td class="plaintable">Not vigorous</td><td class="plaintable">Sawlog</td><td class="plaintable">&gt; 23 cm</td><td class="plaintable">3</td>
+</tr>
+<tr>
+<td class="plaintable">Deciduous</td><td class="plaintable">Not vigorous</td><td class="plaintable">Sawlog</td><td class="plaintable">&le; 23 cm</td><td class="plaintable">4</td>
+</tr>
+<tr>
+<td class="plaintable">Deciduous</td><td class="plaintable">Not vigorous</td><td class="plaintable">Not sawlog</td><td class="plaintable">&gt; 0</td><td class="plaintable">4</td>
+</tr>
+<tr>
+<td class="plaintable">Coniferous</td><td class="plaintable">Vigorous</td><td class="plaintable">NA</td><td class="plaintable">&gt; 0</td><td class="plaintable">5</td>
+</tr>
+<tr>
+<td class="plaintable">Coniferous</td><td class="plaintable">Not vigorous</td>  <td class="plaintable">NA</td><td class="plaintable">&gt; 0</td><td class="plaintable">6</td>
+</tr>
+</table>
+
+<p>
+Species are defined as deciduous or coniferous using the <b>Quality Vigor Classifier - Species Type</b> parameter.
+</p>
+<p>
+Trees that do not have vigor and quality designations, such as new adult trees or initial conditions trees that were not specifically assigned these values, are randomly given vigor and quality according to defined probabilities that these trees are vigorous or of sawlog quality. These probabilities are defined, as values between 0 and 1, in the <b>Quality Vigor Classifier - Prob New Adults Vigorous</b> and <b>Quality Vigor Classifier - Prob New Adults Sawlog</b> parameters. Coniferous species are not assigned a quality value and values entered for those species are ignored.
+</p>
+<p>
+Vigor and quality for a tree may change through time. The probability of transition between states is a function of previous class and size, and is evaluated for each tree each timestep. The probability of a tree being vigorous in the current timestep is: 
+</p>
+<center><img src="../data_files/treeclass_logistic.gif" alt="p eq exp(betax)/(1+exp(betax))"></center>
+<p>
+where:
+</p>
+<center><i>&#946;<sub>x</sub></i> = <i>&#946;<sub>0</sub></i> + <i>&#946;<sub>1class</sub></i> + <i>&#946;<sub>2</sub></i>* <i>DBH</i> + <i>&#946;<sub>3</sub></i>* ln(<i>DBH</i>)</center>
+<p>
+where:
+</p>
+<ul>
+<li><i>&#946;<sub>0</sub></i> is the <b>Quality Vigor Classifier - Vigor Beta 0</b> parameter</li>
+<li><i>&#946;<sub>1class</sub></i> is one of the following depending on the current class designation of the tree:
+<ul>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 1</b></li>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 2</b></li>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 3</b></li>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 4</b></li>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 5</b></li>
+<li><b>Quality Vigor Classifier - Vigor Beta 1 Class 6</b></li>
+</ul></li>
+<li><i>&#946;<sub>2</sub></i> is the <b>Quality Vigor Classifier - Vigor Beta 2</b> parameter</li>
+<li><i>&#946;<sub>3</sub></i> is the <b>Quality Vigor Classifier - Vigor Beta 3</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH in cm</li>
+</ul>
+
+<p>
+Deciduous trees are further evaluated for tree quality. The probability of a tree being of sawlog quality in the current timestep is: 
+</p>
+<center><img src="../data_files/treeclass_logistic.gif" alt="p eq exp(betax)/(1+exp(betax))"></center>
+<p>
+where:
+</p>
+<center><i>&#946;<sub>x</sub></i> = <i>&#946;<sub>0</sub></i> + <i>&#946;<sub>1class</sub></i> + <i>&#946;<sub>2</sub></i>* <i>DBH</i> + <i>&#946;<sub>3</sub></i>* ln(<i>DBH</i>)</center>
+<p>
+where:
+</p>
+<ul>
+<li><i>&#946;<sub>0</sub></i> is the <b>Quality Vigor Classifier - Quality Beta 0</b> parameter</li>
+<li><i>&#946;<sub>1class</sub></i> is one of the following depending on the current class designation of the tree:
+<ul>
+<li><b>Quality Vigor Classifier - Quality Beta 1 Class 1</b></li>
+<li><b>Quality Vigor Classifier - Quality Beta 1 Class 2</b></li>
+<li><b>Quality Vigor Classifier - Quality Beta 1 Class 3</b></li>
+<li><b>Quality Vigor Classifier - Quality Beta 1 Class 4</b></li>
+</ul></li>
+<li><i>&#946;<sub>2</sub></i> is the <b>Quality Vigor Classifier - Quality Beta 2</b> parameter</li>
+<li><i>&#946;<sub>3</sub></i> is the <b>Quality Vigor Classifier - Quality Beta 3</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH in cm</li>
+</ul>
+<p>
+Note that since only deciduous trees get a quality designation, there is no need for &#946;<sub>1</sub> parameters for classes 5 and 6, which only apply to conifers.
+</p>
+<p>
+Once a tree's probability of vigorousness and sawlog quality have been established, random numbers determine the final state. Then class assignment proceeds as above.
+</p>
+<p>
+This behavior creates three <a href="../tree_data_member_list.html">tree data members</a>: "Vigorous", "Sawlog", and "Tree class".
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to adults of any species. It cannot be applied to any other life history stage.
+</p>
+</body>
+</html>

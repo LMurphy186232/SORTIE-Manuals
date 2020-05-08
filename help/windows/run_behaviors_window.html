@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Current run behaviors window</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Current run behaviors window</h1>
+<p>
+This window is reached through the <a href="model_flow_window.html">Edit simulation flow</a> window.  It edits the set of <a href="../using/what_is_a_behavior.html">behaviors</a> for a run, the order they are in, and the trees to which they apply (if it is appropriate for them to apply to trees).  The current list of behaviors, in order, appears in the box labeled "Current behavior order".
+</p>
+
+<a name="adding"><h3>Adding new behaviors</h3></a>
+<p>
+The left-hand side of the window is devoted to choosing new behaviors for this run.  Begin by choosing an overall behavior grouping using the drop-down list that shows "---Please select a behavior group" when the window is first opened.  When you have chosen a group, a list of individual behaviors for that grouping shows in the box underneath.  Select the one you wish to add, then click the button marked ">>" to add it to the list.  It automatically places itself with other behaviors in its group, or in the correct place between other groups if it is the first of its group.  (Behavior groups are separated by dashed lines.)  At this time, you must add new behaviors one at a time.  It is possible to select multiple individual behaviors, but the ">>" button will apply to only the first one selected.  If you have chosen a behavior that is already on the list, nothing happens.
+</p>
+<p>
+Certain special behaviors cannot be added this way.  If you try to add them, you will see a message saying "---Use this behavior's own dialog".  This means that it has options that can be set up through a window accessible from the main SORTIE menu.  You can, however, remove these special behaviors from the run from this dialog.
+</p>
+
+<a name="changing_order"><h3>Changing behavior order - the "Up" and "Down" buttons</h3></a>
+<p>
+You can change the behavior order within the overall behavior groupings.  Behavior groups are separated by dashed lines.  To change a behavior's position in the list, select it in the list labeled "Current behavior order", then click "Up" or "Down" to move it.  You cannot move it past a dashed line.  This ensures behavior orders that make sense. 
+</p>
+
+<a name="removing"><h3>Removing behaviors - the "Remove" button</h3></a>
+<p>
+To remove a behavior from the run, select it in the list labeled "Current behavior order" and click the button marked "Remove". 
+</p>
+
+<a name="modifying"><h3>Changing behavior assignments - the "Modify assigned data" button</h3></a>
+<p>
+This button changes the trees to which a behavior applies, if the behavior is of a kind applied to trees (and most are).  Select a behavior in the list labeled "Current behavior order" and then click the "Modify assigned data" button.  This brings up the <a href="behavior_assignments_window.html">Tree assignments window</a>, to allow you to modify the assignments.
+</p>
+</body>
+</html>

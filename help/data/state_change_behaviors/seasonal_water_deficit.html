@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Seasonal Water Deficit</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Seasonal Water Deficit</h1>
+<p>
+This behavior changes the value of the <a href="../plot.html#parameters">Seasonal Water Deficit</a> parameter of the SORTIE plot in response to changes in the mean annual temperature and precipitation of the plot. Seasonal water deficit is the difference between potential evapotranspiration in the presence of limitless water and actual evapotranspiration based on available precipitation. As such, it is an index of the degree to which actual supply of moisture fails to meet "demand" for moisture. This assumes that monthly temperature and rainfall patterns do not change along with changes in mean annual temperature and precipitation. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Available Water Storage in Top 100 cm Soil</td><td> Maximum available water storage in the top 100 cm of the soil, in mm.</td><tr>
+
+<tr><td class="parname">Proportion of Precipitation in January</td><td> Proportion of annual precipitation that falls during the month of January, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in February</td><td> Proportion of annual precipitation that falls during the month of February, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in March</td><td> Proportion of annual precipitation that falls during the month of March, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in April</td><td> Proportion of annual precipitation that falls during the month of April, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in May</td><td> Proportion of annual precipitation that falls during the month of May, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in June</td><td> Proportion of annual precipitation that falls during the month of June, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in July</td><td> Proportion of annual precipitation that falls during the month of July, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in August</td><td> Proportion of annual precipitation that falls during the month of August, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in September</td><td> Proportion of annual precipitation that falls during the month of September, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in October</td><td> Proportion of annual precipitation that falls during the month of October, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in November</td><td> Proportion of annual precipitation that falls during the month of November, as a value between 0 and 1. </td><tr>
+  
+<tr><td class="parname">Proportion of Precipitation in December</td><td> Proportion of annual precipitation that falls during the month of December, as a value between 0 and 1. </td><tr>  
+  
+  
+<tr><td class="parname">January Radiation (cal/cm2)</td><td> Global radiation received during the month of January, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">February Radiation (cal/cm2)</td><td> Global radiation received during the month of February, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">March Radiation (cal/cm2)</td><td> Global radiation received during the month of March, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">April Radiation (cal/cm2)</td><td> Global radiation received during the month of April, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">May Radiation (cal/cm2)</td><td> Global radiation received during the month of May, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">June Radiation (cal/cm2)</td><td> Global radiation received during the month of June, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">July Radiation (cal/cm2)</td><td> Global radiation received during the month of July, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">August Radiation (cal/cm2)</td><td> Global radiation received during the month of August, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">September Radiation (cal/cm2)</td><td> Global radiation received during the month of September, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">October Radiation (cal/cm2)</td><td> Global radiation received during the month of October, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">November Radiation (cal/cm2)</td><td> Global radiation received during the month of November, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">December Radiation (cal/cm2)</td><td> Global radiation received during the month of December, in cal / cm<sup>2</sup>. </td><tr>
+  
+<tr><td class="parname">Ratio of January Temp to Annual Temp</td><td> January temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of February Temp to Annual Temp</td><td> February temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of March Temp to Annual Temp</td><td> March temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of April Temp to Annual Temp</td><td> April temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of May Temp to Annual Temp</td><td> May temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of June Temp to Annual Temp</td><td> June temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of July Temp to Annual Temp</td><td> July temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of August Temp to Annual Temp</td><td> August temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of September Temp to Annual Temp</td><td> September temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of October Temp to Annual Temp</td><td> October temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of November Temp to Annual Temp</td><td> November temperature divided by mean annual temperature. </td><tr>
+  
+<tr><td class="parname">Ratio of December Temp to Annual Temp</td><td> December temperature divided by mean annual temperature. </td><tr>
+  </table>
+
+<h3>How it works</h3>
+<p>
+The first step is calculating monthly temperature and precipitation based on the latest values for the plot.  
+</p>
+<center><i>T<sub>i</sub> = T * RT<sub>i</sub></i></center>
+<p>
+</p>
+<center><i>P<sub>i</sub> = P * RP<sub>i</sub></i></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>T<sub>i</sub></i> is temperature, in degrees C, for month i</li>
+<li><i>P<sub>i</sub></i> is precipitation, in mm, for month i</li>
+<li><i>P</i> is the annual precipitation, in mm</li>
+<li><i>T</i> is the mean annual temperature, in degrees C </li>
+<li><i>RT<sub>i</sub></i> is the <b>Ratio of [month i] Temp to Annual Temp</b> parameter </li>
+<li><i>RP<sub>i</sub></i> is the <b>Proportion of Precipitation in [month i]</b> parameter </li>
+</ul>
+<p>
+Then PET (monthly potential evapotranspiration) is calculated as:
+</p>
+<center><i>PET<sub>i</sub> = 0.013 * (T<sub>i</sub>/(T<sub>i</sub>+15) * (R<sub>s</sub>+50)</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>PET<sub>i</sub></i> is monthly potential evapotranspiration in mm</li>
+<li><i>T<sub>i</sub></i> is monthly temperature in degrees C</li>
+<li><i>R<sub>s</sub></i> is the <b>[month i] Radiation (cal/cm2)</b> parameter</li>
+</ul>
+<p>
+If <i>T<sub>i</sub></i> &le; 0, then <i>PET<sub>i</sub></i> = 0.
+</p>
+<p>
+In order to calculate actual evapotranspiration, we need monthly soil moisture values. Monthly soil moisture storage is calculated as:
+</p>
+<center><i>sms<sub>i</sub> = 0 &lt; sms<sub>i-1</sub> + precip<sub>i</sub> - PET<sub>i</sub> &lt; MaxAWS</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>sms<sub>i</sub></i> is the soil moisture, in mm, for the current month</li>
+<li><i>sms<sub>i-1</sub></i> is the soil moisture, in mm, for the previous month</li>
+<li><i>precip<sub>i</sub></i> is the monthly precipitation (mm) for the current month</li>
+<li><i>PET<sub>i</sub></i> is potential evapotranspiration for the current month</li>
+<li><i>MaxAWS</i> is the <b>Available Water Storage in Top 100 cm Soil</b></li>
+</ul>
+<p>
+It is assumed that the soil is saturated on the last day of the year, so for January, <i>sms<sub>i-1</sub></i> = <i>MaxAWS</i>.
+</p>
+<p>
+Monthly actual evapotranspiration (AET) is calculated as:
+</p>
+<center><i>AET<sub>i</sub> = sms<sub>i</sub> + precip<sub>i</sub></i></center> 
+<p>if <i>sms<sub>i+1</sub></i> &le; 0, or</p>
+<center><i>AET<sub>i</sub> = PET<sub>i</sub></i></center>
+<p>
+if <i>sms<sub>i+1</sub></i> &gt; 0.
+</p>
+<p>
+Annual AET is the sum of the monthly AET values, and annual PET is the sum of the monthly PET values; and Seasonal Water Deficit = PET - AET.
+</p>
+<p>
+This value is then given to the <a href="../plot.html">Plot</a> object which makes it available to other behaviors in the run.  </p>
+
+<h3>How to apply it</h3>
+<p>
+Add this behavior to the run.  You do not need to assign this behavior to trees.  
+</p>
+
+</body>
+</html>

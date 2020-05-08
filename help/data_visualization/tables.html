@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Tables</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Tables</h1>
+<p>
+There are several different kinds of tables available in SORTIE. The only thing they have in common is their format.
+</p>
+<h2> Plot tables</h2>
+<p>
+An overview table is available for both summary output files and detailed output files.  This table shows basal area and density information for each tree life history stage.  In the case of a summary output file, only the data that you saved in the <a href="../windows/summary_output.html">summary output file setup window</a> are shown.  For a detailed output file, data is shown for each tree species and life history stage for which you have saved at least DBH (or diameter at 10 cm for seedlings). If you know you want to look at this table type, you should save a summary output file.  The graphing performance will be significantly better. 
+</p>
+
+<h2>Stand tables</h2>
+<p>
+When you save DBH data (and optionally, height), you can also view stand tables.  These show density or basal area data broken out by DBH size classes that you define. When you first choose a stand table, you will be given a window where you set the size classes and some other display controls. When you click "Display", the table is generated. Since the table displays all timesteps at once, the initial data compilation step can be time consuming.
+</p>
+<p>
+In addition to density (displayed in stems per hectare) or basal area (displayed in square meters per hectare) by size class, the table also displays the mean DBH for trees which contributed to the table (meaning those which fell outside the size classes would not be included), and, if you have saved height, the average of the 10 tallest trees in the plot (not just the 10 tallest trees that have provided data to the table).
+</p>
+<p>
+You can choose to include or not live trees and snags. You can also display one species at a time.
+</p>
+<p>
+Only those trees for which data has been saved can be included. If you omit a species or life history stage, it will not show up in the table.
+</p>
+
+<h2>Stock table </h2>
+<p>
+When you save DBH and tree volume (from the <a href="../data/analysis_behaviors/tree_volume_calculator.html">Tree volume calculator</a>), you can view a stock table with tree volume broken out by DBH size classes that you define.  In addition, the stock table displays the Mean Annual Increment (MAI), which is calculated as MAI = Volume(T)/(number of years per timestep * T) for a given timestep T, and the volume per year for each timestep (for those trees that contributed to the table); and if you have saved height data, the average of the 10 tallest trees in the plot (not just the 10 tallest trees who have provided data to the table).
+</p>
+
+<h2>Grid tables</h2>
+<p>
+There are specialized tables for the following grids:
+<ul>
+<li><a href="../data/grids/harvest_grid.html">Harvest Results</a></li>
+<li><a href="../data/grids/disturbance_grid.html">Mortality Episode Results</a></li>
+<li><a href="../data/grids/carbon_value_grid.html">Carbon Value</a></li>
+<li><a href="../data/grids/merch_value_grid.html">Merchantable Timber Value</a></li>
+<li><a href="../data/grids/windstorm_grid.html">Windstorm Results</a></li>
+<li><a href="../data/grids/partitioned_biomass_grid.html">Partitioned Biomass</a></li>
+<li><a href="../data/grids/killed_partitioned_biomass_grid.html">Storm Killed Partitioned Biomass</a></li>
+<li><a href="../data/grids/storm_damage_grid.html">Storm Damage</a></li>
+<li><a href="../data/grids/foliar_chem_grid.html">Foliar Chemistry</a></li>
+</ul>
+<p>
+If you wish to view these tables, set up your detailed output file to save all the data from your chosen grids.
+</p>
+
+<h2>Timestep tree writer</h2>
+<p>
+This is not really a table as such. This tool will write out all tree data saved for a given timestep to a tab-delimited text file.
+</p>
+
+</body>
+</html>

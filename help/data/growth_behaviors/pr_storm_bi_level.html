@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Puerto Rico storm bi-level growth - diam with auto height</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Puerto Rico storm bi-level growth - diam with auto height</h1>
+<a name="pr_storm_bi_level"><h2>Puerto Rico storm bi-level growth - diam with auto height</h2></a>
+<p>
+This behavior increments growth according to two possible growth equations, one to be used in low-light conditions and the other to be used in high-light conditions.  This behavior was originally created for the Puerto Rico model.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">PR Storm Bi-Level - Threshold for High-Light Growth (0 - 100)</td><td> The threshold between low-light and high-light equations, as a value between 0 and 100. </td></tr>
+
+<tr><td class="parname">PR Storm Bi-Level - High-Light "a"</td><td> The "a" value in the high-light growth function. </td></tr>
+
+<tr><td class="parname">PR Storm Bi-Level - High-Light "b"</td><td> The "b" value in the high-light growth function. </td></tr>
+
+<tr><td class="parname">PR Storm Bi-Level - Intercept for Low-Light Growth (a)</td><td> The intercept of the linear growth function used in low-light conditions. </td></tr>
+
+<tr><td class="parname">PR Storm Bi-Level - Slope for Low-Light Growth (b)</td><td> The slope of the linear growth function used in high-light conditions. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Light levels come from the <a href="../grids/storm_light_grid.html">Storm Light</a> grid produced by the <a href="../light_behaviors/storm_light.html">Storm Light</a> behavior.  The threshold between the use of the high-light and low-light functions is set in the <b>PR Storm Bi-Level - Threshold for High-Light Growth (0 - 100)</b> parameter.
+</p>
+<p>
+The function used in low-light conditions is:
+</p>
+<center><i>Y = (a + b * diam) * T</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>Y</i> = amount of diameter growth in cm</li>
+<li><i>a</i> = <b>PR Storm Bi-Level - Intercept for Low-Light Growth (a)</b> parameter</li>
+<li><i>b</i> = <b>PR Storm Bi-Level - Slope for Low-Light Growth (b)</b> parameter</li>
+<li><i>diam</i> = diameter (diameter at 10 cm for seedlings and saplings, DBH for adults)</li>
+<li><i>T</i> = number of years per timestep</li>
+</ul>
+<p>
+The function used in high-light conditions is:
+</p>
+<center><i>H = T * a * diam * e<sup>(-b * N)</sup></i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>H</i> = amount of <b>height</b> growth, in cm</li>
+<li><i>a</i> = <b>PR Storm Bi-Level - High-Light "a"</b> parameter</li>
+<li><i>b</i> = <b>PR Storm Bi-Level - High-Light "b"</b> parameter</li>
+<li><i>diam</i> = diameter (diameter at 10 cm for seedlings and saplings, DBH for adults)</li>
+<li><i>N</i> = number of years since the last storm, from the <a href="../grids/storm_damage_grid.html">Storm Damage</a> grid produced by the <a href="../disturbance_behaviors/storm_disturbance.html">Storm disturbance</a> behavior</li>
+<li><i>T</i> = number of years per timestep</li>
+</ul>
+<p>
+H is expressed in centimeters of height growth.  This is transformed into a number of cm of diameter growth, which is what this behavior passes along.  This means that during tree life history stage transitions, the height the tree ends up with is not guaranteed to match the height calculated by the high-light growth function.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  You must also use the <a href="../disturbance_behaviors/storm_disturbance.html">Storm disturbance</a> and <a href="../light_behaviors/storm_light.html">Storm Light</a> behaviors.
+</p>
+</body>
+</html>

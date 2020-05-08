@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Grid cell size</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Grid cell size</h1>
+
+<p>
+Grids are always exactly the same size as the <a href="../data/plot.html">plot</a>.  Grids have an X and a Y axis, which match the orientation and size of the plot's axes.  Grids are divided along the X and Y axes separately, so that each cell within the grid is a rectangle.  If the chosen grid cell sizes do not divide evenly into the X and Y plot lengths, the length of the cells in the last rows in each direction will be the remainder value.  Grids can carry more than one value per cell.  Grid cell size applies to all values in the grid.  The amount of memory and processing time required for a grid is proportional to the number of total values it holds, which is the number of values per cell multiplied by the number of cells.
+</p>
+<p>
+For most grids, you can define the size of the cells by using the <a href="../windows/grid_setup_window.html">Grid setup window</a>.  You do not have to choose the size of a grid's cells; all grids have default values. If you choose to adjust a grid's cell size, you should pick the largest possible value that adequately captures the resolution of the process being modeled, to minimize the model's memory requirements and maximize the speed required to update it.  If you have a set of behaviors that work together and you are defining cell sizes for multiple grids, picking even multiples of a number for different grids (such as 2, 4, 8...) will help maximize the efficiency of data transfer between them.
+</p>
+
+
+</body>
+</html>

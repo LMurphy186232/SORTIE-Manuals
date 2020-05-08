@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Substrate Dependent Seed Survival With Gap Status</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Substrate Dependent Seed Survival With Gap Status</h1>
+<p>
+This behavior assesses seed survival as a function of both the substrate composition of the grid cells in which seeds land and the cells' forest cover (gap or canopy). This behavior allows for different germination favorability for substrates under the two forest covers.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Decayed Logs</td><td> The proportion of those seeds that land on decayed logs under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Fresh Logs</td><td> The proportion of those seeds that land on fresh logs under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Forest Floor Litter</td><td> The proportion of those seeds that land on forest floor litter under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Forest Floor Moss</td><td> The proportion of those seeds that land on forest floor moss under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Scarified Soil</td><td> The proportion of those seeds that land on scarified soil under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Canopy Tip-Up</td><td> The proportion of those seeds that land on tip-up mounds substrate under canopy conditions that survive to become seedlings. Expressed as a value between 0 and 1. </td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Decayed Logs</td><td> The proportion of those seeds that land on decayed logs under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Fresh Logs</td><td> The proportion of those seeds that land on fresh logs under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Forest Floor Litter</td><td> The proportion of those seeds that land on forest floor litter under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Forest Floor Moss</td><td> The proportion of those seeds that land on forest floor moss under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Scarified Soil</td><td> The proportion of those seeds that land on scarified soil under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Gap Tip-Up</td><td> The proportion of those seeds that land on tip-up mounds substrate under gap conditions that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+</table>
+
+<h3>How it works</h3>
+<p>
+The behavior takes the substrate composition of each grid cell in the <a href="../grids/substrate_grid.html">Substrate grid</a> and converts it into a single number for each species, called the substrate favorability index. The favorability index is the sum of the proportions of each substrate multiplied by the proportion of seeds that germinate on that substrate under that cell's cover (canopy or gap).  This index represents the proportion of total seeds of that species that are expected to survive in that area of the plot.  This index is stored in the grid <a href="../grids/substrate_favorability_grid.html">Substrate Favorability</a>.
+</p>
+<p>
+The behavior then goes through each grid cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a> and assesses the survival for the seeds of those species to which it applies.  This behavior starts by giving each seed a random temporary location within the Dispersed Seeds grid cell.  Then, it retrieves the substrate favorability at that point from the Substrate Favorability grid.  It then compares a random number to the substrate favorability to determine whether the seed lives. This method ensures that we can assess substrate favorabilities correctly when the Dispersed Seeds and Substrate grids have different grid cell resolutions.
+</p>
+<p>
+Once this process is complete, the number of surviving seeds for each species is assigned back to the Dispersed Seeds grid.
+</p> 
+
+<h3>How to apply it</h3>
+<p>This behavior may be applied to seeds of any species. A species to which this is applied must also have the <a href="../disperse_behaviors/index.html">Gap spatial disperse behavior</a> applied.  Also, the <a href="../substrate_behaviors/index.html">Substrate behavior</a> must be used in the run.
+</p>
+
+</body>
+</html>

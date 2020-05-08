@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Batch Extract Detailed Output Files</TITLE>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>           
+<BODY>
+<h1>Batch extract detailed output files tool</h1>
+<p>
+This tool allows you to extract chart data for multiple detailed output files at once. The extracted data is a text version of the chart's data for all time steps. For more on extracting text data, see <a href="../data_visualization/extract_chart_data_to_text.html">Extracting chart data into text format</a>.
+</p>
+<p>
+This tool uses a wizard format to set up batch extraction. You reach this tool from the "Tools" menu from the main SORTIE window.
+</p>
+
+<h2>Step 1: Choose detailed output files to extract from.</h2>
+<p>
+In the first window of the wizard, you choose which output files to extract from. These files do not have to be in the same directory, nor do they have to be from the same run. Use the file chooser on the left to select files, then use the "Add files to batch" to add them to the batch list. If you change your mind, select files on the batch list on the right, then use the "Remove files from batch" button. Once you have your list of batch files, click "Next". 
+</p>
+<p>
+The wizard will examine your list of detailed output files to determine what data are available for extraction. This may take awhile for a very long list of files. Once the analysis step is done, the wizard will take you to step 2.
+</p>
+
+<h2>Step 2: Choose extraction options. </h2>
+<p>
+The next window in the wizard offers you the available list of charts to extract data for, by chart type. This is the same set of options that would be offered if you were using data visualization interactively as usual. The options listed is the set of options available in all of the files in your batch. Some files may be missing some of the options. You can still choose any option; that option will be skipped for any files that do not support it.
+</p>
+<p>
+When you choose an option, you will be prompted for a file name root. This root will be used along with the detailed output file name to give the final name for each data file. The directory that you specify is where all of the charts of this type will go. You can put each chart in a different directory if you wish. You can put any file extension on the end of the root, or no extension at all. Whatever extension you give will be added to each file name.
+</p>
+<p>
+In addition to the file name root, you may be prompted for other options required by the chart you have chosen.
+</p>
+<p>
+You cannot create two different instances of the same chart, even if you intend to use different options. You can set up subsequent batch processes for each different set of options desired.
+</p>
+<p>
+Click "Finish" to launch the batch extraction. You'll get a progress bar telling you the amount of work completed.
+</p>
+</BODY>
+</HTML>

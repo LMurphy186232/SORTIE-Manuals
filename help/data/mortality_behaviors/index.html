@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Mortality behaviors</title>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Mortality behaviors</h1>
+<p>
+The mortality behaviors cause tree death due to natural life cycle causes and competition. Tree death due to disturbance is covered by other behaviors.
+</p>
+<p>Mortality behaviors do not actually remove dead trees from memory. They set a flag which marks trees as dead. This is because some other behaviors, such as the <a href="../substrate_behaviors/index.html">Substrate</a> group, have specific interest in dead trees. Dead trees are eventually removed from memory by the <a href="../dead_tree_behaviors/index.html">Dead tree remover</a> behavior. You may notice this behavior in your behavior list. It is included automatically. It is important to include this behavior in your run to avoid incorrect results in behaviors that use dead trees and unacceptably slow model run times.
+</p>
+
+<table class="behaviorlist">
+<tr><th class="behname">Behavior</th><th>Description</th></tr>
+
+<tr><td class="behname"><a href="aggregated.html">Aggregated Mortality</a></td><td>Kills trees randomly to match a predetermined mortality rate, clumping together the deaths in both time and space.</td></tr>
+
+<tr><td class="behname"><a href="bc.html">BC Mortality</a></td><td>Kills trees as a function of growth rate.</td></tr>
+
+<tr><td class="behname"><a href="browsed_stochastic.html">Browsed Stochastic Mortality</a></td><td>Simulates the effects of herbivory by allowing different background mortality rates for browsed and unbrowsed trees.</td></tr>
+
+<tr><td class="behname"><a href="clim_comp_dep_neighborhood.html">Climate and Competition Dependent Neighborhood Survival</a></td><td>Assesses tree survival as a function of mean annual temperature, water deficit, and neighbor adult basal area. For efficiency, it calculates survival rates for cells in a grid and assigns trees the survival probability of the grid cell in which they are found.</td></tr>
+
+<tr><td class="behname"><a href="competition.html">Competition Mortality</a></td><td>Kills trees as a function of growth. Uses the results of the NCI growth behavior.</td></tr>
+
+<tr><td class="behname"><a href="density_self_thinning.html">Density Self-Thinning Mortality</a></td><td>Calculates the probability of mortality of an individual juvenile tree as a function of the density and mean diameter of the neighborhood trees.</td></tr>
+
+<tr><td class="behname"><a href="exponential_growth_and_resource_based.html">Exponential Growth and Resource-Based Mortality</a></td><td>Calculates probability of mortality as a function of growth and some second resource.</td></tr>
+
+<tr><td class="behname"><a href="gmf.html">GMF Mortality</a></td><td>Kills trees as a function of growth rate.</td></tr>
+
+<tr><td class="behname"><a href="gompertz_density_self_thinning.html">Gompertz Density Self Thinning</a></td><td>Calculates the probability of mortality of an individual tree as a function of the density of conspecific neighborhood trees.</td></tr>
+
+<tr><td class="behname"><a href="growth_and_resource_based.html">Growth and Resource-Based Mortality</a></td><td>Calculates probability of survival as a function of growth and some second resource.</td></tr>
+
+<tr><td class="behname"><a href="height_gli_weibull_with_browse.html">Height-GLI Weibull Mortality with Browse</a></td><td>Calculates the probability of mortality using a Weibull function of tree height and GLI (light level). It can also simulate the effects of herbivory by using different parameters for browsed and unbrowsed trees.</td></tr>
+
+<tr><td class="behname"><a href="insect_infestation.html">Insect Infestation Mortality</a></td><td>Causes mortality in trees that are infested with insects.</td></tr>
+
+<tr><td class="behname"><a href="logistic_bi_level.html">Logistic Bi-Level Mortality</a></td><td>Calculates the probability of survival according to a logistic equation, with the possibility of two sets of parameters for each species:  one for high-light conditions and one for low-light conditions.</td></tr>
+
+<tr><td class="behname"><a href="nci.html">NCI Mortality</a></td><td>Uses multiple effects, including neighbor competitiveness, to calculate mortality rates.</td></tr>
+
+<tr><td class="behname"><a href="post_harvest_skidding.html">Post Harvest Skidding Mortality</a></td><td>Simulates an increase in mortality after harvesting attributable to skidding damage or other effects.</td></tr>
+
+<tr><td class="behname"><a href="self_thinning.html">Self Thinning</a></td><td>Uses a pseudo-density dependent function designed to increase the death rate in dense uniform-age stands.</td></tr>
+
+<tr><td class="behname"><a href="senescence.html">Senescence</a></td><td>Provides for an uptick in mortality rates among large adult trees.</td></tr>
+
+<tr><td class="behname"><a href="size_dependent_logistic_mortality.html">Size Dependent Logistic Mortality</a></td><td>Mortality rates are a logistic function of tree size.</td></tr>
+
+<tr><td class="behname"><a href="stochastic_bi_level.html">Stochastic Bi-Level Mortality - Storm Light</a></td><td>Applies a constant rate of mortality to trees, with different rates for high-light and low-light conditions. This works with the Storm Light behavior.</td></tr>
+
+<tr><td class="behname"><a href="stochastic_bi_level.html">Stochastic Bi-Level Mortality - GLI</a></td><td>Applies a constant rate of mortality to trees, with different rates for high-light and low-light conditions. This works with the GLI behavior.</td></tr>
+
+<tr><td class="behname"><a href="stochastic.html">Stochastic Mortality</a></td><td>Produces background mortality by randomly choosing trees to die according to a specified rate.</td></tr>
+
+<tr><td class="behname"><a href="suppression_duration.html">Suppression Duration Mortality</a></td><td>Evaluates mortality as a function of tree age. This is particularly useful for simulating suppression in seedlings.</td></tr>
+
+<tr><td class="behname"><a href="temperature_dependent_neighborhood.html">Temperature dependent neighborhood survival</a></td><td>Assesses tree survival as a function of mean annual temperature and neighbor adult basal area. For efficiency, it calculates survival rates for cells in a grid and assigns trees the survival probability of the grid cell in which they are found.</td></tr>
+
+<tr><td class="behname"><a href="weibull_snag.html">Weibull Snag Mortality</a></td><td>Controls snag fall according to a Weibull function of snag age.</td></tr>
+</table>
+
+</body>
+</html>

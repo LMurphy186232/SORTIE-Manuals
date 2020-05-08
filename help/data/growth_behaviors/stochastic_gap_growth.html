@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Stochastic Gap Growth</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Stochastic Gap Growth</h1>
+<p>
+This behavior uses a shortcut for simulating gap dynamics with very competitive conditions.  This behavior causes rapid growth in high light, with a unique "winner"; low light produces no growth at all.
+</p>
+
+<h3>How it works</h3>
+<p>
+This behavior simulates high growth in gap conditions.  It relies on the <a href="../grids/gap_light_grid.html">Gap Light</a> grid created by the <a href="../light_behaviors/gap_light.html">Gap Light</a> behavior to tell it where the gaps are. In this grid, each cell is either in gap (with 100% GLI) or not in gap (with 0% GLI).  If a cell is in gap, a tree in that cell is randomly chosen out of all the trees to which the behavior applies to be promoted directly to adult tree status (even if it is a seedling).  This tree represents the "winner".  All other trees in the cell do not grow.  In cells that are not in gap, no trees grow.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to seedlings, saplings, and adults of any species.  Any tree species/type combination to which it is applied must also have the <a href="../light_behaviors/gap_light.html">Gap Light behavior</a> applied.
+</p>
+</body>
+</html>

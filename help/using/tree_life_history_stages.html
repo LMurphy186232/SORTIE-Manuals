@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Tree life history stages and transitions </title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Tree life history stages and transitions</h1>
+
+<p>Tree life history stage (also referred to as tree type), along with species, is the basic way to classify trees. When you set up <a href="what_is_a_behavior.html">behaviors</a> for a run, you tell each behavior which trees to act on by species and type. There is support for seven tree life history stages in the model:</p>
+<ul>
+<li><b>Seed.</b></li>
+<li><b>Seedling.</b> Seedlings are defined as trees less than the height set in the <a href="../data/tree_parameters.html">parameter</a> <b>Max Seedling Height (meters)</b> (normally 1.35 meters, thus seedlings have no DBH). Their primary size measurement is the diameter at 10 cm height (diam<sub>10</sub>).</li>
+<li><b>Sapling.</b> Saplings are defined as having a DBH greater than 0 and less than the <b>Minimum adult DBH</b> defined in the <a href="../data/tree_parameters.html">tree parameters</a>. Seedlings and saplings are sometimes referred to collectively as "juveniles".</li>
+<li><b>Adult.</b> Adults are defined as having a DBH equal to or greater than the <b>Minimum adult DBH</b> defined in the <a href="../data/tree_parameters.html">tree parameters</a>.</li>
+<li><b>Stump.</b> Stumps are saplings or adults that have been cut by the <a href="../data/disturbance_behaviors/index.html">Harvest behavior</a>.</li>
+<li><b>Snag.</b> Snags are standing dead trees. They can be produced when saplings and adults die due to normal tree <a href="../data/mortality_behaviors/index.html">mortality</a> or a <a href="../data/disturbance_behaviors/index.html">disturbance event</a>, such as disease.  Only adult trees become snags.  See below for more on how trees become snags.
+</li>
+<li><b>Woody debris.</b> Woody debris comes from fallen snags. Currently, no behavior uses woody debris and this is a placeholder stage only. It is not created at this time.</li>
+</ul>
+
+<h2>Tree life history stage transitioning - growth</h2>
+<p>
+<b>Seed to seedling.</b> Seeds are modeled only as aggregates, not individuals. Seeds become individual seedlings when they are processed by an <a href="../data/establishment_behaviors/index.html"> establishment</a> behavior.
+<p>
+<b> Seedling to sapling.</b> When a seedling reaches the maximum seedling height set for its species, it becomes a sapling.  The diam<sub>10</sub> value is converted to a DBH value, which is then used to calculate the rest of the sapling's new dimensions.  Since height is re-calculated with a different equation and input parameters, there may be a discontinuity in height values right around the seedling/sapling transition point.  If a species uses different allometric relationships for its saplings and adults, another discontinuity may occur at the time of this transition as well.  For more on the allometric relationships and how they are calculated, see the <a href="../data/allometry/index.html">Allometry</a> topic.  (The automatic updating of these allometric relationships during the growth phase can be overridden.  For more, see the <a href="../data/growth_behaviors/index.html">Growth behaviors</a> topic.)
+</p>
+<p>
+<b> Sapling to adult.</b> When a sapling's DBH reaches the minimum adult DBH for its species, it becomes an adult.
+</p>
+<h2>Tree life history stage transitioning - death</h2>
+<p>
+Death also produces tree life history stage transitions.  Behaviors can request to a tree population that a tree be killed.  How the tree population responds to this request depends on the type of tree, the reason for death, and the type of run.  
+</p>
+<h3>Mortality reasons</h3>
+<p>
+The reasons why a tree is killed are:
+</p>
+<ul>
+<li>Natural mortality</li>
+<li>Harvest</li>
+<li>Insects</li>
+<li>Fire</li>
+<li>Disease</li>
+</ul>
+<p>
+Check the documentation for your chosen <a href="../data/disturbance_behaviors/index.html">disturbance behaviors</a> and <a href="../data/mortality_behaviors/index.html">mortality behaviors</a> for more information on which codes will apply to your run. 
+</p>
+<p>
+There are life history stages for dead trees, but a run may not be set up to handle them.  The tree population takes this into account.  It examines the run to see if any behaviors directly deal with stumps and snags.  If either is the case, the run is classified as "stump aware" and/or "snag aware".  
+</p>
+<p>
+Here's what happens to a tree to be killed in different situations:
+</p>
+<ul>
+<li>If a tree is a seedling, it is deleted from memory no matter why it died.
+<li>If a tree is a sapling or adult killed in a harvest, and the run is "stump aware", the tree is converted to a stump.
+<li>Saplings killed for any other reason, or by harvest in a run that is not "stump aware", are deleted from memory. 
+<li>If the tree is an adult killed by harvest and the run is not "stump aware", it is deleted from memory. 
+<li>If the tree is an adult killed for any reason other than harvest, and the run is "snag aware", the tree is converted to a snag.
+<li>If the tree is an adult killed for any reason other than harvest, and the run is NOT "snag aware", the tree is removed from memory. 
+<li>If the tree is already a snag, it is removed from memory.
+</ul>
+<p>
+Stumps exist only for the timestep in which they were created, and then disappear.
+</p>
+
+<p>
+You can include information on dead trees in output files. For the purposes of output, dead trees are those which have been removed from memory and are no longer interacting with the model in any way. In this case, a snag is considered alive, although a tree that produced a snag will show up in output mortality records in the timestep in which it died to become a snag. Then the snag would show up again when it was finally removed from the model. 
+</p>
+ 
+
+
+</body>
+</html>

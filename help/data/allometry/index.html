@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>Allometry</title>
+
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Allometry</h1>
+<p>
+The allometry relationships govern a tree's size and shape.
+</p>
+
+<h2>Tree size attributes</h2>
+<ul>
+<li><b>DBH</b> (diameter at breast height) is the diameter of a tree trunk in centimeters at 1.35 meters above the ground.</li>
+<li><b>Diameter at 10 cm</b>, or <b>diam<sub>10</sub></b>, is the diameter of a tree trunk, measured in centimeters, at a height of 10 cm above the ground.</li>
+<li><b>Height</b> is the distance from the ground to the top of the crown, in meters.</li>
+<li><b>Crown radius</b> is the distance from the trunk to the edge of the crown, in meters.</li>
+<li><b>Crown depth</b> is the distance from the top to the bottom of the crown, in meters. </li>
+</ul>
+
+<h2>Attributes by life history stage</h2>
+<ul>
+<li><b>Seedlings:</b> diam<sub>10</sub> and height.</li>
+<li><b>Saplings:</b> diam<sub>10</sub>, DBH, height, crown radius, and crown depth.</li>
+<li><b>Adults and snags:</b> DBH, height, crown radius, and crown depth.</li>
+</ul>
+
+<h2>How size and shape attributes are used</h2>
+<p>
+Many behaviors do their work using equations that are functions of tree size in some way. Diameter is by far the most important attribute. Other dimensions may or may not be used in a run, depending on the set of chosen behaviors. How important it is to get the allometric relationships correct depends on how they will be used. Check the documentation of your chosen behaviors. If, for instance, crown shape is not used, it doesn't really matter what relationships you assign.
+</p>
+<p>
+Trees are not required to conform to their allometric relationships. For instance, growth many cause height and diameter to vary independently of each other.
+</p>
+<p>
+You choose the relationship used by each life history stage of each species for each attribute. These can be freely mixed-and-matched. Use the <a href="../../windows/edit_allometry_functions_window.html">Edit Allometry Functions</a> window to set the allometry functions.
+</p>
+
+<table class="behaviorlist">
+<tr><th class="behname">Function</th><th>Description</th></tr>
+<tr><td class="behname"><a href="standard_crown.html">The standard crown depth and radius relationships</a></td><td>Crown dimensions are power functions of tree dimensions.</td></tr>
+<tr><td class="behname"><a href="chapman_richards_crown.html">The Chapman-Richards crown depth and radius relationships</a></td><td>Uses the Chapman-Richards function to calculate crown dimensions.</td></tr>
+<tr><td class="behname"><a href="non_spatial_density_dependent_crown.html">The non-spatial density dependent crown depth and radius relationships</a></td><td>Uses non-spatial measures of density to calculate crown radius and crown depth.</td></tr>
+<tr><td class="behname"><a href="nci_crown.html">The NCI crown depth and radius relationships</a> </td><td>Calculates crown dimensions as a function of tree size and local crowding.</td></tr>
+<tr><td class="behname"><a href="dbh_diam10.html">DBH - diameter at 10 cm relationship</a></td><td>DBH is a linear function of diameter at 10 cm.</td></tr>
+<tr><td class="behname"><a href="standard_diam_height.html">The standard diameter-height relationships</a></td><td>Height is a function of DBH or diameter at 10 cm. These are called "standard" because they were the original SORTIE functions.</td></tr>
+<tr><td class="behname"><a href="linear_diam_height.html">The linear diameter-height relationship</a></td><td>Height is a linear function of diameter.</td></tr>
+<tr><td class="behname"><a href="reverse_linear_diam_height.html">The reverse linear diameter-height relationship</a></td><td>Diameter is a linear function of height.</td></tr>
+<tr><td class="behname"><a href="power_height_diam.html">The power diameter-height relationship</a></td><td>Height is a power function of diameter at 10 cm.</td></tr>
+</table>
+
+
+</body>
+</html>

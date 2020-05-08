@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Gompertz Density Self Thinning Mortality</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Gompertz Density Self Thinning Mortality</h1>
+
+<p>
+This behavior calculates the probability of mortality of an individual tree as a function of the density of conspecific neighborhood trees.
+</p>
+<p>
+Trees killed by this behavior will have a mortality reason code of "natural".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Gompertz Density Self Thinning - G</td><td> G in the function for probability of mortality.</td></tr>
+
+<tr><td class="parname">Gompertz Density Self Thinning - H</td><td> H in the function for probability of mortality.</td></tr>
+
+<tr><td class="parname">Gompertz Density Self Thinning - I</td><td> I in the function for probability of mortality.</td></tr>
+
+<tr><td class="parname">Gompertz Density Self Thinning - Min Neighbor Height (m)</td><td> Minimum height for conspecific neighbors to be counted towards density.</td></tr>
+
+<tr><td class="parname">Gompertz Density Self Thinning - Neighbor Search Radius (m)</td><td> Radius for which to search for conspecific neighbors.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The density of conspecific neighbors is the number of stems per square meter of trees above the height set in the <b>Conspecific Tree Minimum Neighbor Height (m)</b> parameter, within the radius from the target tree's location set in the <b>Conspecific Tree Search Radius (m)</b> parameter.
+</p>
+<p>
+The probability of mortality is calculated as follows:
+</p>
+<center><i>P<sub>m</sub> = G * exp(-exp(H - I * Den))</i></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>P<sub>m</sub></i> is the probability of mortality for an individual tree</li>
+<li><i>Den</i> is the density of conspecific neighbor trees, stems/m2</li>
+<li><i>G</i> is the <b>Gompertz Density Self Thinning - G</b> parameter</li>
+<li><i>H</i> is the <b>Gompertz Density Self Thinning - H</b> parameter</li>
+<li><i>I</i> is the <b>Gompertz Density Self Thinning - I</b> parameter</li>  
+</ul>
+
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to trees of any species.
+</p>
+</body>
+</html>

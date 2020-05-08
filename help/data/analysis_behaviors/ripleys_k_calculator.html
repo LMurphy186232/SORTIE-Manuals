@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Ripley's K Calculator</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Ripley's K Calculator</h1>
+
+<p>
+This behavior calculates the Ripley's K function for all trees in the plot as well as for the members of each species.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Ripley's K - Maximum Distance (m)</td><td> The maximum distance out to which to calculate K values. </td></tr>
+
+<tr><td class="parname">Ripley's K - Distance Increment (m)</td><td> The distance increments at which K will be calculated. Smaller increments mean a smoother curve but also more processing time. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The Ripley's K function is a measure of the way trees are spatially distributed across the plot. K values are calculated repeatedly for a succession of distances out to a maximum, giving a curve. The Ripley's K statistic for a given distance t is calculated as:
+</p>
+<center><img src="../data_files/ripleys_k_eq.gif" alt="K equals AX over n squared"></center>
+<p>
+where: 
+</p>
+<ul>
+<li><i>K(t)</i> is the K value at distance t</li>
+<li><i>A</i> is the plot area in square meters</li>
+<li><i>X</i> is the number of pairs of trees in the plot less than t meters apart</li>
+<li><i>n</i> is the total number of trees in the plot</li>
+</ul>
+<p>
+The size of the distance increment is given in the <b>Ripley's K - Distance Increment (m)</b> parameter. The maximum distance out to which to calculate K is given in the <b>Ripley's K - Maximum Distance (m)</b> parameter. Most Ripley's K formulas come with a term for edge correction, which is not needed in SORTIE-ND as the plot has no edges. (See <a href="../plot.html">the SORTIE-ND Plot</a> topic for more on the plot's shape.)
+</p>
+<p>
+Only saplings and adult trees are included in K calculations.
+</p>
+<p>
+The K values are calculated for all trees in the plot as well as for individual species. In the case of an individual species, X is the number of pairs of trees of that species, and n is the total number of trees of that species.
+</p>
+<p>
+The resulting K values are stored in the <a href="../grids/ripleys_k_grid.html">Ripley's K</a> grid.
+</p>
+
+<h3>How to apply it</h3>
+<p>Add this behavior to your run. There is no need to apply it to specific tree species or types. Indeed, any such specifications will be ignored. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> will list the <a href="../grids/ripleys_k_grid.html">Ripley's K</a> grid. Save all the data members of this grid. You can then view the K values as a <a href="../../data_visualization/line_graphs.html">line graph</a> and use the graph to save the K values as a text file.
+</p>
+
+
+</body>
+</html>

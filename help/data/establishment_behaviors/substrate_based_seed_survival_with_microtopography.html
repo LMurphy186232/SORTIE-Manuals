@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Substrate Based Seed Survival With Microtopography</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Substrate Based Seed Survival With Microtopography</h1>
+<p>
+This behavior assesses seed survival based on substrate conditions, allowing for site microtopography to influence seed survival.  In this scenario, the plot is divided into small-scale mounds.  The portion of the plot that is slightly elevated is "mound".  The portion of the plot between the mounds, at lower elevation, is "ground".  The size of the mounds and their height is not important. 
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Decayed Logs</td><td> The proportion of those seeds that land on decayed logs ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Forest Floor Litter</td><td> The proportion of those seeds that land on forest floor litter ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Forest Floor Moss</td><td> The proportion of those seeds that land on forest floor moss ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Fresh Logs</td><td> The proportion of those seeds that land on fresh logs ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Scarified Soil</td><td> The proportion of those seeds that land on scarified soil ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Ground Tip-Up</td><td> The proportion of those seeds that land on tip-up ground substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Decayed Logs</td><td> The proportion of those seeds that land on decayed logs mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Forest Floor Litter</td><td> The proportion of those seeds that land on forest floor litter mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Forest Floor Moss</td><td> The proportion of those seeds that land on forest floor moss mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Fresh Logs</td><td> The proportion of those seeds that land on fresh logs mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Scarified Soil</td><td> The proportion of those seeds that land on scarified soil mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Fraction Seeds Germinating on Mound Tip-Up</td><td> The proportion of those seeds that land on tip-up mound substrate that survive to become seedlings. Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Proportion of Plot Area that is Mound</td><td> The proportion of plot area that is mound area, as opposed to ground area.  Expressed as a value between 0 and 1.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The area of the plot that is "mound" and the area that is "ground" are in fixed relative proportion to each other.  This fixed proportion is entered in the <b>Proportion of Plot Area that is Mound</b> parameter.  Each grid cell in the <a href="../grids/substrate_grid.html">Substrate grid</a> has been divided by the Substrate behavior into six substrate types;  each of those types is further divided into "mound" and "ground" according to the fixed proportion, making twelve total substrate types.  For example, if 20% of a grid cell's area is forest floor litter, and 60% of the plot area is mound, then the area of the grid cell that is forest floor litter mound substrate is 12% and the area of grid cell that is forest floor litter ground substrate is 8%. 
+</p>
+<p>
+The behavior takes the substrate composition of each grid cell in the <a href="../grids/substrate_grid.html">Substrate grid</a>, calculates the amount of the twelve substrate types, and converts it into a single number for each species, called the substrate favorability index. The favorability index is the sum of the proportions of each substrate multiplied by the proportion of seeds that germinate on that substrate.  This index represents the proportion of total seeds of that species that are expected to survive in that area of the plot.  This index is stored in the grid <a href="../grids/substrate_favorability_grid.html">Substrate Favorability</a>.
+</p>
+<p>
+The behavior then goes through each grid cell in the <a href="../grids/dispersed_seeds_grid.html">Dispersed Seeds grid</a> and assesses the survival for the seeds of those species to which it applies.  This behavior starts by giving each seed a random temporary location within the Dispersed Seeds grid cell.  Then, it retrieves the substrate favorability at that point from the Substrate Favorability grid.  It then compares a random number to the substrate favorability to determine whether the seed lives. This method ensures that we can assess substrate favorabilities correctly when the Dispersed Seeds and Substrate grids have different grid cell resolutions.
+</p>
+<p>
+Once this process is complete, the number of surviving seeds for each species is assigned back to the Dispersed Seeds grid.
+</p>
+<h3>How to apply it</h3>
+<p>
+This behavior may be applied to seeds of any species. A species to which this is applied must also have a <a href="../disperse_behaviors/index.html">Disperse behavior</a> applied.  Also, the <a href="../substrate_behaviors/index.html">Substrate behavior</a> must be used in the run.
+</p>
+</body>
+</html>

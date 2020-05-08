@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Competition Harvest</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Competition Harvest</h1>
+<p>
+Competition Harvest performs harvests in a way that preferentially removes the most competitive individuals in a plot. It also decides when and how much to harvest based on criteria you give it.
+</p>
+<p>
+You choose one of two ways to determine when a harvest will occur: at a fixed time interval, or whenever the basal area in a plot is more than a certain threshold. If you choose to do fixed interval harvests, you can cut either a proportion of the total plot basal area, or cut back to leave a certain amount of basal area remaining. If you choose to do basal area threshold harvests, you can either remove a proportion of the total plot basal area, or remove the same amount of basal area every time. You can cut either the most competitive or the least competitive trees.
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "harvest".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Competition Harvest: Amount of Harvest Per Species (0 - 1)</td><td> Trees to harvest can be treated as a common pool where species identity is not a factor in selecting trees for harvest. In this case, all values should be set to 1.0. Otherwise, species can be harvested at a fixed proportion. In this case, set the proportion to harvest for each species as a value between 0 and 1, with all values adding up to 1.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Amount to Harvest</td><td> Amount to harvest, <b>depending on the harvest type</b>. 
+<ul>
+<li>Harvest type is <i>Fixed Interval Remove Proportion</i>:  The value for this parameter is the proportion of basal area that should be removed, 0-1.</li>
+<li>Harvest type is <i>Fixed Interval Leave Amt</i>: The value for this parameter is the desired basal area of the plot after harvesting, in m<sup>2</sup>/ha</li>
+<li>Harvest type is <i>Fixed BA Amt</i>: The value for this parameter is the amount of basal area to cut, in m<sup>2</sup>/ha</li>
+<li>Harvest type is <i>Fixed BA %</i>: The value for this parameter is the proportion of the total plot's basal area to cut between 0 and 1.</li></ul></td></tr>
+
+<tr><td class="parname">Competition Harvest: C</td><td> The slope of the curve "C" of the competitive effect of a target on a neighbor of each species.</td></tr>
+
+<tr><td class="parname">Competition Harvest: D</td><td> The steepness of the curve "D" of the competitive effect of a target on a neighbor of each species.</td></tr>
+
+<tr><td class="parname">Competition Harvest: DBH Effect of Targets (alpha)</td><td> Exponent controlling the effect of a target's DBH on neighbors.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Distance Effect of Targets (beta)</td><td> Exponent controlling the effect of distance between target and neighbors.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Filename for List of Harvested Trees</td><td> Optional. If there is a value in this field, the Competition Harvest behavior will write a tab-delimited text file of this name with all the trees cut during the run. In batch runs this will get overwritten and only contain the last run's list.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA %" or "Fixed BA Amt"), this is the amount of basal area that the plot must have before a harvest occurs. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
+
+<tr><td class="parname">Competition Harvest: Fixed Interval Harvest Interval (yr)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to "Fixed Interval Remove Proportion" or "Fixed Interval Leave Amt"), this is the number of years between harvests. This value is ignored if the harvest type is "Fixed BA %" or "Fixed BA Amt".</td></tr>
+
+<tr><td class="parname">Competition Harvest: Harvest Type</td><td> The type of harvest to perform. 
+<ul>
+<li><b>Fixed BA %</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount cut is a proportion of the total basal area.</li>
+<li><b>Fixed BA Amt</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount to cut is a fixed amount of basal area.</li>
+<li><b>Fixed Interval Leave Amt</b> means that there is a harvest every X years, with the plot being harvested until it is cut back to a certain amount of basal area.</li>
+<li><b>Fixed Interval Remove Proportion</b> means that there is a harvest every X years, with a fixed proportion of the plot's basal area removed.</li></ul></td></tr>
+
+<tr><td class="parname">Competition Harvest: Minimum DBH to Harvest</td><td> The minimum DBH, in cm, of trees that can be harvested.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Min Years Between Fixed BA Harvests</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA %" or "Fixed BA Amt"), this is the minimum number of years that must pass between harvests, even if the plot basal area is over the harvesting threshold. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
+
+<tr><td class="parname">Competition Harvest: Maximum DBH to Harvest</td><td> The maximum DBH, in cm, of trees that can be harvested.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Max Radius of Competitive Effects (m)</td><td>The maximum radius in meters at which a target tree of that species competitively affects other trees.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Cut Most Competitive First?</td><td>Whether to cut trees from most-to-least competitive (true) or least-to-most competitive (false).</td></tr>
+
+<tr><td class="parname">Competition Harvest: Species i Target Lambda</td><td> The competitive effect of targets of Species i on neighbors of every other species.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Size Sensitivity (gamma)</td><td> The effect of a neighbor tree's size on its sensitivity to competition.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Target DBH Divisor</td><td> The value by which target DBHs are divided when calculating competitive effects. This can be used to make units adjustments.</td></tr>
+
+<tr><td class="parname">Competition Harvest: Year of Run To Begin Harvests</td><td> The year in the run that harvests should begin. Set to 0 to begin harvests immediately.</td></tr>
+
+<tr><td class="parname">Gen Harvest Acceptable Deviation From Cut Target</td><td> The amount by which it is acceptable to deviate from the harvest target basal area removal without triggering a second harvest pass. Expressed as a proportion of the target basal area, between 0 and 1.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Competition Harvest performs harvests when specific conditions are met in the plot. The amount harvested is also based on conditions in the plot. There are four ways to specify the timing and amount of harvesting. The desired method is set in the <b>Competition Harvest: Harvest Type</b> parameter. The harvest types are:  
+</p>
+<ul>
+<li><i>Fixed basal area threshold, cutting a specific amount of basal area.</i> (Set the harvest type parameter to "Fixed BA Amt".) A harvest occurs whenever the plot's basal area exceeds a certain threshold, set in the <b>Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</b> parameter. The same amount of basal area is harvested every time, set in the <b>Competition Harvest: Amount to Harvest</b> parameter. To make sure that harvests do not happen too frequently, set a minimum interval between harvests in the <b>Competition Harvest: Min Years Between Fixed BA Harvests</b> parameter.</li>
+<li><i>Fixed basal area threshold, cutting a proportion of the plot basal area.</i> (Set the harvest type parameter to "Fixed BA %".) This is the same as the first harvest type, except the amount to harvest is different. This harvest removes a set proportion of the plot's basal area. Set this proportion (between 0 and 1) in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
+<li><i>Fixed interval, cutting plots back to a basal area threshold.</i> (Set the harvest type parameter to "Fixed Interval Leave Amt".) Harvests occur at a fixed interval, set in the <b>Competition Harvest: Fixed Interval Harvest Interval (yr)</b> parameter. The first timestep will have a harvest. Harvests remove trees until the plot reaches a specific amount of basal area, set in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
+<li><i>Fixed interval, cutting a proportion of the plot basal area.</i> (Set the harvest type parameter to "Fixed Interval Remove Proportion".) Harvests occur at a fixed interval, set in the <b>Competition Harvest: Fixed Interval Harvest Interval (yr)</b> parameter. The first timestep will have a harvest. Harvests remove a proportion of the plot basal area, with the proportion set in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
+</ul>
+<p>
+Competition Harvest uses these criteria to determine when and how much to cut. Harvests occur over the the entire plot area. You cannot mix harvest types, but you may be able to achieve a similar effect by using more than one instance of the Competition Harvest behavior.
+</p>
+<p>
+During a harvest, Competition Harvest calculates how much basal area it needs to cut. It can select trees without regard to species, or it can remove trees in a set ratio. Species ratio is set in the <b>Competition Harvest: Amount of Harvest Per Species (0 - 1)</b> parameter. If all values are set to 1, this means that species identity is ignored when selecting individuals for harvesting. Otherwise, the species are cut in the proportions entered. The values should add up to one. For example, if Species 1 is set to 0.25 and Species 2 is 0.75, then Competition Harvest will try to make 25% of the basal area removed come from Species 1 individuals and 75% come from Species 2. Of course, there are trade-offs between removing the most competitive individuals and making sure specific species targets are met.
+</p>
+<p>
+When selecting trees for harvesting, Competition Harvest evaluates the competitive effects of all potentially harvestable trees on their neighbors. The neighbors of an individual are all sapling and adult trees within the radius specified in the <b>Competition Harvest: Max Radius of Competitive Effects (m)</b> parameter. (Seedlings, snags, and dead trees never count as neighbors.) The competitive effect (COE) of tree i on the N neighbors surrounding it is:
+</p>
+<center><img src="../data_files/coe_eq.gif" alt="COE Equation"/></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>C</i> is the <b>Competition Harvest: C</b> parameter for the species of neighbor j</li>
+<li><i>D</i> is the <b>Competition Harvest: D</b> parameter for the species of neighbor j</li>
+<li><i>&#945;</i> is the <b>Competition Harvest: DBH Effect of Targets (alpha)</b> parameter for the species of neighbor j</li>
+<li><i>&#946;</i> is the <b>Competition Harvest: Distance Effect of Targets (beta)</b> parameter for the species of neighbor j</li>
+<li><i>&#947;</i> is the <b>Competition Harvest: Size Sensitivity (gamma)</b> parameter for the species of neighbor j</li>
+<li><i>DBH<sub>j</sub></i> is the DBH, in cm, of neighbor j</li>
+<li><i>&#955;</i> is the <b>Competition Harvest: Species i Target Lambda</b> parameter for the species of neighbor j, where Species i is the target's species</li>
+<li><i>DBH<sub>i</sub></i> is the DBH, in cm, of target i</li>
+<li><i>dist</i> is the distance between target and neighbor, in meters</li>
+</ul>
+<p>
+You can choose whether Competition Harvest removes trees in order from most-to-least competitive, or least-to-most competitive. Competition Harvest removes the tree with the highest (or lowest) COE value in the plot, then updates the COE of each tree in the vicinity so that the removed tree is no longer a neighbor. This process is repeated until the harvest cut target has been reached. If removing a tree will cause the harvest to overshoot its cutting target, a random number is compared to the amount of overshoot to determine if the tree will be removed, then harvest ends. If species are to be cut in a certain proportion, then separate cut targets are maintained for each species. If the highest COE individual is of a species whose cut target has been reached, it is not cut and Harvest Competition searches for the highest COE individuals of other species.
+</p>
+<p>
+Only trees to which you have applied the Competition Harvest behavior are considered for harvesting. You can only apply the behavior to saplings and adults. You can specify a size range to cut using the <b>Competition Harvest: Minimum DBH to Harvest</b> and <b>Competition Harvest: Maximum DBH to Harvest </b> parameters.
+</p>
+<p>
+The Competition Harvest behavior stores how much it actually cut each timestep in the <a href="../grids/competition_harvest_results_grid.html">Competition Harvest Results grid</a>. Additionally (and optionally), you can give the behavior a filename with the <b>Competition Harvest: Filename for List of Harvested Trees</b> parameter. If a filename is present, Competition Harvest will write to this file a list of the individuals harvested each timestep for the entire run. The file is a tab-delimited text file, with a header line, and five columns: X, Y, Species, DBH, and Timestep cut.
+</p>
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to saplings and/or adults of any species.
+</p>
+</body>
+</html>

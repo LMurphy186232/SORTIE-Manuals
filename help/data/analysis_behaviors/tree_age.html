@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Tree Age</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Tree Age</h1>
+
+<p>
+This behavior calculates tree age.
+</p>
+
+<h3>How it works</h3>
+<p>
+The age of a tree, in years, is kept in a tree data member called "Tree Age" and updated each timestep.  If this behavior is after the establishment behaviors, new seedlings will have an age equal to one timestep on the timestep they are created. 
+</p>
+<p>
+Some trees can be created at the beginning of a run, either in a tree map or to provide a specified initial tree density.  These trees are given an age of 10000, so they can be easily distinguished from trees created during a run.  If a tree map is provided and the trees are specifically given an age in the map, that age is kept and they are not re-assigned an age of 10000.
+</p>
+<p>
+This behavior may not be applied to snags, since they have a different age counter.
+</p>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to the trees for which you want to track age.  You can then save the "Tree Age" data in a detailed output file for analysis. 
+</p>
+
+</body>
+</html>

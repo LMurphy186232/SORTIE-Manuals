@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - Software Structure</title>
+</head>
+
+<body>
+<h1>Software Structure</h1>
+<p>
+The model software has two parts:  the C++ core model and the Java graphical user interface (GUI).  These two parts are fully separate and can be run independently.
+</p>
+<br><img width=550 height=251 src="../doc_files/software_structure.gif">
+
+<p>
+The two pieces of software interact through simple message-passing and through SORTIE-ND data files (see the <a href="io.html">SORTIE-ND I/O</a> topic).  
+</p>
+<h2>The Core Model</h2>
+<p>
+The core model is written in C++.  Its job is to actually perform model runs.  It accepts as input a parameter file, written in XML.  It then performs all necessary calculations, creates any specified output, and exits.
+</p>
+<h2>The Graphical User Interface</h2>
+<p>
+The graphical user interface is written in Java.  It has two jobs:  to help the user create a parameter file to send to the core model, and to help the user interpret the output from the core model by displaying the data as maps, histograms, etc. We refer to this second process as "data visualization".  
+</p>
+</body>
+</html>

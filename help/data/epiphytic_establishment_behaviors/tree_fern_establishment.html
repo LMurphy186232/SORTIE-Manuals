@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>Tree Fern Establishment</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>Tree Fern Establishment</h1>
+<p>
+This behavior was developed to simulate the establishment of seedlings epiphytically on tree ferns.  Rather than tracking individual seedlings that germinate and grow on a tree fern during its life, this assumes that upon a tree fern's death, there is a possibility that a seedling will establish in that spot.  For the purposes of this behavior, multiple species can serve as possible epiphytic substrates, but only one species will establish upon them.
+</p>
+<p>
+<b> Note:</b> this behavior is applied to the epiphytic substrate trees (species and life history stage), not the establishing species.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<p>
+Because the <a href="tree_fern_establishment.html">Tree Fern Establishment</a> behavior makes light calculations, a set of light parameters is included in its parameter list.  These are used in exactly the same way as the light behavior parameters.  However, the values are independent of those which may be used for other light behaviors.  If updates are made to the light parameters of an existing parameter file, they must be updated in both places.
+</p>
+
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Tree Fern Establishment Species of New Seedlings</td><td> The species of seedlings which are establishing epiphytically on the substrate species. </td></tr>
+
+<tr><td class="parname">Tree Fern Establishment Seedling Prob "a"</td><td> The variable <i>a</i> in the function used to calculate the probability of the establishment of a seedling on a dead substrate tree.</td></tr>
+
+<tr><td class="parname">Tree Fern Establishment Seedling Prob "b"</td><td> The variable <i>b</i> in the function used to calculate the probability of the establishment of a seedling on a dead substrate tree. </td></tr>
+
+<tr><td class="parname">Tree Fern Establishment Seedling Prob "c"</td><td> The variable <i>c</i> in the function used to calculate the probability of the establishment of a seedling on a dead substrate tree. </td></tr>
+
+<tr><td class="parname">Tree Fern Establishment Seedling Height "m"</td><td>The intercept in the linear function for seedling rooting height. </td></tr>
+
+<tr><td class="parname">Tree Fern Establishment Seedling Height "n"</td><td>The slope in the linear function for seedling rooting height.  </td><tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+There can be multiple species of epiphytic substrate trees, but only one establishing species. The establishing species is specified using <b>Tree Fern Establishment Species of New Seedlings</b> parameter. 
+</p>
+<p>
+When an individual of one of the epiphytic substrate tree species (that is, a tree fern) dies, there is a certain probability that one of its presumed epiphytic seedlings will root in its location. This probability is:  
+</p>
+<center><i>P = 1 - (1/ ( 1 + exp( a + b * Height + c * GLI )))</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>P</i> is the probability of a seedling rooting in that location</li>
+<li><i>Height</i> is the height of the dead substrate tree, in m</li>
+<li><i>GLI</i> is the light level (0 - 100) taken at the trunk of the substrate tree, halfway between the ground and the bottom of the crown</li>
+<li><i>a</i> is the <b>Tree Fern Establishment Seedling Prob "a"</b> parameter</li>
+<li><i>b</i> is the <b>Tree Fern Establishment Seedling Prob "b"</b> parameter</li>
+<li><i>c</i> is the <b>Tree Fern Establishment Seedling Prob "c"</b> parameter</li>
+</ul>
+<p>
+The GLI is calculated from the forest as it is at the tree's death; this may be different from any GLI value calculated at the beginning of the timestep, since growth will have occurred. The substrate tree itself is not yet a snag (if snags are used in the run), so it will cast shade as a living tree would. 
+</p>
+<p>
+SORTIE uses a random number to decide whether a new seedling will root based on this probability. If a seedling does root, its height is:
+</p>
+<center><i>HS = m + n * Height</i></center>
+<p>
+where
+</p>
+<ul>
+<li><i>HS</i> is the seedling height, in cm</li>
+<li><i>Height</i> is the height of the dead substrate tree, in m</li>
+<li><i>m</i> is the <b>Tree Fern Establishment Seedling Height "m"</b> parameter</li>
+<li><i>n</i> is the <b>Tree Fern Establishment Seedling Height "n"</b> parameter</li>
+</ul>
+<p>
+The seedling's location is exactly the same as that of the dead substrate tree. Its diameter is calculated from its height using the appropriate allometric function. It is not forced to be a seedling; if its height is tall enough to become a sapling, this is allowed. This behavior does nothing further to the dead substrate tree. It is subject to substrate dynamics, snag formation, or any other post-mortality process being used in the run, just like any other dead tree. 
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior can be applied to saplings and adults of any species.  The species to which it is applied are the <b> substrate</b> species, not the establishing species.  It should be executed after mortality and before dead tree remover behaviors have been applied in each timestep.
+</p>
+
+</body>
+</html>

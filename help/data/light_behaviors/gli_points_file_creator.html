@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HEAD>
+<TITLE>GLI Points File Creator behavior</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<BODY>
+
+<h1>GLI Points File Creator behavior</h1>
+<p>
+This behavior calculates GLI values for individual points in the plot.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Azimuth of North, in rad</td><td> The azimuth of north for the solar sky. The plot's north is always azimuth 0. If this is set to something other than 0, the sky is rotated relative to the plot. Values are between 0 and 2PI radians.</td></tr>
+
+<tr><td class="parname">GLI Points Input File</td><td> The file containing the points for which to calculate GLI.  This file will overwrite any existing points.  For best results, enter a fully-qualified pathname (i.e. "c:\sortie\my_file.txt").</td></tr>
+
+<tr><td class="parname">GLI Points Output File</td><td> The file to which results will be written each timestep.  Any existing data in this file will be overwritten at the start of the run.</td></tr>
+
+<tr><td class="parname">Minimum Solar Angle for GLI Points Creator, in rad</td><td> This is the minimum angle at which sunlight is seen, in radians. Below this value the sky is assumed to be dark due to shading neighbors. </td></tr>
+
+<tr><td class="parname">Number of Altitude Sky Divisions for GLI Points Creator</td><td> Number of grid cells into which the sky is divided from horizon to zenith, for the purpose of calculating light direction.</td></tr>
+
+<tr><td class="parname">Number of Azimuth Sky Divisions for GLI Points Creator</td><td>Number of grid cells into which the sky is divided around the horizon, for the purpose of calculating light direction.</td></tr>
+</table>
+
+<h3>General light parameters used by this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Beam Fraction of Global Radiation</td><td> The fraction of total solar radiation that is direct beam radiation (as opposed to diffuse). Expressed as a value between 0 and 1.</td></tr>
+
+<tr><td class="parname">Clear Sky Transmission Coefficient</td><td> Used to determine the amount of solar radiation seen at the plot location.</td></tr>
+
+<tr><td class="parname">First Day of Growing Season</td><td> The first day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Last Day of Growing Season</td><td> The last day of the growing season, as a Julian day (number between 1 and 365). Trees only get light during the growing season.</td></tr>
+
+<tr><td class="parname">Amount Canopy Light Transmission (0-1)</td><td> Fraction of light transmitted through the tree crown for each species. Expressed as a fraction between 0 and 1. A value must be provided for all species, even if they don't all use light.</td></tr>
+
+<tr><td class="parname">Snag Age Class 1 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 1".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 2 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 1", but is less than or equal to "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Snag Age Class 3 Amount Canopy Light Transmission (0-1)</td><td>  Fraction of light transmitted through the snag tree crown for each species. Applies to those snags whose age is greater than "Upper Age (Yrs) of Snag Light Transmission Class 2".  Expressed as a fraction between 0 and 1. If your run does not work with snags, you can ignore this.  Otherwise, a value must be provided for all species.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 1</td><td>  The upper age limit, in years, defining the first age class of snag light transmission.  Snags with an age less than or equal to this age have a light transmission coefficient matching "Snag Age Class 1 Light Transmission Coefficient".  If your run does not work with snags, you can ignore this.</td></tr>
+
+<tr><td class="parname">Upper Age (Yrs) of Snag Light Transmission Class 2</td><td>  The upper age limit, in years, defining the second age class of snag light transmission.  Snags with an age greater than the upper limit for size class 1, but less than or equal to this age, have a light transmission coefficient matching "Snag Age Class 2 Light Transmission Coefficient".  Snags with an age greater than this value are in age class three.  If your run does not work with snags, you can ignore this.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+You provide, as input, a file that contains the list of points for which you would like GLI values.  The file is tab-delimited text, and has the following format:  
+</p>
+<table class="plaintable">
+<tr><th class="plaintable">X</th><th class="plaintable">Y</th><th class="plaintable">Height (m)</th></tr>
+<tr><td class="plaintable">12.4</td><td class="plaintable">36.5</td><td class="plaintable">1.2</td></tr>
+<tr><td class="plaintable">128.7</td><td class="plaintable">19.5</td><td class="plaintable">0.68</td></tr>
+</table>
+<p>
+The first row is assumed to be a header row and is ignored.  Each subsequent row is a single point for which to calculate GLI.  You can include as many as you wish.  The first column is the point's X coordinate; the second is the Y coordinate; and the third column is the height above the ground, in meters.  Name the file whatever you wish.  Put the file name for the points file in the <b>GLI Points Input File</b> parameter.  It is best to use a fully-qualified path name (i.e. "c:\sortie\my_points.txt").  SORTIE-ND will load the points into the parameter file.  If you are working with a parameter file that already contains GLI points because they were saved into it previously, you do not need to enter another file and can leave the <b>GLI Points Input File</b> parameter blank.
+</p>
+<p>
+Each timestep, this behavior calculates GLI at each of the points specified.  It then writes the results to another tab-delimited text file.  You enter the filename of this file in the <b>GLI Points Output File</b> parameter.  It should be fully-qualified (i.e. "c:\sortie\points_output.txt") and should have a ".txt" extension.  If the file already exists when the SORTIE-ND run begins, the contents will be overwritten.  This means that this behavior cannot successfully be used in batch runs where a parameter file will be run multiple times.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+This behavior does not need to be applied to trees.  It can stand alone as the only light behavior if you wish.
+</p>
+
+</body>
+</html>

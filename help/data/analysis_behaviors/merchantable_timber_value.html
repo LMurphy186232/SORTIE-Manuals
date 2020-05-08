@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Merchantable Timber Value</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Merchantable Timber Value</h1>
+
+<p>
+This behavior calculates the value of merchantable timber.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th</tr>
+
+<tr><td class="parname">Merchantable Timber Value Form Class</td><td> The form class of the species.  Valid values are 78, 79, 80, 81, 84, and 85. </td></tr>
+
+<tr><td class="parname">Merchantable Timber Value Price / 1000 Board Feet</td><td> The price per thousand board feet for each species.  The currency used doesn't matter. </td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+The value for each tree is calculated by finding out its volume in board feet, and multiplying that by the price for its species.  The price is held in the <b>Merchantable Timber Value Price / 1000 Board Feet</b> parameter.  The currency used doesn't matter.  The tree's final value is placed in a tree data member called "Merchantable Value".  The total value for each species is saved in a grid called <a href="../grids/merch_value_grid.html">Merchantable Timber Value</a>.  You can save these values in a detailed output file for analysis. 
+</p>
+<p>
+The volume of merchantable timber in a tree depends on its size and form class.  These control how many 16-foot logs there are in a tree, and how many board feet of timber (assuming 0.25-inch thickness) those logs can create.  The form class is entered in the <b>Merchantable Timber Value Form Class</b> parameter.
+</p>
+<p>
+The behavior begins by finding out how many 16-foot logs the tree can provide in its bole.  The base of the bole is the top of the cut stump; the top of the bole is the merchantable height.  This behavior defines the merchantable height as the height at which the trunk diameter inside the bark tapers to 60% of DBH.  The behavior tries fitting in as many 16-foot logs as possible before the 60% taper occurs.  The amount of taper at the top of the first 16-foot log is established by the tree's form class.  A species's form class is the percentage of DBH to which the bole has tapered at the top of the first 16-foot log.
+</p>
+<p> 
+Then the behavior determines how many more logs the tree contains.  The amount of taper at the top of the first 16-foot log is subtracted from the DBH, to see how much taper is left before the 60% merchantable-height diameter is reached.  There is no formula that establishes clearly how many logs will fit; the behavior uses a trial-and-error approach taken from <a href="../../more_info/further_reading.html">Messavage and Girard, 1956</a>.  This paper includes the table below for upper-log taper for trees of various DBH and bole heights.  The behavior uses this table to determine the maximum number of logs it can fit into the taper available.
+</p>
+<p>
+Trees below 10 inches of DBH contain no merchantable timber and have a value of zero.  Trees greater than 40 inches of DBH are treated like 40-inch trees.
+</p>
+<p>
+Once the behavior figures out how many 16-foot logs a tree contains, it uses another set of tables, based on form class, to determine how many board-feet of timber the tree contains.  These tables are also from <a href="../../more_info/further_reading.html">Messavage and Girard, 1956</a>, and are shown below.
+</p>
+<b>Average upper-log taper (inches) in 16-foot logs</b>
+<table class="plaintable">
+<tr><th rowspan="2" class="plaintable">DBH (in)</th><th class="plaintable">2-log tree</th><th colspan="2" class="plaintable">3-log tree</th><th colspan="3" class="plaintable">4-log tree</th><th colspan="4" class="plaintable">5-log tree</th><th colspan="5" class="plaintable">6-log tree</th></tr>
+<tr><th class="plaintable">2d log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">5th log</th><th class="plaintable">2d log</th><th class="plaintable">3d log</th><th class="plaintable">4th log</th><th class="plaintable">5th log</th><th class="plaintable">6th log</th></tr>
+
+<tr><td class="plaintable">10</td><td class="plaintable">1.4</td><td class="plaintable">1.2</td><td class="plaintable">1.4</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">12</td><td class="plaintable">1.6</td><td class="plaintable">1.3</td><td class="plaintable">1.5</td><td class="plaintable">1.1</td><td class="plaintable">1.4</td><td class="plaintable">1.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">14</td><td class="plaintable">1.7</td><td class="plaintable">1.4</td><td class="plaintable">1.6</td><td class="plaintable">1.2</td><td class="plaintable">1.5</td><td class="plaintable">2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">16</td><td class="plaintable">1.9</td><td class="plaintable">1.5</td><td class="plaintable">1.7</td><td class="plaintable">1.2</td><td class="plaintable">1.6</td><td class="plaintable">2.1</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">18</td><td class="plaintable">2</td><td class="plaintable">1.6</td><td class="plaintable">1.8</td><td class="plaintable">1.3</td><td class="plaintable">1.7</td><td class="plaintable">2.2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">20</td><td class="plaintable">2.1</td><td class="plaintable">1.7</td><td class="plaintable">1.9</td><td class="plaintable">1.4</td><td class="plaintable">1.8</td><td class="plaintable">2.4</td><td class="plaintable">1.1</td><td class="plaintable">1.6</td><td class="plaintable">2.2</td><td class="plaintable">2.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">22</td><td class="plaintable">2.2</td><td class="plaintable">1.8</td><td class="plaintable">2</td><td class="plaintable">1.4</td><td class="plaintable">2</td><td class="plaintable">2.5</td><td class="plaintable">1.1</td><td class="plaintable">1.7</td><td class="plaintable">2.3</td><td class="plaintable">2.9</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">24</td><td class="plaintable">2.3</td><td class="plaintable">1.8</td><td class="plaintable">2.2</td><td class="plaintable">1.5</td><td class="plaintable">2.2</td><td class="plaintable">2.6</td><td class="plaintable">1.1</td><td class="plaintable">1.8</td><td class="plaintable">2.4</td><td class="plaintable">3.1</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">26</td><td class="plaintable">2.4</td><td class="plaintable">1.9</td><td class="plaintable">2.3</td><td class="plaintable">1.5</td><td class="plaintable">2.3</td><td class="plaintable">2.7</td><td class="plaintable">1.1</td><td class="plaintable">1.9</td><td class="plaintable">2.5</td><td class="plaintable">3.2</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+
+<tr><td class="plaintable">28</td><td class="plaintable">2.5</td><td class="plaintable">1.9</td><td class="plaintable">2.5</td><td class="plaintable">1.6</td><td class="plaintable">2.4</td><td class="plaintable">2.8</td><td class="plaintable">1.2</td><td class="plaintable">1.9</td><td class="plaintable">2.6</td><td class="plaintable">3.3</td><td class="plaintable">0.9</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.4</td></tr>
+
+<tr><td class="plaintable">30</td><td class="plaintable">2.6</td><td class="plaintable">2</td><td class="plaintable">2.6</td><td class="plaintable">1.7</td><td class="plaintable">2.5</td><td class="plaintable">3</td><td class="plaintable">1.2</td><td class="plaintable">2</td><td class="plaintable">2.7</td><td class="plaintable">3.5</td><td class="plaintable">0.9</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.5</td></tr>
+
+<tr><td class="plaintable">32</td><td class="plaintable">2.7</td><td class="plaintable">2</td><td class="plaintable">2.7</td><td class="plaintable">1.7</td><td class="plaintable">2.5</td><td class="plaintable">3.1</td><td class="plaintable">1.2</td><td class="plaintable">2.1</td><td class="plaintable">2.9</td><td class="plaintable">3.7</td><td class="plaintable">1</td><td class="plaintable">1.4</td><td class="plaintable">2.1</td><td class="plaintable">3.2</td><td class="plaintable">4.6</td></tr>
+
+<tr><td class="plaintable">34</td><td class="plaintable">2.8</td><td class="plaintable">2.1</td><td class="plaintable">2.7</td><td class="plaintable">1.8</td><td class="plaintable">2.5</td><td class="plaintable">3.3</td><td class="plaintable">1.3</td><td class="plaintable">2.1</td><td class="plaintable">3</td><td class="plaintable">3.8</td><td class="plaintable">1</td><td class="plaintable">1.4</td><td class="plaintable">2.2</td><td class="plaintable">3.3</td><td class="plaintable">4.7</td></tr>
+
+<tr><td class="plaintable">36</td><td class="plaintable">2.8</td><td class="plaintable">2.1</td><td class="plaintable">2.8</td><td class="plaintable">1.8</td><td class="plaintable">2.6</td><td class="plaintable">3.4</td><td class="plaintable">1.3</td><td class="plaintable">2.2</td><td class="plaintable">3</td><td class="plaintable">3.9</td><td class="plaintable">1.1</td><td class="plaintable">1.5</td><td class="plaintable">2.2</td><td class="plaintable">3.3</td><td class="plaintable">4.9</td></tr>
+
+<tr><td class="plaintable">38</td><td class="plaintable">2.9</td><td class="plaintable">2.1</td><td class="plaintable">2.8</td><td class="plaintable">1.9</td><td class="plaintable">2.6</td><td class="plaintable">3.4</td><td class="plaintable">1.3</td><td class="plaintable">2.2</td><td class="plaintable">3.1</td><td class="plaintable">3.9</td><td class="plaintable">1.1</td><td class="plaintable">1.5</td><td class="plaintable">2.3</td><td class="plaintable">3.4</td><td class="plaintable">5.1</td></tr>
+
+<tr><td class="plaintable">40</td><td class="plaintable">2.9</td><td class="plaintable">2.2</td><td class="plaintable">2.8</td><td class="plaintable">1.9</td><td class="plaintable">2.7</td><td class="plaintable">3.4</td><td class="plaintable">1.4</td><td class="plaintable">2.3</td><td class="plaintable">3.2</td><td class="plaintable">4</td><td class="plaintable">1.2</td><td class="plaintable">1.5</td><td class="plaintable">2.4</td><td class="plaintable">3.5</td><td class="plaintable">5.3</td></tr>
+</table>
+
+<br><b>Volume (board feet) by number of usable 16 foot logs</b><br>
+<b>Form Class 78:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">36</td><td class="plaintable">59</td><td class="plaintable">73</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">46</td><td class="plaintable">76</td><td class="plaintable">96</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">56</td><td class="plaintable">92</td><td class="plaintable">120</td><td class="plaintable">137</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">67</td><td class="plaintable">112</td><td class="plaintable">147</td><td class="plaintable">168</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">78</td><td class="plaintable">132</td><td class="plaintable">174</td><td class="plaintable">200</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">92</td><td class="plaintable">156</td><td class="plaintable">208</td><td class="plaintable">242</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">106</td><td class="plaintable">180</td><td class="plaintable">241</td><td class="plaintable">285</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">121</td><td class="plaintable">206</td><td class="plaintable">278</td><td class="plaintable">330</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">136</td><td class="plaintable">233</td><td class="plaintable">314</td><td class="plaintable">374</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">154</td><td class="plaintable">264</td><td class="plaintable">358</td><td class="plaintable">427</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">171</td><td class="plaintable">296</td><td class="plaintable">401</td><td class="plaintable">480</td><td class="plaintable">542</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">191</td><td class="plaintable">332</td><td class="plaintable">450</td><td class="plaintable">542</td><td class="plaintable">616</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">211</td><td class="plaintable">368</td><td class="plaintable">500</td><td class="plaintable">603</td><td class="plaintable">691</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">231</td><td class="plaintable">404</td><td class="plaintable">552</td><td class="plaintable">663</td><td class="plaintable">714</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">251</td><td class="plaintable">441</td><td class="plaintable">605</td><td class="plaintable">723</td><td class="plaintable">782</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">275</td><td class="plaintable">484</td><td class="plaintable">665</td><td class="plaintable">800</td><td class="plaintable">865</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">299</td><td class="plaintable">528</td><td class="plaintable">725</td><td class="plaintable">877</td><td class="plaintable">1,021</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">323</td><td class="plaintable">572</td><td class="plaintable">788</td><td class="plaintable">952</td><td class="plaintable">1,111</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">347</td><td class="plaintable">616</td><td class="plaintable">850</td><td class="plaintable">1,027</td><td class="plaintable">1,201</td><td class="plaintable">1,358</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">375</td><td class="plaintable">667</td><td class="plaintable">920</td><td class="plaintable">1,112</td><td class="plaintable">1,308</td><td class="plaintable">1,488</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">403</td><td class="plaintable">718</td><td class="plaintable">991</td><td class="plaintable">1,198</td><td class="plaintable">1,415</td><td class="plaintable">1,619</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">432</td><td class="plaintable">772</td><td class="plaintable">1,070</td><td class="plaintable">1,299</td><td class="plaintable">1,526</td><td class="plaintable">1,754</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">462</td><td class="plaintable">826</td><td class="plaintable">1,149</td><td class="plaintable">1,400</td><td class="plaintable">1,637</td><td class="plaintable">1,888</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">492</td><td class="plaintable">880</td><td class="plaintable">1,226</td><td class="plaintable">1,495</td><td class="plaintable">1,750</td><td class="plaintable">2,026</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">521</td><td class="plaintable">934</td><td class="plaintable">1,304</td><td class="plaintable">1,590</td><td class="plaintable">1,864</td><td class="plaintable">2,163</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">555</td><td class="plaintable">998</td><td class="plaintable">1,394</td><td class="plaintable">1,702</td><td class="plaintable">2,000</td><td class="plaintable">2,312</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">589</td><td class="plaintable">1,063</td><td class="plaintable">1,485</td><td class="plaintable">1,814</td><td class="plaintable">2,135</td><td class="plaintable">2,461</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">622</td><td class="plaintable">1,124</td><td class="plaintable">1,578</td><td class="plaintable">1,926</td><td class="plaintable">2,272</td><td class="plaintable">2,616</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">656</td><td class="plaintable">1,186</td><td class="plaintable">1,670</td><td class="plaintable">2,038</td><td class="plaintable">2,410</td><td class="plaintable">2,771</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">694</td><td class="plaintable">1,258</td><td class="plaintable">1,769</td><td class="plaintable">2,166</td><td class="plaintable">2,552</td><td class="plaintable">2,937</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">731</td><td class="plaintable">1,329</td><td class="plaintable">1,868</td><td class="plaintable">2,294</td><td class="plaintable">2,693</td><td class="plaintable">3,103</td></tr>
+</table>
+
+<br><b>Form Class 79:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">38</td><td class="plaintable">61</td><td class="plaintable">77</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">48</td><td class="plaintable">78</td><td class="plaintable">100</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">58</td><td class="plaintable">96</td><td class="plaintable">124</td><td class="plaintable">141</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">70</td><td class="plaintable">117</td><td class="plaintable">153</td><td class="plaintable">176</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">82</td><td class="plaintable">138</td><td class="plaintable">182</td><td class="plaintable">211</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">95</td><td class="plaintable">160</td><td class="plaintable">214</td><td class="plaintable">252</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">108</td><td class="plaintable">183</td><td class="plaintable">246</td><td class="plaintable">292</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">124</td><td class="plaintable">212</td><td class="plaintable">286</td><td class="plaintable">340</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">140</td><td class="plaintable">240</td><td class="plaintable">325</td><td class="plaintable">388</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">158</td><td class="plaintable">272</td><td class="plaintable">370</td><td class="plaintable">442</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">176</td><td class="plaintable">305</td><td class="plaintable">414</td><td class="plaintable">496</td><td class="plaintable">561</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">196</td><td class="plaintable">342</td><td class="plaintable">464</td><td class="plaintable">558</td><td class="plaintable">636</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">216</td><td class="plaintable">378</td><td class="plaintable">514</td><td class="plaintable">621</td><td class="plaintable">710</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">238</td><td class="plaintable">418</td><td class="plaintable">571</td><td class="plaintable">687</td><td class="plaintable">792</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">260</td><td class="plaintable">458</td><td class="plaintable">628</td><td class="plaintable">753</td><td class="plaintable">875</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">282</td><td class="plaintable">499</td><td class="plaintable">685</td><td class="plaintable">826</td><td class="plaintable">960</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">305</td><td class="plaintable">540</td><td class="plaintable">742</td><td class="plaintable">899</td><td class="plaintable">1,046</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">331</td><td class="plaintable">588</td><td class="plaintable">810</td><td class="plaintable">980</td><td class="plaintable">1,144</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">357</td><td class="plaintable">635</td><td class="plaintable">877</td><td class="plaintable">1,061</td><td class="plaintable">1,242</td><td class="plaintable">1,404</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">385</td><td class="plaintable">686</td><td class="plaintable">948</td><td class="plaintable">1,148</td><td class="plaintable">1,350</td><td class="plaintable">1,537</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">413</td><td class="plaintable">737</td><td class="plaintable">1,020</td><td class="plaintable">1,235</td><td class="plaintable">1,458</td><td class="plaintable">1,670</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">444</td><td class="plaintable">792</td><td class="plaintable">1,100</td><td class="plaintable">1,338</td><td class="plaintable">1,572</td><td class="plaintable">1,808</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">474</td><td class="plaintable">848</td><td class="plaintable">1,181</td><td class="plaintable">1,440</td><td class="plaintable">1,685</td><td class="plaintable">1,945</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">506</td><td class="plaintable">907</td><td class="plaintable">1,265</td><td class="plaintable">1,544</td><td class="plaintable">1,808</td><td class="plaintable">2,094</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">538</td><td class="plaintable">966</td><td class="plaintable">1,349</td><td class="plaintable">1,647</td><td class="plaintable">1,932</td><td class="plaintable">2,244</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">570</td><td class="plaintable">1,026</td><td class="plaintable">1,435</td><td class="plaintable">1,754</td><td class="plaintable">2,000</td><td class="plaintable">2,384</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">602</td><td class="plaintable">1,087</td><td class="plaintable">1,521</td><td class="plaintable">1,860</td><td class="plaintable">2,189</td><td class="plaintable">2,525</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">638</td><td class="plaintable">1,154</td><td class="plaintable">1,620</td><td class="plaintable">1,980</td><td class="plaintable">2,338</td><td class="plaintable">2,694</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">674</td><td class="plaintable">1,220</td><td class="plaintable">1,720</td><td class="plaintable">2,101</td><td class="plaintable">2,488</td><td class="plaintable">2,862</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">712</td><td class="plaintable">1,292</td><td class="plaintable">1,822</td><td class="plaintable">2,232</td><td class="plaintable">2,632</td><td class="plaintable">3,031</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">750</td><td class="plaintable">1,365</td><td class="plaintable">1,923</td><td class="plaintable">2,362</td><td class="plaintable">2,775</td><td class="plaintable">3,200</td></tr>
+</table>
+ 
+<br><b>Form Class 80:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">39</td><td class="plaintable">63</td><td class="plaintable">80</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">49</td><td class="plaintable">80</td><td class="plaintable">104</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">59</td><td class="plaintable">98</td><td class="plaintable">127</td><td class="plaintable">146</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">71</td><td class="plaintable">120</td><td class="plaintable">156</td><td class="plaintable">181</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">83</td><td class="plaintable">141</td><td class="plaintable">186</td><td class="plaintable">216</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">98</td><td class="plaintable">166</td><td class="plaintable">221</td><td class="plaintable">260</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">112</td><td class="plaintable">190</td><td class="plaintable">256</td><td class="plaintable">305</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">128</td><td class="plaintable">219</td><td class="plaintable">296</td><td class="plaintable">354</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">144</td><td class="plaintable">248</td><td class="plaintable">336</td><td class="plaintable">402</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">162</td><td class="plaintable">281</td><td class="plaintable">382</td><td class="plaintable">457</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">181</td><td class="plaintable">314</td><td class="plaintable">427</td><td class="plaintable">512</td><td class="plaintable">580</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">201</td><td class="plaintable">350</td><td class="plaintable">478</td><td class="plaintable">575</td><td class="plaintable">656</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">221</td><td class="plaintable">387</td><td class="plaintable">528</td><td class="plaintable">638</td><td class="plaintable">732</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">244</td><td class="plaintable">428</td><td class="plaintable">586</td><td class="plaintable">706</td><td class="plaintable">816</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">266</td><td class="plaintable">469</td><td class="plaintable">644</td><td class="plaintable">773</td><td class="plaintable">899</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">290</td><td class="plaintable">514</td><td class="plaintable">706</td><td class="plaintable">852</td><td class="plaintable">992</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">315</td><td class="plaintable">558</td><td class="plaintable">767</td><td class="plaintable">931</td><td class="plaintable">1,086</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">341</td><td class="plaintable">606</td><td class="plaintable">836</td><td class="plaintable">1,014</td><td class="plaintable">1,185</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">367</td><td class="plaintable">654</td><td class="plaintable">904</td><td class="plaintable">1,096</td><td class="plaintable">1,284</td><td class="plaintable">1,453</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">396</td><td class="plaintable">706</td><td class="plaintable">977</td><td class="plaintable">1,184</td><td class="plaintable">1,394</td><td class="plaintable">1,588</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">424</td><td class="plaintable">758</td><td class="plaintable">1,050</td><td class="plaintable">1,272</td><td class="plaintable">1,503</td><td class="plaintable">1,723</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">454</td><td class="plaintable">814</td><td class="plaintable">1,132</td><td class="plaintable">1,376</td><td class="plaintable">1,618</td><td class="plaintable">1,862</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">485</td><td class="plaintable">870</td><td class="plaintable">1,213</td><td class="plaintable">1,480</td><td class="plaintable">1,733</td><td class="plaintable">2,001</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">518</td><td class="plaintable">930</td><td class="plaintable">1,298</td><td class="plaintable">1,586</td><td class="plaintable">1,858</td><td class="plaintable">2,152</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">550</td><td class="plaintable">989</td><td class="plaintable">1,383</td><td class="plaintable">1,691</td><td class="plaintable">1,984</td><td class="plaintable">2,304</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">585</td><td class="plaintable">1,055</td><td class="plaintable">1,477</td><td class="plaintable">1,806</td><td class="plaintable">2,124</td><td class="plaintable">2,458</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">620</td><td class="plaintable">1,121</td><td class="plaintable">1,571</td><td class="plaintable">1,922</td><td class="plaintable">2,264</td><td class="plaintable">2,612</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">656</td><td class="plaintable">1,188</td><td class="plaintable">1,672</td><td class="plaintable">2,044</td><td class="plaintable">2,416</td><td class="plaintable">2,783</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">693</td><td class="plaintable">1,256</td><td class="plaintable">1,772</td><td class="plaintable">2,167</td><td class="plaintable">2,568</td><td class="plaintable">2,954</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">732</td><td class="plaintable">1,330</td><td class="plaintable">1,874</td><td class="plaintable">2,300</td><td class="plaintable">2,714</td><td class="plaintable">3,127</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">770</td><td class="plaintable">1,403</td><td class="plaintable">1,977</td><td class="plaintable">2,432</td><td class="plaintable">2,860</td><td class="plaintable">3,300</td></tr>
+</table>
+ 
+<br><b>Form Class 81:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">40</td><td class="plaintable">65</td><td class="plaintable">82</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">50</td><td class="plaintable">82</td><td class="plaintable">106</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">60</td><td class="plaintable">100</td><td class="plaintable">130</td><td class="plaintable">150</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">72</td><td class="plaintable">122</td><td class="plaintable">160</td><td class="plaintable">186</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">85</td><td class="plaintable">144</td><td class="plaintable">190</td><td class="plaintable">221</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">100</td><td class="plaintable">170</td><td class="plaintable">228</td><td class="plaintable">268</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">115</td><td class="plaintable">197</td><td class="plaintable">265</td><td class="plaintable">316</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">132</td><td class="plaintable">226</td><td class="plaintable">306</td><td class="plaintable">366</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">148</td><td class="plaintable">256</td><td class="plaintable">346</td><td class="plaintable">415</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">166</td><td class="plaintable">290</td><td class="plaintable">392</td><td class="plaintable">471</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">185</td><td class="plaintable">323</td><td class="plaintable">439</td><td class="plaintable">527</td><td class="plaintable">598</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">206</td><td class="plaintable">360</td><td class="plaintable">492</td><td class="plaintable">592</td><td class="plaintable">676</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">227</td><td class="plaintable">398</td><td class="plaintable">544</td><td class="plaintable">656</td><td class="plaintable">754</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">250</td><td class="plaintable">439</td><td class="plaintable">602</td><td class="plaintable">724</td><td class="plaintable">838</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">272</td><td class="plaintable">480</td><td class="plaintable">659</td><td class="plaintable">791</td><td class="plaintable">923</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">298</td><td class="plaintable">528</td><td class="plaintable">726</td><td class="plaintable">877</td><td class="plaintable">1,024</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">324</td><td class="plaintable">575</td><td class="plaintable">793</td><td class="plaintable">963</td><td class="plaintable">1,124</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">351</td><td class="plaintable">624</td><td class="plaintable">863</td><td class="plaintable">1,047</td><td class="plaintable">1,226</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">378</td><td class="plaintable">674</td><td class="plaintable">933</td><td class="plaintable">1,131</td><td class="plaintable">1,327</td><td class="plaintable">1,502</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">406</td><td class="plaintable">726</td><td class="plaintable">1,006</td><td class="plaintable">1,220</td><td class="plaintable">1,438</td><td class="plaintable">1,640</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">435</td><td class="plaintable">779</td><td class="plaintable">1,080</td><td class="plaintable">1,310</td><td class="plaintable">1,549</td><td class="plaintable">1,777</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">466</td><td class="plaintable">836</td><td class="plaintable">1,162</td><td class="plaintable">1,416</td><td class="plaintable">1,666</td><td class="plaintable">1,918</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">497</td><td class="plaintable">892</td><td class="plaintable">1,245</td><td class="plaintable">1,522</td><td class="plaintable">1,784</td><td class="plaintable">2,059</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">530</td><td class="plaintable">953</td><td class="plaintable">1,332</td><td class="plaintable">1,628</td><td class="plaintable">1,910</td><td class="plaintable">2,214</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">563</td><td class="plaintable">1,014</td><td class="plaintable">1,419</td><td class="plaintable">1,734</td><td class="plaintable">2,037</td><td class="plaintable">2,368</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">600</td><td class="plaintable">1,084</td><td class="plaintable">1,518</td><td class="plaintable">1,859</td><td class="plaintable">2,188</td><td class="plaintable">2,534</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">637</td><td class="plaintable">1,154</td><td class="plaintable">1,618</td><td class="plaintable">1,984</td><td class="plaintable">2,338</td><td class="plaintable">2,700</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">674</td><td class="plaintable">1,223</td><td class="plaintable">1,721</td><td class="plaintable">2,109</td><td class="plaintable">2,494</td><td class="plaintable">2,874</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">712</td><td class="plaintable">1,292</td><td class="plaintable">1,824</td><td class="plaintable">2,234</td><td class="plaintable">2,649</td><td class="plaintable">3,049</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">751</td><td class="plaintable">1,366</td><td class="plaintable">1,928</td><td class="plaintable">2,368</td><td class="plaintable">2,796</td><td class="plaintable">3,224</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">790</td><td class="plaintable">1,441</td><td class="plaintable">2,032</td><td class="plaintable">2,502</td><td class="plaintable">2,944</td><td class="plaintable">3,399</td></tr>
+</table>
+ 
+<br><b>Form Class 84:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">43</td><td class="plaintable">71</td><td class="plaintable">91</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">54</td><td class="plaintable">91</td><td class="plaintable">118</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">66</td><td class="plaintable">111</td><td class="plaintable">145</td><td class="plaintable">168</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">80</td><td class="plaintable">135</td><td class="plaintable">178</td><td class="plaintable">208</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">93</td><td class="plaintable">159</td><td class="plaintable">212</td><td class="plaintable">248</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">108</td><td class="plaintable">185</td><td class="plaintable">249</td><td class="plaintable">295</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">123</td><td class="plaintable">211</td><td class="plaintable">286</td><td class="plaintable">342</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">142</td><td class="plaintable">244</td><td class="plaintable">332</td><td class="plaintable">398</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">160</td><td class="plaintable">277</td><td class="plaintable">377</td><td class="plaintable">453</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">180</td><td class="plaintable">314</td><td class="plaintable">428</td><td class="plaintable">524</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">200</td><td class="plaintable">351</td><td class="plaintable">479</td><td class="plaintable">576</td><td class="plaintable">657</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">223</td><td class="plaintable">392</td><td class="plaintable">537</td><td class="plaintable">649</td><td class="plaintable">744</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">246</td><td class="plaintable">434</td><td class="plaintable">595</td><td class="plaintable">722</td><td class="plaintable">830</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">271</td><td class="plaintable">480</td><td class="plaintable">660</td><td class="plaintable">798</td><td class="plaintable">925</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">296</td><td class="plaintable">525</td><td class="plaintable">724</td><td class="plaintable">873</td><td class="plaintable">1,020</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">322</td><td class="plaintable">572</td><td class="plaintable">790</td><td class="plaintable">958</td><td class="plaintable">1,118</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">347</td><td class="plaintable">619</td><td class="plaintable">855</td><td class="plaintable">1,042</td><td class="plaintable">1,217</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">376</td><td class="plaintable">673</td><td class="plaintable">932</td><td class="plaintable">1,136</td><td class="plaintable">1,331</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">406</td><td class="plaintable">727</td><td class="plaintable">1,010</td><td class="plaintable">1,230</td><td class="plaintable">1,445</td><td class="plaintable">1,636</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">438</td><td class="plaintable">786</td><td class="plaintable">1,092</td><td class="plaintable">1,330</td><td class="plaintable">1,569</td><td class="plaintable">1,790</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">470</td><td class="plaintable">844</td><td class="plaintable">1,173</td><td class="plaintable">1,429</td><td class="plaintable">1,693</td><td class="plaintable">1,943</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">504</td><td class="plaintable">907</td><td class="plaintable">1,265</td><td class="plaintable">1,546</td><td class="plaintable">1,823</td><td class="plaintable">2,101</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">538</td><td class="plaintable">970</td><td class="plaintable">1,357</td><td class="plaintable">1,664</td><td class="plaintable">1,953</td><td class="plaintable">2,259</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">574</td><td class="plaintable">1,037</td><td class="plaintable">1,453</td><td class="plaintable">1,782</td><td class="plaintable">2,096</td><td class="plaintable">2,431</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">611</td><td class="plaintable">1,104</td><td class="plaintable">1,549</td><td class="plaintable">1,901</td><td class="plaintable">2,240</td><td class="plaintable">2,603</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">647</td><td class="plaintable">1,173</td><td class="plaintable">1,648</td><td class="plaintable">2,023</td><td class="plaintable">2,387</td><td class="plaintable">2,766</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">683</td><td class="plaintable">1,242</td><td class="plaintable">1,746</td><td class="plaintable">2,145</td><td class="plaintable">2,534</td><td class="plaintable">2,929</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">724</td><td class="plaintable">1,318</td><td class="plaintable">1,859</td><td class="plaintable">2,284</td><td class="plaintable">2,706</td><td class="plaintable">3,123</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">765</td><td class="plaintable">1,393</td><td class="plaintable">1,972</td><td class="plaintable">2,422</td><td class="plaintable">2,877</td><td class="plaintable">3,317</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">808</td><td class="plaintable">1,476</td><td class="plaintable">2,088</td><td class="plaintable">2,570</td><td class="plaintable">3,042</td><td class="plaintable">3,512</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">851</td><td class="plaintable">1,558</td><td class="plaintable">2,203</td><td class="plaintable">2,719</td><td class="plaintable">3,208</td><td class="plaintable">3,706</td></tr>
+</table>
+ 
+<br><b>Form Class 85:</b>
+<table class="plaintable">
+<tr><th class="plaintable">DBH (inches)</th><th class="plaintable">1 log</th><th class="plaintable">2 logs</th><th class="plaintable">3 logs</th><th class="plaintable">4 logs</th><th class="plaintable">5 logs</th><th class="plaintable">6 logs</th></tr>
+<tr><td class="plaintable">10</td><td class="plaintable">45</td><td class="plaintable">74</td><td class="plaintable">94</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">11</td><td class="plaintable">56</td><td class="plaintable">94</td><td class="plaintable">122</td><td class="plaintable">---</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">12</td><td class="plaintable">68</td><td class="plaintable">114</td><td class="plaintable">150</td><td class="plaintable">173</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">13</td><td class="plaintable">82</td><td class="plaintable">138</td><td class="plaintable">184</td><td class="plaintable">214</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">14</td><td class="plaintable">95</td><td class="plaintable">163</td><td class="plaintable">217</td><td class="plaintable">254</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">15</td><td class="plaintable">111</td><td class="plaintable">191</td><td class="plaintable">257</td><td class="plaintable">304</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">16</td><td class="plaintable">127</td><td class="plaintable">219</td><td class="plaintable">297</td><td class="plaintable">355</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">17</td><td class="plaintable">146</td><td class="plaintable">252</td><td class="plaintable">342</td><td class="plaintable">412</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">18</td><td class="plaintable">164</td><td class="plaintable">285</td><td class="plaintable">388</td><td class="plaintable">468</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">19</td><td class="plaintable">184</td><td class="plaintable">322</td><td class="plaintable">440</td><td class="plaintable">531</td><td class="plaintable">---</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">20</td><td class="plaintable">205</td><td class="plaintable">360</td><td class="plaintable">492</td><td class="plaintable">594</td><td class="plaintable">678</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">21</td><td class="plaintable">228</td><td class="plaintable">402</td><td class="plaintable">550</td><td class="plaintable">667</td><td class="plaintable">765</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">22</td><td class="plaintable">251</td><td class="plaintable">444</td><td class="plaintable">609</td><td class="plaintable">740</td><td class="plaintable">852</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">23</td><td class="plaintable">276</td><td class="plaintable">490</td><td class="plaintable">675</td><td class="plaintable">818</td><td class="plaintable">950</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">24</td><td class="plaintable">302</td><td class="plaintable">537</td><td class="plaintable">741</td><td class="plaintable">895</td><td class="plaintable">1,047</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">25</td><td class="plaintable">330</td><td class="plaintable">588</td><td class="plaintable">812</td><td class="plaintable">986</td><td class="plaintable">1,153</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">26</td><td class="plaintable">357</td><td class="plaintable">638</td><td class="plaintable">882</td><td class="plaintable">1,076</td><td class="plaintable">1,259</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">27</td><td class="plaintable">387</td><td class="plaintable">693</td><td class="plaintable">961</td><td class="plaintable">1,172</td><td class="plaintable">1,374</td><td class="plaintable">---</td></tr>
+<tr><td class="plaintable">28</td><td class="plaintable">417</td><td class="plaintable">745</td><td class="plaintable">1,040</td><td class="plaintable">1,267</td><td class="plaintable">1,490</td><td class="plaintable">1,689</td></tr>
+<tr><td class="plaintable">29</td><td class="plaintable">448</td><td class="plaintable">807</td><td class="plaintable">1,122</td><td class="plaintable">1,368</td><td class="plaintable">1,616</td><td class="plaintable">1,844</td></tr>
+<tr><td class="plaintable">30</td><td class="plaintable">481</td><td class="plaintable">866</td><td class="plaintable">1,205</td><td class="plaintable">1,469</td><td class="plaintable">1,741</td><td class="plaintable">1,999</td></tr>
+<tr><td class="plaintable">31</td><td class="plaintable">516</td><td class="plaintable">930</td><td class="plaintable">1,298</td><td class="plaintable">1,588</td><td class="plaintable">1,874</td><td class="plaintable">2,160</td></tr>
+<tr><td class="plaintable">32</td><td class="plaintable">550</td><td class="plaintable">993</td><td class="plaintable">1,391</td><td class="plaintable">1,706</td><td class="plaintable">2,006</td><td class="plaintable">2,321</td></tr>
+<tr><td class="plaintable">33</td><td class="plaintable">587</td><td class="plaintable">1,061</td><td class="plaintable">1,488</td><td class="plaintable">1,827</td><td class="plaintable">2,150</td><td class="plaintable">2,495</td></tr>
+<tr><td class="plaintable">34</td><td class="plaintable">624</td><td class="plaintable">1,129</td><td class="plaintable">1,586</td><td class="plaintable">1,948</td><td class="plaintable">2,294</td><td class="plaintable">2,669</td></tr>
+<tr><td class="plaintable">35</td><td class="plaintable">663</td><td class="plaintable">1,204</td><td class="plaintable">1,692</td><td class="plaintable">2,080</td><td class="plaintable">2,454</td><td class="plaintable">2,846</td></tr>
+<tr><td class="plaintable">36</td><td class="plaintable">702</td><td class="plaintable">1,278</td><td class="plaintable">1,797</td><td class="plaintable">2,212</td><td class="plaintable">2,614</td><td class="plaintable">3,022</td></tr>
+<tr><td class="plaintable">37</td><td class="plaintable">744</td><td class="plaintable">1,355</td><td class="plaintable">1,912</td><td class="plaintable">2,352</td><td class="plaintable">2,788</td><td class="plaintable">3,219</td></tr>
+<tr><td class="plaintable">38</td><td class="plaintable">785</td><td class="plaintable">1,432</td><td class="plaintable">2,027</td><td class="plaintable">2,493</td><td class="plaintable">2,962</td><td class="plaintable">3,416</td></tr>
+<tr><td class="plaintable">39</td><td class="plaintable">828</td><td class="plaintable">1,515</td><td class="plaintable">2,144</td><td class="plaintable">2,644</td><td class="plaintable">3,130</td><td class="plaintable">3,614</td></tr>
+<tr><td class="plaintable">40</td><td class="plaintable">872</td><td class="plaintable">1,598</td><td class="plaintable">2,260</td><td class="plaintable">2,795</td><td class="plaintable">3,298</td><td class="plaintable">3,813</td></tr>
+</table>
+
+<h3>How to apply it</h3>
+<p>Apply this behavior to saplings, adults, or snags of any species. <em>This behavior does not automatically create output.</em> Once you have added this behavior to your run, the <a href="../../windows/detailed_output_tree_setup.html">Detailed output setup window</a> for trees will have a tree data member called "Merchantable Value".  Add this to your detailed  output file to output volume in cubic feet.  You can also use the <a href="../../windows/detailed_output_grid_setup.html">Detailed output grid setup window</a> to save the data members in the <a href="../grids/merch_value_grid.html">Merchantable Timber Value grid</a>, which contains the total value for each species. You can then view the contents of this grid as a <a href="../../data_visualization/tables.html">table</a> using SORTIE's data visualization system.
+</p>
+
+</body>
+</html>

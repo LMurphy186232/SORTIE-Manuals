@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Storm damage killer</TITLE>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h1>Storm damage killer</h1>
+<p>
+This behavior kills trees damaged in storms.  It decides which damaged trees die, and if they become snags, it manages the snag population by causing snag tip-up and removal.  This behavior does not decide which trees get damaged in a storm; that is the job of the <a href="storm_damage_applier.html">Storm damage applier</a> behavior. 
+</p>
+<p>
+Trees removed by this behavior will have a mortality reason code of "storm".
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+
+<tr><td class="parname">Minimum DBH for Storm Damage, in cm</td><td>  The minimum DBH for trees that can be damaged or killed by storms.  Trees smaller than this are never damaged no matter what storms occur.</td></tr>
+
+<tr><td class="parname">Number of Years Storm-Damaged Snags Last</td><td> The number of years snags damaged in storms last before disappearing.  If snags are not used in a run, this is not required. </td></tr>
+
+<tr><td class="parname">Storm Heavy Damage Survival Prob Intercept (a)</td><td> The "a" value in the probability of survival logit function for trees with heavy damage.</td></tr>
+
+<tr><td class="parname">Storm Heavy Damage Survival Prob DBH Coeff. (b)</td><td> The "b" value in the probability of survival logit function for trees with heavy damage.</td></tr>
+
+<tr><td class="parname">Storm Medium Damage Survival Prob Intercept (a)</td><td> The "a" value in the probability of survival logit function for trees with medium damage. </td></tr>
+
+<tr><td class="parname">Storm Medium Damage Survival Prob DBH Coeff. (b)</td><td> The "b" value in the probability of survival logit function for trees with medium damage.</td></tr>
+
+<tr><td class="parname">Storm - Prop. Heavy Damage Dead Trees that Tip Up</td><td> The proportion of those heavily damaged trees that are killed in the storm that tip up, as a value between 0 and 1.  For how a tipped-up tree is treated, see the behavior description.</td></tr>
+
+</table>
+
+<h3>How it works</h3>
+<p>
+Trees that have received medium or heavy damage from the <a href="storm_damage_applier.html">Storm damage applier</a> behavior have a certain probability of survival.  (Undamaged trees, and any trees with a DBH smaller than the values set in the <b>Minimum DBH for Storm Damage, in cm</b> parameter, are ignored.)  The probability is:
+</p>
+<center><img src="../data_files/storm_surv_eqn.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>p</i> is the tree's probability of survival, between 0 and 1</li>
+<li><i>a<sub>i</sub></i> is either the <b>Storm Medium Damage Survival Prob Intercept (a)</b> or the <b>Storm Heavy Damage Survival Prob Intercept (a)</b> parameter, depending on the tree's damage category</li>
+<li><i>b</i> is either the <b>Storm Medium Damage Survival Prob DBH Coeff. (b)</b> or the <b>Storm Heavy Damage Survival Prob DBH Coeff. (b)</b> parameter, depending on the tree's damage category</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+</ul>
+<p>
+Once the survival probability has been calculated, this behavior uses a random number to determine whether it lives or dies.  Damaged trees are only at risk of dying at the time of the storm that damages them; if they survive it, this behavior will not try to kill them again even if they are still damaged.  A certain proportion of heavily damaged trees that die create tip-ups.  The probability of this is in the parameter <b>Storm - Prop. Heavy Damage Dead Trees that Tip Up</b>. 
+</p>
+<p>
+If snags are used in this run, those trees that die in either damage category (except for tip-ups) become snags.  A time-since-damage counter is set for each of these snags.  After the amount of time specified in the <b>Number of Years Storm-Damaged Snags Last</b> has passed, this behavior will remove those snags, "killing" them.  They are not available for later processes such as substrate.  This behavior will not do anything to any snag that it did not kill.  If snags are not used in this run, trees that die have a flag set indicating that they are dead.  They are available during the timestep in which they die to substrate and other processes, in exactly the same manner as trees that die due to natural mortality.  They will be subject to the same cleanup and removal processes as well.
+</p>
+<p>
+If a heavily-damaged dead tree tips up, and snags are used in the run, the tip-up becomes a snag that has its "dead" flag set to true.  It is available during the timestep in which it dies to substrate and other processes, in exactly the same manner as other snags that die due to natural mortality.  It is subject to the same cleanup and removal processes as well.  If snags are not used in the run, then tip-ups are treated like all other storm-killed trees.
+</p>
+<p>
+Saplings that are killed in storms never become snags.  They are killed in the manner described above for trees that die in a non-snag run.  Existing snags are never at risk for storm damage or mortality, but the behavior must be applied to the snag tree type in order to cause storm-killed adults to become snags.
+</p>
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to the trees that can be killed in storms.  You must also apply the <a href="storm_damage_applier.html">Storm damage applier</a> behavior to the same trees.  You may not apply this behavior to seedlings.  If you wish to have storm-killed trees become snags, you must apply this behavior to the snag tree type.    This may cause snags to appear due to natural mortality and other causes; you must use other behaviors to manage these snags.
+</p>  
+<p>
+You must also have any kind of <a href="../mortality_behaviors/index.html">mortality behavior</a> applied to each tree species and life history stage to which this behavior is applied. 
+</p>
+</body>
+</html>

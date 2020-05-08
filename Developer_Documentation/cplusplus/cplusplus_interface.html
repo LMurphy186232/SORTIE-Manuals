@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<title>SORTIE-ND Developer's Manual - C++ Interface</title>
+</head>
+
+<body>
+<h1>C++ Interface</h1>
+<p>
+You can bypass the Java interface when working with the C++ core.  This is very useful when debugging.
+</p>
+<p>
+To access the interface, build the project that contains the interface and then run "coremodel.exe" (probably from a debugger).  The welcome screen should appear in a DOS window.
+</p>
+<p>
+To add a file, type "input " + the filename.  If the file reads correctly, the following appears:
+</p>
+<p>
+Model Status:  Ready to run.
+</p>
+<p>
+To run, type "run".  If you want to specify a number of timesteps to run, you can type the number after the word "run."  To enter another file, type "input " followed by the path and name of the parameter file. 
+</p>
+<p>
+For a list of all commands, type "help".  To end, type "quit".
+</p>
+<p>
+Sometimes the interface traps debugger commands. In this case launch coremodel with the name of the parameter file as an argument.
+</p>
+</body>
+</html>
