@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<title>Masting disperse with autocorrelation behavior</title>
+<link href="../../style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Masting disperse with autocorrelation behavior</h1>
+
+<p>
+This behavior simulates differences in population-level year-to-year seed production. Individual reproduction is a function of size, past seed production history, and individual seed production potential. This behavior allows fine control over the population-level seed production at the timestep level. Specifying individual timestep values allows you to explore any statistical pattern you desire, or recreate historical sequences.
+</p>
+
+<h3>Parameters for this behavior</h3>
+<table class="parlist">
+<tr><th class="parname">Parameter name</th><th>Description</th></tr>
+<tr><td class="parname">"a" for Fraction of Pop Reproducing</td><td>The "a" value in the function for determining the proportion of the population that reproduces, as a function of mast level.</td></tr>
+<tr><td class="parname">"b" for Fraction of Pop Reproducing</td><td>The "b" value in the function for determining the proportion of the population that reproduces, as a function of mast level. This value is generally negative.</td></tr>
+<tr><td class="parname">"c" for Fraction of Pop Reproducing</td><td>The "c" value in the function for determining the proportion of the population that reproduces, as a function of mast level. This defines the asymptote of the function and represents the maximum proportion of the population that reproduce in a given timestep. Must be between 0 and 1.</td></tr>
+<tr><td class="parname">Standard Deviation of Seed Producer Score</td><td> The standard deviation for drawing seed producer score values, from a normal distribution with a mean of one. Small values cause most trees to operate near the species mean; larger values increase individual variability. A value of 0 causes all trees to get seed producer scores of one, negating this effect entirely.</td></tr>
+<tr><td class="parname">Masting level for timestep X (0-1)</td><td>The masting level for timestep X, as a value between 0 and 1. If you supply one timestep's value, you must supply all timesteps. If you wish the behavior to randomly generate masting levels, leave this value as -1.</td></tr>
+<tr><td class="parname">Autocorrelated Masting - DBH of Max Size Effect</td><td> The value of the DBH, in cm, of the maximum DBH for the purposes of calculating rho.</td></tr>
+<tr><td class="parname">Autocorrelated Masting - Max Autocorrelation for Rho</td><td> The maximum autocorrelation factor for the purposes of calculating rho.</td></tr>
+<tr><td class="parname">Standard Deviation for Rho Added Noise</td><td> Standard deviation for additional random noise to be added to rho. Set to 0 to turn off additional noise.</td></tr>
+<tr><td class="parname">Autocorrelated Masting - Slope of Individual Repro Probability</td><td>The slope of the individual reproduction probability, as a linear function of DBH.</td></tr>
+<tr><td class="parname">Intercept of Individual Repro Probability</td><td>The intercept of the individual reproduction probability, as a linear function of DBH.</td></tr>
+<tr><td class="parname">Seed Distribution</td><td> The distribution method to be applied to seeds (randomization).  The forms for these functions can be found <a href="../../more_info/math.html">here.</a> Choices are: 
+<ul>
+<li>Deterministic - no randomization.</li>
+<li>Poisson - use the number of seeds as the mean in a Poisson probability distribution function.</li>
+<li>Normal - use the number of seeds as the mean in a normal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Lognormal - use the number of seeds as the mean in a lognormal probability distribution function. You must then supply a standard deviation for the function.</li>
+<li>Negative binomial - use the number of seeds as the mean in a negative binomial probability distribution function. You must then supply a clumping parameter.</li></ul>
+</td></tr>
+
+<tr><td class="parname">Seed Dist. Clumping Parameter (Neg. Binomial)</td><td> If you have chosen the negative binomial probability distribution function for "Seed distribution", this is the clumping parameter of the function, in seeds per m<sup>2</sup>. If you have not chosen that PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Seed Dist. Std. Deviation (Normal or Lognormal)</td><td> If you have chosen the normal or lognormal probability distribution functions for "Seed distribution", this is the standard deviation of the function, in seeds per m<sup>2</sup>. If you have not chosen these PDFs, then this parameter is not required. </td></tr>
+
+<tr><td class="parname">Minimum DBH for Reproduction, in cm</td><td> The minimum DBH at which a tree can reproduce. This value does not have to match the <a href="../tree_parameters.html">Minimum adult DBH</a>. </td></tr>
+
+<tr><td class="parname">Canopy Function Used</td><td> The probability distribution function to be used to distribute seeds. The "canopy" in the name reflects the canopy / gap split present in some disperse behaviors but not applicable here.</td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>0</sub></td><td> The mean of the lognormal function, if the seed probability distribution function is lognormal. Not used if the Weibull function is chosen. The "canopy" in the name reflects the canopy / gap split present in some disperse behaviors but not applicable here.</td></tr>
+
+<tr><td class="parname">Lognormal Canopy X<sub>b</sub></td><td> The standard deviation of the lognormal function, if the seed probability distribution function is lognormal. Not used if the Weibull function is chosen. The "canopy" in the name reflects the canopy / gap split present in some disperse behaviors but not applicable here.</td></tr>
+
+<tr><td class="parname">Weibull Canopy Dispersal</td><td> The dispersal value for the Weibull function, if the seed probability distribution function is Weibull. Not used if the lognormal function is chosen. The "canopy" in the name reflects the canopy / gap split present in some disperse behaviors but not applicable here.</td></tr>
+
+<tr><td class="parname">Weibull Canopy Theta</td><td> The &#952; for the Weibull function, if the seed probability distribution function is Weibull. Not used if the lognormal function is chosen. The "canopy" in the name reflects the canopy / gap split present in some disperse behaviors but not applicable here.</td></tr>
+
+<tr><td class="parname">Beta</td><td> The &#946; value in the function for determining seed production.</td></tr>
+
+<tr><td class="parname">Annual STR</td><td> The mean annual STR value in the function for determining seed production.</td></tr>
+
+
+
+
+
+
+
+
+
+</table>
+
+<h3>How it works</h3>
+<p>
+<b>Population-level seed production.</b> The population-level seed production for a given timestep is controlled by its masting level, a value between 0 and 1 where 1 represents maximum seed production. You can enter a masting level for each timestep in the parameters. If you don't enter masting level values, the behavior will generate a random value for each timestep.
+</p>
+<p>
+Using the masting level, the behavior then calculates the proportion of the population that reproduces, as follows:
+</p>
+<center><img src="../data_files/mast_prop.gif"></center>
+<p>
+where:
+</p>
+<ul>
+<li><i>a</i> is <b>"a" for Fraction of Pop Reproducing</b> parameter</li>
+<li><i>b</i> is <b>"b" for Fraction of Pop Reproducing</b> parameter</li>
+<li><i>c</i> is <b>"c" for Fraction of Pop Reproducing</b> parameter</li>
+<li><i>mast</i> is the timestep masting level</li>
+</ul>
+<p>
+The actual proportion of the population that reproduces may not match this value, as it is not used directly, but as an input to further evaluate individual reproduction probability.  
+</p>
+<p><b>Individual seed production.</b> Each individual tree has a seed producer score, which is an index of its seed production capability. A value of one corresponds to mean seed production. Trees with scores below one produce fewer seeds than the mean; trees with scores above one produce more than the mean. A tree keeps the same seed producer score throughout its life. This behavior assigns seed producer scores with a random draw on a normal distribution with a mean of one. You provide the standard deviation with the <b>Standard Deviation of Seed Producer Score</b> parameter. Large values increase individual variability, and small values decrease it. Setting this value to zero eliminates the seed producer score effect altogether and causes all trees to operate at mean seed production (seed producer score of one).
+</p>
+<p>
+The probability that an individual tree will reproduce is calculated as follows:
+</p>
+<center><b><i>ind_prob</i> = <i>(m * DBH + n) * prop</i></b></center>
+<p>where:</p>
+<ul>
+<li><i>m</i> is the <b>Autocorrelated Masting - Slope of Individual Repro Probability</b> parameter</li>
+<li><i>n</i> is the <b>Intercept of Individual Repro Probability</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+<li><i>prop</i> is the proportion of the population that reproduces, calculated above</li>
+</ul>
+<p>
+The portion of the function <i>m * DBH + n</i> is truncated at 0 and 1 before multiplying by <i>prop</i>. This allows for a saturation effect where almost all trees above a certain DBH will reliably reproduce. This also means that setting a high value for the intercept, along with a positive slope, will set the individual reproductive probability approximately equal to the population probability. No provision is made for overall population size distributions. It is entirely possible for there to be a high proportion of the population reproducing, but all individual trees get a very small probability, if the parameters are set that way.   
+</p>
+<p>
+Once an individual's probability of reproduction is established, a random number is compared to this probability to determine if it goes on to actually produce seeds. If it does, the number of seeds it will produce depends on its size, seed producer score, and how many seeds it produced in the last timestep. To begin, the autocorrelation factor <i>rho</i> is calculated as follows:
+</p>
+<center><img src="../data_files/mast_rho.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>min.DBH</i> is the <b>Minimum DBH for Reproduction, in cm</b> parameter</li>
+<li><i>max.DBH</i> is the <b>Autocorrelated Masting - DBH of Max Size Effect</b> parameter</li>
+<li><i>ACF</i> is the <b>Autocorrelated Masting - Max Autocorrelation for Rho</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+</ul>
+<p>
+For trees with a DBH above the maximum DBH, the function is truncated at the value of the maximum DBH (i.e., <i>&#961;</i> = <i>ACF</i>). The behavior can add additional noise to this value by performing a random draw on a normal distribution with mean of zero and standard deviation set by the <b>Standard Deviation for Rho Added Noise</b> parameter. 
+</p>
+<p>
+The <b>potential mean</b> number of seeds the tree produces is then:
+</p>
+<center><img src="../data_files/mast_pseeds.gif"></center>
+<p>where:</p>
+<ul>
+<li><i>pseeds</i> is the annual potential seed count</li>
+<li><i>STR</i> is the <b>Annual STR</b> parameter</li>
+<li><i>&#946;</i> is the <b>Beta</b> parameter</li>
+<li><i>DBH</i> is the tree's DBH, in cm</li>
+</ul>
+<p>
+The <b>actual</b> number of seeds produced is:
+</p>
+<center><b><i>seeds<sub>t</sub> = mast_level * (&#961; * (seeds<sub>t-1</sub> - pseeds) + pseeds)</i></b></center>
+<p>where:</p>
+<ul>
+<li><i>seeds<sub>t</sub></i> is the seeds produced in the current timestep</li>
+<li><i>seeds<sub>t-1</sub></i> is the seeds produced in the previous timestep</li>
+<li><i>pseeds</i> is the potential seeds calculated above</li>
+<li><i>mast_level</i> is the timestep masting level</li>
+</ul>
+<p>
+In the first timestep, <i>seeds<sub>t-1</sub></i> is equal to <i>pseeds</i>.
+</p>
+<p>
+Once the behavior has determined what the number of seeds is, they are spatially distributed as described in the <a href="non_gap_spatial_disperse.html">Non-gap spatial disperse</a> behavior.
+</p>
+
+
+<h3>How to apply it</h3>
+<p>
+Apply this behavior to all trees of at least the minimum reproductive age for your chosen species. If the minimum
+reproductive age is less than the <a href="../../using/tree_life_history_stages.html">Minimum adult DBH</a>, be sure to apply this behavior to saplings as well as adults.
+</p>
+
+
+</body>
+</html>

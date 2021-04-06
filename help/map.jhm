@@ -36,6 +36,7 @@ These path names are case-sensitive.  If you don't get the case right, they won'
 <mapID target="dead_tree_behaviors.dead_tree_remover" url="data/dead_tree_behaviors/dead_tree_remover.html" />
 <mapID target="disperse_behaviors.disperse_behaviors" url="data/disperse_behaviors/index.html" />
 <mapID target="disperse_behaviors.gap_spatial_disperse" url="data/disperse_behaviors/gap_spatial_disperse.html" />
+<mapID target="disperse_behaviors.masting_disperse_autocorrelation" url="data/disperse_behaviors/masting_disperse_autocorrelation.html" />
 <mapID target="disperse_behaviors.masting_non_spatial_disperse" url="data/disperse_behaviors/masting_non_spatial_disperse.html" />
 <mapID target="disperse_behaviors.masting_spatial_disperse" url="data/disperse_behaviors/masting_spatial_disperse.html" />
 <mapID target="disperse_behaviors.non_gap_spatial_disperse" url="data/disperse_behaviors/non_gap_spatial_disperse.html" />
@@ -251,6 +252,7 @@ These path names are case-sensitive.  If you don't get the case right, they won'
 <mapID target="windows.edit_harvest_window" url="windows/edit_harvest_window.html" />
 <mapID target="windows.edit_menu" url="windows/edit_menu.html" />
 <mapID target="windows.edit_climate_importer_data" url="windows/edit_monthly_climate_data_importer_window.html" />
+<mapID target="windows.edit_masting_disperse_autocorrelation_data" url="windows/edit_masting_autocorrelation_levels_window.html" />
 <mapID target="windows.edit_mortality_episode_window" url="windows/edit_mortality_episode_window.html" />
 <mapID target="windows.edit_planting_window" url="windows/edit_planting_window.html" />
 <mapID target="windows.edit_scheduled_storms_window" url="windows/edit_scheduled_storms_window.html" />
