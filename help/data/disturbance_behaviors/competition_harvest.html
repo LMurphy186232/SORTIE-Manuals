@@ -26,8 +26,8 @@ Trees removed by this behavior will have a mortality reason code of "harvest".
 <ul>
 <li>Harvest type is <i>Fixed Interval Remove Proportion</i>:  The value for this parameter is the proportion of basal area that should be removed, 0-1.</li>
 <li>Harvest type is <i>Fixed Interval Leave Amt</i>: The value for this parameter is the desired basal area of the plot after harvesting, in m<sup>2</sup>/ha</li>
-<li>Harvest type is <i>Fixed BA Amt</i>: The value for this parameter is the amount of basal area to cut, in m<sup>2</sup>/ha</li>
-<li>Harvest type is <i>Fixed BA %</i>: The value for this parameter is the proportion of the total plot's basal area to cut between 0 and 1.</li></ul></td></tr>
+<li>Harvest type is <i>Fixed BA Fixed Remove Amt</i>: The value for this parameter is the amount of basal area to cut, in m<sup>2</sup>/ha</li>
+<li>Harvest type is <i>Fixed BA Remove Proportion</i>: The value for this parameter is the proportion of the total plot's basal area to cut between 0 and 1.</li></ul></td></tr>
 
 <tr><td class="parname">Competition Harvest: C</td><td> The slope of the curve "C" of the competitive effect of a target on a neighbor of each species.</td></tr>
 
@@ -39,20 +39,20 @@ Trees removed by this behavior will have a mortality reason code of "harvest".
 
 <tr><td class="parname">Competition Harvest: Filename for List of Harvested Trees</td><td> Optional. If there is a value in this field, the Competition Harvest behavior will write a tab-delimited text file of this name with all the trees cut during the run. In batch runs this will get overwritten and only contain the last run's list.</td></tr>
 
-<tr><td class="parname">Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA %" or "Fixed BA Amt"), this is the amount of basal area that the plot must have before a harvest occurs. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
+<tr><td class="parname">Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA Remove Proportion" or "Fixed BA Fixed Remove Amt"), this is the amount of basal area that the plot must have before a harvest occurs. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
 
-<tr><td class="parname">Competition Harvest: Fixed Interval Harvest Interval (yr)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to "Fixed Interval Remove Proportion" or "Fixed Interval Leave Amt"), this is the number of years between harvests. This value is ignored if the harvest type is "Fixed BA %" or "Fixed BA Amt".</td></tr>
+<tr><td class="parname">Competition Harvest: Fixed Interval Harvest Interval (yr)</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to "Fixed Interval Remove Proportion" or "Fixed Interval Leave Amt"), this is the number of years between harvests. This value is ignored if the harvest type is "Fixed BA Remove Proportion" or "Fixed BA Fixed Remove Amt".</td></tr>
 
 <tr><td class="parname">Competition Harvest: Harvest Type</td><td> The type of harvest to perform. 
 <ul>
-<li><b>Fixed BA %</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount cut is a proportion of the total basal area.</li>
-<li><b>Fixed BA Amt</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount to cut is a fixed amount of basal area.</li>
+<li><b>Fixed BA Remove Proportion</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount cut is a proportion of the total basal area.</li>
+<li><b>Fixed BA Fixed Remove Amt</b> means that there is a harvest every time the plot reaches a fixed basal area threshold, and the amount to cut is a fixed amount of basal area.</li>
 <li><b>Fixed Interval Leave Amt</b> means that there is a harvest every X years, with the plot being harvested until it is cut back to a certain amount of basal area.</li>
 <li><b>Fixed Interval Remove Proportion</b> means that there is a harvest every X years, with a fixed proportion of the plot's basal area removed.</li></ul></td></tr>
 
 <tr><td class="parname">Competition Harvest: Minimum DBH to Harvest</td><td> The minimum DBH, in cm, of trees that can be harvested.</td></tr>
 
-<tr><td class="parname">Competition Harvest: Min Years Between Fixed BA Harvests</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA %" or "Fixed BA Amt"), this is the minimum number of years that must pass between harvests, even if the plot basal area is over the harvesting threshold. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
+<tr><td class="parname">Competition Harvest: Min Years Between Fixed BA Harvests</td><td> For fixed basal area threshold harvests (the value in <b>Competition Harvest: Harvest Type</b> is set to either "Fixed BA Remove Proportion" or "Fixed BA Fixed Remove Amt"), this is the minimum number of years that must pass between harvests, even if the plot basal area is over the harvesting threshold. This value is ignored if the harvest type is "Fixed Interval".</td></tr>
 
 <tr><td class="parname">Competition Harvest: Maximum DBH to Harvest</td><td> The maximum DBH, in cm, of trees that can be harvested.</td></tr>
 
@@ -77,8 +77,8 @@ Trees removed by this behavior will have a mortality reason code of "harvest".
 Competition Harvest performs harvests when specific conditions are met in the plot. The amount harvested is also based on conditions in the plot. There are four ways to specify the timing and amount of harvesting. The desired method is set in the <b>Competition Harvest: Harvest Type</b> parameter. The harvest types are:  
 </p>
 <ul>
-<li><i>Fixed basal area threshold, cutting a specific amount of basal area.</i> (Set the harvest type parameter to "Fixed BA Amt".) A harvest occurs whenever the plot's basal area exceeds a certain threshold, set in the <b>Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</b> parameter. The same amount of basal area is harvested every time, set in the <b>Competition Harvest: Amount to Harvest</b> parameter. To make sure that harvests do not happen too frequently, set a minimum interval between harvests in the <b>Competition Harvest: Min Years Between Fixed BA Harvests</b> parameter.</li>
-<li><i>Fixed basal area threshold, cutting a proportion of the plot basal area.</i> (Set the harvest type parameter to "Fixed BA %".) This is the same as the first harvest type, except the amount to harvest is different. This harvest removes a set proportion of the plot's basal area. Set this proportion (between 0 and 1) in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
+<li><i>Fixed basal area threshold, cutting a specific amount of basal area.</i> (Set the harvest type parameter to "Fixed BA Fixed Remove Amt".) A harvest occurs whenever the plot's basal area exceeds a certain threshold, set in the <b>Competition Harvest: Fixed BA Harvest Threshold (m2/ha)</b> parameter. The same amount of basal area is harvested every time, set in the <b>Competition Harvest: Amount to Harvest</b> parameter. To make sure that harvests do not happen too frequently, set a minimum interval between harvests in the <b>Competition Harvest: Min Years Between Fixed BA Harvests</b> parameter.</li>
+<li><i>Fixed basal area threshold, cutting a proportion of the plot basal area.</i> (Set the harvest type parameter to "Fixed BA Remove Proportion".) This is the same as the first harvest type, except the amount to harvest is different. This harvest removes a set proportion of the plot's basal area. Set this proportion (between 0 and 1) in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
 <li><i>Fixed interval, cutting plots back to a basal area threshold.</i> (Set the harvest type parameter to "Fixed Interval Leave Amt".) Harvests occur at a fixed interval, set in the <b>Competition Harvest: Fixed Interval Harvest Interval (yr)</b> parameter. The first timestep will have a harvest. Harvests remove trees until the plot reaches a specific amount of basal area, set in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
 <li><i>Fixed interval, cutting a proportion of the plot basal area.</i> (Set the harvest type parameter to "Fixed Interval Remove Proportion".) Harvests occur at a fixed interval, set in the <b>Competition Harvest: Fixed Interval Harvest Interval (yr)</b> parameter. The first timestep will have a harvest. Harvests remove a proportion of the plot basal area, with the proportion set in the <b>Competition Harvest: Amount to Harvest</b> parameter.</li>
 </ul>
